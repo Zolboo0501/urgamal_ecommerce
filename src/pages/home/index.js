@@ -43,6 +43,9 @@ export default function Home({ data }) {
     const [productData, setProductData] = useState([])
     const arr = [1, 2, 3, 4, 5, 6]
     const [offset, setOffset] = useState(0)
+    const [main, setMain] = useState()
+    const [parent, setParent] = useState()
+    const [child, setChild] = useState()
     const onScroll = useCallback(event => {
         const wrappedElement = document.getElementById('content');
         if (isBottomhh(wrappedElement)) {
@@ -54,10 +57,8 @@ export default function Home({ data }) {
         const bottom = document.documentElement.scrollHeight;
         if ((pageYOffset >= 1308 || scrollY >= 1308) && (pageYOffset < bottom - 800 || scrollY < bottom - 800)) {
             setPositionSticky(true)
-            console.log("true")
         } else {
             setPositionSticky(false)
-            console.log("false")
         }
         if ((innerHeight + Math.ceil(pageYOffset)) >= document.body.offsetHeight) {
             setPositionSticky(false)
@@ -102,11 +103,42 @@ export default function Home({ data }) {
         // remove event on unmount to prevent a memory leak with the cleanup
         window.dispatchEvent(new Event('storage'))
         setProductData(data.data)
+        getAllCategory()
         return () => {
             window.removeEventListener("scroll", onScroll);
         }
     }, []);
 
+    const getAllCategory = async () => {
+        const requestOption = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        }
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/category/main`, requestOption)
+        if (res.status === 200) {
+            const data = await res.json()
+            if (data.success === true) {
+                setMain(data.data)
+                localStorage.setItem("main", JSON.stringify(data.data))
+            }
+        }
+        const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/category/parent`, requestOption)
+        if (res2.status === 200) {
+            const data = await res2.json()
+            if (data.success === true) {
+                setParent(data.data)
+                localStorage.setItem("parent", JSON.stringify(data.data))
+            }
+        }
+        const res3 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/category/child`, requestOption)
+        if (res3.status === 200) {
+            const data = await res3.json()
+            if (data.success === true) {
+                setChild(data.data)
+                localStorage.setItem("child", JSON.stringify(data.data))
+            }
+        }
+    }
     const router = useRouter()
     const clickProduct = (e) => {
         router.push({
@@ -124,7 +156,7 @@ export default function Home({ data }) {
                     <FeatureBundle />
                     <div className="flex flex-row">
                         <div style={{ width: "30%", height: "80%", position: "relative" }}>
-                            <Category positionSticky={positionSticky} />
+                            <Category positionSticky={positionSticky} parent={parent} main={main} child={child} />
                         </div>
                         <div className="flex flex-col ml-12 " style={{ width: "70%" }}>
                             <FeatureProductList />

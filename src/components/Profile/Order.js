@@ -3,7 +3,7 @@ import { Button, TextInput, Collapse } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import CollapseItem from './CollapseItem';
 
-const Order = ({ orderNumber, price }) => {
+const Order = ({ data }) => {
 
     const [opened, { toggle }] = useDisclosure(false);
 
@@ -13,11 +13,11 @@ const Order = ({ orderNumber, price }) => {
                 <div className='flex flex-col'>
                     <div className='flex flex-row'>
                         <p className='text-base text-grey'>Захиалгын дугаар :</p>
-                        <p className='text-base ml-1'>{orderNumber}</p>
+                        <p className='text-base ml-1'>{data?.orderid}</p>
                     </div>
                     <div className='flex flex-row'>
                         <p className='text-base text-grey'>Баталгаажсан : </p>
-                        <p className='text-base ml-1'>{price}</p>
+                        <p className='text-base ml-1'>{data?.createdAt}</p>
                     </div>
                 </div>
                 <div className='flex flex-row gap-2'>
@@ -26,17 +26,11 @@ const Order = ({ orderNumber, price }) => {
                 </div>
             </div>
             <Collapse in={opened}>
-                <CollapseItem src={"/bundle-1.svg"}
-                    name={"Энерген Экстра"}
-                    count={"50ш"}
-                    price={"15’000₮"} />
-                <CollapseItem src={"/bundle-1.svg"}
-                    name={"Энерген Экстра"}
-                    count={"50ш"}
-                    price={"15’000₮"} />
-                <div className='w-full py-2 flex flex-row justify-end items-center'>
+                <CollapseItem orderItems={data.order_items} total={data.total} />
+
+                <div className='w-full py-2 flex flex-row justify-end items-center pr-9'>
                     <p className='text-grey'>Нийт үнийн дүн :</p>
-                    <p className='ml-1'>60000₮</p>
+                    <p className='ml-1'>{data.total}₮</p>
                 </div>
             </Collapse>
         </div>

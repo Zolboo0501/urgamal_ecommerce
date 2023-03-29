@@ -1,6 +1,10 @@
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 const BottomFooter = () => {
+
+    const router = useRouter()
+
     return (
         <div className="flex flex-row px-16 border-t-1 border-black  py-8 bg-green2 justify-between">
             <div className="flex flex-col items-center">
@@ -26,14 +30,14 @@ const BottomFooter = () => {
             </div>
             <div className="flex flex-col" style={{ width: "30%" }}>
                 <p className="text-sm mt-2">Холбоо барих</p>
-                <div className="flex flex-row items-start mt-1">
+                <div className="flex flex-row items-start mt-1 hover:text-white" onClick={() => router.push("/location")}>
                     <Image
                         className="m-1"
                         src={"/icons/location.svg"}
                         width={20}
                         height={20}
                     />
-                    <p className="text-sm ml-2">
+                    <p className="text-sm ml-2 ">
                         Хаяг: Улаанбаатар хот, Баянзүрх дүүрэг, 12-р хороолол, 1-р хороо
                         , 20/2 байр, Таримал ургамлын үрийн дэлгүүр
                     </p>

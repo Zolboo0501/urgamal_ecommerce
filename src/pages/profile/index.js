@@ -18,7 +18,6 @@ const Profile = () => {
     const [tabs, setTabs] = useState(1)
     const onClickTabs = (e) => {
         setTabs(e)
-        console.log($(`#${e}`).children)
     }
 
     useEffect(() => {
@@ -51,12 +50,12 @@ const Profile = () => {
                 </div>
                 <div className=' mt-6 flex flex-row'>
                     <div className='bg-white rounded-md w-3/12 py-6 h-fit'>
-                        <ProfileTabs image={"/icons/profile-tab-icon.svg"} text={"Хувийн мэдээлэл"} onClickTabs={() => onClickTabs(1)} id={1} first={true} />
-                        <ProfileTabs image={"/icons/profile-tab2-icon.svg"} text={"Хувийн тохиргоо"} onClickTabs={() => onClickTabs(2)} id={2} />
-                        <ProfileTabs image={"/icons/hearth.svg"} text={"Хаяг"} onClickTabs={() => onClickTabs(3)} id={3} />
-                        <ProfileTabs image={"/icons/profile-tab4-icon.svg"} text={"Хадгалсан"} onClickTabs={() => onClickTabs(4)} id={4} />
-                        <ProfileTabs image={"/icons/profile-tab5-icon.svg"} text={"Захиалга"} onClickTabs={() => onClickTabs(5)} id={5} />
-                        <ProfileTabs image={"/icons/profile-tab3-icon.svg"} text={"Худалдан авсан түүх"} onClickTabs={() => onClickTabs(6)} id={6} />
+                        {tabs === 1 ? <ProfileTabs image={"/icons/profile-tab-icon.svg"} text={"Хувийн мэдээлэл"} onClickTabs={() => onClickTabs(1)} id={1} first={true} /> : <ProfileTabs image={"/icons/profile-tab-icon.svg"} text={"Хувийн мэдээлэл"} onClickTabs={() => onClickTabs(1)} id={1} />}
+                        {tabs === 2 ? <ProfileTabs image={"/icons/profile-tab2-icon.svg"} text={"Хувийн тохиргоо"} onClickTabs={() => onClickTabs(2)} id={2} first={true} /> : <ProfileTabs image={"/icons/profile-tab2-icon.svg"} text={"Хувийн тохиргоо"} onClickTabs={() => onClickTabs(2)} id={2} />}
+                        {tabs === 3 ? <ProfileTabs image={"/icons/hearth.svg"} text={"Хаяг"} onClickTabs={() => onClickTabs(3)} id={3} first={true} /> : <ProfileTabs image={"/icons/hearth.svg"} text={"Хаяг"} onClickTabs={() => onClickTabs(3)} id={3} />}
+                        {tabs === 4 ? <ProfileTabs image={"/icons/profile-tab4-icon.svg"} text={"Хадгалсан"} onClickTabs={() => onClickTabs(4)} id={4} first={true} /> : <ProfileTabs image={"/icons/profile-tab4-icon.svg"} text={"Хадгалсан"} onClickTabs={() => onClickTabs(4)} id={4} />}
+                        {tabs === 5 ? <ProfileTabs image={"/icons/profile-tab5-icon.svg"} text={"Захиалга"} onClickTabs={() => onClickTabs(5)} id={5} first={true} /> : <ProfileTabs image={"/icons/profile-tab5-icon.svg"} text={"Захиалга"} onClickTabs={() => onClickTabs(5)} id={5} />}
+                        {tabs === 6 ? <ProfileTabs image={"/icons/profile-tab3-icon.svg"} text={"Худалдан авсан түүх"} onClickTabs={() => onClickTabs(6)} id={6} first={true} /> : <ProfileTabs image={"/icons/profile-tab3-icon.svg"} text={"Худалдан авсан түүх"} onClickTabs={() => onClickTabs(6)} id={6} />}
                     </div>
                     {tabs === 1 && <ProfileInfo />}
                     {tabs === 2 && <EmailPhone />}

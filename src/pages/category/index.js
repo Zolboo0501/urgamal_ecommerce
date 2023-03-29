@@ -1,24 +1,37 @@
 import Image from 'next/image'
 import GlobalLayout from '../../components/GlobalLayout/GlobalLayout'
-import Category from "../../../src/pages/components/category"
+import Category from '@/components/category'
 import ProductCard from '../../components/product-card'
 import { Footer } from '@mantine/core'
 import BottomFooter from '../../components/Footer'
 import ProductCardExample from '../../components/ProductCardExample'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+
 const CategoryPage = () => {
 
+    const [main, setMain] = useState()
+    const [parent, setParent] = useState()
+    const [child, setChild] = useState()
     useEffect(() => {
         window.dispatchEvent(new Event('storage'))
-    }, [])
+        getLocalCat()
 
+    }, [])
+    const getLocalCat = () => {
+        const data = JSON.parse(localStorage.getItem("main"))
+        setMain(data)
+        const data2 = JSON.parse(localStorage.getItem("parent"))
+        setParent(data2)
+        const data3 = JSON.parse(localStorage.getItem("child"))
+        setChild(data3)
+    }
     return (
         <div>
             <GlobalLayout />
             <div className=' px-32 bg-nav-background h-full flex flex-col'>
                 <div className='flex flex-row py-12 w-full  '>
                     <div style={{ width: "28%", height: "80%" }}>
-                        <Category />
+                        <Category parent={parent} main={main} child={child} />
                     </div>
                     <div className='flex flex-col ml-6' style={{ width: "70%" }}>
                         <div className='flex flex-row justify-between w-full'>

@@ -1,6 +1,9 @@
 import { Collapse, Text, Grid } from "@nextui-org/react";
 import Image from "next/image";
-const Category = ({ positionSticky }) => {
+import Link from "next/link";
+import { useEffect } from "react";
+
+const Category = ({ positionSticky, parent, main, child }) => {
   return (
     <div
       className={positionSticky === true ? "rounded-md bg-white fixed w-80 top-36" : "rounded-md bg-white"}
@@ -21,36 +24,35 @@ const Category = ({ positionSticky }) => {
             color={"#8DC57F"}
           />
         </div>
-        <Grid style={{ padding: "0px" }}>
-          <Collapse.Group divider={false}>
-            <Collapse title="Бордоо" >
-              <Text>
-                Ургамал
-              </Text>
-            </Collapse>
-            <Collapse title="Үр">
-              <Text>
-                Ургамал
-              </Text>
-            </Collapse>
-            <Collapse title="Ургамал хамгаалал">
-              <Text>
-                Ургамал
-              </Text>
-            </Collapse>
-            <Collapse title="Хөрс">
-              <Text>
-                Ургамал
-              </Text>
-            </Collapse>
-            <Collapse title="Багаж хэрэгсэл">
-              <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </Text>
-            </Collapse>
+        <Grid style={{ width: "100%" }} grow gutter="xs">
+          <Collapse.Group divider={false} css={{ marginTop: "0px" }}  >
+            {main !== undefined && main.map((e) => {
+              return (
+                <Collapse title={e.name} style={{ width: "100%", }} cs={{ paddingTop: "0px" }}>
+                  {parent !== undefined && parent.map((el) => {
+                    if (e.id === el.main_cat_id) {
+                      return (
+                        <Collapse.Group divider={false}>
+                          <Collapse title={el.name}>
+                            <div className="max-h-64 overflow-auto scrollbar-hide">
+                              {child !== undefined && child.map((item) => {
+                                if (e.id === item.main_cat_id && el.id === item.parent_id) {
+                                  return (
+                                    <Link>
+                                      <Text style={{ width: "100%" }}>{item.name}</Text>
+                                    </Link>
+                                  )
+                                }
+                              })}
+                            </div>
+                          </Collapse>
+                        </Collapse.Group>
+                      )
+                    }
+                  })}
+                </Collapse>
+              )
+            })}
           </Collapse.Group>
         </Grid>
       </Grid.Container>

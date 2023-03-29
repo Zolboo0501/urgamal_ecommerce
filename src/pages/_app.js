@@ -4,10 +4,7 @@ import { MantineProvider, createEmotionCache } from "@mantine/core";
 import { Notifications } from '@mantine/notifications';
 import Router from "next/router";
 import { useState, useEffect } from "react";
-import useSWR, { SWRConfig } from 'swr'
-import { NextUIProvider } from '@nextui-org/react';
 const appendCache = createEmotionCache({ key: "mantine", prepend: false });
-import { useSSR } from '@nextui-org/react'
 
 // function Loading() {
 //   const [loading, setLoading] = useState(false);
@@ -36,7 +33,6 @@ Router.onRouteChangeError = () => {
 
 export default function App({ Component, pageProps }) {
 
-  const { isBrowser } = useSSR()
   return (
     <MantineProvider
       withCSSVariables
@@ -52,7 +48,7 @@ export default function App({ Component, pageProps }) {
       {/* <Loading /> */}
       <StoreProvider>
 
-        {isBrowser && (<Component {...pageProps} />)}
+        <Component {...pageProps} />
 
 
       </StoreProvider>
