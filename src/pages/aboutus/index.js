@@ -4,9 +4,14 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import React, { useContext, useEffect, useState } from "react";
-import SliderWithText from "./components/SliderWithText";
-import ImageWithParaList from "./components/ImageWithParaList";
-import ImageWithHyperlink from "./components/ImageWithHyperlink";
+import SliderWithText from "../landing/components/SliderWithText";
+import ImageWithParaList from "../landing/components/ImageWithParaList";
+import ImageWithHyperlink from "../landing/components/ImageWithHyperlink";
+import BannerToTheRight from "../landing/components/BannerToTheRight";
+import ParaUnderImage from "../landing/components/ParaUnderImage";
+import ParaRight from "../landing/components/ParaRight";
+import TextSandwich from "../landing/components/TextSandwich";
+import MultipleArray from "../landing/components/MultipleArray";
 
 const Landing = () => {
   const [data, setData] = useState({
@@ -31,9 +36,11 @@ const Landing = () => {
     , []);
   return (
     <div className="mx-auto w-[900px]">
-      <SliderWithText data={data} />
-      <ImageWithParaList data={data} />
-      <ImageWithHyperlink data={data} />
+      <BannerToTheRight data={data} />
+      <ParaUnderImage data={data} />
+      <ParaRight data={data} />
+      <TextSandwich data={data} />
+      <MultipleArray data={data} />
     </div>
   );
 }
