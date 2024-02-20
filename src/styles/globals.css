@@ -37,6 +37,12 @@ body,
   width: 100%;
   height: 100%;
 }
+
+.swiper-pagination-bullet-active {
+  color: #fff;
+  background: #f1b13a !important;
+}
+
 .swiper-button-prev {
   background-color: #f1b13a;
   border-radius: 999px;

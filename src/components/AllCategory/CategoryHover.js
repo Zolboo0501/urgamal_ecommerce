@@ -21,7 +21,7 @@ const CategoryHover = ({ loading, categories, parentId }) => {
     </div>
   ) : categories?.length > 0 ? (
     <div className="flex flex-row h-full w-full">
-      <div className="flex flex-col items-center justify-start">
+      <div className="flex flex-col items-center justify-start pl-8">
         {categories &&
           categories?.map((item, index) => (
             <Link
