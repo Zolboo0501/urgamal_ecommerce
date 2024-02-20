@@ -79,14 +79,14 @@ export default function Home({ cats, dealData }) {
 
   return (
     <GlobalLayout>
-      {!userConfigs.configId && (
+      {/* {!userConfigs.configId && (
         <Preference_modal
           close={close}
           open={open}
           opened={opened}
           preference_cookie={preference_cookie}
         />
-      )}
+      )} */}
       <div className="block lg:hidden">
         <Banner />
       </div>
