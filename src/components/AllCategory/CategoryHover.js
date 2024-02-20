@@ -21,7 +21,8 @@ const CategoryHover = ({ loading, categories, parentId }) => {
     </div>
   ) : categories?.length > 0 ? (
     <div className="flex flex-row h-full w-full">
-      <div className="flex flex-col items-center justify-start pl-8">
+      <div className="flex flex-col justify-start pl-8">
+        <p className="font-semibold text-grey500 py-2">Дэд ангилал</p>
         {categories &&
           categories?.map((item, index) => (
             <Link
@@ -39,11 +40,13 @@ const CategoryHover = ({ loading, categories, parentId }) => {
               {item.icon && (
                 <Image src={item.icon} width={24} height={24} alt="icon" />
               )}
+
               <CategoryHoverItem item={item} index={index} />
             </Link>
           ))}
       </div>
       <div className="w-[30rem] max-w-[40rem] h-full flex flex-col pl-8">
+        <p className="font-semibold text-grey500 py-2">Дотоод ангилал</p>
         {filterData?.map((item, index) => (
           <Link
             href={{
@@ -55,7 +58,7 @@ const CategoryHover = ({ loading, categories, parentId }) => {
               },
             }}
             key={index}
-            className="py-2 text-sm hover:text-primary text-grey600 font-semibold flex flex-row justify-between items-center hover:text-[#F9BC60]"
+            className="py-2 text-sm text-grey600 font-semibold flex flex-row justify-between items-center hover:text-[#F9BC60]"
           >
             {item?.name}
             {/* //! pisd sum neheed bvl butsaagarai ..... */}

@@ -19,14 +19,14 @@ const Banner = () => {
   const categories = useCategories();
 
   return (
-    <div className="mt-10 flex relative mx-auto w-[90%] h-[180px] border rounded-lg lg:h-[28rem] md:h-[20rem]">
+    <div className="mt-10 flex relative mx-auto w-[100%] h-[320px] border  lg:h-[28rem] md:h-[20rem]">
       <div
         className="flex-row hidden relative lg:flex"
         onMouseLeave={() => {
           setHoveredCategory([]);
         }}
       >
-        <div className="py-4 pl-4 mr-2 mr-2 h-full  overscroll-contain overflow-y-auto">
+        <div className="py-4 pl-4 pr-3 bg-white h-full  overscroll-contain overflow-y-auto">
           {categories &&
             categories?.categories?.map((item, idx) => {
               return (
@@ -53,7 +53,9 @@ const Banner = () => {
                     )}
                     <span className="font-semibold">{item?.name}</span>
                   </div>
-                  <IconChevronRight size={rem(16)} />
+                  <div className="ml-10">
+                    <IconChevronRight size={rem(16)} />
+                  </div>
                 </Link>
               );
             })}
@@ -102,7 +104,7 @@ const Banner = () => {
             alt="banner2"
             src="/banner2.png"
             fill
-            className="rounded-lg md:rounded-r-lg object-fill md:object-fill max-h-full"
+            className="object-fill md:object-fill max-h-full"
             draggable={false}
           />
         </SwiperSlide>
@@ -111,7 +113,7 @@ const Banner = () => {
             alt="banner"
             src="/banner.png"
             fill
-            className="rounded-lg md:rounded-r-lg object-fill md:object-fill  max-h-full"
+            className="object-fill md:object-fill  max-h-full"
             draggable={false}
           />
         </SwiperSlide>
