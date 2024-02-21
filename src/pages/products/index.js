@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import GlobalLayout from '@/components/GlobalLayout/GlobalLayout';
-import ProductGridList from '@/components/ProductGridList/ProductGridList';
-import Category from '@/components/AllCategory/category';
-import ProductCard from '@/components/product-card';
-import { PAGE_SIZE } from '@/utils/constant';
-import { fetchMethod, fetcher, getCategory } from '@/utils/fetch';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import GlobalLayout from "@/components/GlobalLayout/GlobalLayout";
+import ProductGridList from "@/components/ProductGridList/ProductGridList";
+import Category from "@/components/AllCategory/category";
+import ProductCard from "@/components/product-card";
+import { PAGE_SIZE } from "@/utils/constant";
+import { fetchMethod, fetcher, getCategory } from "@/utils/fetch";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 // import { Virtuoso, VirtuosoGrid } from "react-virtuoso";
-import useSWRInfinite from 'swr/infinite';
-import { Button } from '@mantine/core';
-import CategoryLayout from '@/components/GlobalLayout/CategoryLayout';
+import useSWRInfinite from "swr/infinite";
+import { Button } from "@mantine/core";
+import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
 
 export async function getServerSideProps() {
-  const data = await fetchMethod('GET', 'product');
+  const data = await fetchMethod("GET", "product");
   return {
     props: {
       initialData: data,
@@ -60,15 +60,14 @@ export default function SearchResult({ initialData }) {
 
   useEffect(() => {
     if (data?.length > 0) {
-      setProducts(products.concat(data[data?.length - 1]));
+      setProducts(products.concat(data?.[data?.length - 1]));
     }
   }, [data]);
 
   const fetchMore = () => {
-    if (total === data?.length) {
-      return;
+    if (total !== products?.length) {
+      setSize(size + 1);
     }
-    setSize(size + 1);
   };
 
   useEffect(() => {

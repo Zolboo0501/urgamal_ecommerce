@@ -1,24 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/router';
-import Category from '@/components/AllCategory/category';
-import axios from 'axios';
-import useSWRInfinite from 'swr/infinite';
-import GlobalLayout from '@/components/GlobalLayout/GlobalLayout';
-import ProductCard from '@/components/product-card';
-import ProductGridList from '@/components/ProductGridList/ProductGridList';
-import { Breadcrumbs, Button, rem } from '@mantine/core';
-import { fetchMethod, fetcher, getCategory } from '@/utils/fetch';
-import { PAGE_SIZE } from '@/utils/constant';
-import CategoryLayout from '@/components/GlobalLayout/CategoryLayout';
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/router";
+import useSWRInfinite from "swr/infinite";
+import ProductCard from "@/components/product-card";
+import ProductGridList from "@/components/ProductGridList/ProductGridList";
+import { Breadcrumbs, Button, rem } from "@mantine/core";
+import { fetchMethod, fetcher, getCategory } from "@/utils/fetch";
+import { PAGE_SIZE } from "@/utils/constant";
+import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
 
 export async function getServerSideProps({ query }) {
   const { catId } = query;
 
   const data = await fetchMethod(
-    'GET',
+    "GET",
     `product?offset=0&limit=${PAGE_SIZE}&query=&categoryId=${catId}`
   );
   return {
@@ -47,18 +42,21 @@ const CategoryPage = ({ initialData }) => {
   const isEmpty = products?.length === 0;
   const fetchMore = async () => {
     setLoading(true);
-    if (total === data?.length) {
-      return;
+    if (total !== products?.length) {
+      setSize(size + 1);
     }
-    setSize(size + 1);
     setLoading(false);
   };
 
   useEffect(() => {
     if (data?.length > 0) {
-      setProducts(products.concat(data[data?.length - 1]));
+      setProducts(products.concat(data?.[data?.length - 1]));
     }
   }, [data]);
+
+  useEffect(() => {
+    setSize(0);
+  }, [catId]);
 
   useEffect(() => {
     setLoading(true);
@@ -68,34 +66,32 @@ const CategoryPage = ({ initialData }) => {
   }, [initialData]);
 
   function categoryPositioner() {
-    var navbar = document.getElementById('category-menu');
-    var content = document.getElementById('content');
+    var navbar = document.getElementById("category-menu");
+    var content = document.getElementById("content");
     var sticky = navbar?.offsetTop;
     if (window.pageYOffset >= sticky) {
-      navbar?.classList.add('fixed', 'top-16');
+      navbar?.classList.add("fixed", "top-16");
     } else {
-      navbar?.classList.remove('fixed', 'top-16');
+      navbar?.classList.remove("fixed", "top-16");
     }
   }
 
   useEffect(() => {
-    window.addEventListener('scroll', categoryPositioner);
+    window.addEventListener("scroll", categoryPositioner);
     return () => {
-      window.removeEventListener('scroll', categoryPositioner);
+      window.removeEventListener("scroll", categoryPositioner);
     };
   }, []);
 
   return (
     <CategoryLayout>
-
       <div className="flex-1">
-         <div className="px-4 md:px-5 h-full">
+        <div className="px-4 md:px-5 h-full">
           <div className="h-full flex flex-row py-6 md:py-6 justify-between gap-10">
-
             <div
               className="flex flex-row w-full h-full"
-              style={{ gap: '30px', flexWrap: 'wrap' }}
-              id={'content'}
+              style={{ gap: "30px", flexWrap: "wrap" }}
+              id={"content"}
             >
               {/* <div className="flex flex-row justify-between w-full">
                 <div className="flex flex-row items-center"></div>
@@ -127,6 +123,8 @@ const CategoryPage = ({ initialData }) => {
                     />
                   ))}
                 </ProductGridList>
+                {console.log(total, "total")}
+                {console.log(products?.length, "length")}
                 {total !== products?.length && (
                   <div className="flex justify-center items-center mt-8">
                     <Button
