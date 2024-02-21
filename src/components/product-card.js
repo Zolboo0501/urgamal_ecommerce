@@ -10,7 +10,6 @@ import {
   Group,
   Image,
   Stack,
-  Overlay,
   Box,
   AspectRatio,
 } from "@mantine/core";
@@ -34,7 +33,6 @@ import {
 import { useRouter } from "next/router";
 import { fetchMethod } from "@/utils/fetch";
 import useWishlist from "@/hooks/useWishlist";
-import useAverageColor from "@/hooks/useAverageColor";
 
 const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
   const [productCount, setProductCount] = useState(1);

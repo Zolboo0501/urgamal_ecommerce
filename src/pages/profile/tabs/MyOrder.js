@@ -1,5 +1,5 @@
-import { useMemo, useState, useEffect } from "react";
-import { Loader, Modal, Tabs, Text, TextInput } from "@mantine/core";
+import { useMemo, useState } from "react";
+import { Loader, Tabs, Text } from "@mantine/core";
 import Order from "../../../components/Profile/Order";
 import { getCookie } from "cookies-next";
 import useSWR from "swr";

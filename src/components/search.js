@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Image from "next/image";
 import { forwardRef, useEffect, useState } from "react";
-import { Autocomplete, Group, Avatar, Text, rem } from "@mantine/core";
+import { Autocomplete, Group, Avatar, Text } from "@mantine/core";
 import { useRouter } from "next/router";
-import axios from "axios";
 import useSWR from "swr";
 import { useDebouncedValue } from "@mantine/hooks";
-import { IconCategory, IconPackage, IconSearch } from "@tabler/icons-react";
+import { IconPackage, IconSearch } from "@tabler/icons-react";
 import { fetcher } from "@/utils/fetch";
 
 const Search = () => {

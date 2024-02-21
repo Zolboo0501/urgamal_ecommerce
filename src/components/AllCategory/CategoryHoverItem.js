@@ -1,6 +1,5 @@
 import { rem } from "@mantine/core";
-import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
 const CategoryHoverItem = ({ item, index }) => {

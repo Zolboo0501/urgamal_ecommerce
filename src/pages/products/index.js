@@ -1,7 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import GlobalLayout from "@/components/GlobalLayout/GlobalLayout";
 import ProductGridList from "@/components/ProductGridList/ProductGridList";
-import Category from "@/components/AllCategory/category";
 import ProductCard from "@/components/product-card";
 import { PAGE_SIZE } from "@/utils/constant";
 import { fetchMethod, fetcher, getCategory } from "@/utils/fetch";

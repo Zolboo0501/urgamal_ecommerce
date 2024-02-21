@@ -1,12 +1,5 @@
 import Image from "next/image";
-import {
-  Button,
-  Loader,
-  LoadingOverlay,
-  Text,
-  ThemeIcon,
-  rem,
-} from "@mantine/core";
+import { Button, Loader, ThemeIcon, rem } from "@mantine/core";
 import {
   IconCheck,
   IconCircleXFilled,

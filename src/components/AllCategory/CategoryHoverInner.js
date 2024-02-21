@@ -2,7 +2,6 @@ import { rem } from "@mantine/core";
 import { IconArrowBigRight, IconMacroOff } from "@tabler/icons-react";
 import Link from "next/link";
 import React from "react";
-import { IoIosArrowForward } from "react-icons/io";
 
 const CategoryHoverInner = ({ item }) => {
   return (

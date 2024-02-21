@@ -1,4 +1,3 @@
-import { IconMacroOff } from "@tabler/icons-react";
 import React, { useState } from "react";
 import CategoryHoverInner from "./CategoryHoverInner";
 import { IoIosArrowForward } from "react-icons/io";

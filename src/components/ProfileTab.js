@@ -1,5 +1,4 @@
 import { Text } from "@mantine/core";
-import Image from "next/image";
 const ProfileTabs = ({ icon, text, id, onClickTabs, first }) => {
   return (
     <div

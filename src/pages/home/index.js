@@ -5,10 +5,8 @@ import "swiper/css/pagination";
 import GlobalLayout from "../../components/GlobalLayout/GlobalLayout";
 import Banner from "../../components/banner";
 import { useEffect, useCallback, useState, useContext } from "react";
-import Preference_modal from "@/components/preference_modal/preference_modal";
 import { UserConfigContext } from "@/utils/userConfigContext";
 import { useDisclosure } from "@mantine/hooks";
-import ProductListWithCategory from "@/components/ProductListWithCategory/ProductListWithCategory";
 import useCategories from "@/hooks/useCategories";
 import SpecialDeal from "@/components/SpecialDeal";
 

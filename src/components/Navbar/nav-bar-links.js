@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 const NavBarLinks = ({ name }) => {
   return (
     <div

@@ -1,18 +1,8 @@
 import Image from "next/image";
-import {
-  rem,
-  Input,
-  Button,
-  Stack,
-  Text,
-  Group,
-  Loader,
-  PinInput,
-  TextInput,
-} from "@mantine/core";
-import React, { useState, useEffect } from "react";
+import { rem, Input, Button, TextInput } from "@mantine/core";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { IconCheck, IconMailCode, IconPhoneCall } from "@tabler/icons-react";
+import { IconCheck, IconMailCode } from "@tabler/icons-react";
 import { fetchMethod } from "@/utils/fetch";
 import { showNotification } from "@mantine/notifications";
 

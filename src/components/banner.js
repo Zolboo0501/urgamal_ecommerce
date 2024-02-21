@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useState } from "react";
-import { Carousel } from "@mantine/carousel";
 import Link from "next/link";
 import { rem } from "@mantine/core";
 import CategoryHover from "./AllCategory/CategoryHover";

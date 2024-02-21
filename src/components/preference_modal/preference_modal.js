@@ -1,6 +1,5 @@
 import {
   Text,
-  Button,
   Modal,
   Group,
   Image,
@@ -69,7 +68,12 @@ export default function Preference_modal({ close, opened, preference_cookie }) {
             }}
           >
             <Card.Section>
-              <Image src="/Begginer.png" width={200} className="mx-10 my-10" alt="begginer" />
+              <Image
+                src="/Begginer.png"
+                width={200}
+                className="mx-10 my-10"
+                alt="begginer"
+              />
             </Card.Section>
 
             <Text align="center" color="dark" weight={500} size="xl">
@@ -88,7 +92,12 @@ export default function Preference_modal({ close, opened, preference_cookie }) {
             }}
           >
             <Card.Section>
-              <Image src="/Pro.png" width={200} className="mx-auto my-10" alt="pro" />
+              <Image
+                src="/Pro.png"
+                width={200}
+                className="mx-auto my-10"
+                alt="pro"
+              />
             </Card.Section>
 
             <Text align="center" color="dark" weight={500} size="xl">

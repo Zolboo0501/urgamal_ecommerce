@@ -3,7 +3,7 @@ import { Loader, Tabs, Text } from "@mantine/core";
 import { getCookie } from "cookies-next";
 import React, { useMemo, useState } from "react";
 
-import { IconFileOff, IconPackageOff } from "@tabler/icons-react";
+import { IconFileOff } from "@tabler/icons-react";
 import useSWR from "swr";
 import axios from "axios";
 const Invoice = () => {

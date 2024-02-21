@@ -1,25 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import ShippingAddressCard from "@/components/ShippingAddressCard/ShippingAddressCard";
 import UserAddress from "@/components/UserProfileForms/UserAddress";
 import { fetchMethod } from "@/utils/fetch";
-import {
-  Button,
-  Center,
-  Loader,
-  Paper,
-  Text,
-  TextInput,
-  Title,
-} from "@mantine/core";
+import { Loader, Text, Title } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { IconCircleXFilled, IconPlus } from "@tabler/icons-react";
+import { IconCircleXFilled } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 const Address = () => {
   const [addressData, setAddressData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const token = getCookie("token");
 
   useEffect(() => {

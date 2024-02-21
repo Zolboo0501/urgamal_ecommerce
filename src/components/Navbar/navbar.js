@@ -12,7 +12,6 @@ import {
   Text,
   Tooltip,
   rem,
-  Popover,
 } from "@mantine/core";
 import { forwardRef, useContext, useEffect, useState } from "react";
 import { getCookie, setCookie } from "cookies-next";

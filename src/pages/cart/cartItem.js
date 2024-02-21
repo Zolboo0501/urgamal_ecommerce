@@ -44,7 +44,6 @@ import {
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { openContextModal } from "@mantine/modals";
 import axios from "axios";
-import Image from "next/image";
 import { UserConfigContext } from "@/utils/userConfigContext";
 import { fetchMethod } from "@/utils/fetch";
 import InvoiceModal from "@/components/InvoiceModal/InvoiceModal";
@@ -365,7 +364,9 @@ const CartItems = (props) => {
   };
 
   const handleInvoiceInput = async (values) => {
-    const addressData = `Хот: ${selectedShippingData?.city}, Дүүрэг: ${selectedShippingData?.district}, Хороо: ${selectedShippingData?.committee}, Гудамж: ${selectedShippingData?.street}, Байр: ${selectedShippingData?.apartment}, Тоот: ${selectedShippingData?.number}`;
+    let addressData = checked
+      ? "Очиж авна"
+      : `Хот: ${selectedShippingData?.city}, Дүүрэг: ${selectedShippingData?.district}, Хороо: ${selectedShippingData?.committee}, Гудамж: ${selectedShippingData?.street}, Байр: ${selectedShippingData?.apartment}, Тоот: ${selectedShippingData?.number}`;
     const requestOption = {
       address: addressData,
       method: "invoice",
@@ -373,6 +374,7 @@ const CartItems = (props) => {
       contact: values?.contact,
       email: values?.email,
       registry: values?.registry,
+      cart_items: selectedItemsIds,
     };
     const token = getCookie("token");
     const data = await fetchMethod(

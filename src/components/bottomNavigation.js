@@ -11,10 +11,8 @@ import {
   IconCategory2,
   IconUserCircle,
 } from "@tabler/icons-react";
-import axios from "axios";
 import { useDisclosure } from "@mantine/hooks";
 import { Drawer, ScrollArea, Text } from "@mantine/core";
-import useSWR from "swr";
 import { fetchMethod } from "@/utils/fetch";
 import { getCookie } from "cookies-next";
 import { emptyCart, getCart, syncCart } from "@/utils/Store";

@@ -19,14 +19,12 @@ import { fetchMethod } from "@/utils/fetch";
 import { showNotification } from "@mantine/notifications";
 import { UserConfigContext } from "@/utils/userConfigContext";
 import { rememberMe, rememberMeRemove } from "@/utils/Store";
-import useSocket from "@/hooks/useSocket";
 
 const Login = () => {
   const router = useRouter();
   const { login } = useContext(UserConfigContext);
   const [remember, setRemember] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
-  const socketContext = useSocket();
   const form = useForm({
     initialValues: {
       email: "",

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Button, Grid, TextInput, Select, Group } from "@mantine/core";
-import { IconAlertCircle, IconCheck, IconError404 } from "@tabler/icons-react";
+import { IconAlertCircle, IconCheck } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
 import { showNotification } from "@mantine/notifications";
 import { isNotEmpty, useForm } from "@mantine/form";

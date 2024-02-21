@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useContext, useState } from "react";
+import { useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import {
   Button,
@@ -19,7 +19,6 @@ import {
   IconHeart,
   IconPhotoOff,
 } from "@tabler/icons-react";
-import ProductListWithCategory from "@/components/ProductListWithCategory/ProductListWithCategory";
 import { fetchMethod, getCategory } from "@/utils/fetch";
 import Image from "next/image";
 import useCategories from "@/hooks/useCategories";

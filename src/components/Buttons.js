@@ -1,8 +1,6 @@
 import { Button, rem } from "@mantine/core";
 import React from "react";
 import {
-  IconAt,
-  IconLock,
   IconBrandFacebook,
   IconBrandGoogle,
   IconDeviceMobile,

@@ -1,22 +1,9 @@
-import { ActionIcon, SimpleGrid, Stack, Text } from "@mantine/core";
-
-import {
-  IconChevronLeft,
-  IconChevronRight,
-  IconSearch,
-} from "@tabler/icons-react";
 import Image from "next/image";
 import { SwiperSlide, Swiper } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import ProductCard from "./product-card";
-import { useRef, useState } from "react";
-import useSWR from "swr";
-import axios from "axios";
-import Link from "next/link";
-import { fetcher } from "@/utils/fetch";
-import { PAGE_SIZE } from "@/utils/constant";
 
 export default function ProductListWithCategory({
   categoryName,
@@ -31,6 +18,17 @@ export default function ProductListWithCategory({
     <div className={`flex flex-col justify-center ${className}`}>
       <div className="flex justify-between items-end">
         <div className="flex items-center gap-4 ml-2">
+          {categoryIcon && (
+            <div
+              className="relative
+              h-10 w-10
+              md:h-16 md:w-16
+              sm:h-14 sm:w-14
+              xs:h-12 xs:w-12"
+            >
+              <Image src={categoryIcon} fill alt={categoryIcon} />
+            </div>
+          )}
           <p
             className="
             text-xl font-medium
@@ -40,17 +38,6 @@ export default function ProductListWithCategory({
           >
             {categoryName}
           </p>
-          {categoryIcon && (
-            <div
-              className="relative
-              h-8 w-8
-              md:h-12 md:w-12
-              sm:h-10 sm:w-10
-              xs:h-8 xs:w-8"
-            >
-              <Image src={categoryIcon} fill alt={categoryIcon} />
-            </div>
-          )}
         </div>
       </div>
       <Swiper

@@ -1,8 +1,6 @@
-import Image from "next/image";
 import { useState } from "react";
 
-import { Button, TextInput, Title } from "@mantine/core";
-import Order from "../../../components/Profile/Order";
+import { Title } from "@mantine/core";
 import PurchaseHistoryOrder from "@/components/Profile/PurchaseHistoryOrder";
 
 const PurchaseHistory = () => {

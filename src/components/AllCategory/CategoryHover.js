@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { fetchMethod, getCategory } from "@/utils/fetch";
-import { IoIosArrowForward } from "react-icons/io";
-import { Loader, rem } from "@mantine/core";
+import React, { useState } from "react";
+import { Loader } from "@mantine/core";
 import CategoryHoverItem from "./CategoryHoverItem";
-import CategoryHoverResult from "./CategoryHoverResult";
 import { IconMacroOff } from "@tabler/icons-react";
 import Image from "next/image";
-import { showNotification } from "@mantine/notifications";
-import { IconCircleXFilled } from "@tabler/icons-react";
 import Link from "next/link";
-import CategoryHoverInner from "./CategoryHoverInner";
 
 const CategoryHover = ({ loading, categories, parentId }) => {
   const [filterData, setFilterData] = useState([]);

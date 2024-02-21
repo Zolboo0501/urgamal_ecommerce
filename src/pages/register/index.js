@@ -1,13 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Image from "next/image";
-import {
-  TextInput,
-  Button,
-  rem,
-  PasswordInput,
-  Text,
-  Input,
-} from "@mantine/core";
+import { TextInput, Button, rem, PasswordInput, Text } from "@mantine/core";
 import React, { useState, useEffect, useContext } from "react";
 import { useForm } from "@mantine/form";
 import { useRouter } from "next/router";

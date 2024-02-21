@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button, Input, Loader, Modal, TextInput, rem } from "@mantine/core";
+import { Button, Loader, Modal, TextInput, rem } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import {
   Icon123,

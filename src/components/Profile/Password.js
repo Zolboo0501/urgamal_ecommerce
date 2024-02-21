@@ -11,10 +11,8 @@ import {
   PinInput,
   Stack,
   Text,
-  Title,
   rem,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import {
   IconLock,
@@ -22,7 +20,6 @@ import {
   IconDeviceMobile,
   IconSend,
   IconCircleXFilled,
-  IconCheck,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
 import React, { useEffect, useState } from "react";
