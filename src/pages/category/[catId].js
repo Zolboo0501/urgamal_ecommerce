@@ -123,8 +123,6 @@ const CategoryPage = ({ initialData }) => {
                     />
                   ))}
                 </ProductGridList>
-                {console.log(total, "total")}
-                {console.log(products?.length, "length")}
                 {total !== products?.length && (
                   <div className="flex justify-center items-center mt-8">
                     <Button

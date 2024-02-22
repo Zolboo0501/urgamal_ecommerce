@@ -9,7 +9,6 @@ const SocketProvider = ({ children }) => {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const token = getCookie("token");
   const socketLogin = (userid) => {
-    console.log(socket.id, "id socket emitted");
     socket.emit("storeMySocketId", userid);
   };
   const onConnect = () => setIsConnected(true);

@@ -67,34 +67,13 @@ export default function ProductListWithCategory({
             spaceBetween: 30,
           },
           1520: {
-            slidesPerView: suggest && 4,
+            slidesPerView: suggest ? 4 : 5,
             spaceBetween: 30,
           },
           1780: {
-            slidesPerView: suggest && 5,
+            slidesPerView: suggest ? 5 : 6,
             spaceBetween: 30,
           },
-
-          // 768: {
-          //   slidesPerView: 2,
-          //   spaceBetween: 20,
-          // },
-          // 1024: {
-          //   slidesPerView: 2,
-          //   spaceBetween: 30,
-          // },
-          // 1280: {
-          //   slidesPerView: 3,
-          //   spaceBetween: 30,
-          // },
-          // 1520: {
-          //   slidesPerView: 4,
-          //   spaceBetween: 30,
-          // },
-          // 1780 : {
-          //   slidesPerView: 4,
-          //   spaceBetween: 30,
-          // }
         }}
         className="mySwiper mt-6"
       >

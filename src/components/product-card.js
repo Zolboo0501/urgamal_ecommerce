@@ -12,11 +12,11 @@ import {
   Stack,
   Box,
   AspectRatio,
-} from '@mantine/core';
-import { useState } from 'react';
-import { addCart } from '../utils/Store';
-import { getCookie } from 'cookies-next';
-import { showNotification } from '@mantine/notifications';
+} from "@mantine/core";
+import { useState } from "react";
+import { addCart } from "../utils/Store";
+import { getCookie } from "cookies-next";
+import { showNotification } from "@mantine/notifications";
 import {
   IconCheck,
   IconCircleXFilled,
@@ -25,14 +25,14 @@ import {
   IconMinus,
   IconPhotoOff,
   IconPlus,
-} from '@tabler/icons-react';
+} from "@tabler/icons-react";
 import {
   SuccessNotification,
   ErrorNotification,
-} from '../utils/SuccessNotification';
-import { useRouter } from 'next/router';
-import { fetchMethod } from '@/utils/fetch';
-import useWishlist from '@/hooks/useWishlist';
+} from "../utils/SuccessNotification";
+import { useRouter } from "next/router";
+import { fetchMethod } from "@/utils/fetch";
+import useWishlist from "@/hooks/useWishlist";
 
 const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
   const [productCount, setProductCount] = useState(1);
@@ -42,7 +42,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
   });
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const token = getCookie('token');
+  const token = getCookie("token");
   const [toggle, setToggle] = useState(false);
   const wishlist = useWishlist();
   // const averageBgColor = useAverageColor(src?.url);
@@ -51,8 +51,8 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
     if (data?.balance - productCount > 0) setProductCount(productCount + 1);
     else
       showNotification({
-        message: 'Барааны үлдэгдэл хүрэлцэхгүй байна.',
-        color: 'red',
+        message: "Барааны үлдэгдэл хүрэлцэхгүй байна.",
+        color: "red",
       });
   };
 
@@ -65,8 +65,8 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
           productid: data.id,
         };
         const res = await fetchMethod(
-          'POST',
-          'user/wishlist',
+          "POST",
+          "user/wishlist",
           token,
           requestOption
         );
@@ -75,12 +75,12 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
           showNotification({
             message: res.message,
             icon: <IconCheck />,
-            color: 'green',
+            color: "green",
           });
         } else {
           showNotification({
             message: res?.message,
-            color: 'red',
+            color: "red",
             icon: (
               <IconCircleXFilled
                 style={{
@@ -93,8 +93,8 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
         }
       } else {
         showNotification({
-          message: 'Нэвтрэх шаардлагатай',
-          color: 'red',
+          message: "Нэвтрэх шаардлагатай",
+          color: "red",
           icon: (
             <IconCircleXFilled
               style={{
@@ -122,28 +122,28 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
           product_id: data.id,
           quantity: productCount,
         };
-        const fetchData = await fetchMethod('POST', 'cart/add', token, body);
+        const fetchData = await fetchMethod("POST", "cart/add", token, body);
         if (fetchData?.success) {
           setLoading(false);
           SuccessNotification({
             message: data.name,
-            title: 'Сагсанд амжилттай орлоо!',
+            title: "Сагсанд амжилттай орлоо!",
           });
           addCart({ ...data, quantity: productCount });
         } else {
-          ErrorNotification({ title: 'Алдаа гарлаа.' });
+          ErrorNotification({ title: "Алдаа гарлаа." });
         }
       } else {
         addCart({ ...data, quantity: productCount });
         SuccessNotification({
           message: data.name,
-          title: 'Сагсанд амжилттай орлоо!',
+          title: "Сагсанд амжилттай орлоо!",
         });
       }
     } else {
       showNotification({
-        message: 'Барааны үлдэгдэл хүрэлцэхгүй байна.',
-        color: 'red',
+        message: "Барааны үлдэгдэл хүрэлцэхгүй байна.",
+        color: "red",
       });
     }
   };
@@ -152,7 +152,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
     e.preventDefault();
     router.push({
       shallow: true,
-      pathname: '/product/[id]',
+      pathname: "/product/[id]",
       query: { id: data.id },
     });
   };
@@ -175,9 +175,9 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
       }}
       className={`hover:cursor-pointer ${
         shouldScale &&
-        'transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-101'
+        "transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-101"
       }`}
-      style={{ border: '0.5px solid #f3f3f3' }}
+      style={{ border: "0.5px solid #f3f3f3" }}
     >
       <Card.Section>
         <div className="relative block border-b">
@@ -230,7 +230,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
                           bottom: 2,
                           left: 0,
                           right: 0,
-                          top: 'auto',
+                          top: "auto",
                           backgroundColor:
                             currentImage?.key === addImg?.key
                               ? theme.colors.yellow[2]
@@ -287,7 +287,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
               <IconHeartFilled
                 stroke={1.5}
                 size={rem(24)}
-                style={{ color: '#F9BC60' }}
+                style={{ color: "#F9BC60" }}
               />
             ) : (
               <IconHeart stroke={1.5} size={rem(24)} color="#F9BC60" />
@@ -337,7 +337,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
           >
             {loading === true ? (
               <LoadingOverlay
-                loaderProps={{ size: 'sm', color: 'white' }}
+                loaderProps={{ size: "sm", color: "white" }}
                 overlayOpacity={0.1}
                 visible={loading}
               />

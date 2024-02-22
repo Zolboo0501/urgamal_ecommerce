@@ -1,24 +1,26 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Link from "next/link";
-import { rem } from "@mantine/core";
+import { Text, ThemeIcon, rem } from "@mantine/core";
 import CategoryHover from "./AllCategory/CategoryHover";
 import useCategories from "@/hooks/useCategories";
-import { IconChevronRight } from "@tabler/icons-react";
+import { IconChevronRight, IconPhotoOff } from "@tabler/icons-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { UserConfigContext } from "@/utils/userConfigContext";
 
 const Banner = () => {
   const [hoveredCategory, setHoveredCategory] = useState([]);
   const [parentId, setParentId] = useState("");
   const [loading, setLoading] = useState(false);
   const categories = useCategories();
+  const user = useContext(UserConfigContext);
 
   return (
-    <div className="mt-10 flex relative mx-auto w-[100%] h-[320px] border  lg:h-[28rem] md:h-[20rem]">
+    <div className="mt-10 flex relative mx-auto w-[100%] h-[320px] border  lg:h-[36rem] md:h-[20rem]">
       <div
         className="flex-row hidden relative lg:flex"
         onMouseLeave={() => {
@@ -41,7 +43,7 @@ const Banner = () => {
                     setParentId(item?.id);
                   }}
                 >
-                  <div className="flex felx-row items-center gap-2">
+                  <div className="flex felx-row items-center gap-5">
                     {item?.icon && (
                       <Image
                         src={item?.icon ?? ""}
@@ -98,24 +100,30 @@ const Banner = () => {
           },
         }}
       >
-        <SwiperSlide>
-          <Image
-            alt="banner2"
-            src="/banner2.png"
-            fill
-            className="object-fill md:object-fill max-h-full"
-            draggable={false}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            alt="banner"
-            src="/banner.png"
-            fill
-            className="object-fill md:object-fill  max-h-full"
-            draggable={false}
-          />
-        </SwiperSlide>
+        {user?.address?.banners?.length > 0 ? (
+          user?.address?.banners.map((item, index) => {
+            return (
+              <SwiperSlide key={index}>
+                <Image
+                  alt={item}
+                  src={item}
+                  fill
+                  className="object-fill md:object-cover max-h-full lg:object-fill"
+                  draggable={false}
+                />
+              </SwiperSlide>
+            );
+          })
+        ) : (
+          <div className="flex flex-col items-center gap-2 rounded-md">
+            <ThemeIcon size="lg" variant="light" color="green">
+              <IconPhotoOff size="80%" stroke={0.5} />
+            </ThemeIcon>
+            <Text size="xs" weight={300} color="dimmed">
+              Зураггүй
+            </Text>
+          </div>
+        )}
       </Swiper>
       {/* 
       <Carousel

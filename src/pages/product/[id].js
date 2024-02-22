@@ -17,11 +17,11 @@ import {
   IconCheck,
   IconCircleXFilled,
   IconHeart,
+  IconNotesOff,
   IconPhotoOff,
 } from "@tabler/icons-react";
-import { fetchMethod, getCategory } from "@/utils/fetch";
+import { fetchMethod } from "@/utils/fetch";
 import Image from "next/image";
-import useCategories from "@/hooks/useCategories";
 import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
 import { showNotification } from "@mantine/notifications";
 import useWishlist from "@/hooks/useWishlist";
@@ -53,9 +53,9 @@ export async function getServerSideProps({ params }) {
 
 const ProductDetail = ({ product, dealData }) => {
   const [loading, setLoading] = useState(false);
-  const categories = useCategories();
   const [renderImage, setRenderImage] = useState("");
   const wishlist = useWishlist();
+  const [toggle, setToggle] = useState("description");
   const addToCartHandler = async () => {
     const token = getCookie("token");
     if (token) {
@@ -355,7 +355,7 @@ const ProductDetail = ({ product, dealData }) => {
                     ></textarea>
                   </div>
                 )}
-                {product?.detailed_description && (
+                {/* {product?.detailed_description && (
                   <div className="flex flex-col gap-4">
                     <span className="flex font-semibold text-greenish-grey text-base">
                       Нэмэлт мэдээлэл
@@ -368,7 +368,7 @@ const ProductDetail = ({ product, dealData }) => {
                       value={product?.detailed_description}
                     ></textarea>
                   </div>
-                )}
+                )} */}
               </div>
 
               <div className="flex gap-6 w-full mt-5">
@@ -411,6 +411,100 @@ const ProductDetail = ({ product, dealData }) => {
         </div>
 
         <hr className="my-12 lg:my-14 w-full border" />
+        <div className="container flex flex-col">
+          <div className="flex flex-row gap-10">
+            <button
+              className={`text-black text-lg py-3 ${
+                toggle === "description"
+                  ? "font-semibold border-b-1  border-[#F9BC60]"
+                  : "font-normal text-[#98A2B3]"
+              }`}
+              onClick={() => setToggle("description")}
+            >
+              Тайлбар
+            </button>
+            <button
+              className={`text-lg ${
+                toggle === "detailed_description"
+                  ? "font-semibold text-black border-b-1  border-[#F9BC60]"
+                  : "font-normal text-[#98A2B3]"
+              }`}
+              onClick={() => setToggle("detailed_description")}
+            >
+              Дэлгэрэнгүй тайлбар
+            </button>
+            <button
+              className={`text-lg ${
+                toggle === "note"
+                  ? "font-semibold text-black border-b-1  border-[#F9BC60]"
+                  : "font-normal text-[#98A2B3]"
+              }`}
+              onClick={() => setToggle("note")}
+            >
+              Тэмдэглэл
+            </button>
+          </div>
+          {toggle === "description" && (
+            <div className="mt-4 bg-white p-4 rounded-md">
+              {product?.description ? (
+                <textarea
+                  cols={60}
+                  rows={8}
+                  readOnly
+                  className="w-full overflow-x-hidden overflow-y-auto focus: outline-0 py-3 px-3 rounded-md text-base font-normal"
+                  value={product?.description}
+                />
+              ) : (
+                <div className="flex justify-center items-center h-40 flex-col">
+                  <IconNotesOff size="2.5rem" stroke={1.5} color="orange" />
+                  <span className="mt-2 font-medium text-base text-grey">
+                    Тайлбар хоосон байна.
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+          {toggle === "detailed_description" && (
+            <div className="mt-4 bg-white p-4 rounded-md">
+              {product?.description ? (
+                <textarea
+                  cols={60}
+                  rows={8}
+                  readOnly
+                  className="w-full overflow-x-hidden overflow-y-auto focus: outline-0 py-3 px-3 rounded-md text-base"
+                  value={product?.description}
+                />
+              ) : (
+                <div className="flex justify-center items-center h-40 flex-col">
+                  <IconNotesOff size="2.5rem" stroke={1.5} color="orange" />
+                  <span className="mt-2 font-medium text-base text-grey">
+                    Дэлгэрэнгүй тайлбар хоосон байна.
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+          {toggle === "note" && (
+            <div className="mt-4 bg-white p-4 rounded-md">
+              {product?.description ? (
+                <textarea
+                  cols={60}
+                  rows={8}
+                  readOnly
+                  className="w-full overflow-x-hidden overflow-y-auto focus: outline-0 py-3 px-3 rounded-md text-base"
+                  value={product?.note}
+                />
+              ) : (
+                <div className="flex justify-center items-center h-40 flex-col">
+                  <IconNotesOff size="2.5rem" stroke={1.5} color="orange" />
+                  <span className="mt-2 font-medium text-base text-grey">
+                    Тэмдэглэл хоосон байна.
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
         <div className="w-full">
           {dealData &&
             dealData?.data &&
