@@ -1,49 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import GlobalLayout from "../../components/GlobalLayout/GlobalLayout";
-import Banner from "../../components/banner";
-import { useEffect, useCallback, useState, useContext } from "react";
-import { UserConfigContext } from "@/utils/userConfigContext";
-import { useDisclosure } from "@mantine/hooks";
-import useCategories from "@/hooks/useCategories";
-import SpecialDeal from "@/components/SpecialDeal";
+import 'swiper/css';
+import 'swiper/css/pagination';
+import GlobalLayout from '../../components/GlobalLayout/GlobalLayout';
+import Banner from '../../components/banner';
+import { useEffect, useCallback, useState, useContext } from 'react';
+import { UserConfigContext } from '@/utils/userConfigContext';
+import { useDisclosure } from '@mantine/hooks';
+import useCategories from '@/hooks/useCategories';
+import SpecialDeal from '@/components/SpecialDeal';
 
-const PAGE_SIZE = 20;
-
-export async function getStaticProps() {
-  try {
-    const requestOption = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    };
-
-    const specialDeal = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/product/specials`,
-      requestOption
-    );
-
-    const dealData = await specialDeal.json();
-    return {
-      props: {
-        dealData,
-      },
-    };
-  } catch (error) {
-    console.log(error, "error");
-    return {
-      props: {
-        cats: [],
-        dealData: [],
-      },
-    };
-  }
-}
-
-export default function Home({ cats, dealData }) {
+export default function Home() {
   const userConfigs = useContext(UserConfigContext);
-  const { preference_cookie, configId } = userConfigs;
   const categories = useCategories();
   const [positionSticky, setPositionSticky] = useState(false);
 
@@ -66,12 +34,12 @@ export default function Home({ cats, dealData }) {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", onScroll);
-    window.dispatchEvent(new Event("storage"));
+    window.addEventListener('scroll', onScroll);
+    window.dispatchEvent(new Event('storage'));
     // setProducts(data.result);
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener('scroll', onScroll);
     };
   }, []);
 
@@ -125,21 +93,7 @@ export default function Home({ cats, dealData }) {
                 })}
             </div> */}
             <div className="px-12">
-              {dealData &&
-                dealData?.data &&
-                dealData?.data.map((item, index) => {
-                  return (
-                    <SpecialDeal
-                      key={`list-with-category-${index}`}
-                      categoryId={item?.id}
-                      categoryName={item?.name}
-                      categoryIcon={item?.icon}
-                      cols={5}
-                      product={item}
-                      className="mt-12"
-                    />
-                  );
-                })}
+              <SpecialDeal cols={5} className="mt-12" />
             </div>
           </div>
         </div>
