@@ -505,7 +505,7 @@ const ProductDetail = ({ product, dealData }) => {
             </div>
           )}
         </div>
-        <div className="w-full">
+        <div className="w-full mt-12">
           {dealData &&
             dealData?.data &&
             dealData?.data.map((item, index) => {
@@ -514,11 +514,7 @@ const ProductDetail = ({ product, dealData }) => {
                   <SpecialDeal
                     key={`list-with-category-${index}`}
                     suggest={true}
-                    categoryId={item?.id}
                     categoryName={"Санал болгож буй бүтээгдэхүүн"}
-                    cols={5}
-                    product={item}
-                    className="mt-12"
                   />
                 );
               }
