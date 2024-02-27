@@ -1,13 +1,13 @@
-import Image from 'next/image';
-import { useRouter } from 'next/router';
+import Image from "next/image";
+import { useRouter } from "next/router";
 
-import Link from 'next/link';
-import { htmlFrom } from '@/utils/constant';
+import Link from "next/link";
+import { htmlFrom } from "@/utils/constant";
 const BottomFooter = ({ address, links }) => {
   const router = useRouter();
 
   const icon = (item) => {
-    if (item?.title !== 'email') {
+    if (item?.title !== "email") {
       return (
         <Link href={item?.url}>
           <Image
@@ -39,8 +39,8 @@ const BottomFooter = ({ address, links }) => {
               <Image
                 alt={address?.logo}
                 src={address?.logo}
-                width={62}
-                height={116}
+                width={90}
+                height={80}
                 className="mx-4 max-xs:w-4 max-xs:h-4"
               />
             )}
@@ -81,12 +81,12 @@ const BottomFooter = ({ address, links }) => {
           <div className="flex flex-col w-[30%] max-xs:w-56">
             <div
               className="flex flex-row items-start mt-1 hover:text-white"
-              onClick={() => router.push('/location')}
+              onClick={() => router.push("/location")}
             >
               <Image
                 alt="location"
                 className="m-1 max-xs:w-3 max-xs:h-3"
-                src={'/icons/location.svg'}
+                src={"/icons/location.svg"}
                 width={20}
                 height={20}
               />
@@ -101,7 +101,7 @@ const BottomFooter = ({ address, links }) => {
               <Image
                 alt="call"
                 className="m-1 max-xs:w-3 max-xs:h-3"
-                src={'/icons/call.svg'}
+                src={"/icons/call.svg"}
                 width={18}
                 height={18}
               />
@@ -115,7 +115,7 @@ const BottomFooter = ({ address, links }) => {
               <Image
                 alt="time"
                 className="m-1 max-xs:w-3 max-xs:h-3"
-                src={'/icons/time.svg'}
+                src={"/icons/time.svg"}
                 width={18}
                 height={18}
               />
@@ -130,11 +130,11 @@ const BottomFooter = ({ address, links }) => {
               <Image
                 alt="mail"
                 className="m-1 max-xs:w-3 max-xs:h-3  "
-                src={'/icons/mail.svg'}
+                src={"/icons/mail.svg"}
                 width={20}
                 height={20}
               />
-              <Link href={`mailto:${'tarimalurgamal2016@gmail.com'}`}>
+              <Link href={`mailto:${"tarimalurgamal2016@gmail.com"}`}>
                 <p className="text-sm ml-2 max-xs:text-sm-5">
                   tarimalurgamal2016@gmail.com
                 </p>

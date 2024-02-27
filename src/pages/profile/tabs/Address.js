@@ -8,19 +8,21 @@ import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 const Address = () => {
   const [addressData, setAddressData] = useState(null);
+  const [selectAddress, setSelectAddress] = useState([]);
   const [loading, setLoading] = useState(false);
   const token = getCookie("token");
 
   useEffect(() => {
+    setLoading(true);
     getUserAddress();
+    getSelectAddress();
+    setLoading(false);
   }, []);
 
-  const getUserAddress = async () => {
-    setLoading(true);
-    const data = await fetchMethod("GET", "user/address", token);
+  const getSelectAddress = async () => {
+    const data = await fetchMethod("GET", "config/address", token);
     if (data.success) {
-      setAddressData(data?.data);
-      setLoading(false);
+      setSelectAddress(data?.data);
     } else {
       showNotification({
         message: data.message,
@@ -35,7 +37,25 @@ const Address = () => {
         ),
       });
     }
-    setLoading(false);
+  };
+  const getUserAddress = async () => {
+    const data = await fetchMethod("GET", "user/address", token);
+    if (data.success) {
+      setAddressData(data?.data);
+    } else {
+      showNotification({
+        message: data.message,
+        color: "red",
+        icon: (
+          <IconCircleXFilled
+            style={{
+              width: rem(30),
+              height: rem(30),
+            }}
+          />
+        ),
+      });
+    }
   };
 
   return (
@@ -51,7 +71,11 @@ const Address = () => {
             Та хүргэлтийн хаягаа оруулж захиалгаа хялбар хийгээрэй
           </Text>
           <div className="w-full">
-            <UserAddress data={addressData} refresh={getUserAddress} />
+            <UserAddress
+              data={addressData}
+              refresh={getUserAddress}
+              selectAddress={selectAddress}
+            />
           </div>
         </div>
       )}

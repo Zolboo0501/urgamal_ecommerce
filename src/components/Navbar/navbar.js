@@ -286,7 +286,7 @@ const Navbar = (props) => {
                 src={userContext?.address?.logo}
                 width={36}
                 height={36}
-                className="w-7 h-7"
+                className="w-12 h-12"
                 alt={userContext?.address?.logo}
               />
             ) : (
@@ -294,7 +294,7 @@ const Navbar = (props) => {
                 src={"/logo.png"}
                 width={36}
                 height={36}
-                className="w-7 h-7"
+                className="w-12 h-12"
                 alt={"logo"}
               />
             )}

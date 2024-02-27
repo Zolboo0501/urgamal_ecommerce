@@ -8,7 +8,7 @@ import { useState } from "react";
 import { getCookie } from "cookies-next";
 import { showNotification } from "@mantine/notifications";
 
-export default function UserAddress({ data, refresh }) {
+export default function UserAddress({ data, refresh, selectAddress }) {
   const cookie = getCookie("token");
   const [opened, { open, close }] = useDisclosure(false);
   const [confirmationOpened, handlers] = useDisclosure(false);
@@ -175,7 +175,7 @@ export default function UserAddress({ data, refresh }) {
               component="button"
               onClick={(e) => {
                 e.preventDefault();
-                openProductEditingModal({}, "creation");
+                openProductEditingModal(selectAddress, "creation");
               }}
             >
               <div className="w-28 h-28 cursor-pointer flex flex-col justify-center items-center gap-1 ">
@@ -204,6 +204,7 @@ export default function UserAddress({ data, refresh }) {
             ? SubmitCreateShippingData
             : SubmitUpdateShippingData
         }
+        address={selectAddress}
       />
     </div>
   );

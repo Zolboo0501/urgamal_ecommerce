@@ -10,7 +10,7 @@ import {
   Textarea,
 } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function ProductModal({
   initialData,
@@ -18,8 +18,11 @@ function ProductModal({
   close,
   onSubmit,
   loading,
+  address,
   handleClick,
 }) {
+  const [districts, setDistricts] = useState([]);
+  const [committee, setCommittee] = useState([]);
   const form = useForm({
     initialValues: {
       name: initialData?.name ?? "",
@@ -58,6 +61,38 @@ function ProductModal({
     };
   }, [initialData]);
 
+  useEffect(() => {
+    if (form.values.province || form.values.city) {
+      form.setValues({ district: "" });
+      form.setValues({ committee: "" });
+      const districtsOfProvince = address?.filter(
+        (item) => item?.id == form.values.city
+      )[0]?.dic_districts;
+
+      setDistricts(
+        districtsOfProvince?.map((item) => ({
+          value: item?.id,
+          label: item?.name,
+          dic_khoroos: item?.dic_khoroos,
+        }))
+      );
+    }
+  }, [form.values.province, form.values.city]);
+
+  useEffect(() => {
+    if (form.values.district) {
+      form.setValues({ committee: "" });
+      const committeeOfDistrict = districts?.filter(
+        (item) => item?.value == form.values.district
+      )[0]?.dic_khoroos;
+      setCommittee(
+        committeeOfDistrict?.map((item) => ({
+          value: item?.id,
+          label: item?.name,
+        }))
+      );
+    }
+  }, [form.values.district]);
   return (
     <Modal
       opened={isOpen}
@@ -103,46 +138,36 @@ function ProductModal({
                 required
                 {...form.getInputProps(form.values.type ? "province" : "city")}
                 withinPortal
-                data={[
-                  {
-                    value: "Улаанбаатар",
-                    label: "Улаанбаатар",
-                    group: "Хот",
-                  },
-                  {
-                    value: "Дархан",
-                    label: "Дархан",
-                    group: "Хот",
-                  },
-                  {
-                    value: "Дундговь",
-                    label: "Дундговь",
-                    group: "Аймаг",
-                  },
-                  {
-                    value: "Дорнод",
-                    label: "Дорнод",
-                    group: "Аймаг",
-                  },
-                ]}
+                data={address?.map((item) => ({
+                  value: item?.id,
+                  label: item?.name,
+                }))}
               />
             </Grid.Col>
             <Grid.Col span={6}>
-              <TextInput
+              <Select
                 className="w-full"
                 withAsterisk
                 id="input-district"
                 label="Дүүрэг / Сум"
                 {...form.getInputProps("district")}
+                placeholder="Дүүрэг / Сум сонгоно уу."
+                required
+                withinPortal
+                data={districts}
               />
             </Grid.Col>
             <Grid.Col span={2}>
-              <TextInput
+              <Select
                 className="w-full"
                 withAsterisk
                 id="input-committee"
                 label="Хороо / Баг"
                 {...form.getInputProps("committee")}
+                placeholder="Дүүрэг / Сум сонгоно уу."
+                required
+                withinPortal
+                data={committee}
               />
             </Grid.Col>
             <Grid.Col span={2}>

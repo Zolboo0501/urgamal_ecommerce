@@ -1,20 +1,20 @@
-import Image from 'next/image';
-import { useContext, useState } from 'react';
-import Link from 'next/link';
-import { Text, ThemeIcon, rem } from '@mantine/core';
-import CategoryHover from './AllCategory/CategoryHover';
-import useCategories from '@/hooks/useCategories';
-import { IconChevronRight, IconPhotoOff } from '@tabler/icons-react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { UserConfigContext } from '@/utils/userConfigContext';
+import Image from "next/image";
+import { useContext, useState } from "react";
+import Link from "next/link";
+import { Text, ThemeIcon, rem } from "@mantine/core";
+import CategoryHover from "./AllCategory/CategoryHover";
+import useCategories from "@/hooks/useCategories";
+import { IconChevronRight, IconPhotoOff } from "@tabler/icons-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { UserConfigContext } from "@/utils/userConfigContext";
 
 const Banner = () => {
   const [hoveredCategory, setHoveredCategory] = useState([]);
-  const [parentId, setParentId] = useState('');
+  const [parentId, setParentId] = useState("");
   const [loading, setLoading] = useState(false);
   const categories = useCategories();
   const user = useContext(UserConfigContext);
@@ -46,7 +46,7 @@ const Banner = () => {
                   <div className="flex felx-row items-center gap-5">
                     {item?.icon && (
                       <Image
-                        src={item?.icon ?? ''}
+                        src={item?.icon ?? ""}
                         width={40}
                         height={40}
                         alt="icons"
@@ -108,7 +108,7 @@ const Banner = () => {
                   alt={item}
                   src={item}
                   fill
-                  className="object-fill md:object-cover max-h-full lg:object-fill"
+                  className="object-cover md:object-cover max-h-full lg:object-fill"
                   draggable={false}
                 />
               </SwiperSlide>
