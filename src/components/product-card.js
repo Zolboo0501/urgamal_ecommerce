@@ -116,30 +116,11 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
   const addToCartHandler = async (event) => {
     event.stopPropagation();
     if (data?.balance > 0) {
-      if (token) {
-        setLoading(true);
-        const body = {
-          product_id: data.id,
-          quantity: productCount,
-        };
-        const fetchData = await fetchMethod("POST", "cart/add", token, body);
-        if (fetchData?.success) {
-          setLoading(false);
-          SuccessNotification({
-            message: data.name,
-            title: "Сагсанд амжилттай орлоо!",
-          });
-          addCart({ ...data, quantity: productCount });
-        } else {
-          ErrorNotification({ title: "Алдаа гарлаа." });
-        }
-      } else {
-        addCart({ ...data, quantity: productCount });
-        SuccessNotification({
-          message: data.name,
-          title: "Сагсанд амжилттай орлоо!",
-        });
-      }
+      addCart({ ...data, quantity: productCount });
+      SuccessNotification({
+        message: data.name,
+        title: "Сагсанд амжилттай орлоо!",
+      });
     } else {
       showNotification({
         message: "Барааны үлдэгдэл хүрэлцэхгүй байна.",

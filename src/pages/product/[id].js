@@ -56,32 +56,13 @@ const ProductDetail = ({ product, dealData }) => {
   const [renderImage, setRenderImage] = useState("");
   const wishlist = useWishlist();
   const [toggle, setToggle] = useState("description");
+
   const addToCartHandler = async () => {
-    const token = getCookie("token");
-    if (token) {
-      setLoading(true);
-      const body = {
-        product_id: product.id,
-        quantity: 1,
-      };
-      const fetchData = await fetchMethod("POST", "cart/add", token, body);
-      if (fetchData?.success) {
-        addCart({ ...product, quantity: 1 });
-        SuccessNotification({
-          message: "Сагсанд амжилттай орлоо!",
-          title: `${product?.name}`,
-        });
-        setLoading(false);
-      } else {
-        ErrorNotification({ title: "Алдаа гарлаа." });
-      }
-    } else {
-      addCart({ ...product, quantity: 1 });
-      SuccessNotification({
-        message: "Сагсанд амжилттай орлоо!",
-        title: `${product?.name}`,
-      });
-    }
+    addCart({ ...product, quantity: 1 });
+    SuccessNotification({
+      message: "Сагсанд амжилттай орлоо!",
+      title: `${product?.name}`,
+    });
   };
 
   const addToWishlist = async () => {

@@ -70,12 +70,6 @@ const InvoiceInputModal = ({ opened, onClose, handleInvoiceInput }) => {
     }
   }, [form.values.companyName]);
 
-  useEffect(() => {
-    if (form.values.email.length > 30) {
-      form.setFieldValue("email", form.values.email.slice(0, 30));
-    }
-  }, [form.values.email]);
-
   return (
     <Modal centered opened={opened} onClose={onClose} title="Нэхэмжлэх бөглөх">
       <form onSubmit={form.onSubmit((values) => handleClick(values))}>

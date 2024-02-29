@@ -21,8 +21,6 @@ import Category from "./AllCategory/category";
 const BottomNavBar = () => {
   const router = useRouter();
   const userContext = useContext(UserConfigContext);
-  const [categories, setCategories] = useState();
-  const [categoriesLoading, setCategoriesLoading] = useState(false);
   const [cartItem, setCartItem] = useState();
   const userToken = getCookie("token");
   const [
@@ -36,30 +34,6 @@ const BottomNavBar = () => {
     });
   };
 
-  const userConfigs = useContext(UserConfigContext);
-  const { configId } = userConfigs;
-
-  const getUserCart = async () => {
-    const data = await fetchMethod("GET", "cart", userToken);
-    if (data?.success) {
-      if (data?.cart) {
-        if (data?.cart?.cart_items?.length === 0) {
-          setCartItem(data?.cart);
-          emptyCart();
-        } else {
-          setCartItem(data?.cart);
-          syncCart(data?.cart);
-        }
-      } else {
-        setCartItem({ cart: { cart_items: [] } });
-        emptyCart();
-      }
-    } else {
-      setCartItem({ cart: { cart_items: [] } });
-      emptyCart();
-    }
-  };
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.addEventListener("storage", () => {
@@ -71,13 +45,9 @@ const BottomNavBar = () => {
         }
       });
     }
-    if (!userToken) {
-      let data = getCart();
-      if (data) {
-        setCartItem(data);
-      }
-    } else {
-      getUserCart();
+    let data = getCart();
+    if (data) {
+      setCartItem(data);
     }
   }, []);
 

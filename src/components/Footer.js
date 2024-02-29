@@ -236,14 +236,35 @@ const BottomFooter = ({ address, links }) => {
               <div>
                 <ul className="text-gray-600 font-medium">
                   <li className="mb-4">
-                    <a href="#" className="hover:underline">
-                      Хаяг: Улаанбаатар хот, Баянзүрх дүүрэг, 12-р хороолол, 1-р
-                      хороо , 20/2 байр, Таримал ургамлын үрийн дэлгүүр
-                    </a>
+                    <a
+                      href="#"
+                      className="hover:underline"
+                      dangerouslySetInnerHTML={{
+                        __html: htmlFrom(address?.location),
+                      }}
+                    ></a>
                   </li>
-                  <li>
+                  <li className="mb-4">
+                    <a
+                      href="#"
+                      className="hover:underline"
+                      dangerouslySetInnerHTML={{
+                        __html: htmlFrom(address?.contact),
+                      }}
+                    ></a>
+                  </li>
+                  <li className="mb-4">
+                    <a
+                      href="#"
+                      className="hover:underline"
+                      dangerouslySetInnerHTML={{
+                        __html: htmlFrom(address?.work_hours),
+                      }}
+                    ></a>
+                  </li>
+                  <li className="mb-4">
                     <a href="#" className="hover:underline">
-                      Утас: 72720808
+                      Майл : tarimalurgamal2016@gmail.com
                     </a>
                   </li>
                 </ul>

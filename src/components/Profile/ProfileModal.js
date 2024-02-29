@@ -49,7 +49,12 @@ function ProductModal({
       street: isNotEmpty("Заавал бөглөх"),
       apartment: isNotEmpty("Заавал бөглөх"),
       number: isNotEmpty("Заавал бөглөх"),
-      phone: isNotEmpty("Заавал бөглөх"),
+      phone: (value) =>
+        !value.length
+          ? "Заавал бөглөх"
+          : value.length < 8
+          ? "Утасны дугаар буруу байна"
+          : null,
     },
     validateInputOnChange: true,
   });
@@ -63,36 +68,42 @@ function ProductModal({
 
   useEffect(() => {
     if (form.values.province || form.values.city) {
-      form.setValues({ district: "" });
-      form.setValues({ committee: "" });
       const districtsOfProvince = address?.filter(
-        (item) => item?.id == form.values.city
+        (item) => item?.name == form.values.city
       )[0]?.dic_districts;
 
       setDistricts(
         districtsOfProvince?.map((item) => ({
-          value: item?.id,
+          value: item?.name,
           label: item?.name,
+          key: item?.id,
           dic_khoroos: item?.dic_khoroos,
-        }))
+        })) || []
       );
     }
   }, [form.values.province, form.values.city]);
 
   useEffect(() => {
     if (form.values.district) {
-      form.setValues({ committee: "" });
       const committeeOfDistrict = districts?.filter(
         (item) => item?.value == form.values.district
       )[0]?.dic_khoroos;
       setCommittee(
         committeeOfDistrict?.map((item) => ({
-          value: item?.id,
+          value: item?.name,
           label: item?.name,
-        }))
+          key: item?.id,
+        })) || []
       );
     }
   }, [form.values.district]);
+
+  useEffect(() => {
+    if (form.values.phone.length > 8) {
+      form.setFieldValue("phone", form.values.phone.slice(0, 8));
+    }
+  }, [form.values.phone]);
+
   return (
     <Modal
       opened={isOpen}
@@ -137,10 +148,15 @@ function ProductModal({
                 placeholder="Хот / Аймаг сонгоно уу."
                 required
                 {...form.getInputProps(form.values.type ? "province" : "city")}
+                onChange={(val) => {
+                  form.setFieldValue("city", val);
+                  form.setValues({ district: "", committee: "" });
+                }}
                 withinPortal
                 data={address?.map((item) => ({
-                  value: item?.id,
+                  value: item?.name,
                   label: item?.name,
+                  key: item?.id,
                 }))}
               />
             </Grid.Col>
@@ -152,6 +168,10 @@ function ProductModal({
                 label="Дүүрэг / Сум"
                 {...form.getInputProps("district")}
                 placeholder="Дүүрэг / Сум сонгоно уу."
+                onChange={(val) => {
+                  form.setFieldValue("district", val);
+                  form.setFieldValue({ committee: "" });
+                }}
                 required
                 withinPortal
                 data={districts}
@@ -166,6 +186,9 @@ function ProductModal({
                 {...form.getInputProps("committee")}
                 placeholder="Дүүрэг / Сум сонгоно уу."
                 required
+                onChange={(val) => {
+                  form.setFieldValue("committee", val);
+                }}
                 withinPortal
                 data={committee}
               />
@@ -202,7 +225,7 @@ function ProductModal({
                 className="w-full"
                 withAsterisk
                 id="input-phone"
-                type="tel"
+                type="number"
                 label="Утасны дугаар"
                 {...form.getInputProps("phone")}
               />

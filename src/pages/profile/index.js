@@ -243,9 +243,9 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState();
   const userContext = useContext(UserConfigContext);
+  const token = getCookie("token");
   const getUserInfo = async () => {
     setLoading(true);
-    const token = getCookie("token");
     const data = await fetchMethod("GET", "user/profile", token);
     if (data.success) {
       setUserInfo(data.data);
@@ -309,6 +309,17 @@ const Profile = () => {
                 }}
                 className="rounded-full w-28 h-28"
               />
+            ) : token ? (
+              <Image
+                src={"/farmer.png"}
+                width={150}
+                height={150}
+                style={{
+                  objectFit: "cover",
+                  border: "3px solid #EBEFEE",
+                }}
+                className="rounded-full w-28 h-28 bg-white"
+              />
             ) : (
               <Image
                 src={"/user.png"}
@@ -340,7 +351,7 @@ const Profile = () => {
             className="bg-white flex flex-1 flex-col sm:flex-row sm:justify-between items-start pl-36 lg:pl-44 pt-4 sm:pt-8"
             style={{ height: "50%" }}
           >
-            <p className="text-base">
+            <p className="text-base lg:text-xl font-semibold">
               {userInfo?.family_name} {userInfo?.given_name}
             </p>
 

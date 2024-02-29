@@ -202,6 +202,7 @@ const Navbar = (props) => {
   };
 
   const ProfileButtonImage = () => {
+    const token = getCookie("token");
     return (
       <>
         {userInfo.picture ? (
@@ -211,6 +212,14 @@ const Navbar = (props) => {
             width={40}
             height={40}
             className="w-8 h-8 rounded-full"
+          />
+        ) : token ? (
+          <Image
+            alt="user"
+            src="/farmer.png"
+            width={40}
+            height={40}
+            className="w-8 h-8"
           />
         ) : (
           <Image
@@ -236,7 +245,7 @@ const Navbar = (props) => {
           className="max-xs:w-6 h-6"
         />
         <div className="absolute">
-          {cartItem?.cart_items?.length && (
+          {cartItem?.cart_items?.length > 0 && (
             <div className="w-3.5 h-3.5 bg-number flex justify-center items-center text-white -mt-5 rounded-full text-xs ml-5">
               <p className="text-sm-5">
                 {cartItem?.cart_items && cartItem?.cart_items?.length}

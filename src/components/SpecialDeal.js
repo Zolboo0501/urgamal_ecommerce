@@ -80,7 +80,7 @@ export default function ProductListWithCategory({ cols, className, suggest }) {
             modules={[Navigation]}
             breakpoints={{
               320: {
-                slidesPerView: 1.5,
+                slidesPerView: 1,
                 spaceBetween: 20,
               },
               520: {

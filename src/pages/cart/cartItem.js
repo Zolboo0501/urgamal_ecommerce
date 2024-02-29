@@ -41,7 +41,7 @@ import {
   SuccessNotification,
   ErrorNotification,
 } from "../../utils/SuccessNotification";
-import { deleteCookie, getCookie, setCookie } from "cookies-next";
+import { getCookie } from "cookies-next";
 import { openContextModal } from "@mantine/modals";
 import axios from "axios";
 import { UserConfigContext } from "@/utils/userConfigContext";
@@ -56,9 +56,7 @@ const CartItems = (props) => {
   const [cartItem, setCartItem] = useState();
   const [checked, setChecked] = useState(false);
   const [addressVisible, setAddressVisible] = useState(false);
-  const [orderId, setOrderId] = useState();
   const userToken = getCookie("token");
-  const addToCart = getCookie("addToCart");
   const [loadingOrder, setLoadingOrder] = useState(false);
   const [selectedShippingData, setSelectedShippingData] = useState({});
   const [select, setSelect] = useState(false);
@@ -78,69 +76,17 @@ const CartItems = (props) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.addEventListener("storage", () => {
-        if (!userToken) {
-          let data = getCart();
-          if (data) {
-            setCartItem(data);
-          }
+        let data = getCart();
+        if (data) {
+          setCartItem(data);
         }
       });
     }
-    if (!userToken) {
-      let data = getCart();
-      if (data) {
-        setCartItem(data);
-      }
-    } else {
-      getUserCart();
+    let data = getCart();
+    if (data) {
+      setCartItem(data);
     }
   }, []);
-
-  useEffect(() => {
-    if (userToken) {
-      setAddressVisible(true);
-    } else {
-      setAddressVisible(false);
-    }
-  }, [userToken]);
-
-  const storageToCart = async () => {
-    let dataStorage = getCart();
-    if (dataStorage) {
-      const convert = dataStorage?.cart_items?.map((item) => {
-        return {
-          id: item.id,
-          quantity: item.quantity,
-        };
-      });
-      const requestOption = {
-        products: convert,
-      };
-      const data = await fetchMethod(
-        "POST",
-        "cart/sync",
-        userToken,
-        requestOption
-      );
-      if (data?.success) {
-      } else {
-        ErrorNotification({ title: "Алдаа гарлаа." });
-      }
-    }
-  };
-
-  useEffect(() => {
-    const addedCartItems = async () => {
-      if (addToCart) {
-        setLoadingCart(true);
-        await storageToCart();
-        await getUserCart();
-        deleteCookie("addToCart");
-        setTimeout(() => setLoadingCart(false), 1500);
-      }
-    };
-    addedCartItems();
-  }, [addToCart]);
 
   useEffect(() => {
     const allItemsChecked = cartItem?.cart_items?.every(
@@ -154,7 +100,7 @@ const CartItems = (props) => {
 
     const ids = checkIsChecked?.map((item) => {
       if (item?.id) {
-        return item?.id;
+        return { product_id: item?.id, qty: item?.quantity };
       }
     });
     setSelectedItemsIds(ids);
@@ -165,16 +111,22 @@ const CartItems = (props) => {
     setSelectedItemsTotal(total);
   }, [cartItem]);
 
+  useEffect(() => {
+    if (userToken) {
+      setAddressVisible(true);
+    } else {
+      setAddressVisible(false);
+    }
+  }, [userToken]);
+
   const deleteFromCart = async () => {
     let check = true;
     let newArr = [...cartItem?.cart_items];
     let removedArr = [];
-    let cartId;
     newArr.forEach((e) => {
       if (e.isChecked === true) {
         const index = newArr.indexOf(e);
         delete newArr[index];
-        cartId = e.cartid;
         removedArr.push(e.id);
         check = false;
       }
@@ -191,49 +143,14 @@ const CartItems = (props) => {
           temp.push(e);
         }
       });
-      if (userToken) {
-        if (temp.length === 0) {
-          const data = await fetchMethod("DELETE", "cart/whole", userToken);
-          if (data?.success) {
-            getUserCart();
-            SuccessNotification({
-              message: "Бараа амжилттай устлаа.",
-              title: "Сагс",
-            });
-          } else {
-            ErrorNotification({ title: "Алдаа гарлаа." });
-          }
-        } else {
-          const requestOption = {
-            cart_item_id: removedArr,
-            cart_id: cartId,
-          };
-          const data = await fetchMethod(
-            "DELETE",
-            "cart",
-            userToken,
-            requestOption
-          );
-          if (data?.success) {
-            getUserCart();
-            // setCartItem({ ...cartItem, cart_items: temp });
-            // removeFromCart(temp);
-            SuccessNotification({
-              message: "Бараа амжилттай устлаа.",
-              title: "Сагс",
-            });
-          } else {
-            ErrorNotification({ title: "Алдаа гарлаа." });
-          }
-        }
-      } else {
-        setCartItem({ ...cartItem, cart_items: temp });
-        removeFromCart(temp);
-        SuccessNotification({
-          message: "Бараа амжилттай устлаа.",
-          title: "Сагс",
-        });
-      }
+
+      setCartItem({ ...cartItem, cart_items: temp });
+      removeFromCart(temp);
+      SuccessNotification({
+        message: "Бараа амжилттай устлаа.",
+        title: "Сагс",
+      });
+
       removedArr = [];
     }
   };
@@ -269,10 +186,17 @@ const CartItems = (props) => {
       if (res.status === 200) {
         const data = await res.json();
         if (data.success === true) {
-          setOrderId(data.orderid);
-          let temp = [];
-          setCartItem(temp);
-          emptyCart();
+          let total = 0;
+          const temp = cartItem?.cart_items.filter((item, index) => {
+            if (item?.id !== selectedItemsIds[index]?.product_id) {
+              total +=
+                parseInt(item.total) ||
+                parseInt(item.quantity * item.listPrice);
+              return item;
+            }
+          });
+          removeFromCart(temp);
+          setCartItem({ ...cartItem, cart_items: temp, total: total });
           SuccessNotification({ message: data.message, title: "Захиалга" });
           axios
             .get(
@@ -389,9 +313,16 @@ const CartItems = (props) => {
           icon: <IconCheck />,
           color: "green",
         });
-        let temp = [];
-        setCartItem(temp);
-        emptyCart();
+        let total = 0;
+        const temp = cartItem?.cart_items.filter((item, index) => {
+          if (item?.id !== selectedItemsIds[index]?.product_id) {
+            total +=
+              parseInt(item.total) || parseInt(item.quantity * item.listPrice);
+            return item;
+          }
+        });
+        removeFromCart(temp);
+        setCartItem({ ...cartItem, cart_items: temp, total: total });
         closeInput();
         router.push({
           pathname: "/profile",
@@ -413,227 +344,45 @@ const CartItems = (props) => {
           ),
         });
       });
-
-    // if (auth) {
-    //   if (select) {
-    //     openLoader();
-    //     const data = `Хот: ${selectedShippingData?.city}, Дүүрэг: ${selectedShippingData?.district}, Хороо: ${selectedShippingData.committee}, Гудамж: ${selectedShippingData?.street}, Байр: ${selectedShippingData?.apartment}, Тоот: ${selectedShippingData?.number}, Утас: ${selectedShippingData?.phone}`;
-    //     const axiosReqOption = {
-    //       headers: {
-    //         Authorization: "Bearer " + userToken,
-    //         "Content-Type": "application/json",
-    //       },
-    //     };
-    //     const requestOption = {
-    //       method: "POST",
-    //       headers: {
-    //         Authorization: "Bearer " + userToken,
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         address: data,
-    //       }),
-    //     };
-    //     try {
-    //       const res = await fetch(
-    //         `${process.env.NEXT_PUBLIC_API_URL}/order`,
-    //         requestOption
-    //       );
-    //       if (res.status === 200) {
-    //         const data = await res.json();
-    //         if (data.success === true) {
-    //           // open();
-    //           const token = getCookie("token");
-    //           const decoded = tokenDecode(token);
-    //           console.log(decoded, "devocede");
-    //           socket.emit("storeMySocketId", decoded.userid);
-    //           setOrderId(data.orderid);
-    //           let temp = [];
-    //           const cartItems = cartItem;
-    //           setCartItem(temp);
-    //           emptyCart();
-    //           SuccessNotification({ message: data.message, title: "Захиалга" });
-    //           axios
-    //             .get(
-    //               `${process.env.NEXT_PUBLIC_API_URL}/order/payment/${data.orderid}`,
-    //               axiosReqOption
-    //             )
-    //             .then((res) => {
-    //               openContextModal({
-    //                 modal: "payment",
-    //                 title: "Төлбөр төлөлт",
-    //                 innerProps: {
-    //                   paymentData: res.data?.invoice,
-    //                   shouldRedirect: true,
-    //                 },
-    //                 centered: true,
-    //                 size: "lg",
-    //                 closeOnClickOutside: false,
-    //                 withCloseButton: false,
-    //               });
-    //             })
-    //             .catch((err) => {
-    //               if (err.response) {
-    //                 showNotification({
-    //                   message: err.response.data,
-    //                   color: "red",
-    //                 });
-    //               } else {
-    //                 showNotification({
-    //                   message: "Төлбөрийн мэдээлэл авахад алдаа гарлаа",
-    //                   color: "red",
-    //                 });
-    //               }
-    //             });
-    //         } else {
-    //           ErrorNotification({ title: "Алдаа гарлаа." });
-    //         }
-    //       } else if (res.status === 500) {
-    //         showNotification({
-    //           message: "Сагсанд бараа байхгүй байна!",
-    //           color: "red",
-    //         });
-    //       }
-    //     } catch (error) {
-    //       console.log(error, "error");
-    //       showNotification({
-    //         message: "Захиалга үүсгэхэд алдаа гарлаа!",
-    //         color: "red",
-    //       });
-    //     }
-    //     closeLoader();
-    //   } else {
-    //     if (checked === false) {
-    //       showNotification({
-    //         message: "Хаяг сонгоно уу эсвэл очиж авахыг идэвхжүүлнэ үү",
-    //         color: "red",
-    //       });
-    //     } else {
-    //       openLoader();
-    //       const axiosReqOption = {
-    //         headers: {
-    //           Authorization: "Bearer " + userToken,
-    //           "Content-Type": "application/json",
-    //         },
-    //       };
-    //       const requestOption = {
-    //         method: "POST",
-    //         headers: {
-    //           Authorization: "Bearer " + userToken,
-    //           "Content-Type": "application/json",
-    //         },
-    //       };
-    //       try {
-    //         const res = await fetch(
-    //           `${process.env.NEXT_PUBLIC_API_URL}/order`,
-    //           requestOption
-    //         );
-    //         if (res.status === 200) {
-    //           const data = await res.json();
-    //           if (data.success === true) {
-    //             // open();
-    //             setOrderId(data.orderid);
-    //             let temp = [];
-    //             const cartItems = cartItem;
-    //             setCartItem(temp);
-    //             emptyCart();
-    //             SuccessNotification({
-    //               message: data.message,
-    //               title: "Захиалга",
-    //             });
-    //             axios
-    //               .post(
-    //                 `${process.env.NEXT_PUBLIC_API_URL}/payment`,
-    //                 { orderid: data.orderid },
-    //                 axiosReqOption
-    //               )
-    //               .then((res) => {
-    //                 openContextModal({
-    //                   modal: "payment",
-    //                   title: "Төлбөр төлөлт",
-    //                   innerProps: {
-    //                     paymentData: res.data.data,
-    //                     shouldRedirect: true,
-    //                   },
-    //                   centered: true,
-    //                   size: "lg",
-    //                   closeOnClickOutside: false,
-    //                   withCloseButton: false,
-    //                 });
-    //               })
-    //               .catch((err) => {
-    //                 if (err.response) {
-    //                   showNotification({
-    //                     message: err.response.data,
-    //                     color: "red",
-    //                   });
-    //                 } else {
-    //                   showNotification({
-    //                     message: "Төлбөрийн мэдээлэл авахад алдаа гарлаа",
-    //                     color: "red",
-    //                   });
-    //                 }
-    //               });
-    //           } else {
-    //             ErrorNotification({ title: "Алдаа гарлаа." });
-    //           }
-    //         } else if (res.status === 500) {
-    //           showNotification({
-    //             message: "Сагсанд бараа байхгүй байна!",
-    //             color: "red",
-    //           });
-    //         }
-    //       } catch (error) {
-    //         showNotification({
-    //           message: "Захиалга үүсгэхэд алдаа гарлаа!",
-    //           color: "red",
-    //         });
-    //       }
-    //       closeLoader();
-    //     }
-    //   }
-    // } else {
-    //   router.push("/login");
-    // }
   };
 
-  const setCartItemWithChecked = (cartData) => {
-    const updatedCartItems = cartData.cart_items.map((item) => {
-      const existingItem = cartItem?.cart_items.find(
-        (existingItem) => existingItem.id === item.id
-      );
-      return {
-        ...item,
-        isChecked: existingItem ? existingItem.isChecked : false,
-      };
-    });
+  // const setCartItemWithChecked = (cartData) => {
+  //   const updatedCartItems = cartData.cart_items.map((item) => {
+  //     const existingItem = cartItem?.cart_items.find(
+  //       (existingItem) => existingItem.id === item.id
+  //     );
+  //     return {
+  //       ...item,
+  //       isChecked: existingItem ? existingItem.isChecked : false,
+  //     };
+  //   });
 
-    setCartItem({ ...cartData, cart_items: updatedCartItems });
-  };
+  //   setCartItem({ ...cartData, cart_items: updatedCartItems });
+  // };
 
-  const getUserCart = async (item) => {
-    const data = await fetchMethod("GET", "cart", userToken);
-    if (data?.success) {
-      if (data?.cart) {
-        if (data?.cart?.cart_items?.length === 0) {
-          setCartItem(data?.cart);
-          emptyCart();
-        } else {
-          const cartItems = data?.cart?.cart_items.map((cartItem) => ({
-            ...cartItem,
-          }));
-          setCartItemWithChecked({ ...data.cart, cart_items: cartItems });
-          syncCart(data?.cart);
-        }
-      } else {
-        setCartItem({ cart: { cart_items: [] } });
-        emptyCart();
-      }
-    } else {
-      setCartItem({ cart: { cart_items: [] } });
-      emptyCart();
-    }
-  };
+  // const getUserCart = async (item) => {
+  //   const data = await fetchMethod("GET", "cart", userToken);
+  //   if (data?.success) {
+  //     if (data?.cart) {
+  //       if (data?.cart?.cart_items?.length === 0) {
+  //         setCartItem(data?.cart);
+  //         emptyCart();
+  //       } else {
+  //         const cartItems = data?.cart?.cart_items.map((cartItem) => ({
+  //           ...cartItem,
+  //         }));
+  //         setCartItemWithChecked({ ...data.cart, cart_items: cartItems });
+  //         syncCart(data?.cart);
+  //       }
+  //     } else {
+  //       setCartItem({ cart: { cart_items: [] } });
+  //       emptyCart();
+  //     }
+  //   } else {
+  //     setCartItem({ cart: { cart_items: [] } });
+  //     emptyCart();
+  //   }
+  // };
 
   const minusQuantity = async (count, product) => {
     const initialStock = product.balance;
@@ -654,22 +403,8 @@ const CartItems = (props) => {
         ?.reduce((acc, item) => acc + item.quantity * item.listPrice, 0);
       setSelectedItemsTotal(total);
 
-      if (userToken) {
-        const requestOption = {
-          cart_item_id: product.id,
-          cart_id: product.cartid,
-          quantity: count,
-        };
-        const data = await fetchMethod("PUT", "cart", userToken, requestOption);
-        if (data?.success) {
-          getUserCart(product);
-        } else {
-          ErrorNotification({ title: "Алдаа гарлаа." });
-        }
-      } else {
-        setCartItem({ ...cartItem, cart_items: temp });
-        removeQuantityProduct(temp);
-      }
+      setCartItem({ ...cartItem, cart_items: temp });
+      removeQuantityProduct(temp);
     }
   };
 
@@ -692,24 +427,8 @@ const CartItems = (props) => {
         ?.reduce((acc, item) => acc + item.quantity * item.listPrice, 0);
       setSelectedItemsTotal(total);
 
-      if (userToken) {
-        const requestOption = {
-          cart_item_id: product.id,
-          cart_id: product.cartid,
-          quantity: count,
-        };
-        const data = await fetchMethod("PUT", "cart", userToken, requestOption);
-        if (data?.success) {
-          getUserCart(product);
-          // setCartItem({ ...cartItem, cart_items: temp });
-          // addQuantityProduct(temp);
-        } else {
-          ErrorNotification({ title: "Алдаа гарлаа." });
-        }
-      } else {
-        setCartItem({ ...cartItem, cart_items: temp });
-        addQuantityProduct(temp);
-      }
+      setCartItem({ ...cartItem, cart_items: temp });
+      addQuantityProduct(temp);
     } else {
       showNotification({
         message: "Барааны үлдэгдэл хүрэлцэхгүй байна.",
