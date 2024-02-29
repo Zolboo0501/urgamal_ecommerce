@@ -78,7 +78,9 @@ export default function PaymentModal({ context, id, innerProps }) {
       <Tabs defaultValue="qpay" classNames={{ panel: "mt-6" }} color="yellow">
         <Tabs.List grow>
           <Tabs.Tab value="qpay">Qpay- р төлөх</Tabs.Tab>
-          <Tabs.Tab value="others">Бусад апп</Tabs.Tab>
+          <div className="lg:hidden">
+            <Tabs.Tab value="others">Бусад апп</Tabs.Tab>
+          </div>
         </Tabs.List>
         <Tabs.Panel value="qpay">
           <Stack align="center">
