@@ -81,7 +81,7 @@ const Register = () => {
         const bigDate = 30 * 24 * 60 * 60 * 1000;
         const token = data.token;
         login(token);
-        setCookie("email", email, { maxAge: bigDate });
+        setCookie("email", values?.email, { maxAge: bigDate });
         router.push("/home");
         showNotification({
           message: "Амжилттай бүртгүүллээ.",
