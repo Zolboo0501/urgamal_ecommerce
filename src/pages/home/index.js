@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import GlobalLayout from '../../components/GlobalLayout/GlobalLayout';
-import Banner from '../../components/banner';
-import { useEffect, useCallback, useState, useContext } from 'react';
-import { UserConfigContext } from '@/utils/userConfigContext';
-import { useDisclosure } from '@mantine/hooks';
-import useCategories from '@/hooks/useCategories';
-import SpecialDeal from '@/components/SpecialDeal';
+import "swiper/css";
+import "swiper/css/pagination";
+import GlobalLayout from "../../components/GlobalLayout/GlobalLayout";
+import Banner from "../../components/banner";
+import { useEffect, useCallback, useState, useContext } from "react";
+import { UserConfigContext } from "@/utils/userConfigContext";
+import { useDisclosure } from "@mantine/hooks";
+import useCategories from "@/hooks/useCategories";
+import SpecialDeal from "@/components/SpecialDeal";
+import FacebookMsg from "@/components/FacebookMsg";
 
 export default function Home() {
   const userConfigs = useContext(UserConfigContext);
@@ -34,12 +35,12 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    window.addEventListener('scroll', onScroll);
-    window.dispatchEvent(new Event('storage'));
+    window.addEventListener("scroll", onScroll);
+    window.dispatchEvent(new Event("storage"));
     // setProducts(data.result);
 
     return () => {
-      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
@@ -98,6 +99,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <FacebookMsg />
     </GlobalLayout>
   );
 }
