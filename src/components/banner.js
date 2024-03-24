@@ -61,7 +61,7 @@ const Banner = () => {
               );
             })}
         </div>
-        {hoveredCategory.length > 0 ? (
+        {hoveredCategory?.length > 0 ? (
           <div className="z-10 absolute lg:left-[270px] xl:left-[285px] 2xl:left-[300px] 3xl:left-[310px] bg-white py-4 pr-6 h-full max-w-[45rem] overflow-auto flex flex-row items-center justify-start rounded-md">
             <CategoryHover
               parentId={parentId}

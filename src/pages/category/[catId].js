@@ -11,16 +11,25 @@ import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
 
 export async function getServerSideProps({ query }) {
   const { catId } = query;
+  try {
+    const data = await fetchMethod(
+      "GET",
+      `product?offset=0&limit=${PAGE_SIZE}&query=&categoryId=${catId}`
+    );
 
-  const data = await fetchMethod(
-    "GET",
-    `product?offset=0&limit=${PAGE_SIZE}&query=&categoryId=${catId}`
-  );
-  return {
-    props: {
-      initialData: data,
-    },
-  };
+    return {
+      props: {
+        initialData: data,
+      },
+    };
+  } catch (err) {
+    console.log(err, "err");
+    return {
+      props: {
+        initialData: [],
+      },
+    };
+  }
 }
 
 const CategoryPage = ({ initialData }) => {

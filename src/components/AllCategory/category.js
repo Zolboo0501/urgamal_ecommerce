@@ -75,8 +75,8 @@ const Category = ({ padding }) => {
                   );
                 }}
               >
-                {el?.secondary_cats &&
-                  el?.secondary_cats.map((el, index) => {
+                {el?.child_categories &&
+                  el?.child_categories.map((el, index) => {
                     return (
                       <Accordion
                         key={el?.id}
@@ -119,7 +119,7 @@ const Category = ({ padding }) => {
                           }}
                         >
                           <div className="flex flex-col gap-6">
-                            {el.tertiary_cats?.map((item, idx) => {
+                            {el.child_categories?.map((item, idx) => {
                               return (
                                 <div
                                   key={idx}

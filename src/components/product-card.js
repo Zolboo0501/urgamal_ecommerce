@@ -26,10 +26,8 @@ import {
   IconPhotoOff,
   IconPlus,
 } from "@tabler/icons-react";
-import {
-  SuccessNotification,
-  ErrorNotification,
-} from "../utils/SuccessNotification";
+import { IoIosBarcode } from "react-icons/io";
+import { SuccessNotification } from "../utils/SuccessNotification";
 import { useRouter } from "next/router";
 import { fetchMethod } from "@/utils/fetch";
 import useWishlist from "@/hooks/useWishlist";
@@ -275,6 +273,12 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
             )}
           </ActionIcon>
         </div>
+        {data?.barCode && (
+          <div className="flex flex-row gap-1 items-center">
+            <IoIosBarcode size={rem(24)} color="#696A6C" />{" "}
+            <p className="text-grey800 text-sm">{data?.barCode}</p>
+          </div>
+        )}
         <Group pt="md" pb={0} grow align="stretch" w="100%">
           <div className="flex flex-row items-center">
             <ActionIcon
