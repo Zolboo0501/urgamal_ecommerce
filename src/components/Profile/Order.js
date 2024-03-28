@@ -48,6 +48,18 @@ const Order = ({ data }) => {
     });
   };
 
+  const handleEbarimt = () => {
+    openContextModal({
+      modal: "ebarimt",
+      title: "Баримт",
+      centered: true,
+      size: "md",
+      innerProps: {
+        paymentData: data,
+      },
+    });
+  };
+
   const handleChange = () => {
     openContextModal({
       modal: "changeModal",
@@ -113,7 +125,21 @@ const Order = ({ data }) => {
           </div>
         </div>
         <div className="flex flex-row justify-end sm:justify-start gap-2 mt-1 sm:mt-0">
-          {data.status.toString() === "100" && (
+          {data?.status === 200 && data?.lottery_qr && (
+            <Button
+              variant="light"
+              color="orange"
+              loading={loading}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleEbarimt();
+                // fetchPaymentData(data?.orderid);
+              }}
+            >
+              Баримт
+            </Button>
+          )}
+          {data?.status?.toString() === "100" && (
             <Button
               variant="light"
               color="orange"
@@ -126,8 +152,8 @@ const Order = ({ data }) => {
               Төлбөр төлөх
             </Button>
           )}
-
-          {data.refund_request === null && data.status.toString() === "200" ? (
+          {data?.refund_request === null &&
+          data?.status?.toString() === "200" ? (
             <>
               <Button
                 variant="light"
@@ -138,7 +164,7 @@ const Order = ({ data }) => {
                   refundFormRequest();
                 }}
               >
-                Буцаалт хийх
+                Буцаалт
               </Button>
               <Button
                 variant="outline"
@@ -149,14 +175,14 @@ const Order = ({ data }) => {
                   handleChange();
                 }}
               >
-                Солиулалт хийх
+                Солиулалт
               </Button>
             </>
-          ) : data.refund_request?.status === 100 ? (
+          ) : data?.refund_request?.status === 100 ? (
             <Badge color="voilet.4" radius="xs" p={15}>
               Хүлээгдэж байна
             </Badge>
-          ) : data.refund_request?.status === 200 ? (
+          ) : data?.refund_request?.status === 200 ? (
             <Button
               variant="light"
               color="indigo"
@@ -168,15 +194,15 @@ const Order = ({ data }) => {
             >
               Банк мэдээлэл
             </Button>
-          ) : data.refund_request?.status === 300 ? (
+          ) : data?.refund_request?.status === 300 ? (
             <Badge color="voilet.4" radius="xs" p={15}>
               Хүлээгдэж байна
             </Badge>
-          ) : data.refund_request?.status === 400 ? (
+          ) : data?.refund_request?.status === 400 ? (
             <Badge color="red.9" radius="xs" p={15}>
               Татгалзсан
             </Badge>
-          ) : data.refund_request?.status === 500 ? (
+          ) : data?.refund_request?.status === 500 ? (
             <Badge color="green" radius="xs" p={15}>
               Буцаалт хийгдсэн
             </Badge>
