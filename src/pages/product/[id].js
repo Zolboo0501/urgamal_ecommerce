@@ -1,20 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState } from "react";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
+import useWishlist from "@/hooks/useWishlist";
+import { addCart } from "@/utils/Store";
+import { fetchMethod } from "@/utils/fetch";
 import {
-  Button,
   Badge,
+  Button,
   Grid,
   Loader,
   Text,
   ThemeIcon,
   rem,
-  Breadcrumbs,
-  Anchor,
 } from "@mantine/core";
-import { addCart } from "@/utils/Store";
-import { getCookie } from "cookies-next";
-import { SuccessNotification } from "../../utils/SuccessNotification";
+import { showNotification } from "@mantine/notifications";
 import {
   IconCheck,
   IconChevronRight,
@@ -23,14 +21,13 @@ import {
   IconNotesOff,
   IconPhotoOff,
 } from "@tabler/icons-react";
-import { fetchMethod } from "@/utils/fetch";
+import { getCookie } from "cookies-next";
 import Image from "next/image";
-import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
-import { showNotification } from "@mantine/notifications";
-import useWishlist from "@/hooks/useWishlist";
-import SpecialDeal from "../../components/SpecialDeal";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import SpecialDeal from "../../components/SpecialDeal";
+import { SuccessNotification } from "../../utils/SuccessNotification";
 export async function getServerSideProps({ params }) {
   const requestOption = {
     method: "GET",
@@ -51,17 +48,21 @@ export async function getServerSideProps({ params }) {
   const sortOrder = data?.category?.sortOrder;
   const convert = sortOrder?.split("/").filter(Boolean);
   let arr = [];
+  let index = 0;
   for (const element of convert) {
-    const category = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/product/cats/code/${element}`,
-      requestOption
-    );
-    const categoryData = await category.json();
-    arr.push({
-      code: element,
-      name: categoryData?.category?.name,
-      id: categoryData?.category?.id,
-    });
+    if (index < 3) {
+      const category = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/product/cats/code/${element}`,
+        requestOption
+      );
+      const categoryData = await category.json();
+      arr.push({
+        code: element,
+        name: categoryData?.category?.name,
+        id: categoryData?.category?.id,
+      });
+    }
+    index++;
   }
   return {
     props: {
