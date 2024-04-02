@@ -9,12 +9,15 @@ import {
   Text,
   ThemeIcon,
   rem,
+  Breadcrumbs,
+  Anchor,
 } from "@mantine/core";
 import { addCart } from "@/utils/Store";
 import { getCookie } from "cookies-next";
 import { SuccessNotification } from "../../utils/SuccessNotification";
 import {
   IconCheck,
+  IconChevronRight,
   IconCircleXFilled,
   IconHeart,
   IconNotesOff,
@@ -26,6 +29,8 @@ import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
 import { showNotification } from "@mantine/notifications";
 import useWishlist from "@/hooks/useWishlist";
 import SpecialDeal from "../../components/SpecialDeal";
+import Link from "next/link";
+import { useRouter } from "next/router";
 export async function getServerSideProps({ params }) {
   const requestOption = {
     method: "GET",
@@ -43,20 +48,36 @@ export async function getServerSideProps({ params }) {
     requestOption
   );
   const dealData = await specialDeal.json();
+  const sortOrder = data?.category?.sortOrder;
+  const convert = sortOrder?.split("/").filter(Boolean);
+  let arr = [];
+  for (const element of convert) {
+    const category = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/product/cats/code/${element}`,
+      requestOption
+    );
+    const categoryData = await category.json();
+    arr.push({
+      code: element,
+      name: categoryData?.category?.name,
+      id: categoryData?.category?.id,
+    });
+  }
   return {
     props: {
       product: data,
       dealData: dealData,
+      category: arr,
     },
   };
 }
 
-const ProductDetail = ({ product, dealData }) => {
+const ProductDetail = ({ product, dealData, category }) => {
   const [loading, setLoading] = useState(false);
   const [renderImage, setRenderImage] = useState("");
   const wishlist = useWishlist();
   const [toggle, setToggle] = useState("description");
-
+  const router = useRouter();
   const addToCartHandler = async () => {
     addCart({ ...product, quantity: 1 });
     SuccessNotification({
@@ -190,6 +211,68 @@ const ProductDetail = ({ product, dealData }) => {
   return (
     <CategoryLayout title={product?.name}>
       <div className="flex flex-col min-h-screen xl:px-10 lg:px-20 md:px-16 sm:px-11 lg:py-12  items-start py-4 px-4 min-w-96">
+        <div className="mb-4 flex flex-row gap-3">
+          {category?.map((item, index) => {
+            if (index !== category?.length - 1) {
+              return (
+                <button
+                  key={item?.name}
+                  className="flex flex-row items-center gap-3 text-gray-600 hover:underline hover:font-semibold"
+                  onClick={() =>
+                    index === 0
+                      ? router.push(
+                          {
+                            pathname: `/category/${item?.id}`,
+                            query: {
+                              parent_id: item?.id,
+                            },
+                          },
+                          undefined,
+                          { shallow: false }
+                        )
+                      : router.push(
+                          {
+                            pathname: `/category/${item?.id}`,
+                            query: {
+                              parent_id: category?.[0]?.id,
+                              secondary_id: item?.id,
+                            },
+                          },
+                          undefined,
+                          { shallow: false }
+                        )
+                  }
+                >
+                  {item?.name}
+                  <IconChevronRight size={20} color={"#F9BC60"} />
+                </button>
+              );
+            } else {
+              return (
+                <button
+                  onClick={() =>
+                    router.push(
+                      {
+                        pathname: `/category/${item?.id}`,
+                        query: {
+                          parent_id: category?.[0]?.id,
+                          secondary_id: category?.[1]?.id,
+                          tertiary_id: item?.id,
+                        },
+                      },
+                      undefined,
+                      { shallow: false }
+                    )
+                  }
+                  key={item?.name}
+                  className="text-gray-600 hover:underline hover:font-semibold"
+                >
+                  {item?.name}
+                </button>
+              );
+            }
+          })}
+        </div>
         <div className="flex w-full lg:gap-20 justify-start ">
           <div className="flex lg:gap-14 gap-4 justify-center xl:flex-row lg:flex-col md:flex-col  sm:flex-col xs:flex-col xs2:flex-col flex-col lg:none w-full">
             <div className="flex flex-col">
@@ -390,7 +473,6 @@ const ProductDetail = ({ product, dealData }) => {
             </div>
           </div>
         </div>
-
         <hr className="my-12 lg:my-14 w-full border" />
         <div className="container flex flex-col">
           <div className="flex flex-row gap-10">
