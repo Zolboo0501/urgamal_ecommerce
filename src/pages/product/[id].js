@@ -39,7 +39,6 @@ export async function getServerSideProps({ params }) {
     requestOption
   );
   const data = await res.json();
-
   const specialDeal = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/product/specials`,
     requestOption
@@ -393,30 +392,17 @@ const ProductDetail = ({ product, dealData, category }) => {
                     </span>
                   </div>
                 </div>
-                {product?.note && (
-                  <div className="flex gap-2 font-semibold text-base flex-row ">
-                    <span className="text-greenish-grey text-base ">
-                      Тэмдэглэл:
-                    </span>
-
-                    <div className="flex flex-row gap-3 lg:flex-col">
-                      <Text className="text-base break-all">
-                        {product?.note}
-                      </Text>
-                    </div>
-                  </div>
-                )}
-                {product?.description && (
+                {product?.instruction && (
                   <div className="flex flex-col gap-4">
                     <span className="flex font-semibold text-greenish-grey text-base">
                       Хэрэглэх заавар
                     </span>
                     <textarea
-                      cols={60}
-                      rows={8}
+                      cols={80}
+                      rows={15}
                       readOnly
                       className="w-full overflow-x-hidden overflow-y-auto focus: outline-0 py-3 px-3 rounded-md text-base"
-                      value={product.description}
+                      value={product.instruction}
                     ></textarea>
                   </div>
                 )}
@@ -530,13 +516,13 @@ const ProductDetail = ({ product, dealData, category }) => {
           )}
           {toggle === "detailed_description" && (
             <div className="mt-4 bg-white p-4 rounded-md">
-              {product?.description ? (
+              {product?.detailed_description ? (
                 <textarea
                   cols={60}
                   rows={8}
                   readOnly
                   className="w-full overflow-x-hidden overflow-y-auto focus: outline-0 py-3 px-3 rounded-md text-base"
-                  value={product?.description}
+                  value={product?.detailed_description}
                 />
               ) : (
                 <div className="flex justify-center items-center h-40 flex-col">

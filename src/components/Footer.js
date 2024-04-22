@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 
 import Link from "next/link";
 import { htmlFrom } from "@/utils/constant";
+import { IconBrandFacebook, IconBrandInstagram } from "@tabler/icons-react";
+import { ActionIcon } from "@mantine/core";
 const BottomFooter = ({ address, links }) => {
   const router = useRouter();
 
@@ -45,23 +47,31 @@ const BottomFooter = ({ address, links }) => {
               />
             )}
 
-            <p className="text-sm mt-2 max-xs:text-sm-5 max-xs:text-center">
+            <p className="text-sm mt-2 max-xs:text-sm-5 max-xs:text-center font-semibold">
               “Таримал ургамал” ХХК
             </p>
             <div className="flex flex-row mt-4 gap-8 max-xs:gap-2">
               {links?.map((item) => {
                 return icon(item);
               })}
-              {/* <IconBrandInstagram
-                width={25}
-                height={25}
-                className="hover:text-white max-xs:w-3 max-xs:h-3"
-              /> */}
-              {/* <IconBrandFacebook
-                width={25}
-                height={25}
-                className="hover:text-white max-xs:w-3 max-xs:h-3"
-              /> */}
+              <div className="flex flex-row gap-12">
+                <Link href={"https://www.instagram.com/urga.mn/"}>
+                  <IconBrandInstagram
+                    width={25}
+                    height={25}
+                    className="hover:text-white max-xs:w-3 max-xs:h-3"
+                    stroke={1.5}
+                  />
+                </Link>
+                <Link href={"https://www.facebook.com/tarimalurgamal"}>
+                  <IconBrandFacebook
+                    width={25}
+                    height={25}
+                    className="hover:text-white max-xs:w-3 max-xs:h-3"
+                    stroke={1.5}
+                  />
+                </Link>
+              </div>
             </div>
           </div>
           <div className="flex flex-col">

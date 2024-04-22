@@ -4,11 +4,11 @@ import { useRouter } from "next/router";
 import useSWRInfinite from "swr/infinite";
 import ProductCard from "@/components/product-card";
 import ProductGridList from "@/components/ProductGridList/ProductGridList";
-import { Breadcrumbs, Button, rem } from "@mantine/core";
-import { fetchMethod, fetcher, getCategory } from "@/utils/fetch";
+import { Breadcrumbs, Button, Pagination, rem } from "@mantine/core";
+import { fetchMethod, getCategory } from "@/utils/fetch";
 import { PAGE_SIZE } from "@/utils/constant";
 import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
-
+import axios from "axios";
 export async function getServerSideProps({ query }) {
   const { catId } = query;
   try {
@@ -38,33 +38,46 @@ const CategoryPage = ({ initialData }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
+  const [activePage, setActivePage] = useState(1);
+  const fetcher = async (url) =>
+    axios
+      .get(url, { headers: { "Content-Type": "application/json" } })
+      .then((res) => {
+        console.log(res, "res");
+        return { data: res?.data?.result, total: res.data?.meta?.total };
+      })
+      .catch((error) => console.log(error, "err in fetcher"));
 
   const { data, size, setSize, isLoading, isValidating } = useSWRInfinite(
     (index) =>
       `${process.env.NEXT_PUBLIC_API_URL}/product?offset=${
-        (index + 1) * 20
+        index + 1 * 20
       }&limit=${PAGE_SIZE}&query=&categoryId=${catId}`,
     fetcher,
     { revalidateFirstPage: false }
   );
 
   const isEmpty = products?.length === 0;
-  const fetchMore = async () => {
+  const fetchMore = async (value) => {
     setLoading(true);
-    if (total !== products?.length) {
-      setSize(size + 1);
-    }
+    setSize(value);
     setLoading(false);
   };
 
   useEffect(() => {
     if (data?.length > 0) {
-      setProducts(products.concat(data?.[data?.length - 1]));
+      setProducts(data?.[data?.length - 1]?.data);
+      setTotal(data?.[data?.length - 1]?.total);
+      // setProducts(data?.[data?.length - 1]);
+    } else {
+      setProducts(initialData?.result);
+      setTotal(initialData?.meta?.total);
     }
   }, [data]);
 
   useEffect(() => {
     setSize(0);
+    setActivePage(1);
   }, [catId]);
 
   useEffect(() => {
@@ -132,7 +145,20 @@ const CategoryPage = ({ initialData }) => {
                     />
                   ))}
                 </ProductGridList>
-                {total !== products?.length && (
+                <div className="flex justify-center items-center mt-8">
+                  <Pagination
+                    total={total / 20 + 1}
+                    color="yellow"
+                    radius="xl"
+                    value={activePage}
+                    siblings={2}
+                    onChange={(value) => {
+                      setActivePage(value);
+                      fetchMore(value - 1);
+                    }}
+                  />
+                </div>
+                {/* {total !== products?.length && (
                   <div className="flex justify-center items-center mt-8">
                     <Button
                       variant="outline"
@@ -142,7 +168,7 @@ const CategoryPage = ({ initialData }) => {
                       Цааш үзэх
                     </Button>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           </div>

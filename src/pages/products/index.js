@@ -2,13 +2,14 @@
 import ProductGridList from "@/components/ProductGridList/ProductGridList";
 import ProductCard from "@/components/product-card";
 import { PAGE_SIZE } from "@/utils/constant";
-import { fetchMethod, fetcher, getCategory } from "@/utils/fetch";
+import { fetchMethod, getCategory } from "@/utils/fetch";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 // import { Virtuoso, VirtuosoGrid } from "react-virtuoso";
 import useSWRInfinite from "swr/infinite";
-import { Button } from "@mantine/core";
+import { Button, Pagination } from "@mantine/core";
 import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
+import axios from "axios";
 
 export async function getServerSideProps() {
   const data = await fetchMethod("GET", "product");
@@ -24,10 +25,19 @@ export default function SearchResult({ initialData }) {
   const { q } = router.query;
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
+  const [activePage, setActivePage] = useState(1);
+  const fetcher = async (url) =>
+    axios
+      .get(url, { headers: { "Content-Type": "application/json" } })
+      .then((res) => {
+        return { data: res?.data?.result, total: res.data?.meta?.total };
+      })
+      .catch((error) => console.log(error, "err in fetcher"));
+
   const { data, size, setSize, isValidating, isLoading } = useSWRInfinite(
     (index) =>
       `${process.env.NEXT_PUBLIC_API_URL}/product?offset=${
-        index * 20
+        index + 1 * 20
       }&limit=${PAGE_SIZE}`,
     fetcher,
     { revalidateFirstPage: false }
@@ -58,14 +68,17 @@ export default function SearchResult({ initialData }) {
 
   useEffect(() => {
     if (data?.length > 0) {
-      setProducts(products.concat(data?.[data?.length - 1]));
+      setProducts(data?.[data?.length - 1]?.data);
+      setTotal(data?.[data?.length - 1]?.total);
+      // setProducts(data?.[data?.length - 1]);
+    } else {
+      setProducts(initialData?.result);
+      setTotal(initialData?.meta?.total);
     }
   }, [data]);
 
-  const fetchMore = () => {
-    if (total !== products?.length) {
-      setSize(size + 1);
-    }
+  const fetchMore = (value) => {
+    setSize(value);
   };
 
   useEffect(() => {
@@ -97,17 +110,19 @@ export default function SearchResult({ initialData }) {
               );
             })}
           </ProductGridList>
-          {total !== products?.length && (
-            <div className="flex justify-center items-center mt-8">
-              <Button
-                variant="outline"
-                color="yellow"
-                onClick={() => fetchMore()}
-              >
-                Цааш үзэх
-              </Button>
-            </div>
-          )}
+          <div className="flex justify-center items-center mt-8">
+            <Pagination
+              total={total / 20 + 1}
+              color="yellow"
+              radius="xl"
+              value={activePage}
+              onChange={(value) => {
+                setActivePage(value);
+                fetchMore(value - 1);
+              }}
+              siblings={2}
+            />
+          </div>
         </div>
       </div>
     </CategoryLayout>
