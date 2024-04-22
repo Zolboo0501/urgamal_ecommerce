@@ -43,7 +43,6 @@ const CategoryPage = ({ initialData }) => {
     axios
       .get(url, { headers: { "Content-Type": "application/json" } })
       .then((res) => {
-        console.log(res, "res");
         return { data: res?.data?.result, total: res.data?.meta?.total };
       })
       .catch((error) => console.log(error, "err in fetcher"));
