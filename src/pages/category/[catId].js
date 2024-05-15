@@ -50,7 +50,7 @@ const CategoryPage = ({ initialData }) => {
   const { data, size, setSize, isLoading, isValidating } = useSWRInfinite(
     (index) =>
       `${process.env.NEXT_PUBLIC_API_URL}/product?offset=${
-        index + 1 * 20
+        (index + 1) * 20
       }&limit=${PAGE_SIZE}&query=&categoryId=${catId}`,
     fetcher,
     { revalidateFirstPage: false }
@@ -104,6 +104,11 @@ const CategoryPage = ({ initialData }) => {
     };
   }, []);
 
+  const calculateTotal = () => {
+    let page = total / 20;
+    const pageMore = total % 20;
+    return pageMore > 0 ? page + 1 : page;
+  };
   return (
     <CategoryLayout>
       <div className="flex-1">
@@ -114,22 +119,14 @@ const CategoryPage = ({ initialData }) => {
               style={{ gap: "30px", flexWrap: "wrap" }}
               id={"content"}
             >
-              {/* <div className="flex flex-row justify-between w-full">
-                <div className="flex flex-row items-center"></div>
-                <div className="flex justify-center items-center bg-white flex-row  px-4 py-2">
-                  <p className="font-semibold text-sm text-[#3E503C]">
-                    Эрэмбэлэх
-                  </p>
-                  <Image
-                    width={13}
-                    height={13}
-                    src={'/icons/arrow-down-outline.svg'}
-                    className="ml-2 mt-1"
-                    alt="arrow-down"
-                  />
-                </div>
-              </div> */}
-              <div className="flex flex-col w-full">
+              <div className="flex flex-row items-center ">
+                <span className="text-grey700 text-xl">Нийт бүтээгдэхүүн</span>
+                <span className="font-bold text-[#ff8c00] text-2xl ml-2">
+                  {total}
+                </span>
+              </div>
+
+              <div className="flex flex-col w-full items-center">
                 <ProductGridList
                   showSkeleton={loading}
                   emptyStateMessage="Ангиллын бараа олдсонгүй"
@@ -146,7 +143,7 @@ const CategoryPage = ({ initialData }) => {
                 </ProductGridList>
                 <div className="flex justify-center items-center mt-8">
                   <Pagination
-                    total={total / 20 + 1}
+                    total={calculateTotal()}
                     color="yellow"
                     radius="xl"
                     value={activePage}

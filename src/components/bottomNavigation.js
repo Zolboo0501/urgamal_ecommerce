@@ -58,10 +58,14 @@ const BottomNavBar = () => {
         padding={10}
         opened={categoryDrawerOpened}
         onClose={closeCategoryDrawer}
-        title={<Text fw="lighter">Ангилал</Text>}
+        title={
+          <Text fw="lighter" size={"xl"}>
+            Ангилал
+          </Text>
+        }
         scrollAreaComponent={ScrollArea.Autosize}
       >
-        <Category />
+        <Category closeCategoryDrawer={closeCategoryDrawer} />
       </Drawer>
       <div className="block lg:hidden sticky bottom-0 z-50">
         <div className="relative">

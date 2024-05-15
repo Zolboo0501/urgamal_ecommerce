@@ -6,12 +6,13 @@ import { rem } from "@mantine/core";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import { useState } from "react";
 
-const Category = ({ padding }) => {
+const Category = ({ padding, closeCategoryDrawer }) => {
   const router = useRouter();
   const { parent_id, secondary_id, tertiary_id } = router.query;
   const categories = useCategories();
   const [selectParent, setSelectParent] = useState("");
   const [selectChild, setSelectChild] = useState("");
+
   const itemClasses = {
     base: "w-full rounded-lg data-[open=true]:bg-[#F9FAFB]",
     title:
@@ -63,6 +64,8 @@ const Category = ({ padding }) => {
                   )
                 }
                 onPress={() => {
+                  closeCategoryDrawer &&
+                    setTimeout(() => closeCategoryDrawer(), 1500);
                   router.push(
                     {
                       pathname: `/category/${el.id}`,
@@ -103,6 +106,8 @@ const Category = ({ padding }) => {
                             )
                           }
                           onPress={() => {
+                            closeCategoryDrawer &&
+                              setTimeout(() => closeCategoryDrawer(), 1500);
                             router.push(
                               {
                                 pathname: `/category/${el.id}`,
@@ -133,6 +138,11 @@ const Category = ({ padding }) => {
                                 >
                                   <span
                                     onClick={() => {
+                                      closeCategoryDrawer &&
+                                        setTimeout(
+                                          () => closeCategoryDrawer(),
+                                          1500
+                                        );
                                       router.push(
                                         {
                                           pathname: `/category/${item.id}`,
