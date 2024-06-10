@@ -9,12 +9,17 @@ import {
   Select,
 } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
-import { IconCirclePlus, IconTruckOff } from "@tabler/icons-react";
+import {
+  IconCirclePlus,
+  IconCircleXFilled,
+  IconTruckOff,
+} from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import { getCookie } from "cookies-next";
 import ProductModal from "@/components/Profile/ProfileModal";
 import { UserConfigContext } from "@/utils/userConfigContext";
+import { fetchMethod } from "@/utils/fetch";
 
 const Address = ({ setSelectedShippingData, setSelect }) => {
   const [value, setValue] = useState(1);
@@ -24,20 +29,42 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
   const [editingProdData, setEditingProdData] = useState();
   const [cookie, setCookie] = useState();
   const token = getCookie("token");
+  const [selectAddress, setSelectAddress] = useState([]);
   const { auth } = useContext(UserConfigContext);
   const [isAddAddress, setIsAddAddress] = useState(false);
 
   useEffect(() => {
     const cookie = getCookie("token");
     setCookie(cookie);
-    getShippingData(cookie);
-  }, [auth]);
-
-  useEffect(() => {
-    getShippingData();
     setSelectedShippingData(shippingData[1]);
     setValue(shippingData[1]);
-  }, []);
+    getSelectAddress();
+    if (cookie) {
+      getShippingData(cookie);
+    } else {
+      getShippingData();
+    }
+  }, [auth]);
+
+  const getSelectAddress = async () => {
+    const data = await fetchMethod("GET", "config/address", token);
+    if (data.success) {
+      setSelectAddress(data?.data);
+    } else {
+      showNotification({
+        message: data.message,
+        color: "red",
+        icon: (
+          <IconCircleXFilled
+            style={{
+              width: rem(30),
+              height: rem(30),
+            }}
+          />
+        ),
+      });
+    }
+  };
 
   useEffect(() => {
     getShippingData(cookie);
@@ -225,6 +252,7 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
         close={close}
         onSubmit={SubmitCreateShippingData}
         handleClick={handleClick}
+        address={selectAddress}
       />
     </div>
   );
