@@ -31,20 +31,33 @@ export default function UserAddress({ data, refresh, selectAddress }) {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${cookie}`);
     myHeaders.append("Content-Type", "application/json");
+    let city = "";
+    let district = "";
+    let khoroo = "";
+    if (values?.city || values?.district || values?.committee) {
+      const selectedCity = selectAddress?.find(
+        (item) => item?.name === values?.city
+      );
+      city = selectedCity;
+      const selectedDistrict = selectedCity?.dic_districts?.find(
+        (item) => item?.name === values?.district
+      );
+      district = selectedDistrict;
+      const selectedKhoroo = selectedDistrict?.dic_khoroos?.find(
+        (item) => item?.name === values?.committee
+      );
+      khoroo = selectedKhoroo;
+    }
 
     const initialData = {
       name: values.name,
-      city: values.city,
+      city: city?.id,
       // province: values?.province, //? daraa nemeh
-      district: values.district,
-      committee: values.committee,
-      street: values.street,
-      // fence: values.fence, //? daraa nemeh
-      apartment: values?.apartment,
-      number: values.number,
+      district: district?.id,
+      khoroo: khoroo.id,
       phone: values.phone,
       type: values.type === undefined ? false : values.type,
-      note: values.note,
+      note: `Гудамж: ${values.street} Байр: ${values?.apartment} Тоот: ${values.number} ${values.note}`,
     };
 
     const requestOption = {
@@ -53,7 +66,7 @@ export default function UserAddress({ data, refresh, selectAddress }) {
       body: JSON.stringify(initialData),
     };
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/address`, requestOption)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/address-v2`, requestOption)
       .then((response) => response.json())
       .then((result) => {
         if (result.success) {
@@ -130,7 +143,7 @@ export default function UserAddress({ data, refresh, selectAddress }) {
     };
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/user/address/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/user/address-v2/${id}`,
       requestOption
     )
       .then((response) => response.json())

@@ -15,13 +15,13 @@ export default function ShippingAddressCard({
           {name}
         </Text>
         <Group spacing="xs">
-          <ActionIcon
+          {/* <ActionIcon
             color="blue"
             radius="xl"
             onClick={() => onUpdate(address)}
           >
             <IconEdit size="1.2rem" />
-          </ActionIcon>
+          </ActionIcon> */}
           <ActionIcon
             color="red"
             radius="xl"
@@ -35,20 +35,9 @@ export default function ShippingAddressCard({
         <div className="flex flex-col gap-2 w-full">{address.type}</div>
         <div className="flex flex-col gap-4 w-full pr-8">
           <Text size="sm" weight={500} color="grey">
-            {/* {`${address.city ? address.city : ""} ${
-              address.district ? address.district : ""
-            } ${address.committee ? address.committee : ""}
-            ${address.street ? address.street : ""} ${
-              address.apartment ? address.apartment : ""
-            } ${address.number ? address.number : ""} 
-            ${address.phone ? address.phone : ""}`.replaceAll(/\s+/g, ", ")} */}
-            {`${address.city ? address.city : ""}, ${
-              address.district ? address.district : ""
-            }, ${address.committee ? address.committee : ""},
-            ${address.street ? address.street : ""}, ${
-              address.apartment ? address.apartment : ""
-            }, ${address.number ? address.number : ""}, 
-            ${address.phone ? address.phone : ""}`}
+            {`${address.city ? address.city?.name : ""}, ${
+              address.district ? address.district?.name : ""
+            }, ${address.khoroo ? address.khoroo?.name : ""}`}
           </Text>
           <Text size="xs" weight={500}>
             Нэмэлт тайлбар: {address.note}

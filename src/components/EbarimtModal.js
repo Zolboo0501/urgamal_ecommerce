@@ -3,7 +3,6 @@ import Image from "next/image";
 import React from "react";
 
 const EbarimtModal = ({ context, innerProps }) => {
-  console.log(innerProps?.paymentData, "context");
   return (
     <div className="flex flex-col items-center justify-center">
       <img

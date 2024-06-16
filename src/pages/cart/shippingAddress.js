@@ -32,7 +32,6 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
   const [selectAddress, setSelectAddress] = useState([]);
   const { auth } = useContext(UserConfigContext);
   const [isAddAddress, setIsAddAddress] = useState(false);
-
   useEffect(() => {
     const cookie = getCookie("token");
     setCookie(cookie);
@@ -82,7 +81,7 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
       method: "GET",
       headers: myHeaders,
     };
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/address`, requestOptions)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/address-v2`, requestOptions)
       .then((req) => req.json())
       .then((res) => {
         if (res.success === true) {
@@ -101,20 +100,33 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${cookie}`);
     myHeaders.append("Content-Type", "application/json");
+    let city = "";
+    let district = "";
+    let khoroo = "";
+    if (values?.city || values?.district || values?.committee) {
+      const selectedCity = selectAddress?.find(
+        (item) => item?.name === values?.city
+      );
+      city = selectedCity;
+      const selectedDistrict = selectedCity?.dic_districts?.find(
+        (item) => item?.name === values?.district
+      );
+      district = selectedDistrict;
+      const selectedKhoroo = selectedDistrict?.dic_khoroos?.find(
+        (item) => item?.name === values?.committee
+      );
+      khoroo = selectedKhoroo;
+    }
 
     const initialData = {
       name: values.name,
-      city: values.city,
-      province: values.province,
-      district: values.district,
-      committee: values.committee,
-      street: values.street,
-      fence: values.fence,
-      apartment: values.apartment,
-      number: values.number,
+      city: city?.id,
+      // province: values?.province, //? daraa nemeh
+      district: district?.id,
+      khoroo: khoroo.id,
       phone: values.phone,
       type: values.type === undefined ? false : values.type,
-      note: values.note,
+      note: `Гудамж: ${values.street} Байр: ${values?.apartment} Тоот: ${values.number} ${values.note}`,
     };
 
     const requestOption = {
@@ -123,7 +135,7 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
       body: JSON.stringify(initialData),
     };
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/address`, requestOption)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/address-v2`, requestOption)
       .then((response) => response.json())
       .then((result) => {
         if (result.success) {
@@ -208,8 +220,8 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
                                 },
                               })}
                             >
-                              {item.city}-{item.district}-{item.committee}-
-                              {item.street}-{item.apartment}-{item.number}
+                              {item.city?.name}-{item.district?.name}-
+                              {item.khoroo?.name} {item.note}
                             </Text>
                             <Text
                               fz="lg"

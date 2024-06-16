@@ -39,7 +39,7 @@ const Address = () => {
     }
   };
   const getUserAddress = async () => {
-    const data = await fetchMethod("GET", "user/address", token);
+    const data = await fetchMethod("GET", "user/address-v2", token);
     if (data.success) {
       setAddressData(data?.data);
     } else {
