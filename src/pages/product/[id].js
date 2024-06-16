@@ -356,20 +356,22 @@ const ProductDetail = ({ product, dealData, category }) => {
                     {Intl.NumberFormat("mn-MN").format(product?.listPrice)}₮
                   </span>
                 </div>
-                <div className="flex font-semibold gap-2">
-                  <span className="text-greenish-grey text-base  ">
-                    Бөөний үнэ:
-                  </span>
-                  <span className="text-greenish-grey line-through text-base ">
-                    {" "}
-                    {Intl.NumberFormat("mn-MN").format(product?.listPrice)}₮
-                  </span>
-                  <span className="text-greenish-grey text-base "> / </span>
-                  <span className="text-base">
-                    {" "}
-                    {Intl.NumberFormat("mn-MN").format(product?.wholePrice)}₮
-                  </span>
-                </div>
+                {product?.wholePrice > 0 && (
+                  <div className="flex font-semibold gap-2">
+                    <span className="text-greenish-grey text-base  ">
+                      Бөөний үнэ:
+                    </span>
+                    <span className="text-greenish-grey line-through text-base ">
+                      {" "}
+                      {Intl.NumberFormat("mn-MN").format(product?.listPrice)}₮
+                    </span>
+                    <span className="text-greenish-grey text-base "> / </span>
+                    <span className="text-base">
+                      {" "}
+                      {Intl.NumberFormat("mn-MN").format(product?.wholePrice)}₮
+                    </span>
+                  </div>
+                )}
                 <div className="flex font-semibold  gap-2 items-center">
                   <span className="text-greenish-grey text-base  ">
                     Үлдэгдэл:
@@ -517,12 +519,10 @@ const ProductDetail = ({ product, dealData, category }) => {
           {toggle === "detailed_description" && (
             <div className="mt-4 bg-white p-4 rounded-md">
               {product?.detailed_description ? (
-                <textarea
-                  cols={60}
-                  rows={8}
-                  readOnly
-                  className="w-full overflow-x-hidden overflow-y-auto focus: outline-0 py-3 px-3 rounded-md text-base"
-                  value={product?.detailed_description}
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: product?.detailed_description,
+                  }}
                 />
               ) : (
                 <div className="flex justify-center items-center h-40 flex-col">
