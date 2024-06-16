@@ -403,7 +403,7 @@ const ProductDetail = ({ product, dealData, category }) => {
                       cols={80}
                       rows={15}
                       readOnly
-                      className="w-full overflow-x-hidden overflow-y-auto focus: outline-0 py-3 px-3 rounded-md text-base"
+                      className="w-full overflow-x-hidden overflow-y-auto focus: outline-0 py-3 px-3 rounded-md text-base bg-[#F8FAFC]"
                       value={product.instruction}
                     ></textarea>
                   </div>
@@ -517,7 +517,7 @@ const ProductDetail = ({ product, dealData, category }) => {
             </div>
           )}
           {toggle === "detailed_description" && (
-            <div className="mt-4 bg-white p-4 rounded-md">
+            <div className="mt-4 bg-[#F8FAFC] p-4 rounded-md">
               {product?.detailed_description ? (
                 <div
                   dangerouslySetInnerHTML={{
@@ -535,7 +535,7 @@ const ProductDetail = ({ product, dealData, category }) => {
             </div>
           )}
           {toggle === "note" && (
-            <div className="mt-4 bg-white p-4 rounded-md">
+            <div className="mt-4 bg-[#F8FAFC] p-4 rounded-md">
               {product?.description ? (
                 <textarea
                   cols={60}

@@ -9,7 +9,6 @@ import { SimpleGrid, Skeleton } from "@mantine/core";
 
 export default function ProductListWithCategory({ cols, className, suggest }) {
   const { data, isLoading } = useSpecialDeals();
-
   if (isLoading)
     return (
       <SimpleGrid
@@ -187,6 +186,10 @@ export default function ProductListWithCategory({ cols, className, suggest }) {
                 },
                 1780: {
                   slidesPerView: suggest ? 6 : 5,
+                  spaceBetween: 30,
+                },
+                2000: {
+                  slidesPerView: suggest ? 7 : 6,
                   spaceBetween: 30,
                 },
               }}
