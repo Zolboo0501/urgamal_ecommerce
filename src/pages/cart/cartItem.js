@@ -57,6 +57,7 @@ const CartItems = (props) => {
   const [checked, setChecked] = useState(false);
   const [addressVisible, setAddressVisible] = useState(false);
   const userToken = getCookie("token");
+  const [shippingPee, setShippingPee] = useState(0);
   const [loadingOrder, setLoadingOrder] = useState(false);
   const [selectedShippingData, setSelectedShippingData] = useState({});
   const [select, setSelect] = useState(false);
@@ -119,6 +120,20 @@ const CartItems = (props) => {
     }
   }, [userToken]);
 
+  useEffect(() => {
+    if (selectedShippingData) {
+      if (selectedShippingData.zone === "A") {
+        setShippingPee(5000);
+      }
+      if (selectedShippingData.zone === "B") {
+        setShippingPee(10000);
+      }
+      if (selectedShippingData.zone === "C") {
+        setShippingPee(15000);
+      }
+    }
+  }, [selectedShippingData]);
+
   const deleteFromCart = async () => {
     let check = true;
     let newArr = [...cartItem?.cart_items];
@@ -158,9 +173,7 @@ const CartItems = (props) => {
   const handleOrder = async () => {
     optionClose();
     openLoader();
-    let data = checked
-      ? "Очиж авна"
-      : `Хот: ${selectedShippingData?.city}, Дүүрэг: ${selectedShippingData?.district}, Хороо: ${selectedShippingData?.committee}, Гудамж: ${selectedShippingData?.street}, Байр: ${selectedShippingData?.apartment}, Тоот: ${selectedShippingData?.number}, Утас: ${selectedShippingData?.phone}`;
+    let data = checked ? null : selectedShippingData?.id;
     const axiosReqOption = {
       headers: {
         Authorization: "Bearer " + userToken,
@@ -174,13 +187,13 @@ const CartItems = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        address: data,
+        address_id: data,
         cart_items: selectedItemsIds,
       }),
     };
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/order`,
+        `${process.env.NEXT_PUBLIC_API_URL}/order/v3`,
         requestOption
       );
       if (res.status === 200) {
@@ -732,7 +745,7 @@ const CartItems = (props) => {
               <span className="flex justify-between font-[400] lg:text-[1.05rem] text-sm text-[#2125297a]">
                 Хүргэлт
                 <span className="font-[500] lg:text-[1.05rem] text-sm text-[#212529]">
-                  0 ₮
+                  {shippingPee} ₮
                 </span>
               </span>
               <div className="flex flex-row justify-between items-center">
@@ -760,7 +773,9 @@ const CartItems = (props) => {
               <span className="flex justify-between mb-1 font-[400] lg:text-[1.1rem] text-sm text-[#212529af]">
                 Нийлбэр үнэ
                 <span className="font-[500] lg:text-[1.1rem] text-sm text-[#212529]">
-                  {selectedItemsTotal || 0}
+                  {shippingPee
+                    ? selectedItemsTotal + shippingPee
+                    : selectedItemsTotal || 0}
                 </span>
               </span>
               <Button
