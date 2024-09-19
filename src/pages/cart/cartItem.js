@@ -251,6 +251,12 @@ const CartItems = (props) => {
           message: "Сагсанд бараа байхгүй байна!",
           color: "red",
         });
+      } else {
+        const error = await res.json();
+        showNotification({
+          message: error?.message,
+          color: "red",
+        });
       }
     } catch (error) {
       console.log(error, "error");
