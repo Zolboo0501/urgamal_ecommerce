@@ -1,27 +1,22 @@
-import "@/styles/globals.css";
-import { MantineProvider, createEmotionCache, rem } from "@mantine/core";
-import { Notifications } from "@mantine/notifications";
-const appendCache = createEmotionCache({ key: "mantine", prepend: false });
-import { ModalsProvider } from "@mantine/modals";
-import LoginModal from "@/components/LoginModal/LoginModal";
-import { UserConfigProvider } from "@/utils/userConfigProvider";
-import CategoryContextProvider from "@/utils/categoryContextProvider";
-import PaymentModal from "@/components/PaymentModal/PaymentModal";
-import { Commissioner } from "@next/font/google";
-import BankInfoModal from "@/components/refund_modals/bankInformationmodal";
-import RefundRichText from "@/components/refund_modals/descriptionModal";
-import WishlistProvider from "@/utils/wishlistProvider";
-import InvoiceModal from "@/components/InvoiceModal/InvoiceModal";
-import InvoiceFileModal from "@/components/InvoiceModal/InvoiceFileModal";
-import { NextUIProvider } from "@nextui-org/react";
-import SocketProvider from "@/utils/SocketProvider";
 import ChangeModal from "@/components/ChangeModal";
 import EbarimtModal from "@/components/EbarimtModal";
-
-const commissioner = Commissioner({
-  subsets: ["latin"],
-  variable: "--font-commissioner",
-});
+import InvoiceFileModal from "@/components/InvoiceModal/InvoiceFileModal";
+import InvoiceModal from "@/components/InvoiceModal/InvoiceModal";
+import LoginModal from "@/components/LoginModal/LoginModal";
+import PaymentModal from "@/components/PaymentModal/PaymentModal";
+import BankInfoModal from "@/components/refund_modals/bankInformationmodal";
+import RefundRichText from "@/components/refund_modals/descriptionModal";
+import "@/styles/globals.css";
+import CategoryContextProvider from "@/utils/categoryContextProvider";
+import SocketProvider from "@/utils/SocketProvider";
+import { UserConfigProvider } from "@/utils/userConfigProvider";
+import WishlistProvider from "@/utils/wishlistProvider";
+import { MantineProvider, createEmotionCache, rem } from "@mantine/core";
+import { ModalsProvider } from "@mantine/modals";
+import { Notifications } from "@mantine/notifications";
+import { NextUIProvider } from "@nextui-org/react";
+import { sfProRounded } from "public/fonts";
+const appendCache = createEmotionCache({ key: "mantine", prepend: false });
 
 export default function App({ Component, pageProps }) {
   return (
@@ -33,6 +28,7 @@ export default function App({ Component, pageProps }) {
         emotionCache={appendCache}
         theme={{
           colorScheme: "light",
+          fontFamily: sfProRounded.style.fontFamily,
           focusRingStyles: {
             styles: (theme) => ({ outline: `${rem(1)} solid #f9bc609d` }),
             inputStyles: (theme) => ({ outline: `${rem(1)} solid #f9bc609d` }),
@@ -63,7 +59,7 @@ export default function App({ Component, pageProps }) {
                     }}
                   >
                     <main
-                      className={`${commissioner.variable}`}
+                      className={`${sfProRounded.variable}`}
                       style={{ width: "100%", height: "100%" }}
                     >
                       <Component {...pageProps} />

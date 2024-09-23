@@ -286,7 +286,7 @@ const Navbar = (props) => {
     >
       <div className="flex justify-between items-center py-2 px-12 max-sm:px-2 border-b">
         <Link href={"/home"} className="flex flex-row items-center gap-2">
-          <div className="font-open hidden lg:block">ТАРИМАЛ</div>
+          <div className="font-open hidden lg:block font-medium">ТАРИМАЛ</div>
           <div className="flex justify-center items-center ">
             {userContext?.address?.logo ? (
               <Image
@@ -306,7 +306,7 @@ const Navbar = (props) => {
               />
             )}
           </div>
-          <div className="font-open hidden lg:block">УРГАМАЛ</div>
+          <div className="font-open hidden lg:block font-medium">УРГАМАЛ</div>
         </Link>
         <div className="flex justify-end md:justify-center items-center gap-8 md:gap-3 flex-grow ml-6 md:mx-11">
           {catsError && <div>error</div>}
@@ -377,22 +377,22 @@ const Navbar = (props) => {
           </div> */}
           <div className="hidden md:block flex-grow ">
             <Autocomplete
-              className="w-full"
+              className="autoComplete w-full"
               size={"md"}
               placeholder="Бараа хайх..."
               itemComponent={AutocompleteItem}
               data={suggestions ? suggestions : []}
               limit={10}
+              radius={0}
               styles={{
                 root: {
                   paddingLeft: isMobile ? "0px" : "5px",
                   paddingRight: 0,
-                  borderRadius: 25,
                 },
                 input: {
-                  borderRadius: 25,
                   "::placeholder": {
                     fontSize: ".95rem",
+                    color: "#667085",
                   },
                 },
                 rightSection: {
@@ -418,7 +418,7 @@ const Navbar = (props) => {
               }
               rightSection={
                 <button
-                  className="m-auto h-full  bg-background-sort p-2 px-3.5 rounded-full max-xs:w-11 max-xs:flex max-xs:items-center max-xs:justify-center max-xs:p-0 max-xs:px-0 "
+                  className="m-auto h-full  bg-[#00B934] p-2 px-3.5 max-xs:w-11 max-xs:flex max-xs:items-center max-xs:justify-center max-xs:p-0 max-xs:px-0 "
                   onClick={() => {
                     router.push({
                       pathname: "/products",

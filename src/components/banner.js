@@ -82,6 +82,10 @@ const Banner = () => {
         className="mySwiper"
         modules={[Navigation, Pagination]}
         slidesPerView={1}
+        style={{
+          "--swiper-pagination-bullet-inactive-color": "#40C057",
+          "--swiper-pagination-bullet-inactive-opacity": "0.4",
+        }}
         breakpoints={{
           320: {
             spaceBetween: 20,

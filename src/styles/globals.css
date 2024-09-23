@@ -27,7 +27,6 @@ body {
   height: 100%;
   background-color: #bbbbbb;
   font-weight: 400;
-  font-family: "Montserrat", sans-serif !important;
   font-optical-sizing: auto;
 }
 html,
@@ -41,31 +40,34 @@ body,
 
 .swiper-pagination-bullet-active {
   color: #fff;
-  background: #f1b13a !important;
+  background-color: #21b73d !important;
+}
+
+.swiper-pagination-bullet {
+  width: 0.7rem !important;
+  height: 0.7rem !important;
 }
 
 .swiper-button-prev {
-  background-color: #f1b13a;
   border-radius: 999px;
   height: unset !important;
   width: unset !important;
   padding: 0.6rem 0.8rem;
 }
 .swiper-button-prev::after {
-  font-size: 0.7rem !important;
+  font-size: 1.2rem !important;
   font-weight: bold;
   color: white;
 }
 .swiper-button-next {
   height: unset !important;
   width: unset !important;
-  background-color: #f1b13a;
   /* opacity: 1; */
   border-radius: 999px;
   padding: 0.6rem 0.8rem;
 }
 .swiper-button-next::after {
-  font-size: 0.7rem !important;
+  font-size: 1.2rem !important;
   font-weight: bold;
   color: white;
 }
