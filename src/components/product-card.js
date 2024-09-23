@@ -1,21 +1,19 @@
+import useWishlist from "@/hooks/useWishlist";
+import { fetchMethod } from "@/utils/fetch";
 import {
-  Text,
-  Button,
-  LoadingOverlay,
-  Badge,
-  ThemeIcon,
   ActionIcon,
-  rem,
+  AspectRatio,
+  Badge,
+  Box,
+  Button,
   Card,
   Group,
   Image,
+  LoadingOverlay,
+  rem,
   Stack,
-  Box,
-  AspectRatio,
+  ThemeIcon,
 } from "@mantine/core";
-import { useState } from "react";
-import { addCart } from "../utils/Store";
-import { getCookie } from "cookies-next";
 import { showNotification } from "@mantine/notifications";
 import {
   IconCheck,
@@ -25,12 +23,14 @@ import {
   IconMinus,
   IconPhotoOff,
   IconPlus,
+  IconShoppingCartPlus,
 } from "@tabler/icons-react";
-import { IoIosBarcode } from "react-icons/io";
-import { SuccessNotification } from "../utils/SuccessNotification";
+import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
-import { fetchMethod } from "@/utils/fetch";
-import useWishlist from "@/hooks/useWishlist";
+import { useState } from "react";
+import { IoIosBarcode } from "react-icons/io";
+import { addCart } from "../utils/Store";
+import { SuccessNotification } from "../utils/SuccessNotification";
 
 const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
   const [productCount, setProductCount] = useState(1);
@@ -140,6 +140,27 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
     return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, "'");
   }
 
+  const renderRemains = (balance) => {
+    if (balance > 0) {
+      const convertInt = parseInt(balance);
+      if (convertInt > 10) {
+        return (
+          <Badge size="xs" color="teal">
+            Хангалттай
+          </Badge>
+        );
+      }
+      if (convertInt <= 10 && convertInt > 0) {
+        return <p className="text-xs font-semibold ">{balance}</p>;
+      }
+    } else {
+      return (
+        <Badge size="xs" color="gray">
+          Үлдэгдэлгүй
+        </Badge>
+      );
+    }
+  };
   return (
     <Card
       shadow="md"
@@ -148,7 +169,6 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
       radius="md"
       component="a"
       target="_blank"
-      maw={320}
       onClick={(event) => {
         clickProduct(event);
       }}
@@ -171,9 +191,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
                   <ThemeIcon size="lg" variant="light" color="green">
                     <IconPhotoOff size="80%" stroke={0.5} />
                   </ThemeIcon>
-                  <Text size="xs" weight={300} color="dimmed">
-                    Зураггүй
-                  </Text>
+                  <p class="text-xs font-light text-gray-500">Зураггүй</p>
                 </div>
               }
               alt={currentImage?.src}
@@ -226,27 +244,13 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
         </div>
       </Card.Section>
       <Stack position="apart" mt="xs" mb="xs">
-        <Text
-          weight={500}
-          className="text-lg font-medium mt-1 text-start grow"
-          lineClamp={1}
-        >
+        <p class="text-lg font-medium mt-1 text-start grow line-clamp-1">
           {data?.name}
-        </Text>
+        </p>
 
         <div className="flex flex-row items-center gap-1">
           <p className="text-[#696A6C] font-semibold text-xs">Үлдэгдэл : </p>
-          {parseInt(data?.balance) > 10 ? (
-            <Badge size="xs" color="teal">
-              Хангалттай
-            </Badge>
-          ) : parseInt(data?.balance) <= 10 ? (
-            <p className="text-xs font-semibold ">{data?.balance}</p>
-          ) : (
-            <Badge size="xs" color="yellow">
-              Үлдэгдэлгүй
-            </Badge>
-          )}
+          {renderRemains(data?.balance)}
         </div>
       </Stack>
       <div className="flex flex-col w-full">
@@ -269,15 +273,17 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
                 style={{ color: "#F9BC60" }}
               />
             ) : (
-              <IconHeart stroke={1.5} size={rem(24)} color="#F9BC60" />
+              <IconHeart stroke={1.5} size={rem(24)} color="green" />
             )}
           </ActionIcon>
         </div>
-        {data?.barCode && (
+        {data?.barCode ? (
           <div className="flex flex-row gap-1 items-center">
             <IoIosBarcode size={rem(24)} color="#696A6C" />{" "}
             <p className="text-grey800 text-sm">{data?.barCode}</p>
           </div>
+        ) : (
+          <IoIosBarcode size={rem(24)} color="white" />
         )}
         <Group pt="md" pb={0} grow align="stretch" w="100%">
           <div className="flex flex-row items-center">
@@ -286,7 +292,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
               size="lg"
               radius="xl"
               className="flex justify-center items-center border rounded-md"
-              color="yellow"
+              color="green"
               onClick={(event) => {
                 event.preventDefault();
                 minusCount(event);
@@ -302,7 +308,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
               size="lg"
               radius="xl"
               className="flex justify-center items-center rounded-md"
-              color="yellow"
+              color="green"
               onClick={(event) => {
                 event.preventDefault();
                 addCount(event);
@@ -314,7 +320,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
           <Button
             variant="filled"
             radius="xl"
-            color="yellow"
+            color="green"
             onClick={(event) => {
               event.preventDefault();
               addToCartHandler(event);
@@ -328,37 +334,11 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
               />
             ) : (
               <div className="flex items-center">
-                <p className="text-sm font-semibold ">Сагслах</p>
-                {/* <Image width={18} height={18} src={"/icons/trolley2.svg"} /> */}
+                <IconShoppingCartPlus />
               </div>
             )}
           </Button>
         </Group>
-        {/* <Button
-              variant={"filled"}
-              style={{ width: "100%" }}
-              className="flex justify-center items-center p-1 bg-button-yellow rounded-md mt-1 hover:cursor-pointer"
-              color={"orange"}
-              onClick={(event) => addToCartHandler(event, data)}
-            >
-              {loading === true ? (
-                <LoadingOverlay
-                  loaderProps={{ size: "sm", color: "white" }}
-                  overlayOpacity={0.1}
-                  visible={loading}
-                />
-              ) : (
-                <div className="flex items-center">
-                  <p className="text-sm text-white font-semibold ">Сагслах</p>
-                  <Image
-                    className="ml-2"
-                    width={18}
-                    height={18}
-                    src={"/icons/trolley2.svg"}
-                  />
-                </div>
-              )}
-            </Button> */}
       </div>
     </Card>
   );

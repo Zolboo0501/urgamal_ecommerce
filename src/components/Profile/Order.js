@@ -1,14 +1,14 @@
-import { Button, Collapse, Badge, ThemeIcon, Text } from "@mantine/core";
+import { Badge, Button, Collapse, ThemeIcon } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import axios from "axios";
-import { showNotification } from "@mantine/notifications";
-import { getCookie } from "cookies-next";
-import { useState } from "react";
 import { openContextModal } from "@mantine/modals";
-import dayjs from "dayjs";
-import { useRouter } from "next/router";
-import Image from "next/image";
+import { showNotification } from "@mantine/notifications";
 import { IconPhotoOff } from "@tabler/icons-react";
+import axios from "axios";
+import { getCookie } from "cookies-next";
+import dayjs from "dayjs";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 const Order = ({ data }) => {
   const Router = useRouter();

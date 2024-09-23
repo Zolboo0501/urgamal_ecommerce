@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useContext, useState } from "react";
 import Link from "next/link";
-import { Text, ThemeIcon, rem } from "@mantine/core";
+import { ThemeIcon, rem } from "@mantine/core";
 import CategoryHover from "./AllCategory/CategoryHover";
 import useCategories from "@/hooks/useCategories";
 import { IconChevronRight, IconPhotoOff } from "@tabler/icons-react";
@@ -119,9 +119,7 @@ const Banner = () => {
             <ThemeIcon size="lg" variant="light" color="green">
               <IconPhotoOff size="80%" stroke={0.5} />
             </ThemeIcon>
-            <Text size="xs" weight={300} color="dimmed">
-              Зураггүй
-            </Text>
+            <p class="text-xs font-light text-gray-500">Your text here</p>
           </div>
         )}
       </Swiper>

@@ -1,11 +1,11 @@
 import InvoiceItem from "@/components/InvoiceItem";
-import { Loader, Tabs, Text } from "@mantine/core";
+import { Loader, Tabs } from "@mantine/core";
 import { getCookie } from "cookies-next";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { IconFileOff } from "@tabler/icons-react";
-import useSWR from "swr";
 import axios from "axios";
+import useSWR from "swr";
 const Invoice = () => {
   const accessToken = getCookie("token");
   const invoiceType = useMemo(
@@ -83,12 +83,12 @@ const Invoice = () => {
                 <div className="w-full flex items-center justify-center h-56">
                   <div className="flex flex-col gap-2 items-center">
                     <IconFileOff size={"3rem"} stroke={1.2} />
-                    <Text span weight={500}>
+                    <span class="font-medium">
                       {
                         invoiceType.find((types) => types.value === e.value)
                           .title
                       }
-                    </Text>
+                    </span>
                     <span className="mt-2 font-medium text-base text-grey">
                       нэхэмжлэл одоогоор байхгүй байна.
                     </span>

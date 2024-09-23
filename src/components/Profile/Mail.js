@@ -5,7 +5,6 @@ import {
   Input,
   PinInput,
   Stack,
-  Text,
   TextInput,
   rem,
 } from "@mantine/core";
@@ -19,7 +18,7 @@ import {
   IconSend,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const Mail = () => {
   const [emailRequested, setEmailRequested] = useState(false);
@@ -158,18 +157,18 @@ const Mail = () => {
               />
             </Center>
             <Center>
-              <Text size="md" fw={600}>
+              <p class="text-base font-semibold">
                 {emailRequested
                   ? "Нэг удаагийн код"
                   : "Цахим шуудан баталгаажуулах"}
-              </Text>
+              </p>
             </Center>
             <Center>
-              <Text size="sm" c="dimmed">
+              <p class="text-sm text-gray-500">
                 {emailRequested
                   ? "Таны цахим шуудан дээрх 6 оронтой код оруулна уу"
                   : "Та зөвхөн өөрийн цахим шууданг оруулна уу"}
-              </Text>
+              </p>
             </Center>
             {emailRequested ? (
               <Center>

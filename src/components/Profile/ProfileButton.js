@@ -1,12 +1,10 @@
-import React from "react";
-
+import { rem } from "@mantine/core";
 import {
-  IconUserEdit,
-  IconLock,
   IconDeviceMobile,
+  IconLock,
   IconMail,
+  IconUserEdit,
 } from "@tabler/icons-react";
-import { rem, Text } from "@mantine/core";
 
 const ProfileButton = ({ handleTabs, tabs }) => {
   const changeDate = [
@@ -94,20 +92,22 @@ const ProfileButton = ({ handleTabs, tabs }) => {
             <div className="w-full flex flex-row">
               {item.icon}
               <div className="ml-4 flex flex-col">
-                <Text
-                  size={"md"}
-                  color={tabs === item.tabs ? "#fff" : undefined}
-                  fw={tabs === item.tabs ? 600 : undefined}
+                <p
+                  class={`text-base ${
+                    tabs === item.tabs ? "text-white font-semibold" : ""
+                  }`}
                 >
                   {item.title}
-                </Text>
-                <Text
-                  size={"xs"}
-                  color={tabs === item.tabs ? "#fff" : "#667085"}
-                  fw={tabs === item.tabs ? 500 : undefined}
+                </p>
+                <p
+                  class={`text-xs ${
+                    tabs === item.tabs
+                      ? "text-white font-medium"
+                      : "text-gray-500"
+                  }`}
                 >
                   {item.text}
-                </Text>
+                </p>
               </div>
             </div>
           </div>

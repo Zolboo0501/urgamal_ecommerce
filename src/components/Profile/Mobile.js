@@ -6,7 +6,6 @@ import {
   Loader,
   PinInput,
   Stack,
-  Text,
   rem,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
@@ -17,7 +16,7 @@ import {
   IconSend,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Mobile = () => {
   const [seconds, setSeconds] = useState(60);
@@ -173,18 +172,18 @@ const Mobile = () => {
               />
             </Center>
             <Center>
-              <Text size="md" fw={600}>
+              <p class="text-base font-semibold">
                 {otpRequested
                   ? "Нэг удаагийн код"
                   : "Утасны дугаар баталгаажуулах"}
-              </Text>
+              </p>
             </Center>
             <Center>
-              <Text size="sm" c="dimmed">
+              <p class="text-sm text-gray-500">
                 {otpRequested
                   ? "Та 6 оронтой код оруулна уу"
                   : "Та зөвхөн өөрийн утасны дугаарыг оруулна уу"}
-              </Text>
+              </p>
             </Center>
             <Center>
               <Group justify="center">
@@ -219,24 +218,21 @@ const Mobile = () => {
                 loading ? (
                   <Loader variant="dots" color="yellow" />
                 ) : (
-                  <Text
-                    size="xs"
-                    underline
-                    color="yellow"
-                    component="button"
+                  <button
+                    class="text-xs text-yellow-500 underline"
                     onClick={() => {
                       setOtp("");
                       fetchOTP();
                     }}
                   >
                     Дахин авах
-                  </Text>
+                  </button>
                 )
               ) : (
                 <Center>
-                  <Text size="xs" color="orange">
+                  <p class="text-xs text-orange-500">
                     {seconds} секунд хүлээнэ үү
-                  </Text>
+                  </p>
                 </Center>
               ))}
             {otpRequested ? (

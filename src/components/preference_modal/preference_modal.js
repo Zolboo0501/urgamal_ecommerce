@@ -1,11 +1,10 @@
 import {
-  Text,
-  Modal,
+  Card,
+  Container,
+  createStyles,
   Group,
   Image,
-  Card,
-  createStyles,
-  Container,
+  Modal,
 } from "@mantine/core";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/router";
@@ -45,15 +44,15 @@ export default function Preference_modal({ close, opened, preference_cookie }) {
         onClose={close}
         padding="xl"
       >
-        <Text weight={600} size={20} mb={10} align="center">
+        <p class="font-semibold text-[20px] mb-2.5 text-center">
           Хэрэглэгч таны сонирхож байгаа төрөл
-        </Text>
+        </p>
 
         <Container p={10} size={600} mb={20}>
-          <Text size="lg" color="dimmed" className={classes.description}>
+          <p class="text-lg text-gray-500">
             Та доорх хоёр төрлөөс аль нэгийн сонгож өөрт тохирсон бараагаа харах
             боломжтой.
-          </Text>
+          </p>
         </Container>
         <Group spacing={50}>
           <Card
@@ -76,9 +75,9 @@ export default function Preference_modal({ close, opened, preference_cookie }) {
               />
             </Card.Section>
 
-            <Text align="center" color="dark" weight={500} size="xl">
+            <p class="text-xl font-medium text-gray-800 text-center">
               Өрхийн тариаланч
-            </Text>
+            </p>
           </Card>
           <Card
             padding="xl"
@@ -100,9 +99,9 @@ export default function Preference_modal({ close, opened, preference_cookie }) {
               />
             </Card.Section>
 
-            <Text align="center" color="dark" weight={500} size="xl">
+            <p class="text-xl font-medium text-gray-800 text-center">
               Мэргэжлийн тариаланч
-            </Text>
+            </p>
           </Card>
         </Group>
       </Modal>

@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Image from "next/image";
-import { TextInput, Button, rem, PasswordInput, Text } from "@mantine/core";
-import React, { useState, useEffect, useContext } from "react";
+import { Button, PasswordInput, rem, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useRouter } from "next/router";
-import { setCookie } from "cookies-next";
 import { IconAt, IconLock, IconShieldLock } from "@tabler/icons-react";
+import { setCookie } from "cookies-next";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
 
-import { fetchMethod } from "@/utils/fetch";
-import { showNotification } from "@mantine/notifications";
-import { UserConfigContext } from "@/utils/userConfigContext";
 import { regexNumber } from "@/utils/constant";
+import { fetchMethod } from "@/utils/fetch";
+import { UserConfigContext } from "@/utils/userConfigContext";
+import { showNotification } from "@mantine/notifications";
 const icon = (
   <IconAt
     style={{ width: rem(16), height: rem(16), color: "green" }}
@@ -113,9 +113,13 @@ const Register = () => {
 
   const renderCheck = (state, text) => {
     return (
-      <Text size={"sm"} fw={500} color={state ? "#32D583" : "#F97066"}>
+      <p
+        class={`text-sm font-medium ${
+          state ? "text-green-500" : "text-red-500"
+        }`}
+      >
         {text}
-      </Text>
+      </p>
     );
   };
 

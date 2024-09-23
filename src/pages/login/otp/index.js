@@ -1,21 +1,20 @@
-import Image from "next/image";
+import { fetchMethod } from "@/utils/fetch";
+import { UserConfigContext } from "@/utils/userConfigContext";
 import {
-  rem,
-  Input,
   Button,
-  Stack,
-  Text,
   Group,
+  Input,
   Loader,
   PinInput,
+  rem,
+  Stack,
 } from "@mantine/core";
-import React, { useContext, useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { IconPhoneCall } from "@tabler/icons-react";
-import { fetchMethod } from "@/utils/fetch";
 import { showNotification } from "@mantine/notifications";
-import { UserConfigContext } from "@/utils/userConfigContext";
+import { IconPhoneCall } from "@tabler/icons-react";
 import { setCookie } from "cookies-next";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
 
 const icon = (
   <IconPhoneCall
@@ -135,7 +134,7 @@ const OTP = () => {
           {otpRequested && (
             <Stack mt="md" spacing={8} align="center">
               <label for="otp-input">
-                <Text weight={500}>Нэг удаагийн нууц үг</Text>
+                <p class="font-medium">Нэг удаагийн нууц үг</p>
               </label>
               <Group position="center">
                 <PinInput
@@ -151,29 +150,26 @@ const OTP = () => {
                 />
 
                 <Group position="right">
-                  <Text size="xs">Код очоогүй юу?</Text>
+                  <p class="text-xs">Код очоогүй юу?</p>
 
                   {seconds === 0 ? (
                     loading ? (
                       <Loader variant="dots" color="yellow" />
                     ) : (
-                      <Text
-                        size="xs"
-                        underline
-                        color="yellow"
-                        component="button"
+                      <button
+                        class="text-xs text-yellow-500 underline"
                         onClick={() => {
                           setOtp("");
                           fetchOTP();
                         }}
                       >
                         Дахин авах
-                      </Text>
+                      </button>
                     )
                   ) : (
-                    <Text size="xs" color="orange">
+                    <p class="text-xs text-orange-500">
                       {seconds} секунд хүлээнэ үү
-                    </Text>
+                    </p>
                   )}
                 </Group>
               </Group>

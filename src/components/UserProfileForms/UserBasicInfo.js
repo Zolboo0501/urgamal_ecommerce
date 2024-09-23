@@ -1,4 +1,4 @@
-import { Text, Title, rem } from "@mantine/core";
+import { Title, rem } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import { IconCheck, IconUserShield } from "@tabler/icons-react";
@@ -71,9 +71,9 @@ export default function UserBasicInfo({ data, refresh }) {
         </div>
         <div className="ml-4 flex flex-col">
           <Title order={3}>Хувийн мэдээлэл</Title>
-          <Text size="md" c="dimmed">
+          <p class="text-base text-gray-500">
             Та хувийн мэдээллээ доорх талбаруудаар засварлаарай
-          </Text>
+          </p>
         </div>
       </div>
       {/* <form

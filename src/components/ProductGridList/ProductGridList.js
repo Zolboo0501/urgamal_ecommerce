@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
-import { SimpleGrid, Stack, Text } from '@mantine/core';
-import MySkeleton from '../MySkeleton';
-import { IconSearch } from '@tabler/icons-react';
+import { SimpleGrid, Stack } from "@mantine/core";
+import { IconSearch } from "@tabler/icons-react";
+import MySkeleton from "../MySkeleton";
 
 export default function ProductGridList({
   children,
@@ -15,9 +15,7 @@ export default function ProductGridList({
     <div className={`w-full h-screen flex justify-center items-start mt-32`}>
       <Stack align="center" className=" grow">
         <IconSearch size="2rem" stroke={1.5} />
-        <Text size="lg" weight={400}>
-          Ангилал дээрх бараа олдсонгүй...
-        </Text>
+        <p class="text-lg font-normal">Ангилал дээрх бараа олдсонгүй...</p>
       </Stack>
     </div>
   ) : (
@@ -27,12 +25,12 @@ export default function ProductGridList({
       verticalSpacing={20}
       className={className}
       breakpoints={[
-        { maxWidth: '110em', cols: 4, spacing: 'md' },
-        { maxWidth: '90em', cols: 3, spacing: 'md' },
-        { maxWidth: '74em', cols: 3, spacing: 'md' },
-        { maxWidth: '64em', cols: 3, spacing: 'md' },
-        { maxWidth: '48rem', cols: 2, spacing: 'sm' },
-        { maxWidth: '30em', cols: 1, spacing: 'xs' },
+        { maxWidth: "110em", cols: 4, spacing: "md" },
+        { maxWidth: "90em", cols: 3, spacing: "md" },
+        { maxWidth: "74em", cols: 3, spacing: "md" },
+        { maxWidth: "64em", cols: 3, spacing: "md" },
+        { maxWidth: "48rem", cols: 2, spacing: "sm" },
+        { maxWidth: "30em", cols: 1, spacing: "xs" },
       ]}
     >
       {children}

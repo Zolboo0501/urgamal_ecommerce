@@ -3,15 +3,7 @@ import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
 import useWishlist from "@/hooks/useWishlist";
 import { addCart } from "@/utils/Store";
 import { fetchMethod } from "@/utils/fetch";
-import {
-  Badge,
-  Button,
-  Grid,
-  Loader,
-  Text,
-  ThemeIcon,
-  rem,
-} from "@mantine/core";
+import { Badge, Button, Grid, Loader, ThemeIcon, rem } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import {
   IconCheck,
@@ -299,9 +291,7 @@ const ProductDetail = ({ product, dealData, category }) => {
                       <IconPhotoOff size="80%" stroke={0.5} />
                     </ThemeIcon>
 
-                    <Text size="sm" weight={300}>
-                      Зураггүй{" "}
-                    </Text>
+                    <p class="text-sm font-light">Зураггүй </p>
                   </div>
                 )}
               </div>

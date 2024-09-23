@@ -1,21 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRouter } from "next/router";
-import { useState, useEffect, useContext } from "react";
 import { UserConfigContext } from "@/utils/userConfigContext";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
 
-import Link from "next/link";
+import { getCart } from "@/utils/Store";
+import { Drawer, ScrollArea } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { openContextModal } from "@mantine/modals";
 import {
-  IconShoppingCart,
-  IconHomeEco,
   IconCategory2,
+  IconHomeEco,
+  IconShoppingCart,
   IconUserCircle,
 } from "@tabler/icons-react";
-import { useDisclosure } from "@mantine/hooks";
-import { Drawer, ScrollArea, Text } from "@mantine/core";
-import { fetchMethod } from "@/utils/fetch";
 import { getCookie } from "cookies-next";
-import { emptyCart, getCart, syncCart } from "@/utils/Store";
+import Link from "next/link";
 import Category from "./AllCategory/category";
 
 const BottomNavBar = () => {
@@ -58,11 +57,7 @@ const BottomNavBar = () => {
         padding={10}
         opened={categoryDrawerOpened}
         onClose={closeCategoryDrawer}
-        title={
-          <Text fw="lighter" size={"xl"}>
-            Ангилал
-          </Text>
-        }
+        title={<p class="text-xl font-light">Ангилал</p>}
         scrollAreaComponent={ScrollArea.Autosize}
       >
         <Category closeCategoryDrawer={closeCategoryDrawer} />
@@ -116,9 +111,9 @@ const BottomNavBar = () => {
                     openContextModal({
                       modal: "login",
                       title: (
-                        <Text size="sm" weight={400}>
+                        <p class="text-sm font-normal">
                           Хэрэглэгч та өөрийн утасны дугаараар нэвтрэнэ үү
-                        </Text>
+                        </p>
                       ),
                       centered: true,
                     });

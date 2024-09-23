@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
-import { Loader, Tabs, Text } from "@mantine/core";
-import Order from "../../../components/Profile/Order";
-import { getCookie } from "cookies-next";
-import useSWR from "swr";
-import axios from "axios";
+import { Loader, Tabs } from "@mantine/core";
 import { IconPackageOff } from "@tabler/icons-react";
+import axios from "axios";
+import { getCookie } from "cookies-next";
+import { useMemo, useState } from "react";
+import useSWR from "swr";
+import Order from "../../../components/Profile/Order";
 
 const MyOrder = () => {
   const [tabs, setTabs] = useState("all");
@@ -83,9 +83,9 @@ const MyOrder = () => {
             <div className="w-full flex items-center justify-center h-56">
               <div className="flex flex-col gap-2 items-center">
                 <IconPackageOff size={"3rem"} stroke={1.2} />
-                <Text span weight={500}>
+                <span class="font-medium">
                   {orderTypes.find((types) => types.value === e.value).title}
-                </Text>
+                </span>
                 <span className="mt-2 font-medium text-base text-grey">
                   захиалга одоогоор байхгүй байна.
                 </span>

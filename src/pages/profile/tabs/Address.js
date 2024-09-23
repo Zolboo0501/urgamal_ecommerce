@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import UserAddress from "@/components/UserProfileForms/UserAddress";
 import { fetchMethod } from "@/utils/fetch";
-import { Loader, Text, Title } from "@mantine/core";
+import { Loader, Title } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { IconCircleXFilled } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
@@ -67,9 +67,9 @@ const Address = () => {
       ) : (
         <div>
           <Title order={3}>Хүргэлтийн хаяг</Title>
-          <Text size="sm" c="dimmed">
+          <p class="text-sm text-gray-500">
             Та хүргэлтийн хаягаа оруулж захиалгаа хялбар хийгээрэй
-          </Text>
+          </p>
           <div className="w-full">
             <UserAddress
               data={addressData}

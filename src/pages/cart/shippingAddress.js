@@ -1,25 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  Card,
-  Chip,
-  Chips,
-  Text,
-  Button,
-  Skeleton,
-  Select,
-} from "@mantine/core";
-import { useContext, useEffect, useState } from "react";
+import ProductModal from "@/components/Profile/ProfileModal";
+import { fetchMethod } from "@/utils/fetch";
+import { UserConfigContext } from "@/utils/userConfigContext";
+import { Button, Card, Chip, Skeleton } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { showNotification } from "@mantine/notifications";
 import {
   IconCirclePlus,
   IconCircleXFilled,
   IconTruckOff,
 } from "@tabler/icons-react";
-import { useDisclosure } from "@mantine/hooks";
-import { showNotification } from "@mantine/notifications";
 import { getCookie } from "cookies-next";
-import ProductModal from "@/components/Profile/ProfileModal";
-import { UserConfigContext } from "@/utils/userConfigContext";
-import { fetchMethod } from "@/utils/fetch";
+import { useContext, useEffect, useState } from "react";
 
 const Address = ({ setSelectedShippingData, setSelect }) => {
   const [value, setValue] = useState(1);
@@ -212,39 +204,16 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
                             size="sm"
                           />
                           <div>
-                            <Text
-                              fz="md"
-                              sx={(theme) => ({
-                                "@media (max-width: 40em)": {
-                                  fontSize: theme.fontSizes.sm,
-                                },
-                              })}
-                            >
+                            <p class="text-base sm:text-sm">
                               {item.city?.name}-{item.district?.name}-
                               {item.khoroo?.name} {item.note}
-                            </Text>
-                            <Text
-                              fz="lg"
-                              className="flex gap-1 mt-2"
-                              sx={(theme) => ({
-                                "@media (max-width: 40em)": {
-                                  fontSize: theme.fontSizes.sm,
-                                },
-                              })}
-                            >
+                            </p>
+                            <div class="flex gap-1 mt-2 text-lg sm:text-sm">
                               Утас:
-                              <Text
-                                fz="lg"
-                                fw={500}
-                                sx={(theme) => ({
-                                  "@media (max-width: 40em)": {
-                                    fontSize: theme.fontSizes.sm,
-                                  },
-                                })}
-                              >
+                              <span class="text-lg font-medium sm:text-sm">
                                 {item.phone}
-                              </Text>
-                            </Text>
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </Card>

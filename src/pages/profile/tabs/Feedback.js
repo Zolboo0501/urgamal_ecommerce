@@ -1,14 +1,7 @@
-import {
-  Button,
-  Grid,
-  Select,
-  Text,
-  TextInput,
-  Title,
-  rem,
-} from "@mantine/core";
-import { getCookie } from "cookies-next";
-import React, { useEffect, useState } from "react";
+import RickText from "@/components/RickText";
+import { fetchMethod } from "@/utils/fetch";
+import { Button, Grid, Select, TextInput, Title, rem } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import {
   IconCheck,
   IconCircleXFilled,
@@ -16,9 +9,8 @@ import {
   IconSend,
   IconTextSize,
 } from "@tabler/icons-react";
-import RickText from "@/components/RickText";
-import { fetchMethod } from "@/utils/fetch";
-import { showNotification } from "@mantine/notifications";
+import { getCookie } from "cookies-next";
+import { useState } from "react";
 
 const Feedback = () => {
   const [feedback, setFeedback] = useState({
@@ -65,9 +57,9 @@ const Feedback = () => {
   return (
     <div className="flex flex-col w-full bg-white px-8 py-6 rounded-md">
       <Title order={3}>Санал хүсэлт илгээх</Title>{" "}
-      <Text size="sm" c="dimmed">
+      <p class="text-sm text-gray-500">
         Таньд ямар нэгэн асуудал гарсан бол бидэнд мэдэгдээрэй
-      </Text>
+      </p>
       <div className="w-full flex flex-row gap-8 mt-4">
         <div className="w-full">
           <TextInput

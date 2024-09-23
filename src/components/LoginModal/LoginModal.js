@@ -9,7 +9,6 @@ import {
   Loader,
   PinInput,
   Stack,
-  Text,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { setCookie } from "cookies-next";
@@ -82,7 +81,7 @@ export default function LoginModal({ context, id }) {
       <Stack spacing="lg">
         <Stack mt="lg" spacing={8}>
           <label for="mobile-number-input">
-            <Text weight={500}>Утасны дугаар</Text>
+            <p class="font-medium">Утасны дугаар</p>
           </label>
           <Input
             id="mobile-number-input"
@@ -98,7 +97,7 @@ export default function LoginModal({ context, id }) {
         {otpRequested && (
           <Stack mt="md" spacing={8} align="center">
             <label for="otp-input">
-              <Text weight={500}>Нэг удаагийн нууц үг</Text>
+              <p class="font-medium">Нэг удаагийн нууц үг</p>
             </label>
             <Group position="center">
               <PinInput
@@ -114,7 +113,7 @@ export default function LoginModal({ context, id }) {
               />
               {/* <Button size="xs">Дахин илгээх</Button> */}
               <Group position="right">
-                <Text size="xs">Код очоогүй юу?</Text>
+                <p class="text-xs">Код очоогүй юу?</p>
 
                 {/* <ActionIcon size="lg">
                     <IconReload size="1.6rem" />
@@ -124,29 +123,22 @@ export default function LoginModal({ context, id }) {
                   loading ? (
                     <Loader variant="dots" color="yellow" />
                   ) : (
-                    <Text
-                      size="xs"
-                      underline
-                      color="yellow"
-                      component="button"
+                    <button
+                      class="text-xs text-yellow-500 underline"
                       onClick={() => {
                         setOtp("");
                         fetchOTP();
                       }}
                     >
                       Дахин авах
-                    </Text>
+                    </button>
                   )
                 ) : (
-                  <Text size="xs" color="orange">
+                  <p class="text-xs text-orange-500">
                     {seconds} секунд хүлээнэ үү
-                  </Text>
+                  </p>
                 )}
               </Group>
-              {/* <Stack spacing={0}>
-                <Text size="sm">Дахин илгээх</Text>
-                <Text size="sm">60</Text>
-              </Stack> */}
             </Group>
           </Stack>
         )}

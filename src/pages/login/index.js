@@ -1,24 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Image from "next/image";
+import { fetchMethod } from "@/utils/fetch";
+import { rememberMe, rememberMeRemove } from "@/utils/Store";
+import { UserConfigContext } from "@/utils/userConfigContext";
 import {
-  TextInput,
   Button,
-  rem,
-  PasswordInput,
-  Text,
   Checkbox,
   Loader,
+  PasswordInput,
+  rem,
+  TextInput,
 } from "@mantine/core";
-import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
-import { useRouter } from "next/router";
-import { setCookie } from "cookies-next";
-import { IconAt, IconCheck, IconLock } from "@tabler/icons-react";
-import Buttons from "../../components/Buttons";
-import { fetchMethod } from "@/utils/fetch";
 import { showNotification } from "@mantine/notifications";
-import { UserConfigContext } from "@/utils/userConfigContext";
-import { rememberMe, rememberMeRemove } from "@/utils/Store";
+import { IconAt, IconCheck, IconLock } from "@tabler/icons-react";
+import { setCookie } from "cookies-next";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
+import Buttons from "../../components/Buttons";
 
 const Login = () => {
   const router = useRouter();
@@ -260,9 +259,7 @@ const Login = () => {
                 color="gray"
                 onClick={() => router.push("/login/forget")}
               >
-                <Text color="gray" size={"xs"}>
-                  Нууц үгээ мартсан уу?
-                </Text>
+                <p class="text-xs text-gray-500">Нууц үгээ мартсан уу?</p>
               </Button>
             </div>
             <Button

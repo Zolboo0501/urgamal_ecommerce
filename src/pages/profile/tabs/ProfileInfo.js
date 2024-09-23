@@ -3,7 +3,7 @@ import Mobile from "@/components/Profile/Mobile";
 import Password from "@/components/Profile/Password";
 import ProfileButton from "@/components/Profile/ProfileButton";
 import UserEdit from "@/components/Profile/UserEdit";
-import { Text, Title } from "@mantine/core";
+import { Title } from "@mantine/core";
 import { useState } from "react";
 
 const ProfileInfo = (props) => {
@@ -29,25 +29,25 @@ const ProfileInfo = (props) => {
       {tabs === "info" && (
         <>
           <Title order={3}>Хувийн мэдээлэл</Title>
-          <Text size="sm" c="dimmed">
+          <p class="text-sm text-gray-500">
             Та хувийн мэдээллээ доорх талбаруудаар засварлаарай
-          </Text>
+          </p>
         </>
       )}
       {tabs === "change" && (
         <>
           <Title order={3}>Гар утас</Title>
-          <Text size="sm" c="dimmed">
+          <p class="text-sm text-gray-500">
             Та нууц үгээ доорх талбаруудаар засварлаарай
-          </Text>
+          </p>
         </>
       )}
       {tabs === "mobile" && (
         <>
           <Title order={3}>Гар утас баталгаажуулах</Title>
-          <Text size="sm" c="dimmed">
+          <p class="text-sm text-gray-500">
             Та гар утсаа доорх талбаруудаар баталгаажуулаарай
-          </Text>
+          </p>
         </>
       )}
       <ProfileButton handleTabs={handleTabs} tabs={tabs} />

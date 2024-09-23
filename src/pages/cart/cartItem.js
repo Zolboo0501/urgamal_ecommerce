@@ -1,53 +1,50 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import GlobalLayout from "@/components/GlobalLayout/GlobalLayout";
+import InvoiceInputModal from "@/components/InvoiceModal/InvoiceInputModal";
+import InvoiceModal from "@/components/InvoiceModal/InvoiceModal";
+import { fetchMethod } from "@/utils/fetch";
 import {
+  addQuantityProduct,
+  getCart,
+  removeFromCart,
+  removeQuantityProduct,
+} from "@/utils/Store";
+import { UserConfigContext } from "@/utils/userConfigContext";
+import {
+  ActionIcon,
+  Badge,
   Button,
   Checkbox,
-  Table,
-  ActionIcon,
-  Modal,
-  Text,
-  Badge,
   Loader,
+  LoadingOverlay,
+  Modal,
   Stack,
   Switch,
+  Table,
   Tooltip,
-  LoadingOverlay,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { openContextModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import {
-  IconMinus,
-  IconPlus,
-  IconTrash,
+  IconAlertCircle,
   IconArrowLeft,
   IconCheck,
   IconCircleXFilled,
+  IconMinus,
+  IconPlus,
+  IconTrash,
 } from "@tabler/icons-react";
-import { BsCartX } from "react-icons/bs";
-import { useState, useEffect, useContext } from "react";
-import Address from "./shippingAddress";
-import { useRouter } from "next/router";
-import {
-  getCart,
-  removeFromCart,
-  addQuantityProduct,
-  removeQuantityProduct,
-  emptyCart,
-  syncCart,
-} from "@/utils/Store";
-import { IconAlertCircle } from "@tabler/icons-react";
-import GlobalLayout from "@/components/GlobalLayout/GlobalLayout";
-import {
-  SuccessNotification,
-  ErrorNotification,
-} from "../../utils/SuccessNotification";
-import { getCookie } from "cookies-next";
-import { openContextModal } from "@mantine/modals";
 import axios from "axios";
-import { UserConfigContext } from "@/utils/userConfigContext";
-import { fetchMethod } from "@/utils/fetch";
-import InvoiceModal from "@/components/InvoiceModal/InvoiceModal";
-import InvoiceInputModal from "@/components/InvoiceModal/InvoiceInputModal";
+import { getCookie } from "cookies-next";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
+import { BsCartX } from "react-icons/bs";
+import {
+  ErrorNotification,
+  SuccessNotification,
+} from "../../utils/SuccessNotification";
+import Address from "./shippingAddress";
 
 const CartItems = (props) => {
   const [isCheckAll, setIsCheckAll] = useState(true);
@@ -630,7 +627,7 @@ const CartItems = (props) => {
         size="xs"
       >
         <Stack align="center" my="lg" spacing="lg">
-          <Text align="center">Уншиж байна...</Text>
+          <p class="text-center">Уншиж байна...</p>
           <Loader size="lg" color="yellow" />
         </Stack>
       </Modal>

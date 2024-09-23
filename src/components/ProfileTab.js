@@ -1,4 +1,3 @@
-import { Text } from "@mantine/core";
 const ProfileTabs = ({ icon, text, id, onClickTabs, first }) => {
   return (
     <div
@@ -11,9 +10,7 @@ const ProfileTabs = ({ icon, text, id, onClickTabs, first }) => {
     >
       <div className="flex w-4/6 flex-row items-center py-3 ">
         {icon}
-        <Text className="ml-4 text-base" size={"md"}>
-          {text}
-        </Text>
+        <p class="ml-4 text-base">{text}</p>
       </div>
     </div>
   );

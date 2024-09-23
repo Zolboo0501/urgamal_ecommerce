@@ -1,6 +1,5 @@
-import { ActionIcon, Card, Group, Text } from "@mantine/core";
-import { IconEdit, IconTrash } from "@tabler/icons-react";
-import React from "react";
+import { ActionIcon, Card, Group } from "@mantine/core";
+import { IconTrash } from "@tabler/icons-react";
 
 export default function ShippingAddressCard({
   name,
@@ -11,9 +10,7 @@ export default function ShippingAddressCard({
   return (
     <Card p="xs" radius="md" withBorder fluid>
       <Group position="apart">
-        <Text weight="500" size="sm">
-          {name}
-        </Text>
+        <p class="text-sm font-medium">{name}</p>
         <Group spacing="xs">
           {/* <ActionIcon
             color="blue"
@@ -34,14 +31,12 @@ export default function ShippingAddressCard({
       <div className="flex flex-col items-start gap-3 w-full">
         <div className="flex flex-col gap-2 w-full">{address.type}</div>
         <div className="flex flex-col gap-4 w-full pr-8">
-          <Text size="sm" weight={500} color="grey">
+          <p class="text-sm font-medium text-gray-500">
             {`${address.city ? address.city?.name : ""}, ${
               address.district ? address.district?.name : ""
             }, ${address.khoroo ? address.khoroo?.name : ""}`}
-          </Text>
-          <Text size="xs" weight={500}>
-            Нэмэлт тайлбар: {address.note}
-          </Text>
+          </p>
+          <p class="text-xs font-medium">Нэмэлт тайлбар: {address.note}</p>
         </div>
       </div>
     </Card>

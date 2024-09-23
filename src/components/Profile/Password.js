@@ -10,19 +10,18 @@ import {
   PasswordInput,
   PinInput,
   Stack,
-  Text,
   rem,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import {
-  IconLock,
-  IconShieldLock,
-  IconDeviceMobile,
-  IconSend,
   IconCircleXFilled,
+  IconDeviceMobile,
+  IconLock,
+  IconSend,
+  IconShieldLock,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Password = (props) => {
   const { setTabs } = props;
@@ -151,9 +150,13 @@ const Password = (props) => {
 
   const renderCheck = (state, text) => {
     return (
-      <Text size={"sm"} color={state ? "#32D583" : "#F97066"} fw={600}>
+      <p
+        class={`text-sm font-semibold ${
+          state ? "text-green-500" : "text-red-500"
+        }`}
+      >
         - {text}
-      </Text>
+      </p>
     );
   };
 
@@ -202,16 +205,16 @@ const Password = (props) => {
               />
             </Center>
             <Center>
-              <Text size="md" fw={600}>
+              <p class="text-base font-semibold">
                 {otpRequested ? "Нэг удаагийн код" : "Утасны дугаар"}
-              </Text>
+              </p>
             </Center>
             <Center>
-              <Text size="sm" c="dimmed">
+              <p class="text-sm text-gray-500">
                 {otpRequested
                   ? "Та 6 оронтой код оруулна уу"
                   : "Та нэг удаагийн код авах дугаараа оруулна уу"}
-              </Text>
+              </p>
             </Center>
             <Center>
               <Group justify="center">
@@ -246,24 +249,21 @@ const Password = (props) => {
                 loading ? (
                   <Loader variant="dots" color="yellow" />
                 ) : (
-                  <Text
-                    size="xs"
-                    underline
-                    color="yellow"
-                    component="button"
+                  <button
+                    class="text-xs text-yellow-500 underline"
                     onClick={() => {
                       setOtp("");
                       fetchOTP();
                     }}
                   >
                     Дахин авах
-                  </Text>
+                  </button>
                 )
               ) : (
                 <Center>
-                  <Text size="xs" color="orange">
+                  <p class="text-xs text-orange-500">
                     {seconds} секунд хүлээнэ үү
-                  </Text>
+                  </p>
                 </Center>
               )
             ) : (

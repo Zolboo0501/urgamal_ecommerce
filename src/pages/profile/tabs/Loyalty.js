@@ -1,9 +1,9 @@
 import { fetchMethod } from "@/utils/fetch";
-import { Loader, Text, Title, rem } from "@mantine/core";
-import { getCookie } from "cookies-next";
-import React, { useEffect, useState } from "react";
-import dayjs from "dayjs";
+import { Loader, Title, rem } from "@mantine/core";
 import { IconGiftOff, IconStarFilled } from "@tabler/icons-react";
+import { getCookie } from "cookies-next";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 
 const Loyalty = ({ userInfo }) => {
   const [loyalty, setLoyalty] = useState();
@@ -50,9 +50,8 @@ const Loyalty = ({ userInfo }) => {
                 </div>
               </div>
               <div className="flex flex-row gap-2 items-center">
-                <Text size={"md"} weight={"600"}>
-                  {item.amount}
-                </Text>
+                <p class="text-base font-semibold">{item.amount}</p>
+
                 <IconStarFilled
                   style={{
                     width: rem(20),

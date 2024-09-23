@@ -1,37 +1,35 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react-hooks/exhaustive-deps */
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import {
   Autocomplete,
   Avatar,
   Button,
   Group,
   Select,
-  Text,
   Tooltip,
   rem,
 } from "@mantine/core";
-import { forwardRef, useContext, useEffect, useState } from "react";
-import { getCookie, setCookie } from "cookies-next";
 import {
-  IconPackage,
-  IconSearch,
   IconCircleXFilled,
   IconHomeEco,
+  IconPackage,
   IconReportSearch,
+  IconSearch,
 } from "@tabler/icons-react";
+import { getCookie, setCookie } from "cookies-next";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { forwardRef, useContext, useEffect, useState } from "react";
 
-import useSWR from "swr";
-import { useDebouncedValue } from "@mantine/hooks";
-import { UserConfigContext } from "@/utils/userConfigContext";
-import { isMobile } from "react-device-detect";
+import useWishlist from "@/hooks/useWishlist";
 import { fetchMethod, fetcher } from "@/utils/fetch";
 import { getCart } from "@/utils/Store";
+import { UserConfigContext } from "@/utils/userConfigContext";
+import { useDebouncedValue } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
-import NavbarBottom from "./NavbarBottom";
-import useWishlist from "@/hooks/useWishlist";
+import { isMobile } from "react-device-detect";
+import useSWR from "swr";
 import Notification from "../Notification/Notification";
 const Navbar = (props) => {
   const { address } = props;
@@ -101,7 +99,7 @@ const Navbar = (props) => {
             <IconPackage stroke={1.5} />
           </Avatar>
           <div>
-            <Text>{value}</Text>
+            <p>{value}</p>
             {/* <Text size="xs" color="dimmed">
               {props?.description}
             </Text> */}

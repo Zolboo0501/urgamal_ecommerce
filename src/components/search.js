@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Image from "next/image";
-import { forwardRef, useEffect, useState } from "react";
-import { Autocomplete, Group, Avatar, Text } from "@mantine/core";
-import { useRouter } from "next/router";
-import useSWR from "swr";
+import { fetcher } from "@/utils/fetch";
+import { Autocomplete, Avatar, Group } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { IconPackage, IconSearch } from "@tabler/icons-react";
-import { fetcher } from "@/utils/fetch";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { forwardRef, useEffect, useState } from "react";
+import useSWR from "swr";
 
 const Search = () => {
   const router = useRouter();
@@ -49,10 +49,7 @@ const Search = () => {
             <IconPackage stroke={1.5} />
           </Avatar>
           <div>
-            <Text>{value}</Text>
-            {/* <Text size="xs" color="dimmed">
-              {props?.description}
-            </Text> */}
+            <p>{value}</p>
           </div>
         </Group>
       </div>

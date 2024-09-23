@@ -1,12 +1,12 @@
-import { Paper, Text, Title } from "@mantine/core";
-import { IconPlus } from "@tabler/icons-react";
-import ShippingAddressCard from "../ShippingAddressCard/ShippingAddressCard";
+import { Paper } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { showNotification } from "@mantine/notifications";
+import { IconPlus } from "@tabler/icons-react";
+import { getCookie } from "cookies-next";
+import { useState } from "react";
 import { DeleteConfirmationDialog } from "../Profile/deleteAddress";
 import ProductModal from "../Profile/ProfileModal";
-import { useState } from "react";
-import { getCookie } from "cookies-next";
-import { showNotification } from "@mantine/notifications";
+import ShippingAddressCard from "../ShippingAddressCard/ShippingAddressCard";
 
 export default function UserAddress({ data, refresh, selectAddress }) {
   const cookie = getCookie("token");
@@ -193,9 +193,7 @@ export default function UserAddress({ data, refresh, selectAddress }) {
             >
               <div className="w-28 h-28 cursor-pointer flex flex-col justify-center items-center gap-1 ">
                 <IconPlus stroke={1.5} color="#228BE6" />
-                <Text color="#228BE6" size="sm">
-                  Нэмэх
-                </Text>
+                <p class="text-sm text-blue-500">Нэмэх</p>
               </div>
             </Paper>
           </div>
