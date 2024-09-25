@@ -8,11 +8,12 @@ import {
   Select,
   Tooltip,
   rem,
+  Badge,
 } from "@mantine/core";
 import {
   IconCircleXFilled,
   IconHomeEco,
-  IconPackage,
+  IconPhotoOff,
   IconReportSearch,
   IconSearch,
 } from "@tabler/icons-react";
@@ -31,6 +32,7 @@ import { showNotification } from "@mantine/notifications";
 import { isMobile } from "react-device-detect";
 import useSWR from "swr";
 import Notification from "../Notification/Notification";
+import { numberWithCommas } from "@/utils/utils";
 const Navbar = (props) => {
   const { address } = props;
   const router = useRouter();
@@ -71,6 +73,8 @@ const Navbar = (props) => {
           id: e?.id || "",
           image: e?.additionalImage[0]?.url || "",
           description: e?.description || "",
+          balance: e?.balance || "",
+          price: e?.listPrice || "",
         };
       })
     : [];
@@ -79,6 +83,27 @@ const Navbar = (props) => {
     mutate();
   }, [debounced]);
 
+  const renderRemains = (balance) => {
+    if (balance > 0) {
+      const convertInt = parseInt(balance);
+      if (convertInt > 10) {
+        return (
+          <Badge size="xs" color="teal">
+            Хангалттай
+          </Badge>
+        );
+      }
+      if (convertInt <= 10 && convertInt > 0) {
+        return <p className="text-xs font-semibold ">{balance}</p>;
+      }
+    } else {
+      return (
+        <Badge size="xs" color="gray">
+          Үлдэгдэлгүй
+        </Badge>
+      );
+    }
+  };
   // useEffect(() => {
   //   if (isMobile === true && catsLoading === false) {
   //     props.getValue(categories);
@@ -86,28 +111,39 @@ const Navbar = (props) => {
   // }, [categories]);
 
   // eslint-disable-next-line react/display-name
-  const AutocompleteItem = forwardRef(({ image, value, ...others }, ref) => {
-    return (
-      <div
-        ref={ref}
-        style={{ padding: "10px", marginTop: "5px" }}
-        className=" hover:cursor-pointer hover:bg-gray-100 hover:rounded-md"
-        {...others}
-      >
-        <Group noWrap>
-          <Avatar src={image} alt="Зураг">
-            <IconPackage stroke={1.5} />
-          </Avatar>
-          <div>
-            <p>{value}</p>
-            {/* <Text size="xs" color="dimmed">
-              {props?.description}
-            </Text> */}
-          </div>
-        </Group>
-      </div>
-    );
-  });
+  const AutocompleteItem = forwardRef(
+    ({ image, value, balance, price, ...others }, ref) => {
+      return (
+        <div
+          ref={ref}
+          style={{ padding: "10px", marginTop: "5px" }}
+          className=" hover:cursor-pointer hover:bg-gray-100 hover:rounded-md"
+          {...others}
+        >
+          <Group noWrap>
+            <Avatar src={image} alt="Зураг">
+              <IconPhotoOff stroke={1.5} size={16} color="#40C057" />
+            </Avatar>
+            <div>
+              <p className="font-medium text-grey800">{value}</p>
+              <div className="flex flex-row items-center gap-6">
+                <div className="flex items-center">
+                  <p className="text-[#696A6C]  text-xs">Үнэ : </p>
+                  <p className="text-xs ml-1 text-start text-primary700 font-bold ">
+                    {numberWithCommas(price) || 0}₮
+                  </p>
+                </div>
+                <div className="flex items-center">
+                  <p className="text-[#696A6C] text-xs">Үлдэгдэл : </p>
+                  {renderRemains(balance)}
+                </div>
+              </div>
+            </div>
+          </Group>
+        </div>
+      );
+    }
+  );
 
   const linkToCart = () => {
     router.push({
@@ -244,8 +280,8 @@ const Navbar = (props) => {
         />
         <div className="absolute">
           {cartItem?.cart_items?.length > 0 && (
-            <div className="w-3.5 h-3.5 bg-number flex justify-center items-center text-white -mt-5 rounded-full text-xs ml-5">
-              <p className="text-sm-5">
+            <div className="w-3.5 h-3.5 bg-primary600 flex justify-center items-center -mt-5 rounded-full text-xs ml-5">
+              <p className="text-sm-5 text-white">
                 {cartItem?.cart_items && cartItem?.cart_items?.length}
               </p>
             </div>
@@ -267,8 +303,8 @@ const Navbar = (props) => {
         />
         <div className="absolute">
           {wishlist.get.length > 0 && (
-            <div className="w-3.5 h-3.5 bg-number flex justify-center items-center text-white -mt-5 rounded-full text-xs ml-5">
-              <p className="text-sm-5">{wishlist.get.length}</p>
+            <div className="w-3.5 h-3.5 bg-primary600 flex justify-center items-center -mt-5 rounded-full text-xs ml-5">
+              <p className="text-sm-5 text-white">{wishlist.get.length}</p>
             </div>
           )}
         </div>
@@ -278,21 +314,20 @@ const Navbar = (props) => {
 
   return (
     <div
-      className="sticky top-0 z-30 "
+      className="sticky top-0 z-30 shadow"
       style={{
-        borderBottom: "1px solid rgba(0, 0, 0, 0.06)",
         backgroundColor: address?.header_color ? address?.header_color : "#fff",
       }}
     >
-      <div className="flex justify-between items-center py-2 px-12 max-sm:px-2 border-b">
+      <div className="flex justify-between items-center py-2 px-12 max-sm:px-2">
         <Link href={"/home"} className="flex flex-row items-center gap-2">
           <div className="font-open hidden lg:block font-medium">ТАРИМАЛ</div>
           <div className="flex justify-center items-center ">
             {userContext?.address?.logo ? (
               <Image
                 src={userContext?.address?.logo}
-                width={36}
-                height={36}
+                width={42}
+                height={42}
                 className="w-12 h-12"
                 alt={userContext?.address?.logo}
               />
@@ -375,15 +410,15 @@ const Navbar = (props) => {
               </>
             )}
           </div> */}
-          <div className="hidden md:block flex-grow ">
+          <div className="hidden md:block flex-grow">
             <Autocomplete
-              className="autoComplete w-full"
+              className="w-full"
               size={"md"}
-              placeholder="Бараа хайх..."
+              placeholder="Хайлт хийх.."
               itemComponent={AutocompleteItem}
               data={suggestions ? suggestions : []}
-              limit={10}
-              radius={0}
+              limit={7}
+              radius={30}
               styles={{
                 root: {
                   paddingLeft: isMobile ? "0px" : "5px",
@@ -392,12 +427,19 @@ const Navbar = (props) => {
                 input: {
                   "::placeholder": {
                     fontSize: ".95rem",
-                    color: "#667085",
+                    color: "#344054",
                   },
+                  paddingLeft: "1.5rem",
+                  borderWidth: 0,
+                  boxShadow:
+                    "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
                 },
                 rightSection: {
                   margin: 0,
                   padding: 0,
+                },
+                dropdown: {
+                  borderRadius: 15,
                 },
               }}
               value={searchQuery}
@@ -418,7 +460,7 @@ const Navbar = (props) => {
               }
               rightSection={
                 <button
-                  className="m-auto h-full  bg-[#00B934] p-2 px-3.5 max-xs:w-11 max-xs:flex max-xs:items-center max-xs:justify-center max-xs:p-0 max-xs:px-0 "
+                  className="m-auto h-full  bg-primary rounded-r-full p-2 px-3.5 max-xs:w-11 max-xs:flex max-xs:items-center max-xs:justify-center max-xs:p-0 max-xs:px-0 "
                   onClick={() => {
                     router.push({
                       pathname: "/products",
@@ -472,10 +514,10 @@ const Navbar = (props) => {
               onClick={() => linkToCart()}
               leftIcon={<TrolleyButtonImage />}
             >
-              <div className="hidden lg:flex flex-col font-open font-light text-sm-2 text-[#001E1D] gap-1 ml-2">
+              <div className="hidden lg:flex flex-col font-regular text-sm-2 text-[#000] gap-1 ml-2">
                 Таны сагсанд
-                <div className="font-open font-semibold text-xs">
-                  {cartItem?.total || 0}₮
+                <div className="font-open font-semibold text-xs text-primary700">
+                  {numberWithCommas(cartItem?.total) || 0}₮
                 </div>
               </div>
             </Button>
@@ -496,9 +538,9 @@ const Navbar = (props) => {
               }}
             >
               {userContext.auth && (
-                <div className="flex flex-col font-open font-light text-sm-2 text-[#001E1D] gap-1">
+                <div className="flex flex-col font-regular text-sm-2 text-[#000] gap-1">
                   Сайн байна уу?
-                  <div className="font-open font-semibold text-xs">
+                  <div className="font-open font-semibold text-xs text-grey700">
                     {userInfo.name ? userInfo?.name : userInfo?.mobile}
                   </div>
                 </div>
@@ -525,17 +567,10 @@ const Navbar = (props) => {
                   flexGrow: 4,
                 },
                 input: {
-                  borderWidth: 0,
                   "::placeholder": {
                     fontSize: ".95rem",
                   },
-                  "&:focus": {
-                    outline: "none",
-                  },
-                },
-                rightSection: {
-                  margin: 0,
-                  padding: 0,
+                  borderWidth: "3px",
                 },
               }}
               value={searchQuery}

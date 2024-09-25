@@ -40,7 +40,7 @@ export async function getServerSideProps({ params }) {
   const convert = sortOrder?.split("/").filter(Boolean);
   let arr = [];
   let index = 0;
-  for (const element of convert) {
+  for (const element of convert || []) {
     if (index < 3) {
       const category = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/product/cats/code/${element}`,

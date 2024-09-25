@@ -93,8 +93,8 @@ export default function Home() {
                   }
                 })}
             </div> */}
-            <div className="px-12">
-              <SpecialDeal cols={5} className="mt-12" />
+            <div className="px-6">
+              <SpecialDeal cols={5} className="mt-8" />
             </div>
           </div>
         </div>

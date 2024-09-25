@@ -20,14 +20,14 @@ const Banner = () => {
   const user = useContext(UserConfigContext);
 
   return (
-    <div className="mt-10 flex relative mx-auto w-[100%] h-[320px] border  lg:h-[36rem] md:h-[20rem]">
+    <div className="mt-8 flex relative mx-auto w-[100%] h-[320px] lg:h-[36rem] md:h-[20rem] p-1">
       <div
-        className="flex-row hidden relative lg:flex"
+        className="flex-row hidden relative lg:flex bg-white"
         onMouseLeave={() => {
           setHoveredCategory([]);
         }}
       >
-        <div className="py-4 pl-4 pr-3 bg-white h-full  overscroll-contain overflow-y-auto">
+        <div className="p-3  h-full  overscroll-contain overflow-y-auto shadow-inner">
           {categories &&
             categories?.categories?.map((item, idx) => {
               return (
@@ -36,14 +36,14 @@ const Banner = () => {
                     pathname: `/category/${item?.id}`,
                     query: { parent_id: item?.id },
                   }}
-                  className="py-2 flex flex-row justify-between items-center hover:text-[#F9BC60]"
+                  className="py-2 hover:cursor-pointer transition ease-in-out delay-100 hover:translate-x-2  hover:scale-101 rounded-full hover:shadow-2xl flex flex-row justify-between items-center hover:text-primary"
                   key={idx}
                   onMouseEnter={() => {
                     setHoveredCategory(item?.secondary_cats);
                     setParentId(item?.id);
                   }}
                 >
-                  <div className="flex felx-row items-center gap-5">
+                  <div className="flex felx-row items-center gap-3 mx-4">
                     {item?.icon && (
                       <Image
                         src={item?.icon ?? ""}
@@ -53,9 +53,6 @@ const Banner = () => {
                       />
                     )}
                     <span className="font-semibold">{item?.name}</span>
-                  </div>
-                  <div className="ml-10">
-                    <IconChevronRight size={rem(16)} />
                   </div>
                 </Link>
               );
@@ -107,12 +104,12 @@ const Banner = () => {
         {user?.address?.banners?.length > 0 ? (
           user?.address?.banners.map((item, index) => {
             return (
-              <SwiperSlide key={index}>
+              <SwiperSlide key={index} style={{ opacity: 1 }}>
                 <Image
                   alt={item}
                   src={item}
                   fill
-                  className="object-cover h-full w-full md:object-cover max-h-full lg:object-fill"
+                  className="object-cover h-full w-full md:object-cover max-h-full lg:object-fill rounded-r-xl "
                   draggable={false}
                 />
               </SwiperSlide>
@@ -123,7 +120,7 @@ const Banner = () => {
             <ThemeIcon size="lg" variant="light" color="green">
               <IconPhotoOff size="80%" stroke={0.5} />
             </ThemeIcon>
-            <p class="text-xs font-light text-gray-500">Your text here</p>
+            <p class="text-xs font-light text-gray-500">Зураггүй байна</p>
           </div>
         )}
       </Swiper>

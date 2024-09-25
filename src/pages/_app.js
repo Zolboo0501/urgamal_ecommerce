@@ -31,7 +31,7 @@ export default function App({ Component, pageProps }) {
           fontFamily: sfProRounded.style.fontFamily,
           focusRingStyles: {
             styles: (theme) => ({ outline: `${rem(1)} solid #f9bc609d` }),
-            inputStyles: (theme) => ({ outline: `${rem(1)} solid #f9bc609d` }),
+            inputStyles: (theme) => ({ outline: `${rem(1.5)} solid #40C057` }),
           },
         }}
       >

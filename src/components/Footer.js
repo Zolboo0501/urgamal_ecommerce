@@ -1,166 +1,187 @@
-import Image from "next/image";
-import { useRouter } from "next/router";
-
-import Link from "next/link";
 import { htmlFrom } from "@/utils/constant";
-import { IconBrandFacebook, IconBrandInstagram } from "@tabler/icons-react";
-import { ActionIcon } from "@mantine/core";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 const BottomFooter = ({ address, links }) => {
-  const router = useRouter();
-
-  const icon = (item) => {
-    if (item?.title !== "email") {
-      return (
-        <Link href={item?.url}>
-          <Image
-            className="hover:text-white max-xs:w-3 max-xs:h-3"
-            width={25}
-            height={25}
-            src={item?.img}
-            alt="email"
-          />
-        </Link>
-      );
-    }
-  };
-
   return (
     <>
       {/* desktop */}
-      <div className="hidden md:block  border-t-1">
+      <div className="hidden md:block">
         <div
-          className="flex flex-row px-16 py-8 bg-green2  justify-between w-full max-xs:px-1 max-xs:py-4 max-xs:gap-2"
+          className="flex md:flex-col lg:flex-row justify-between py-8 bg-green2 w-full px-6 xl:px-8 "
           style={{
             backgroundColor: address?.footer_color
               ? address?.footer_color
               : null,
           }}
         >
-          <div className="flex flex-col items-center ">
+          <div className="flex flex-row gap-24">
+            <div className="flex flex-col gap-3 ">
+              <span className="font-bold text-xs text-[#000] md:text-lg pb-3">
+                Тусламж
+              </span>
+              <Link
+                href={""}
+                className="text-sm md:text-base font-medium text-[#1C3F11]"
+              >
+                Хэрэглэх заавар
+              </Link>
+              <Link
+                href={""}
+                className="text-sm md:text-base font-medium text-[#1C3F11]"
+              >
+                Түгээмэл асуулт
+              </Link>
+              <Link
+                href={""}
+                className="text-sm md:text-base font-medium text-[#1C3F11]"
+              >
+                Үйлчилгээний нөхцөл
+              </Link>
+              <Link
+                href={""}
+                className="text-sm md:text-base font-medium text-[#1C3F11]"
+              >
+                Нууцлалын баталгаа
+              </Link>
+            </div>
+            <div className="flex flex-col gap-1 ">
+              <span className="font-bold text-[#000] md:text-lg pb-3">
+                Тухай
+              </span>
+              <Link
+                href={""}
+                className="text-sm md:text-base font-medium text-[#1C3F11]"
+              >
+                Бидний тухай
+              </Link>
+              <Link
+                href={""}
+                className="text-sm md:text-base font-medium mt-2 text-[#1C3F11] "
+              >
+                Вэб үйлчилгээ
+              </Link>
+              <Link
+                href={""}
+                className="text-sm md:text-base font-medium mt-2 text-[#1C3F11]"
+              >
+                Бүтээгдэхүүн үйлчилгээ
+              </Link>
+            </div>
+            <div className="flex flex-col gap-2">
+              <span className="font-bold text-[#000] md:text-lg pb-1">
+                Холбоо барих
+              </span>
+              <div className="flex flex-row items-center gap-2">
+                <Image
+                  alt="time"
+                  className=""
+                  src={"/icons/phoneFill.svg"}
+                  width={24}
+                  height={24}
+                />
+                <div
+                  className="text-sm md:text-base font-medium text-[#1C3F11]"
+                  dangerouslySetInnerHTML={{
+                    __html: htmlFrom(address?.contact),
+                  }}
+                />
+              </div>
+              <div className="flex flex-row items-center gap-2">
+                <Image
+                  alt="mail"
+                  className="m-1 max-xs:w-3 max-xs:h-3  "
+                  src={"/icons/mail.svg"}
+                  width={20}
+                  height={20}
+                />
+                <Link href={`mailto:${"tarimalurgamal2016@gmail.com"}`}>
+                  <p className="text-sm md:text-base font-medium text-[#1C3F11]">
+                    tarimalurgamal2016@gmail.com
+                  </p>
+                </Link>
+              </div>
+              <div className="flex flex-row items-center gap-2">
+                <Image
+                  alt="mail"
+                  className="m-1 max-xs:w-3 max-xs:h-3  "
+                  src={"/icons/time.svg"}
+                  width={20}
+                  height={20}
+                />
+                <div
+                  className="text-sm md:text-base font-medium text-[#1C3F11]"
+                  dangerouslySetInnerHTML={{
+                    __html: htmlFrom(address?.work_hours),
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col mt-4 items-start justify-start  lg:items-end">
             {address?.logo && (
               <Image
                 alt={address?.logo}
                 src={address?.logo}
                 width={90}
                 height={80}
-                className="mx-4 max-xs:w-4 max-xs:h-4"
+                className="w-32 h-32 rounded"
               />
             )}
-
-            <p className="text-sm mt-2 max-xs:text-sm-5 max-xs:text-center font-semibold">
-              “Таримал ургамал” ХХК
+            <p className="mt-4 text-sm md:text-lg lg:text-end font-semibold text-black w-[40%] lg:w-[70%] xl:w-[60%]">
+              Тэжээл, нөхөн сэргээлт, зүлгэнд зориулсан үрийн худалдаа
             </p>
-            <div className="flex flex-row mt-4 gap-8 max-xs:gap-2">
-              {links?.map((item) => {
-                return icon(item);
-              })}
-              <div className="flex flex-row gap-12">
-                <Link href={"https://www.instagram.com/urga.mn/"}>
-                  <IconBrandInstagram
-                    width={25}
-                    height={25}
-                    className="hover:text-white max-xs:w-3 max-xs:h-3"
-                    stroke={1.5}
-                  />
-                </Link>
-                <Link href={"https://www.facebook.com/tarimalurgamal"}>
-                  <IconBrandFacebook
-                    width={25}
-                    height={25}
-                    className="hover:text-white max-xs:w-3 max-xs:h-3"
-                    stroke={1.5}
-                  />
-                </Link>
-              </div>
+            <div className="flex mt-3 gap-4">
+              <Link href={"https://www.facebook.com/tarimalurgamal"}>
+                <Image
+                  alt={"facebook"}
+                  src={"/icons/facebook-fill.svg"}
+                  width={90}
+                  height={80}
+                  className=" w-8 h-8 "
+                />
+              </Link>
+              <Link href="https://www.instagram.com/urga.mn/">
+                <Image
+                  alt={"instragram"}
+                  src={"/icons/instagram-fill.svg"}
+                  width={90}
+                  height={80}
+                  className=" w-8 h-8 hover:text-[#1C3F11]"
+                />
+              </Link>
+              <Link href={""}>
+                <Image
+                  alt={"instragram"}
+                  src={"/icons/twitter-fill.svg"}
+                  width={90}
+                  height={80}
+                  className=" w-8 h-8 "
+                />
+              </Link>
             </div>
           </div>
-          <div className="flex flex-col">
-            <p className="text-sm max-xs:text-sm-5">Бидний тухай</p>
-            <p className="text-sm mt-2 max-xs:text-sm-5">Вэб үйлчилгээ</p>
-            <p className="text-sm mt-2 max-xs:text-sm-5">
-              Бүтээгдэхүүн үйлчилгээ
-            </p>
-          </div>
-          <div className="flex flex-col">
-            <p className="text-sm max-xs:text-sm-5">Тусламж</p>
-            <p className="text-sm mt-2 max-xs:text-sm-5">Хэрэглэх заавар</p>
-            <p className="text-sm mt-2 max-xs:text-sm-5">Түгээмэл асуулт</p>
-            <p className="text-sm mt-2 max-xs:text-sm-5">Үйлчилгээний нөхцөл</p>
-            <p className="text-sm mt-2 max-xs:text-sm-5">Нууцлалын баталгаа</p>
-          </div>
-          <div className="flex flex-col w-[30%] max-xs:w-56">
-            <div
-              className="flex flex-row items-start mt-1 hover:text-white"
-              onClick={() => router.push("/location")}
+        </div>
+        <div
+          className="justify-center items-center flex shadow-inner py-2 bg-primary200 border-t-1"
+          style={{
+            backgroundColor: address?.footer_color
+              ? address?.footer_color
+              : null,
+          }}
+        >
+          <div className="w-[80%] flex items-center justify-center ">
+            <Link
+              className="flex flex-row mt-1 hover:text-white items-center text-center"
+              href="/location"
             >
-              <Image
-                alt="location"
-                className="m-1 max-xs:w-3 max-xs:h-3"
-                src={"/icons/location.svg"}
-                width={20}
-                height={20}
-              />
               <div
-                className="text-sm ml-2 max-xs:text-sm-5"
+                className="text-base ml-2 max-xs:text-sm-5 text-[#1C3F11]  font-bold"
                 dangerouslySetInnerHTML={{
                   __html: htmlFrom(address?.location),
                 }}
               ></div>
-            </div>
-            <div className="flex flex-row items-center mt-2">
-              <Image
-                alt="call"
-                className="m-1 max-xs:w-3 max-xs:h-3"
-                src={"/icons/call.svg"}
-                width={18}
-                height={18}
-              />
-
-              <div
-                className="text-sm ml-2 max-xs:text-sm-5"
-                dangerouslySetInnerHTML={{ __html: htmlFrom(address?.contact) }}
-              />
-            </div>
-            <div className="flex flex-row items-start mt-1">
-              <Image
-                alt="time"
-                className="m-1 max-xs:w-3 max-xs:h-3"
-                src={"/icons/time.svg"}
-                width={18}
-                height={18}
-              />
-              <div
-                className="text-sm ml-2 max-xs:text-sm-5"
-                dangerouslySetInnerHTML={{
-                  __html: htmlFrom(address?.work_hours),
-                }}
-              />
-            </div>
-            <div className="flex flex-row items-start mt-1">
-              <Image
-                alt="mail"
-                className="m-1 max-xs:w-3 max-xs:h-3  "
-                src={"/icons/mail.svg"}
-                width={20}
-                height={20}
-              />
-              <Link href={`mailto:${"tarimalurgamal2016@gmail.com"}`}>
-                <p className="text-sm ml-2 max-xs:text-sm-5">
-                  tarimalurgamal2016@gmail.com
-                </p>
-              </Link>
-              {/* {links?.map((item, index) => {
-                if (item?.title === "email") {
-                  return (
-                    <Link href={`mailto:${item?.url}`} key={index}>
-                      <p className="text-sm ml-2 max-xs:text-sm-5">
-                        tarimalurgamal2016@gmail.com
-                      </p>
-                    </Link>
-                  );
-                }
-              })} */}
-            </div>
+            </Link>
           </div>
         </div>
       </div>

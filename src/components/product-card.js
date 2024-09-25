@@ -31,6 +31,7 @@ import { useState } from "react";
 import { IoIosBarcode } from "react-icons/io";
 import { addCart } from "../utils/Store";
 import { SuccessNotification } from "../utils/SuccessNotification";
+import { numberWithCommas } from "@/utils/utils";
 
 const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
   const [productCount, setProductCount] = useState(1);
@@ -136,10 +137,6 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
     });
   };
 
-  function numberWithCommas(x) {
-    return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, "'");
-  }
-
   const renderRemains = (balance) => {
     if (balance > 0) {
       const convertInt = parseInt(balance);
@@ -172,9 +169,9 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
       onClick={(event) => {
         clickProduct(event);
       }}
-      className={`hover:cursor-pointer ${
+      className={`hover:cursor-pointer hover:bg-grey25 ${
         shouldScale &&
-        "transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-101"
+        "transition ease-in-out delay-100 hover:-translate-y-2 hover:scale-101"
       }`}
       style={{ border: "0.5px solid #f3f3f3" }}
     >
@@ -230,7 +227,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
                           top: "auto",
                           backgroundColor:
                             currentImage?.key === addImg?.key
-                              ? theme.colors.yellow[2]
+                              ? theme.colors.green[3]
                               : theme.colors.gray[3],
                           borderRadius: theme.radius.xl,
                         })}
@@ -243,19 +240,18 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
           </AspectRatio>
         </div>
       </Card.Section>
-      <Stack position="apart" mt="xs" mb="xs">
+      <div className="mt-3">
         <p class="text-lg font-medium mt-1 text-start grow line-clamp-1">
           {data?.name}
         </p>
-
         <div className="flex flex-row items-center gap-1">
           <p className="text-[#696A6C] font-semibold text-xs">Үлдэгдэл : </p>
           {renderRemains(data?.balance)}
         </div>
-      </Stack>
+      </div>
       <div className="flex flex-col w-full">
         <div className="flex flex-row justify-between items-center">
-          <p className="font-semibold text-base mt-1 text-start">
+          <p className="text-lg mt-1 text-start text-primary600 font-bold">
             {numberWithCommas(data?.listPrice)}₮
           </p>
           <ActionIcon
@@ -270,7 +266,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
               <IconHeartFilled
                 stroke={1.5}
                 size={rem(24)}
-                style={{ color: "#F9BC60" }}
+                style={{ color: "#40C057" }}
               />
             ) : (
               <IconHeart stroke={1.5} size={rem(24)} color="green" />
@@ -285,61 +281,61 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
         ) : (
           <IoIosBarcode size={rem(24)} color="white" />
         )}
-        <Group pt="md" pb={0} grow align="stretch" w="100%">
-          <div className="flex flex-row items-center">
-            <ActionIcon
-              variant="light"
-              size="lg"
-              radius="xl"
-              className="flex justify-center items-center border rounded-md"
-              color="green"
-              onClick={(event) => {
-                event.preventDefault();
-                minusCount(event);
-              }}
-            >
-              <IconMinus stroke={2} size={rem(16)} />
-            </ActionIcon>
-            <p className="text-center text-sm ml-2 mr-2 font-semibold">
-              {productCount}
-            </p>
-            <ActionIcon
-              variant="light"
-              size="lg"
-              radius="xl"
-              className="flex justify-center items-center rounded-md"
-              color="green"
-              onClick={(event) => {
-                event.preventDefault();
-                addCount(event);
-              }}
-            >
-              <IconPlus stroke={2} size={rem(16)} />
-            </ActionIcon>
-          </div>
-          <Button
-            variant="filled"
+      </div>
+      <Group pt="xs" pb={0} grow align="stretch" w="100%">
+        <div className="flex flex-row items-center">
+          <ActionIcon
+            variant="light"
+            size="lg"
             radius="xl"
+            className="flex justify-center items-center border rounded-md"
             color="green"
             onClick={(event) => {
               event.preventDefault();
-              addToCartHandler(event);
+              minusCount(event);
             }}
           >
-            {loading === true ? (
-              <LoadingOverlay
-                loaderProps={{ size: "sm", color: "white" }}
-                overlayOpacity={0.1}
-                visible={loading}
-              />
-            ) : (
-              <div className="flex items-center">
-                <IconShoppingCartPlus />
-              </div>
-            )}
-          </Button>
-        </Group>
-      </div>
+            <IconMinus stroke={2} size={rem(16)} />
+          </ActionIcon>
+          <p className="text-center text-sm ml-2 mr-2 font-semibold">
+            {productCount}
+          </p>
+          <ActionIcon
+            variant="light"
+            size="lg"
+            radius="xl"
+            className="flex justify-center items-center rounded-md"
+            color="green"
+            onClick={(event) => {
+              event.preventDefault();
+              addCount(event);
+            }}
+          >
+            <IconPlus stroke={2} size={rem(16)} />
+          </ActionIcon>
+        </div>
+        <Button
+          variant="filled"
+          radius="xl"
+          color="green"
+          onClick={(event) => {
+            event.preventDefault();
+            addToCartHandler(event);
+          }}
+        >
+          {loading === true ? (
+            <LoadingOverlay
+              loaderProps={{ size: "sm", color: "white" }}
+              overlayOpacity={0.1}
+              visible={loading}
+            />
+          ) : (
+            <div className="flex items-center">
+              <IconShoppingCartPlus />
+            </div>
+          )}
+        </Button>
+      </Group>
     </Card>
   );
 };

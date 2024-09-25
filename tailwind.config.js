@@ -34,6 +34,15 @@ module.exports = {
       xxl: "2rem",
     },
     extend: {
+      animation: {
+        "infinite-scroll": "infinite-scroll 25s linear infinite",
+      },
+      keyframes: {
+        "infinite-scroll": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-100%)" },
+        },
+      },
       fontFamily: {
         sf: ["var(--font-sf)"],
       },
@@ -51,6 +60,10 @@ module.exports = {
         "nav-background": "#F6F7FB",
         number: "#E16162",
         "background-sort": "#F9BC60",
+        primary10: "#15B392",
+        primary20: "#54C392",
+        primary30: "#73EC8B",
+        primary40: "#D2FF72",
         primary: "#40C057",
         primary25: "#E6F9E9",
         primary50: "#CCF4D3",
@@ -86,7 +99,20 @@ module.exports = {
         "greenish-grey": "rgba(53, 105, 102, 0.75)",
         description: "#001E1D",
         tertiary: "#e16162",
-        primary: "#F9BC60",
+        primary: "#40C057",
+        primary10: "#15B392",
+        primary20: "#54C392",
+        primary30: "#73EC8B",
+        primary40: "#D2FF72",
+        primary25: "#E6F9E9",
+        primary50: "#CCF4D3",
+        primary100: "#99E9A6",
+        primary200: "#66DE7A",
+        primary300: "#33D34D",
+        primary400: "#1ABB33",
+        primary500: "#40C057",
+        primary600: "#369A46",
+        primary700: "#2D7E39",
       },
       backgroundColor: {
         main: "#F1F4F0",

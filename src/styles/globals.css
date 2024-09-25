@@ -25,10 +25,11 @@
 body {
   width: 100%;
   height: 100%;
-  background-color: #bbbbbb;
+  background-color: #fff !important;
   font-weight: 400;
   font-optical-sizing: auto;
 }
+
 html,
 body,
 #__next {

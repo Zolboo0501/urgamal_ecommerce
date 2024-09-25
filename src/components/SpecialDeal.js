@@ -120,7 +120,7 @@ export default function ProductListWithCategory({ cols, className, suggest }) {
                 >
                   <ProductCard
                     key={`product-card-key-${index}-${e.id}`}
-                    shouldScale={false}
+                    shouldScale={true}
                     loader={() => e.additionalImage?.[0]}
                     src={e.additionalImage?.[0]}
                     additionalImages={e.additionalImage?.slice(1)}
@@ -206,7 +206,7 @@ export default function ProductListWithCategory({ cols, className, suggest }) {
                   >
                     <ProductCard
                       key={`product-card-key-${index}-${e.id}`}
-                      shouldScale={false}
+                      shouldScale={true}
                       loader={() => e.additionalImage?.[0]}
                       src={e.additionalImage?.[0]}
                       additionalImages={e.additionalImage?.slice(1)}
