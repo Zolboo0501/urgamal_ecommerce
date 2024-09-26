@@ -1,7 +1,14 @@
 import Image from "next/image";
 const { useState } = require("react");
 
-function Magnifier({ imgSrc, imgHeight, imgWidth, magnifierRadius }) {
+function Magnifier({
+  imgSrc,
+  imgHeight,
+  imgWidth,
+  magnifierRadius,
+  containerClassname,
+  imageClassname,
+}) {
   // Store the position of the magnifier and position of the large image relative to the magnifier.
   const [magnifierState, setMagnifierState] = useState({
     top: 0,
@@ -14,7 +21,7 @@ function Magnifier({ imgSrc, imgHeight, imgWidth, magnifierRadius }) {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative" }} className={containerClassname}>
       <Image
         alt={imgSrc}
         src={imgSrc}
@@ -23,17 +30,12 @@ function Magnifier({ imgSrc, imgHeight, imgWidth, magnifierRadius }) {
         height={imgHeight}
         loader={() => imgSrc}
         // Image can be a maximum of 50% of the viewport in either direction.
+        className={imageClassname}
         style={{
-          // maxHeight: "50vh",
-          // maxWidth: "50vh",
-          height: `${imgHeight}px`,
-          width: `${imgWidth}px`,
           borderRadius: 10,
           objectFit: "contain",
-          userSelect: 'none'
+          userSelect: "none",
         }}
-
-        className="magni-mobile"
         // Set the magnifier state on every move of the mouse over the image.
         onMouseMove={(e) => {
           setIsVisible(true);
@@ -45,8 +47,12 @@ function Magnifier({ imgSrc, imgHeight, imgWidth, magnifierRadius }) {
             top: y - magnifierRadius,
             left: x - magnifierRadius,
             // scale up to get position relative to the large image.
-            offsetX: (x / smallImage.width) * smallImage.naturalWidth - magnifierRadius,
-            offsetY: (y / smallImage.height) * smallImage.naturalHeight - magnifierRadius,
+            offsetX:
+              (x / smallImage.width) * smallImage.naturalWidth -
+              magnifierRadius,
+            offsetY:
+              (y / smallImage.height) * smallImage.naturalHeight -
+              magnifierRadius,
           });
         }}
         // Hide the magnifier when leaving the image.
@@ -62,7 +68,7 @@ function Magnifier({ imgSrc, imgHeight, imgWidth, magnifierRadius }) {
           zIndex: 99,
           display: "block",
           transition: "opacity 0.2s",
-          userSelect: 'none',
+          userSelect: "none",
           // Set background to the image from props:
           background: `url("${imgSrc}") no-repeat #fff`,
           // Set sizing based on the magnifierRadius from props:

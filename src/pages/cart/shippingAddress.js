@@ -2,7 +2,7 @@
 import ProductModal from "@/components/Profile/ProfileModal";
 import { fetchMethod } from "@/utils/fetch";
 import { UserConfigContext } from "@/utils/userConfigContext";
-import { Button, Card, Chip, Skeleton } from "@mantine/core";
+import { Button, Card, Chip, Flex, Group, Skeleton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import {
@@ -147,17 +147,22 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg lg:px-10 lg:py-8 mt-2 px-3 py-3 overflow-auto max-h-80">
+    <div className="bg-white rounded-lg lg:px-10 lg:py-8 mt-6 px-3 py-3 overflow-auto  shadow-md">
       {!loading ? (
         <>
           <div className="flex flex-row justify-between">
-            <span className="font-[500] lg:text-[1.3rem] text-sm text-[#212529]">
-              Хаягийн Мэдээлэл
+            <span className="font-[500] lg:text-[1.3rem] text-lg text-[#212529]">
+              Хаягийн мэдээлэл
             </span>
             <Button
               leftIcon={<IconCirclePlus size={20} />}
               variant="subtle"
               compact
+              sx={(theme) => ({
+                "@media (max-width: 40em)": {
+                  fontSize: theme.fontSizes.md,
+                },
+              })}
               onClick={(e) => {
                 e.preventDefault();
                 openProductEditingModal({}, "creation");
@@ -166,62 +171,31 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
               Шинэ хаяг нэмэх
             </Button>
           </div>
-          <div className="flex flex-col gap-6 mt-6 w-full  overflow-auto">
-            <div className="radio-button lg:px-5 gap-6 w-full px-2">
-              <Card.Section
-                sx={{ display: "flex", flexDirection: "column", gap: "15px" }}
-              >
-                {shippingData?.length === 0 && (
-                  <div className="flex flex-col w-full items-center gap-4 mt-6">
-                    <IconTruckOff size="2rem" stroke={1.5} />
-                    <span className="text-grey font-medium">
-                      {" "}
-                      Хаягийн мэдээлэл оруулаагүй байна
-                    </span>
-                  </div>
-                )}
-                {shippingData?.map((item, idx) => (
-                  <div key={idx}>
-                    <Chip.Group
-                      multiple={false}
-                      value={value}
-                      onChange={() => setValue(item.id)}
-                    >
-                      <Card
-                        shadow="sm"
-                        sx={{ width: "100%", backgroundColor: "#5475ab0d" }}
-                        className="cursor-pointer"
-                        component="label"
-                        onClick={() => {
-                          setSelectedShippingData(item);
-                          setSelect(true);
-                        }}
-                      >
-                        <div className="flex flex-row lg:gap-6 items-center gap-3">
-                          <Chip
-                            value={item.id}
-                            defaultChecked={value}
-                            size="sm"
-                          />
-                          <div>
-                            <p class="text-base sm:text-sm">
-                              {item.city?.name}-{item.district?.name}-
-                              {item.khoroo?.name} {item.note}
-                            </p>
-                            <div class="flex gap-1 mt-2 text-lg sm:text-sm">
-                              Утас:
-                              <span class="text-lg font-medium sm:text-sm">
-                                {item.phone}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </Card>
-                    </Chip.Group>
-                  </div>
-                ))}
-              </Card.Section>
-            </div>
+          <div className="radio-button lg:px-5 gap-6 w-full px-2 flex-col mt-4">
+            {shippingData?.length === 0 && (
+              <div className="flex flex-col w-full items-center gap-4 mt-6">
+                <IconTruckOff size="2rem" stroke={1.5} />
+                <span className="text-grey font-medium">
+                  {" "}
+                  Хаягийн мэдээлэл оруулаагүй байна
+                </span>
+              </div>
+            )}
+
+            <Chip.Group multiple={false} value={value}>
+              {shippingData?.map((item, idx) => {
+                return (
+                  <Chip
+                    key={idx}
+                    value={item?.id}
+                    variant="light"
+                    onClick={() => setValue(item?.id)}
+                    radius={10}
+                    className="flex flex-wrap"
+                  ></Chip>
+                );
+              })}
+            </Chip.Group>
           </div>
         </>
       ) : (

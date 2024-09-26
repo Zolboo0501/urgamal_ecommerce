@@ -199,10 +199,6 @@ body,
   .mantine-1phcupv tbody tr td {
     padding: 0.325rem 0.325rem !important;
   }
-  .magni-mobile {
-    width: 40px !important;
-    height: 40px !important;
-  }
 }
 
 @media screen and (max-width: 640px) {

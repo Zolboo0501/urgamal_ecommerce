@@ -32,8 +32,10 @@ import {
   IconCheck,
   IconCircleXFilled,
   IconMinus,
+  IconPhotoOff,
   IconPlus,
   IconTrash,
+  IconX,
 } from "@tabler/icons-react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
@@ -45,6 +47,8 @@ import {
   SuccessNotification,
 } from "../../utils/SuccessNotification";
 import Address from "./shippingAddress";
+import Magnifier from "@/components/Magnifier/Magnifier";
+import { numberWithCommas } from "@/utils/utils";
 
 const CartItems = (props) => {
   const [isCheckAll, setIsCheckAll] = useState(true);
@@ -131,40 +135,37 @@ const CartItems = (props) => {
     }
   }, [selectedShippingData]);
 
+  const deleteCartItem = (event, id) => {
+    event.stopPropagation();
+    const temp = [...cartItem?.cart_items];
+    const filter = temp?.filter((item) => item?.id !== id);
+    setCartItem({ ...cartItem, cart_items: filter });
+    removeFromCart(filter);
+  };
+
   const deleteFromCart = async () => {
-    let check = true;
-    let newArr = [...cartItem?.cart_items];
-    let removedArr = [];
-    newArr.forEach((e) => {
-      if (e.isChecked === true) {
-        const index = newArr.indexOf(e);
-        delete newArr[index];
-        removedArr.push(e.id);
-        check = false;
+    let isSelected = true;
+    let temp = [...cartItem?.cart_items];
+
+    const filter = temp?.filter((item) => {
+      if (item?.isChecked) {
+        isSelected = false;
       }
+      return item?.isChecked !== true;
     });
-    let temp = [];
-    if (check === true) {
+
+    if (isSelected) {
       return showNotification({
         message: "Устгах бараа сонгоно уу",
         color: "red",
       });
-    } else {
-      newArr.forEach((e) => {
-        if (e !== null && e !== undefined && !e.length) {
-          temp.push(e);
-        }
-      });
-
-      setCartItem({ ...cartItem, cart_items: temp });
-      removeFromCart(temp);
-      SuccessNotification({
-        message: "Бараа амжилттай устлаа.",
-        title: "Сагс",
-      });
-
-      removedArr = [];
     }
+    setCartItem({ ...cartItem, cart_items: filter });
+    removeFromCart(filter);
+    SuccessNotification({
+      message: "Бараа амжилттай устлаа.",
+      title: "Сагс",
+    });
   };
 
   const handleOrder = async () => {
@@ -400,7 +401,8 @@ const CartItems = (props) => {
   //   }
   // };
 
-  const minusQuantity = async (count, product) => {
+  const minusQuantity = async (event, count, product) => {
+    event.stopPropagation();
     const initialStock = product.balance;
     count--;
     if (initialStock >= count && count > 0) {
@@ -424,7 +426,8 @@ const CartItems = (props) => {
     }
   };
 
-  const addQuantity = async (count, product) => {
+  const addQuantity = async (event, count, product) => {
+    event.stopPropagation();
     const initialStock = product.balance;
     count++;
     if (initialStock >= count) {
@@ -542,8 +545,8 @@ const CartItems = (props) => {
                   <span className="font-[500] lg:text-[1.002rem] text-[0.55rem] text-[#212529]">
                     {item.name}
                   </span>
-                  <span className="font-[500] lg:text-[0.87rem] text-[0.6rem] text-[#2125297a]">
-                    Үлдэгдэл:{" "}
+                  <span className="font-[500] lg:text-[0.87rem] text-xs text-[#2125297a]">
+                    Үлдэгдэл:
                     <span className="text-[#212529]">
                       {/* {item.remainStock !== undefined || item.remainStock !== null
                         ? item.remainStock
@@ -568,13 +571,15 @@ const CartItems = (props) => {
             </td>
             <td>
               <div className="inherit">
-                <div className="flex items-center border border-[#21252923] rounded lg:p-1">
+                <div className="flex items-center justify-center border border-[#21252923] rounded lg:p-1">
                   <ActionIcon
                     sx={{
                       ":hover": { backgroundColor: "#fff5f5" },
                     }}
                     className="lg:mr-3 w-4 h-4 p-0 m-0"
-                    onClick={() => minusQuantity(item.quantity, item)}
+                    onClick={(event) =>
+                      minusQuantity(event, item.quantity, item)
+                    }
                   >
                     <IconMinus
                       size="1.2rem"
@@ -590,7 +595,7 @@ const CartItems = (props) => {
                       ":hover": { backgroundColor: "#ebfbee" },
                     }}
                     className="lg:ml-3"
-                    onClick={() => addQuantity(item.quantity, item)}
+                    onClick={(event) => addQuantity(event, item.quantity, item)}
                   >
                     <IconPlus
                       size="1.2rem"
@@ -607,7 +612,7 @@ const CartItems = (props) => {
               </span>
             </td>
             <td width={"100px"} style={{ textAlign: "center" }}>
-              <span className="font-[600] lg:text-[1rem] text-[0.6rem] text-[#212529]">
+              <span className="font-[500] lg:text-[1rem] text-[0.6rem] text-[#212529]">
                 {item?.total} ₮
               </span>
             </td>
@@ -615,6 +620,166 @@ const CartItems = (props) => {
         );
       }
     });
+
+  const renderBalanceBadge = (balance) => {
+    if (balance > 10) {
+      return (
+        <Badge color="teal" size="xs">
+          Хангалттай
+        </Badge>
+      );
+    } else if (balance === 0) {
+      return (
+        <Badge color="yellow" size="xs">
+          Үлдэгдэлгүй
+        </Badge>
+      );
+    } else {
+      return (
+        <span className="text-primary500 text-sm-3 sm:text-xs font-medium">
+          {balance}
+        </span>
+      );
+    }
+  };
+
+  const QuantityControl = ({ item }) => (
+    <div className="flex gap-2 max-w-12 items-center py-1 justify-center border border-[#21252923] rounded lg:p-1">
+      <button onClick={(event) => minusQuantity(event, item?.quantity, item)}>
+        <IconMinus
+          size="1.2rem"
+          color="#212529"
+          className="w-2 h-2 lg:w-4 lg:h-4"
+        />
+      </button>
+      <span className="font-[500] lg:text-[1rem] text-[0.6rem] text-[#212529]">
+        {item?.quantity}
+      </span>
+      <button onClick={(event) => addQuantity(event, item?.quantity, item)}>
+        <IconPlus
+          size="1.2rem"
+          color="#212529"
+          className="w-2 h-2 lg:w-4 lg:h-4"
+        />
+      </button>
+    </div>
+  );
+
+  const renderCartContent = () => {
+    const hasItems = cartItem?.cart_items?.length > 0;
+    const isLoading = loadingCart;
+
+    if (!hasItems) {
+      return (
+        <div className="min-h-full h-72 flex flex-col items-center justify-center">
+          <BsCartX size="2rem" stroke={1.5} />
+          <span className="mt-2 font-medium text-base text-grey">
+            Таны сагс хоосон байна.
+          </span>
+        </div>
+      );
+    }
+
+    if (isLoading) {
+      return (
+        <div className="min-h-full h-72 flex flex-col items-center justify-center relative">
+          <LoadingOverlay
+            loaderProps={{ size: "md", color: "#f9bc60" }}
+            overlayOpacity={0.1}
+            visible={isLoading}
+          />
+        </div>
+      );
+    }
+
+    return (
+      <div className="mt-6 flex flex-col overflow-auto">
+        {cartItem?.cart_items?.map((item, index) => {
+          return (
+            <button
+              className={`flex items-center justify-start gap-2 px-1 py-4 ${
+                index !== cartItem?.cart_items?.length - 1 && "border-b-1"
+              }`}
+              key={index}
+              onClick={(e) => handleClick(item)}
+            >
+              <Checkbox
+                className="checkbox-input"
+                checked={item.isChecked}
+                id={item.id}
+                onClick={(e) => handleClick(item)}
+                size={"xs"}
+                sx={{
+                  "@media (max-width: 40em)": {
+                    ".mantine-Checkbox-input": {
+                      width: "16px",
+                      height: "16px",
+                    },
+                  },
+                }}
+              />
+              <div className="flex flex-col flex-1 gap-2" key={index}>
+                <div className="flex flex-1 flex-col">
+                  <div className="flex flex-1 gap-1 items-center justify-between">
+                    <div className="flex flex-1 gap-1">
+                      {item?.additionalImage?.[0]?.url ? (
+                        <Magnifier
+                          imgSrc={item?.additionalImage?.[0]?.url}
+                          imgWidth={32}
+                          imgHeight={32}
+                          magnifierRadius={50}
+                          containerClassname={
+                            "self-center shrink-0 bg-grey100 rounded"
+                          }
+                          imageClassname={"w-16 h-16"}
+                        />
+                      ) : (
+                        <div className="w-16 h-16 flex items-center justify-center bg-grey100 rounded">
+                          <IconPhotoOff
+                            stroke={1.5}
+                            size={20}
+                            color="#40C057"
+                          />
+                        </div>
+                      )}
+
+                      <div className="flex flex-col gap-1.5 ml-2">
+                        <span className="text-sm line-clamp-2 font-medium text-start text-grey800">
+                          {item?.name}
+                        </span>
+                        <span className="text-md-2 font-medium text-grey600 text-start">
+                          {numberWithCommas(item.listPrice)}₮
+                        </span>
+                        <QuantityControl item={item} />
+                      </div>
+                    </div>
+                    <span className="font-medium text-ss text-[#212529]">
+                      {numberWithCommas(item.total)}₮
+                    </span>
+                  </div>
+                  <div className="flex flex-1 mt-2 justify-between ml-0">
+                    <div className="flex items-center gap-1">
+                      <span className="font-[500] lg:text-[0.87rem] text-xs text-[#2125297a]">
+                        Үлдэгдэл:
+                      </span>
+                      {renderBalanceBadge(item?.balance)}
+                    </div>
+                    <button
+                      className="flex flex-row items-center gap-1 px-2"
+                      onClick={(event) => deleteCartItem(event, item?.id)}
+                    >
+                      <IconX className="w-3 h-3 text-red-400" />
+                      <span className="text-xs text-grey500">Устгах</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    );
+  };
 
   return (
     <GlobalLayout>
@@ -644,8 +809,8 @@ const CartItems = (props) => {
         onClose={closeInput}
         handleInvoiceInput={handleInvoiceInput}
       />
-      <div className="bg-grey-back w-full lg:px-8 lg:py-4 px-4 py-4  h-screen relative">
-        <div className="absolute top-9">
+      <div className="bg-grey-back w-full lg:px-8 px-4 py-4 relative">
+        {/* <div className="absolute top-9">
           <Button
             variant="subtle"
             color=""
@@ -666,62 +831,33 @@ const CartItems = (props) => {
           >
             Буцах
           </Button>
-        </div>
-        <div className="flex md:flex-row flex-col lg:gap-10 lg:mt-8 gap-4 lg:px-32">
+        </div> */}
+        <div className="flex md:flex-row flex-col lg:gap-10 lg:mt-8 gap-4">
           <div className="flex relative flex-col lg:w-[70%] w-[100%] lg:gap-8">
-            <div>
-              <div className=" bg-white rounded-lg lg:px-10 lg:py-6 px-3 py-3">
-                <div className="flex flex-row justify-between">
-                  <span className="font-[500] lg:text-[1.3rem] text-[#212529]">
-                    Сагс
-                  </span>
-                  <div className="font-[400] text-[1rem] text-[#ff6868]"></div>
-                  <Button
-                    component="a"
-                    href="#"
-                    compact
-                    variant="subtle"
-                    leftIcon={<IconTrash size="1rem" />}
-                    sx={(theme) => ({
-                      "@media (max-width: 40em)": {
-                        fontSize: theme.fontSizes.xs,
-                      },
-                    })}
-                    color="red"
-                    onClick={() => deleteFromCart()}
-                  >
-                    Устгах
-                  </Button>
-                </div>
-                {/* <Suspense fallback={<Loading />}> */}
-                {cartItem?.cart_items?.length > 0 ? (
-                  loadingCart ? (
-                    <div className="min-h-full h-72 flex flex-col items-center justify-center relative">
-                      <LoadingOverlay
-                        loaderProps={{ size: "md", color: "#f9bc60" }}
-                        overlayOpacity={0.1}
-                        visible={loadingCart}
-                      />
-                    </div>
-                  ) : (
-                    <div className="mt-6 overflow-auto max-h-80">
-                      <Table captionSide="bottom" striped>
-                        {/* <caption>Some elements from periodic table</caption> */}
-                        <thead>{ths}</thead>
-                        <tbody>{rows}</tbody>
-                      </Table>
-                    </div>
-                  )
-                ) : (
-                  <div className="min-h-full h-72 flex flex-col items-center justify-center">
-                    <BsCartX size="2rem" stroke={1.5} />
-                    <span className="mt-2 font-medium text-base text-grey">
-                      Таны сагс хоосон байна.
-                    </span>
-                  </div>
-                )}
-                {/* </Suspense> */}
+            <div className=" bg-white rounded-lg lg:px-10 lg:py-6 px-3 py-3 shadow-md">
+              <div className="flex flex-row justify-between">
+                <span className="font-[500] lg:text-[1.3rem] text-lg text-[#212529]">
+                  Миний сагс
+                </span>
+                <div className="font-[400] text-[1rem] text-[#ff6868]"></div>
+                <Button
+                  component="a"
+                  href="#"
+                  compact
+                  variant="subtle"
+                  leftIcon={<IconTrash size="1rem" />}
+                  sx={(theme) => ({
+                    "@media (max-width: 40em)": {
+                      fontSize: theme.fontSizes.md,
+                    },
+                  })}
+                  color="red"
+                  onClick={() => deleteFromCart()}
+                >
+                  Устгах
+                </Button>
               </div>
+              {renderCartContent()}
             </div>
             {addressVisible === true && (
               <Address
@@ -731,8 +867,8 @@ const CartItems = (props) => {
             )}
           </div>
 
-          <div className="lg:w-[30%] h-2/5	bg-white rounded-lg lg:px-10 lg:py-8 px-4 py-4">
-            <div className="flex flex-col lg:gap-5 gap-3">
+          <div className="flex flex-1 h-2/5	bg-white rounded-lg lg:px-10 lg:py-8 px-4 py-4 shadow-md">
+            <div className="flex flex-col lg:gap-5 gap-3 flex-1">
               <span className="flex justify-between font-[400] lg:text-[1.05rem] text-sm text-[#2125297a]">
                 Нийт үнэ
                 <span className="font-[500] lg:text-[1.05rem] text-sm text-[#212529]">
@@ -784,7 +920,6 @@ const CartItems = (props) => {
               <Button
                 styles={(theme) => ({
                   root: {
-                    backgroundColor: "#f9bc60",
                     border: 0,
                     height: 42,
                     paddingLeft: 20,
@@ -800,7 +935,7 @@ const CartItems = (props) => {
                     fontSize: theme.fontSizes.xs,
                   },
                 })}
-                color="yellow"
+                color="green"
                 disabled={loadingOrder && true}
                 variant="filled"
                 radius="md"

@@ -189,7 +189,14 @@ const BottomFooter = ({ address, links }) => {
       {/* mobile */}
 
       <div className="block md:hidden">
-        <footer className="bg-green2">
+        <footer
+          className="bg-green2"
+          style={{
+            backgroundColor: address?.footer_color
+              ? address?.footer_color
+              : null,
+          }}
+        >
           <div className="mx-auto w-full max-w-screen-xl p-4 py-6">
             <div className="block">
               <div className="grid grid-cols-2 gap-8 mb-12">
