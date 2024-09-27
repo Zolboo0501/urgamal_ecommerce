@@ -8,6 +8,7 @@ import { setCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import BottomNavBar from "../bottomNavigation";
 import Category from "@/components/AllCategory/category";
+import { ColorSchemeScript } from "@mantine/core";
 
 export default function CategoryLayout({
   children,
@@ -54,6 +55,7 @@ export default function CategoryLayout({
           rel="stylesheet"
         />
         <title>{title}</title>
+        <ColorSchemeScript />
       </Head>
       <div className="shadow bg-white">
         <main

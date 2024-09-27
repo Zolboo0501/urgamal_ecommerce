@@ -2,7 +2,7 @@
 import ProductModal from "@/components/Profile/ProfileModal";
 import { fetchMethod } from "@/utils/fetch";
 import { UserConfigContext } from "@/utils/userConfigContext";
-import { Button, Card, Chip, Flex, Group, Skeleton } from "@mantine/core";
+import { Button, Checkbox, Skeleton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import {
@@ -171,7 +171,7 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
               Шинэ хаяг нэмэх
             </Button>
           </div>
-          <div className="radio-button lg:px-5 gap-6 w-full px-2 flex-col mt-4">
+          <div className="radio-button  gap-6 w-full flex-col mt-4 pb-4">
             {shippingData?.length === 0 && (
               <div className="flex flex-col w-full items-center gap-4 mt-6">
                 <IconTruckOff size="2rem" stroke={1.5} />
@@ -182,20 +182,39 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
               </div>
             )}
 
-            <Chip.Group multiple={false} value={value}>
-              {shippingData?.map((item, idx) => {
-                return (
-                  <Chip
-                    key={idx}
-                    value={item?.id}
-                    variant="light"
-                    onClick={() => setValue(item?.id)}
-                    radius={10}
-                    className="flex flex-wrap"
-                  ></Chip>
-                );
-              })}
-            </Chip.Group>
+            <Checkbox.Group>
+              <div className="flex flex-col gap-6">
+                {shippingData?.map((item, idx) => {
+                  if (item && item.id) {
+                    return (
+                      <Checkbox.Card
+                        key={item.id}
+                        withBorder={false}
+                        className="shadow-md "
+                        style={{ backgroundColor: "#F9FAFB" }}
+                      >
+                        <div className="flex gap-3 px-3 py-4">
+                          <Checkbox.Indicator />
+                          <div className="flex flex-col gap-1">
+                            <span class="text-base font-semibold">
+                              {item.city?.name} {item.district?.name}
+                            </span>
+                            <div className="flex gap-2">
+                              <span className="text-sm text-grey600 font-medium">
+                                {item.khoroo?.name} {item.note}
+                              </span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-grey800 font-medium">
+                              Утас: {item.phone}
+                            </div>
+                          </div>
+                        </div>
+                      </Checkbox.Card>
+                    );
+                  }
+                })}
+              </div>
+            </Checkbox.Group>
           </div>
         </>
       ) : (

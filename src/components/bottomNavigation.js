@@ -64,48 +64,77 @@ const BottomNavBar = () => {
       </Drawer>
       <div className="block lg:hidden sticky bottom-0 z-50">
         <div className="relative">
-          <div className="w-full bg-white p-4 h-full border-t border-gray-200 ">
+          <div className="bg-white h-full">
             <div className="grid h-full max-w-lg grid-cols-4 mx-auto">
               <button
                 type="button"
-                className="inline-flex flex-col gap-2 items-center justify-center font-medium px-5 hover:bg-gray-50 group"
+                className={`inline-flex flex-col items-center justify-center font-medium px-5 hover:bg-gray-50 group py-3`}
                 onClick={openCategoryDrawer}
               >
-                <IconCategory2 className="group-hover:text-blue-600 " />
-                <span className="text-lg text-gray-600 group-hover:text-blue-600 ">
+                <IconCategory2 size={"1.5rem"} color="#475467" />
+                <span className="text-sm text-grey700 font-medium">
                   Ангилал
                 </span>
               </button>
-              <Link
+              <button
                 type="button"
-                href={"/"}
-                className="inline-flex flex-col gap-2 items-center justify-center font-medium px-5 hover:bg-gray-50 group"
+                onClick={() => router.push("/home")}
+                className={`inline-flex flex-col  items-center justify-center font-medium px-5 hover:bg-gray-50 group py-3 ${
+                  router.pathname === "/home" && "border-t-3 border-primary"
+                }`}
               >
-                <IconHomeEco className="group-hover:text-blue-600 " />
-                <span className="text-lg text-gray-600 group-hover:text-blue-600 ">
+                <IconHomeEco
+                  size={"1.5rem"}
+                  color={`${
+                    router.pathname === "/home" ? "#2D7E39" : "#475467"
+                  }`}
+                />
+                <span
+                  className={`text-sm font-medium ${
+                    router.pathname === "/home"
+                      ? "text-primary600"
+                      : "text-grey700"
+                  }`}
+                >
                   Нүүр
                 </span>
-              </Link>
+              </button>
               <button
                 onClick={() => linkToCart()}
                 type="button"
-                className="inline-flex flex-col gap-2 items-center justify-center font-medium px-5 hover:bg-gray-50 group"
+                className={`inline-flex flex-col  items-center justify-center font-medium px-5 hover:bg-gray-50 group py-3 ${
+                  router.pathname === "/cart/cartItem" &&
+                  "border-t-3 border-primary"
+                }`}
               >
                 <div className="absolute">
-                  <div className="w-5 h-5 bg-number flex justify-center items-center text-white -mt-9 rounded-full text-sm ml-8">
-                    <p className="text-md">
+                  <div className="w-5 h-5 bg-number flex justify-center items-center text-white -mt-8 rounded-full text-sm ml-8">
+                    <p className="text-xs">
                       {cartItem?.cart_items ? cartItem?.cart_items?.length : 0}
                     </p>
                   </div>
                 </div>
-                <IconShoppingCart className="group-hover:text-blue-600 " />
-                <span className="text-lg text-gray-600 group-hover:text-blue-600 ">
+                <IconShoppingCart
+                  size={"1.5rem"}
+                  color={`${
+                    router.pathname === "/cart/cartItem" ? "#2D7E39" : "#475467"
+                  }`}
+                />
+                <span
+                  className={`text-sm font-medium ${
+                    router.pathname === "/cart/cartItem"
+                      ? "text-primary600"
+                      : "text-grey700"
+                  }`}
+                >
                   Сагс
                 </span>
               </button>
               <button
                 type="button"
-                className="inline-flex flex-col gap-2 items-center justify-center font-medium px-5 hover:bg-gray-50 group"
+                className={`inline-flex flex-col  items-center justify-center font-medium px-5 hover:bg-gray-50 group  ${
+                  router.pathname === "/profile" && "border-t-3 border-primary"
+                }`}
                 onClick={() => {
                   if (!userContext.auth) {
                     openContextModal({
@@ -122,8 +151,19 @@ const BottomNavBar = () => {
                   }
                 }}
               >
-                <IconUserCircle className="group-hover:text-blue-600 " />
-                <span className="text-lg text-gray-600 group-hover:text-blue-600 ">
+                <IconUserCircle
+                  size={"1.5rem"}
+                  color={`${
+                    router.pathname === "/profile" ? "#2D7E39" : "#475467"
+                  }`}
+                />
+                <span
+                  className={`text-sm font-medium ${
+                    router.pathname === "/profile"
+                      ? "text-primary600"
+                      : "text-grey700"
+                  }`}
+                >
                   Профайл
                 </span>
               </button>

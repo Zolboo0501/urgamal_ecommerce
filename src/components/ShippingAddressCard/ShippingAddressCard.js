@@ -36,7 +36,7 @@ export default function ShippingAddressCard({
               address.district ? address.district?.name : ""
             }, ${address.khoroo ? address.khoroo?.name : ""}`}
           </p>
-          <p class="text-xs font-medium">Нэмэлт тайлбар: {address.note}</p>
+          <p class="text-xs font-medium">{address.note}</p>
         </div>
       </div>
     </Card>

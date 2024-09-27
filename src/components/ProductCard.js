@@ -1,5 +1,6 @@
 import useWishlist from "@/hooks/useWishlist";
 import { fetchMethod } from "@/utils/fetch";
+import { numberWithCommas } from "@/utils/utils";
 import {
   ActionIcon,
   AspectRatio,
@@ -11,7 +12,6 @@ import {
   Image,
   LoadingOverlay,
   rem,
-  Stack,
   ThemeIcon,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
@@ -31,7 +31,6 @@ import { useState } from "react";
 import { IoIosBarcode } from "react-icons/io";
 import { addCart } from "../utils/Store";
 import { SuccessNotification } from "../utils/SuccessNotification";
-import { numberWithCommas } from "@/utils/utils";
 
 const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
   const [productCount, setProductCount] = useState(1);
@@ -44,7 +43,6 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
   const token = getCookie("token");
   const [toggle, setToggle] = useState(false);
   const wishlist = useWishlist();
-  // const averageBgColor = useAverageColor(src?.url);
   const addCount = (event) => {
     event.stopPropagation();
     if (data?.balance - productCount > 0) setProductCount(productCount + 1);
@@ -275,18 +273,18 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
         </div>
         {data?.barCode ? (
           <div className="flex flex-row gap-1 items-center">
-            <IoIosBarcode size={rem(24)} color="#696A6C" />{" "}
+            <IoIosBarcode size={"2rem"} color="#696A6C" />{" "}
             <p className="text-grey800 text-sm">{data?.barCode}</p>
           </div>
         ) : (
-          <IoIosBarcode size={rem(24)} color="white" />
+          <IoIosBarcode size={"2rem"} color="white" />
         )}
       </div>
       <Group pt="xs" pb={0} grow align="stretch" w="100%">
         <div className="flex flex-row items-center">
           <ActionIcon
             variant="light"
-            size="lg"
+            size="md"
             radius="xl"
             className="flex justify-center items-center border rounded-md"
             color="green"
@@ -295,14 +293,14 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
               minusCount(event);
             }}
           >
-            <IconMinus stroke={2} size={rem(16)} />
+            <IconMinus stroke={2} size={"1.2rem"} />
           </ActionIcon>
           <p className="text-center text-sm ml-2 mr-2 font-semibold">
             {productCount}
           </p>
           <ActionIcon
             variant="light"
-            size="lg"
+            size="md"
             radius="xl"
             className="flex justify-center items-center rounded-md"
             color="green"
@@ -311,7 +309,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
               addCount(event);
             }}
           >
-            <IconPlus stroke={2} size={rem(16)} />
+            <IconPlus stroke={2} size={"1.2rem"} />
           </ActionIcon>
         </div>
         <Button

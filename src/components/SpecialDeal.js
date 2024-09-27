@@ -1,11 +1,13 @@
 import Image from "next/image";
 import { SwiperSlide, Swiper } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation } from "swiper";
-import ProductCard from "./product-card";
+import { Navigation } from "swiper/modules";
 import { useSpecialDeals } from "@/hooks/useSpecialDeals";
 import { SimpleGrid, Skeleton } from "@mantine/core";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import ProductCard from "./ProductCard";
 
 export default function ProductListWithCategory({ cols, className, suggest }) {
   const { data, isLoading } = useSpecialDeals();

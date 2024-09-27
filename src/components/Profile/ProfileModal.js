@@ -177,7 +177,7 @@ function ProductModal({
                 data={districts}
               />
             </Grid.Col>
-            <Grid.Col span={2}>
+            <Grid.Col span={6}>
               <Select
                 className="w-full"
                 withAsterisk
@@ -193,7 +193,7 @@ function ProductModal({
                 data={committee}
               />
             </Grid.Col>
-            <Grid.Col span={2}>
+            <Grid.Col span={6}>
               <TextInput
                 className="w-full"
                 withAsterisk

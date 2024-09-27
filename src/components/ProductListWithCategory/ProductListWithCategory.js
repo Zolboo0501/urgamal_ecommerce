@@ -1,15 +1,13 @@
 import MySkeleton from "../MySkeleton";
 import { IconChevronRight } from "@tabler/icons-react";
 import Image from "next/image";
-import { SwiperSlide, Swiper } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation } from "swiper";
-import ProductCard from "../product-card";
 import useSWR from "swr";
 import Link from "next/link";
 import { fetcher } from "@/utils/fetch";
 import { PAGE_SIZE } from "@/utils/constant";
+import { Pagination, Navigation } from "swiper/modules";
+import Swiper from "swiper/react";
+import ProductCard from "../ProductCard";
 
 export default function ProductListWithCategory({
   categoryName,
@@ -75,7 +73,7 @@ export default function ProductListWithCategory({
         slidesPerView={5}
         spaceBetween={30}
         navigation
-        modules={[Navigation]}
+        modules={[Navigation, Pagination]}
         breakpoints={{
           320: {
             slidesPerView: 1.5,

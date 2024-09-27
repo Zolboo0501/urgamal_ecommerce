@@ -2,6 +2,7 @@
 import GlobalLayout from "@/components/GlobalLayout/GlobalLayout";
 import InvoiceInputModal from "@/components/InvoiceModal/InvoiceInputModal";
 import InvoiceModal from "@/components/InvoiceModal/InvoiceModal";
+import Magnifier from "@/components/Magnifier/Magnifier";
 import { fetchMethod } from "@/utils/fetch";
 import {
   addQuantityProduct,
@@ -10,6 +11,7 @@ import {
   removeQuantityProduct,
 } from "@/utils/Store";
 import { UserConfigContext } from "@/utils/userConfigContext";
+import { numberWithCommas } from "@/utils/utils";
 import {
   ActionIcon,
   Badge,
@@ -20,7 +22,6 @@ import {
   Modal,
   Stack,
   Switch,
-  Table,
   Tooltip,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -28,7 +29,6 @@ import { openContextModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import {
   IconAlertCircle,
-  IconArrowLeft,
   IconCheck,
   IconCircleXFilled,
   IconMinus,
@@ -47,8 +47,6 @@ import {
   SuccessNotification,
 } from "../../utils/SuccessNotification";
 import Address from "./shippingAddress";
-import Magnifier from "@/components/Magnifier/Magnifier";
-import { numberWithCommas } from "@/utils/utils";
 
 const CartItems = (props) => {
   const [isCheckAll, setIsCheckAll] = useState(true);
@@ -494,133 +492,6 @@ const CartItems = (props) => {
     setSelectedItemsTotal(total);
   };
 
-  const ths = (
-    <tr className="table-row">
-      <th className="lg:py-10 w-[5%]">
-        <Checkbox
-          value="selectAll"
-          onClick={handleSelectAll}
-          checked={isCheckAll}
-          size="sm"
-        />
-      </th>
-      <th className="w-[40%] text-center">Бараа</th>
-      <th className="w-[15%] text-center">Ширхэг</th>
-      <th className="w-[20%] text-center">Үнэ</th>
-      <th className="w-[20%] text-center">Дүн</th>
-    </tr>
-  );
-
-  const rows =
-    cartItem &&
-    cartItem?.cart_items?.map((item, idx) => {
-      if (item !== undefined) {
-        return (
-          <tr key={idx}>
-            <td>
-              <Checkbox
-                className="checkbox-input"
-                checked={item.isChecked}
-                id={item.id}
-                onClick={(e) => handleClick(item)}
-                size="sm"
-              />
-            </td>
-            <td>
-              <div className="flex flex-row lg:gap-8">
-                {/* <Magnifier
-                  imgSrc={"/bundle-1.svg"}
-                  imgWidth={80}
-                  imgHeight={80}
-                  magnifierRadius={50}
-                /> */}
-                {/* <Image
-                  loader={() => item?.pictureurl}
-                  src={item?.pictureurl}
-                  width={80}
-                  height={80}
-                  alt={item.name}
-                /> */}
-                <div className="flex flex-col justify-around ml-2 lg:ml-0">
-                  <span className="font-[500] lg:text-[1.002rem] text-[0.55rem] text-[#212529]">
-                    {item.name}
-                  </span>
-                  <span className="font-[500] lg:text-[0.87rem] text-xs text-[#2125297a]">
-                    Үлдэгдэл:
-                    <span className="text-[#212529]">
-                      {/* {item.remainStock !== undefined || item.remainStock !== null
-                        ? item.remainStock
-                        : item.instock - item.quantity} */}
-                      {item.balance > 10 ? (
-                        <Badge color="teal" size={"xs"}>
-                          Хангалттай
-                        </Badge>
-                      ) : item.balance == 0 ? (
-                        <Badge color="yellow" size={"xs"}>
-                          Үлдэгдэлгүй
-                        </Badge>
-                      ) : (
-                        <span className="text-greenish-grey text-xs  ">
-                          {item.balance}
-                        </span>
-                      )}
-                    </span>
-                  </span>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div className="inherit">
-                <div className="flex items-center justify-center border border-[#21252923] rounded lg:p-1">
-                  <ActionIcon
-                    sx={{
-                      ":hover": { backgroundColor: "#fff5f5" },
-                    }}
-                    className="lg:mr-3 w-4 h-4 p-0 m-0"
-                    onClick={(event) =>
-                      minusQuantity(event, item.quantity, item)
-                    }
-                  >
-                    <IconMinus
-                      size="1.2rem"
-                      color="#212529"
-                      className="w-2 h-2 lg:w-4 lg:h-4"
-                    />
-                  </ActionIcon>
-                  <span className="font-[500] lg:text-[1rem] text-[0.6rem] text-[#212529]">
-                    {item.quantity}
-                  </span>
-                  <ActionIcon
-                    sx={{
-                      ":hover": { backgroundColor: "#ebfbee" },
-                    }}
-                    className="lg:ml-3"
-                    onClick={(event) => addQuantity(event, item.quantity, item)}
-                  >
-                    <IconPlus
-                      size="1.2rem"
-                      color="#212529"
-                      className="w-2 h-2 lg:w-4 lg:h-4"
-                    />
-                  </ActionIcon>
-                </div>
-              </div>
-            </td>
-            <td width={"100px"} style={{ textAlign: "center" }}>
-              <span className="font-[600] lg:text-[1rem] text-[0.6rem] text-[#212529]">
-                {item.listPrice} ₮
-              </span>
-            </td>
-            <td width={"100px"} style={{ textAlign: "center" }}>
-              <span className="font-[500] lg:text-[1rem] text-[0.6rem] text-[#212529]">
-                {item?.total} ₮
-              </span>
-            </td>
-          </tr>
-        );
-      }
-    });
-
   const renderBalanceBadge = (balance) => {
     if (balance > 10) {
       return (
@@ -644,24 +515,30 @@ const CartItems = (props) => {
   };
 
   const QuantityControl = ({ item }) => (
-    <div className="flex gap-2 max-w-12 items-center py-1 justify-center border border-[#21252923] rounded lg:p-1">
-      <button onClick={(event) => minusQuantity(event, item?.quantity, item)}>
+    <div className="flex gap-2 max-w-[5rem] items-center py-1 justify-center rounded lg:p-1">
+      <ActionIcon
+        variant="light"
+        color="teal"
+        radius={"xl"}
+        onClick={(event) => minusQuantity(event, item?.quantity, item)}
+      >
         <IconMinus
-          size="1.2rem"
-          color="#212529"
-          className="w-2 h-2 lg:w-4 lg:h-4"
+          size={24}
+          color="#40C057"
+          className="w-4 h-4 lg:w-4 lg:h-4"
         />
-      </button>
-      <span className="font-[500] lg:text-[1rem] text-[0.6rem] text-[#212529]">
+      </ActionIcon>
+      <span className="font-[500] lg:text-[1rem] text-[0.9rem] text-[#212529]">
         {item?.quantity}
       </span>
-      <button onClick={(event) => addQuantity(event, item?.quantity, item)}>
-        <IconPlus
-          size="1.2rem"
-          color="#212529"
-          className="w-2 h-2 lg:w-4 lg:h-4"
-        />
-      </button>
+      <ActionIcon
+        variant="light"
+        color="teal"
+        radius={"xl"}
+        onClick={(event) => addQuantity(event, item?.quantity, item)}
+      >
+        <IconPlus size={24} color="#40C057" className="w-4 h-4 lg:w-4 lg:h-4" />
+      </ActionIcon>
     </div>
   );
 
@@ -693,7 +570,7 @@ const CartItems = (props) => {
     }
 
     return (
-      <div className="mt-6 flex flex-col overflow-auto">
+      <div className="mt-0 flex flex-col overflow-auto">
         {cartItem?.cart_items?.map((item, index) => {
           return (
             <button
@@ -743,23 +620,25 @@ const CartItems = (props) => {
                         </div>
                       )}
 
-                      <div className="flex flex-col gap-1.5 ml-2">
-                        <span className="text-sm line-clamp-2 font-medium text-start text-grey800">
+                      <div className="flex flex-1 flex-col gap-1.5 ml-2">
+                        <span className="text-ss line-clamp-2 font-medium text-start text-grey800">
                           {item?.name}
                         </span>
-                        <span className="text-md-2 font-medium text-grey600 text-start">
+                        <span className="text-sm font-medium text-grey600 text-start">
                           {numberWithCommas(item.listPrice)}₮
                         </span>
-                        <QuantityControl item={item} />
+                        <div className="flex items-center justify-between ">
+                          <QuantityControl item={item} />
+                          <span className="font-medium text-ss text-[#212529]">
+                            {numberWithCommas(item.total)}₮
+                          </span>
+                        </div>
                       </div>
                     </div>
-                    <span className="font-medium text-ss text-[#212529]">
-                      {numberWithCommas(item.total)}₮
-                    </span>
                   </div>
                   <div className="flex flex-1 mt-2 justify-between ml-0">
                     <div className="flex items-center gap-1">
-                      <span className="font-[500] lg:text-[0.87rem] text-xs text-[#2125297a]">
+                      <span className="font-[500] lg:text-[0.87rem] text-sm text-[#2125297a]">
                         Үлдэгдэл:
                       </span>
                       {renderBalanceBadge(item?.balance)}
@@ -768,8 +647,8 @@ const CartItems = (props) => {
                       className="flex flex-row items-center gap-1 px-2"
                       onClick={(event) => deleteCartItem(event, item?.id)}
                     >
-                      <IconX className="w-3 h-3 text-red-400" />
-                      <span className="text-xs text-grey500">Устгах</span>
+                      <span className="text-sm text-grey500">Устгах</span>
+                      <IconX className="w-5 h-5 text-red-400" />
                     </button>
                   </div>
                 </div>
@@ -809,7 +688,7 @@ const CartItems = (props) => {
         onClose={closeInput}
         handleInvoiceInput={handleInvoiceInput}
       />
-      <div className="bg-grey-back w-full lg:px-8 px-4 py-4 relative">
+      <div className="bg-grey-back w-full lg:px-8 px-4 py-8 relative ">
         {/* <div className="absolute top-9">
           <Button
             variant="subtle"
@@ -839,13 +718,12 @@ const CartItems = (props) => {
                 <span className="font-[500] lg:text-[1.3rem] text-lg text-[#212529]">
                   Миний сагс
                 </span>
-                <div className="font-[400] text-[1rem] text-[#ff6868]"></div>
                 <Button
                   component="a"
                   href="#"
                   compact
                   variant="subtle"
-                  leftIcon={<IconTrash size="1rem" />}
+                  leftSection={<IconTrash size={"1rem"} />}
                   sx={(theme) => ({
                     "@media (max-width: 40em)": {
                       fontSize: theme.fontSizes.md,
@@ -869,27 +747,27 @@ const CartItems = (props) => {
 
           <div className="flex flex-1 h-2/5	bg-white rounded-lg lg:px-10 lg:py-8 px-4 py-4 shadow-md">
             <div className="flex flex-col lg:gap-5 gap-3 flex-1">
-              <span className="flex justify-between font-[400] lg:text-[1.05rem] text-sm text-[#2125297a]">
+              <span className="flex justify-between font-[400] lg:text-[1.05rem] text-ss text-[#2125297a]">
                 Нийт үнэ
                 <span className="font-[500] lg:text-[1.05rem] text-sm text-[#212529]">
-                  {selectedItemsTotal || 0}
+                  {numberWithCommas(selectedItemsTotal) || 0}₮
                 </span>
               </span>
-              <span className="flex justify-between font-[400] lg:text-[1.05rem] text-sm text-[#2125297a]">
+              {/* <span className="flex justify-between font-[400] lg:text-[1.05rem] text-ss text-[#2125297a]">
                 Хөнгөлөлт
                 <span className="font-[500] lg:text-[1.05rem] text-sm text-[#212529]">
                   0 ₮
                 </span>
-              </span>
-              <span className="flex justify-between font-[400] lg:text-[1.05rem] text-sm text-[#2125297a]">
+              </span> */}
+              <span className="flex justify-between font-[400] lg:text-[1.05rem] text-ss text-[#2125297a]">
                 Хүргэлт
-                <span className="font-[500] lg:text-[1.05rem] text-sm text-[#212529]">
-                  {shippingPee} ₮
+                <span className="font-[500] lg:text-[1.05rem] text-ss text-[#212529]">
+                  {numberWithCommas(shippingPee)}₮
                 </span>
               </span>
               <div className="flex flex-row justify-between items-center">
                 <div className="flex items-center">
-                  <span className="flex justify-between font-[400] lg:text-[1.05rem] text-sm text-[#2125297a]">
+                  <span className="flex justify-between font-[400] lg:text-[1.05rem] text-ss text-[#2125297a]">
                     Очиж авах
                     <Tooltip label="Очиж авах бол заавал баруун гар талд байгаа товчийг идэвхжүүлнэ үү">
                       <IconAlertCircle
@@ -912,9 +790,12 @@ const CartItems = (props) => {
               <span className="flex justify-between mb-1 font-[400] lg:text-[1.1rem] text-sm text-[#212529af]">
                 Нийлбэр үнэ
                 <span className="font-[500] lg:text-[1.1rem] text-sm text-[#212529]">
-                  {shippingPee
-                    ? selectedItemsTotal + shippingPee
-                    : selectedItemsTotal || 0}
+                  {numberWithCommas(
+                    shippingPee
+                      ? selectedItemsTotal + shippingPee
+                      : selectedItemsTotal || 0
+                  )}
+                  ₮
                 </span>
               </span>
               <Button

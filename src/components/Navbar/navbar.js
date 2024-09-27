@@ -16,6 +16,7 @@ import {
   IconPhotoOff,
   IconReportSearch,
   IconSearch,
+  IconX,
 } from "@tabler/icons-react";
 import { getCookie, setCookie } from "cookies-next";
 import Image from "next/image";
@@ -29,10 +30,10 @@ import { getCart } from "@/utils/Store";
 import { UserConfigContext } from "@/utils/userConfigContext";
 import { useDebouncedValue } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
-import { isMobile } from "react-device-detect";
 import useSWR from "swr";
 import Notification from "../Notification/Notification";
 import { numberWithCommas } from "@/utils/utils";
+import { options } from "sanitize-html";
 const Navbar = (props) => {
   const { address } = props;
   const router = useRouter();
@@ -67,16 +68,14 @@ const Navbar = (props) => {
   );
 
   const suggestions = data
-    ? data?.map((e) => {
-        return {
-          value: e?.name || "",
-          id: e?.id || "",
-          image: e?.additionalImage[0]?.url || "",
-          description: e?.description || "",
-          balance: e?.balance || "",
-          price: e?.listPrice || "",
-        };
-      })
+    ? data.map((e) => ({
+        value: e?.name || "",
+        id: e?.id || "",
+        image: e?.additionalImage[0]?.url || "",
+
+        balance: e?.balance || "",
+        price: e?.listPrice || "",
+      }))
     : [];
 
   useEffect(() => {
@@ -111,39 +110,43 @@ const Navbar = (props) => {
   // }, [categories]);
 
   // eslint-disable-next-line react/display-name
-  const AutocompleteItem = forwardRef(
-    ({ image, value, balance, price, ...others }, ref) => {
-      return (
-        <div
-          ref={ref}
-          style={{ padding: "10px", marginTop: "5px" }}
-          className=" hover:cursor-pointer hover:bg-gray-100 hover:rounded-md"
-          {...others}
+  const renderOptionItem = ({ option }) => {
+    const value = suggestions?.filter(
+      (item) => item?.value === option?.value
+    )?.[0];
+
+    return (
+      <div className=" hover:bg-gray-100 hover:rounded-md flex items-center gap-2 p-2">
+        <Avatar
+          src={value?.image}
+          alt="Зураг"
+          size={"3rem"}
+          className="shrink-0"
         >
-          <Group noWrap>
-            <Avatar src={image} alt="Зураг">
-              <IconPhotoOff stroke={1.5} size={16} color="#40C057" />
-            </Avatar>
-            <div>
-              <p className="font-medium text-grey800">{value}</p>
-              <div className="flex flex-row items-center gap-6">
-                <div className="flex items-center">
-                  <p className="text-[#696A6C]  text-xs">Үнэ : </p>
-                  <p className="text-xs ml-1 text-start text-primary700 font-bold ">
-                    {numberWithCommas(price) || 0}₮
-                  </p>
-                </div>
-                <div className="flex items-center">
-                  <p className="text-[#696A6C] text-xs">Үлдэгдэл : </p>
-                  {renderRemains(balance)}
-                </div>
-              </div>
+          <IconPhotoOff stroke={1.5} size={16} color="#40C057" />
+        </Avatar>
+        <div className="flex flex-col gap-1">
+          <div className="flex flex-wrap">
+            <p className="text-sm font-medium text-grey800 line-clamp-2">
+              {value?.value}
+            </p>
+          </div>
+          <div className="flex flex-row items-center gap-2 md:gap-4 lg:gap-6">
+            <div className="flex items-center">
+              <p className="text-[#696A6C] text-xs md:text-sm">Үнэ : </p>
+              <p className="text-xs md:text-sm ml-1 text-start text-primary700 font-bold ">
+                {numberWithCommas(value?.price) || 0}₮
+              </p>
             </div>
-          </Group>
+            <div className="flex items-center gap-1">
+              <p className="text-[#696A6C] text-xs md:text-sm">Үлдэгдэл : </p>
+              {renderRemains(value?.balance)}
+            </div>
+          </div>
         </div>
-      );
-    }
-  );
+      </div>
+    );
+  };
 
   const linkToCart = () => {
     router.push({
@@ -319,31 +322,35 @@ const Navbar = (props) => {
         backgroundColor: address?.header_color ? address?.header_color : "#fff",
       }}
     >
-      <div className="flex justify-between items-center py-2 px-12 max-sm:px-2">
-        <Link href={"/home"} className="flex flex-row items-center gap-2">
-          <div className="font-open hidden lg:block font-medium">ТАРИМАЛ</div>
-          <div className="flex justify-center items-center ">
-            {userContext?.address?.logo ? (
-              <Image
-                src={userContext?.address?.logo}
-                width={42}
-                height={42}
-                className="w-12 h-12"
-                alt={userContext?.address?.logo}
-              />
-            ) : (
-              <Image
-                src={"/logo.png"}
-                width={36}
-                height={36}
-                className="w-12 h-12"
-                alt={"logo"}
-              />
-            )}
-          </div>
-          <div className="font-open hidden lg:block font-medium">УРГАМАЛ</div>
-        </Link>
-        <div className="flex justify-end md:justify-center items-center gap-8 md:gap-3 flex-grow ml-6 md:mx-11">
+      <div className="flex justify-between items-center py-2 px-4 md:px-4 lg:px-8">
+        {!showSearch && (
+          <Link href={"/home"} className="flex flex-row items-center gap-2">
+            <div className="font-open hidden lg:block text-base font-medium">
+              ТАРИМАЛ
+            </div>
+            <div className="flex justify-center items-center ">
+              {userContext?.address?.logo ? (
+                <Image
+                  src={userContext?.address?.logo}
+                  width={42}
+                  height={42}
+                  className="w-12 h-112"
+                  alt={userContext?.address?.logo}
+                />
+              ) : (
+                <Image
+                  src={"/logo.png"}
+                  width={36}
+                  height={36}
+                  className="w-12 h-12"
+                  alt={"logo"}
+                />
+              )}
+            </div>
+            <div className="font-open hidden lg:block font-medium">УРГАМАЛ</div>
+          </Link>
+        )}
+        <div className="flex justify-end md:flex-1 md:justify-center items-center gap-8 md:gap-3 lg:flex-grow lg:ml-6 md:mx-2 lg:mx-4">
           {catsError && <div>error</div>}
           {categories && (
             <Tooltip
@@ -352,14 +359,10 @@ const Navbar = (props) => {
               className=" md:block"
             >
               <Select
-                // variant="filled"
                 size="md"
                 radius="xl"
                 value={userConfigValue}
                 onChange={(value) => handleConfigSelection(value)}
-                // rightSection={<IconArrowsExchange2 size="1rem" />}
-                // rightSectionWidth={30}
-                // styles={{ rightSection: { pointerEvents: "none" } }}
                 styles={(theme) => ({
                   item: {
                     "&[data-selected]": {
@@ -367,8 +370,6 @@ const Navbar = (props) => {
                         backgroundColor: "#f9bc60",
                       },
                     },
-
-                    // applies styles to hovered item (with mouse or keyboard)
                     "&[data-hovered]": {},
                   },
                 })}
@@ -410,18 +411,18 @@ const Navbar = (props) => {
               </>
             )}
           </div> */}
-          <div className="hidden md:block flex-grow">
+          <div className="hidden md:block flex-grow pl-2">
             <Autocomplete
               className="w-full"
               size={"md"}
               placeholder="Хайлт хийх.."
-              itemComponent={AutocompleteItem}
               data={suggestions ? suggestions : []}
+              renderOption={renderOptionItem}
               limit={7}
               radius={30}
+              maxDropdownHeight={400}
               styles={{
                 root: {
-                  paddingLeft: isMobile ? "0px" : "5px",
                   paddingRight: 0,
                 },
                 input: {
@@ -452,12 +453,15 @@ const Navbar = (props) => {
                   });
                 }
               }}
-              onItemSubmit={({ id }) =>
+              onOptionSubmit={(option) => {
+                const value = suggestions?.filter(
+                  (item) => item?.value === option
+                )?.[0];
                 router.push({
                   pathname: "/product/[id]",
-                  query: { id },
-                })
-              }
+                  query: { id: value?.id },
+                });
+              }}
               rightSection={
                 <button
                   className="m-auto h-full  bg-primary rounded-r-full p-2 px-3.5 max-xs:w-11 max-xs:flex max-xs:items-center max-xs:justify-center max-xs:p-0 max-xs:px-0 "
@@ -479,20 +483,85 @@ const Navbar = (props) => {
             />
           </div>
         </div>
-        <div className="block md:hidden">
-          <button
-            className="w-full m-auto h-full bg-background-sort p-3 rounded-full max-xs:w-11 max-xs:h-11 max-xs:flex max-xs:items-center max-xs:justify-center max-xs:p-0 max-xs:px-0 "
-            onClick={() => {
-              setShowSearch(!showSearch);
-            }}
-          >
-            <IconSearch
-              color="white"
-              size="1.2rem"
-              stroke={2.5}
-              className="max-xs:w-4 max-xs:h-4"
-            />
-          </button>
+        <div
+          className={`flex md:hidden flex-1 items-center ${
+            !showSearch && "justify-end"
+          }`}
+        >
+          {showSearch && (
+            <div className="flex flex-1 my-[0.3rem]">
+              <Autocomplete
+                className="w-full"
+                size={"sm"}
+                placeholder="Хайлт хийх.."
+                data={suggestions ? suggestions : []}
+                renderOption={renderOptionItem}
+                limit={7}
+                radius={30}
+                maxDropdownHeight={400}
+                styles={{
+                  root: {
+                    paddingRight: 0,
+                  },
+                  input: {
+                    "::placeholder": {
+                      fontSize: ".95rem",
+                      color: "#344054",
+                    },
+                    paddingLeft: "1.5rem",
+                    borderWidth: 0,
+                    boxShadow:
+                      "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+                  },
+                  rightSection: {
+                    margin: 0,
+                    padding: 0,
+                  },
+                  dropdown: {
+                    borderRadius: 15,
+                  },
+                }}
+                value={searchQuery}
+                onChange={setSearchQuery}
+                rightSection={
+                  <button
+                    onClick={() => {
+                      setShowSearch(!showSearch);
+                    }}
+                  >
+                    <IconX color="black" size="1.2rem" stroke={2.5} />
+                  </button>
+                }
+                onKeyDown={(e) => {
+                  if (e.code === "Enter") {
+                    router.push({
+                      pathname: "/products",
+                      query: { q: searchQuery },
+                    });
+                  }
+                }}
+                onOptionSubmit={(option) => {
+                  const value = suggestions?.filter(
+                    (item) => item?.value === option
+                  )?.[0];
+                  router.push({
+                    pathname: "/product/[id]",
+                    query: { id: value?.id },
+                  });
+                }}
+              />
+            </div>
+          )}
+          {!showSearch && (
+            <button
+              className="bg-primary p-2 rounded-full"
+              onClick={() => {
+                setShowSearch(!showSearch);
+              }}
+            >
+              <IconSearch color="white" size="1.0rem" stroke={2.5} />
+            </button>
+          )}
         </div>
         <div className="flex items-center gap-4 max-xs:gap-2">
           <div className="hidden md:block">
@@ -504,7 +573,8 @@ const Navbar = (props) => {
                 root: { paddingLeft: 0, paddingRight: rem(13), margin: 0 },
               })}
               className="mr-1"
-              leftIcon={<HearthButtonImage />}
+              size="md"
+              leftSection={<HearthButtonImage />}
             />
             <Button
               styles={() => ({
@@ -512,7 +582,8 @@ const Navbar = (props) => {
               })}
               variant={"transparent"}
               onClick={() => linkToCart()}
-              leftIcon={<TrolleyButtonImage />}
+              size="md"
+              leftSection={<TrolleyButtonImage />}
             >
               <div className="hidden lg:flex flex-col font-regular text-sm-2 text-[#000] gap-1 ml-2">
                 Таны сагсанд
@@ -528,7 +599,7 @@ const Navbar = (props) => {
               styles={() => ({
                 root: { padding: 0, margin: 0 },
               })}
-              leftIcon={<ProfileButtonImage />}
+              rightSection={<ProfileButtonImage />}
               onClick={() => {
                 if (!userContext.auth) {
                   route.push("/login");
@@ -548,50 +619,6 @@ const Navbar = (props) => {
             </Button>
           </div>
         </div>
-      </div>
-      <div>
-        {showSearch && (
-          <div>
-            <Autocomplete
-              className="w-full"
-              size={"md"}
-              placeholder="Бараа хайх..."
-              itemComponent={AutocompleteItem}
-              data={suggestions ? suggestions : []}
-              limit={10}
-              styles={{
-                root: {
-                  paddingLeft: isMobile ? "0px" : "5px",
-                  paddingRight: 0,
-                  borderRadius: 25,
-                  flexGrow: 4,
-                },
-                input: {
-                  "::placeholder": {
-                    fontSize: ".95rem",
-                  },
-                  borderWidth: "3px",
-                },
-              }}
-              value={searchQuery}
-              onChange={setSearchQuery}
-              onKeyDown={(e) => {
-                if (e.code === "Enter") {
-                  router.push({
-                    pathname: "/products",
-                    query: { q: searchQuery },
-                  });
-                }
-              }}
-              onItemSubmit={({ id }) =>
-                router.push({
-                  pathname: "/product/[id]",
-                  query: { id },
-                })
-              }
-            />
-          </div>
-        )}
       </div>
     </div>
   );

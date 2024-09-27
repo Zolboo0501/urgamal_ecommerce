@@ -64,6 +64,7 @@ const Notification = () => {
       <Popover.Target>
         <Button
           variant="transparent"
+          size="md"
           onClick={() => {
             const token = getCookie("token");
             if (token) {

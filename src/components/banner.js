@@ -4,12 +4,14 @@ import Link from "next/link";
 import { ThemeIcon, rem } from "@mantine/core";
 import CategoryHover from "./AllCategory/CategoryHover";
 import useCategories from "@/hooks/useCategories";
-import { IconChevronRight, IconPhotoOff } from "@tabler/icons-react";
+import { IconPhotoOff } from "@tabler/icons-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+
+import { Navigation, Pagination } from "swiper/modules";
 import { UserConfigContext } from "@/utils/userConfigContext";
 
 const Banner = () => {

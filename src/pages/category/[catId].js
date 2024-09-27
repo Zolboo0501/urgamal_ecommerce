@@ -2,13 +2,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import useSWRInfinite from "swr/infinite";
-import ProductCard from "@/components/product-card";
 import ProductGridList from "@/components/ProductGridList/ProductGridList";
 import { Breadcrumbs, Button, Pagination, rem } from "@mantine/core";
 import { fetchMethod, getCategory } from "@/utils/fetch";
 import { PAGE_SIZE } from "@/utils/constant";
 import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
 import axios from "axios";
+import ProductCard from "@/components/ProductCard";
 export async function getServerSideProps({ query }) {
   const { catId } = query;
   try {

@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import ProductGridList from "@/components/ProductGridList/ProductGridList";
-import ProductCard from "@/components/product-card";
 import { PAGE_SIZE } from "@/utils/constant";
 import { fetchMethod, getCategory } from "@/utils/fetch";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 // import { Virtuoso, VirtuosoGrid } from "react-virtuoso";
 import useSWRInfinite from "swr/infinite";
-import { Button, Pagination } from "@mantine/core";
+import { Pagination } from "@mantine/core";
 import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
 import axios from "axios";
+import ProductCard from "@/components/ProductCard";
 
 export async function getServerSideProps() {
   const data = await fetchMethod("GET", "product");

@@ -5,7 +5,6 @@ import { IconCircleXFilled, IconSearch } from "@tabler/icons-react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { isMobile } from "react-device-detect";
 import CategoryHover from "../AllCategory/CategoryHover";
 import { fetchMethod } from "@/utils/fetch";
 import { showNotification } from "@mantine/notifications";
@@ -81,7 +80,6 @@ const NavbarBottom = ({
           limit={10}
           styles={{
             root: {
-              paddingLeft: isMobile ? "0px" : "5px",
               paddingRight: 0,
               borderRadius: 6,
               flexGrow: 1,

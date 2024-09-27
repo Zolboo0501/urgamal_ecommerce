@@ -11,12 +11,16 @@ import CategoryContextProvider from "@/utils/categoryContextProvider";
 import SocketProvider from "@/utils/SocketProvider";
 import { UserConfigProvider } from "@/utils/userConfigProvider";
 import WishlistProvider from "@/utils/wishlistProvider";
-import { MantineProvider, createEmotionCache, rem } from "@mantine/core";
+import { MantineProvider, rem } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 import { NextUIProvider } from "@nextui-org/react";
 import { sfProRounded } from "public/fonts";
-const appendCache = createEmotionCache({ key: "mantine", prepend: false });
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import "@mantine/core/styles.css";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -25,13 +29,12 @@ export default function App({ Component, pageProps }) {
         withCSSVariables
         withGlobalStyles
         withNormalizeCSS
-        emotionCache={appendCache}
         theme={{
           colorScheme: "light",
           fontFamily: sfProRounded.style.fontFamily,
           focusRingStyles: {
-            styles: (theme) => ({ outline: `${rem(1)} solid #f9bc609d` }),
-            inputStyles: (theme) => ({ outline: `${rem(1.5)} solid #40C057` }),
+            // styles: (theme) => ({ outline: `${rem(1)} solid #f9bc609d` }),
+            // inputStyles: (theme) => ({ outline: `${rem(1.5)} solid #40C057` }),
           },
         }}
       >

@@ -1,49 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import GlobalLayout from "../../components/GlobalLayout/GlobalLayout";
-import Banner from "../../components/banner";
-import { useEffect, useCallback, useState, useContext } from "react";
-import { UserConfigContext } from "@/utils/userConfigContext";
-import { useDisclosure } from "@mantine/hooks";
-import useCategories from "@/hooks/useCategories";
-import SpecialDeal from "@/components/SpecialDeal";
+
 import FacebookMsg from "@/components/FacebookMsg";
+import SpecialDeal from "@/components/SpecialDeal";
+import { useEffect } from "react";
+import GlobalLayout from "../../components/GlobalLayout/GlobalLayout";
+import Banner from "@/components/Banner";
 
 export default function Home() {
-  const userConfigs = useContext(UserConfigContext);
-  const categories = useCategories();
-  const [positionSticky, setPositionSticky] = useState(false);
-
-  const [opened, { open, close }] = useDisclosure(true);
-
-  const onScroll = useCallback((event) => {
-    const { pageYOffset, scrollY, innerHeight } = window;
-    const bottom = document.documentElement.scrollHeight;
-    if (
-      (pageYOffset >= 1308 || scrollY >= 1308) &&
-      (pageYOffset < bottom - 800 || scrollY < bottom - 800)
-    ) {
-      setPositionSticky(true);
-    } else {
-      setPositionSticky(false);
-    }
-    if (innerHeight + Math.ceil(pageYOffset) >= document.body.offsetHeight) {
-      setPositionSticky(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("scroll", onScroll);
-    window.dispatchEvent(new Event("storage"));
-    // setProducts(data.result);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
   return (
     <GlobalLayout>
       {/* {!userConfigs.configId && (

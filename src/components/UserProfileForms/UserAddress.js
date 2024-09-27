@@ -57,7 +57,7 @@ export default function UserAddress({ data, refresh, selectAddress }) {
       khoroo: khoroo.id,
       phone: values.phone,
       type: values.type === undefined ? false : values.type,
-      note: `Гудамж: ${values.street} Байр: ${values?.apartment} Тоот: ${values.number} ${values.note}`,
+      note: `${values.street} гудамж, ${values?.apartment} байр, ${values.number} тоот ${values.note}`,
     };
 
     const requestOption = {
