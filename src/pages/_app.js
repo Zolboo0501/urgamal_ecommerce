@@ -21,7 +21,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "@mantine/core/styles.css";
-
+import "@mantine/notifications/styles.css";
 export default function App({ Component, pageProps }) {
   return (
     <NextUIProvider>

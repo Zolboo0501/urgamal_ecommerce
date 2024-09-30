@@ -223,7 +223,7 @@ const Mail = () => {
                     color: "#F9BC60",
                   },
                 })}
-                leftIcon={
+                leftSection={
                   <IconCheck
                     style={{
                       width: rem(20),
@@ -250,7 +250,7 @@ const Mail = () => {
                     color: "#F9BC60",
                   },
                 })}
-                leftIcon={
+                leftSection={
                   <IconSend
                     style={{
                       width: rem(20),

@@ -22,7 +22,7 @@ const Banner = () => {
   const user = useContext(UserConfigContext);
 
   return (
-    <div className="mt-8 flex relative mx-auto w-[100%] h-[320px] lg:h-[36rem] md:h-[20rem] p-1">
+    <div className="mt-8 flex relative mx-auto w-[100%] h-[320px] sm:h-[380px] lg:h-[36rem] md:h-[24rem] p-1">
       <div
         className="flex-row hidden relative lg:flex bg-white"
         onMouseLeave={() => {
@@ -111,7 +111,7 @@ const Banner = () => {
                   alt={item}
                   src={item}
                   fill
-                  className="object-cover h-full w-full md:object-cover max-h-full lg:object-fill rounded-r-xl "
+                  className="object-cover h-full w-full md:object-cover max-h-full rounded-r-xl "
                   draggable={false}
                 />
               </SwiperSlide>

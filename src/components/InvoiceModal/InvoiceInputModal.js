@@ -147,11 +147,11 @@ const InvoiceInputModal = ({ opened, onClose, handleInvoiceInput }) => {
             color="yellow"
             className="w-full"
             disabled={loading && true}
-            leftIcon={
+            leftSection={
               loading ? (
                 <Loader size={"xs"} color="white" />
               ) : (
-                <IconSend stroke={2} size={rem(20)} />
+                <IconSend stroke={1.5} size={"1.3rem"} />
               )
             }
             type="submit"

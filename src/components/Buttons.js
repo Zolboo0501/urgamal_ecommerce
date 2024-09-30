@@ -43,7 +43,7 @@ const LoginButton = ({
         w={"100%"}
         className="mt-4"
         color="dark"
-        leftIcon={mobileIcon}
+        leftSection={mobileIcon}
       >
         Нэг удаагийн кодоор нэвтрэх
       </Button>
@@ -52,7 +52,7 @@ const LoginButton = ({
         radius="xl"
         w={"100%"}
         className="mt-2"
-        leftIcon={facebookIcon}
+        leftSection={facebookIcon}
         onClick={() => handleFacebook()}
       >
         Facebook-ээр нэвтрэх
@@ -63,7 +63,7 @@ const LoginButton = ({
         w={"100%"}
         className="mt-2"
         color="orange"
-        leftIcon={googleIcon}
+        leftSection={googleIcon}
         onClick={handleGoogle}
       >
         Google-ээр нэвтрэх

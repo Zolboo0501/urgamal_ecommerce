@@ -160,7 +160,7 @@ const Feedback = () => {
       <div className="w-full flex justify-end mt-6">
         <Button
           color="yellow"
-          leftIcon={
+          leftSection={
             <IconSend
               style={{
                 width: rem(20),

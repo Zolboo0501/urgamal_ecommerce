@@ -357,7 +357,7 @@ const Profile = () => {
 
             <div className="mt-1">
               <Button
-                leftIcon={
+                leftSection={
                   <Image
                     src={"/icons/logout-icon.svg"}
                     width={20}

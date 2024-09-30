@@ -361,44 +361,6 @@ const CartItems = (props) => {
       });
   };
 
-  // const setCartItemWithChecked = (cartData) => {
-  //   const updatedCartItems = cartData.cart_items.map((item) => {
-  //     const existingItem = cartItem?.cart_items.find(
-  //       (existingItem) => existingItem.id === item.id
-  //     );
-  //     return {
-  //       ...item,
-  //       isChecked: existingItem ? existingItem.isChecked : false,
-  //     };
-  //   });
-
-  //   setCartItem({ ...cartData, cart_items: updatedCartItems });
-  // };
-
-  // const getUserCart = async (item) => {
-  //   const data = await fetchMethod("GET", "cart", userToken);
-  //   if (data?.success) {
-  //     if (data?.cart) {
-  //       if (data?.cart?.cart_items?.length === 0) {
-  //         setCartItem(data?.cart);
-  //         emptyCart();
-  //       } else {
-  //         const cartItems = data?.cart?.cart_items.map((cartItem) => ({
-  //           ...cartItem,
-  //         }));
-  //         setCartItemWithChecked({ ...data.cart, cart_items: cartItems });
-  //         syncCart(data?.cart);
-  //       }
-  //     } else {
-  //       setCartItem({ cart: { cart_items: [] } });
-  //       emptyCart();
-  //     }
-  //   } else {
-  //     setCartItem({ cart: { cart_items: [] } });
-  //     emptyCart();
-  //   }
-  // };
-
   const minusQuantity = async (event, count, product) => {
     event.stopPropagation();
     const initialStock = product.balance;
@@ -495,7 +457,7 @@ const CartItems = (props) => {
   const renderBalanceBadge = (balance) => {
     if (balance > 10) {
       return (
-        <Badge color="teal" size="xs">
+        <Badge color="teal" size="xs" classNames={{ root: "text-xl" }}>
           Хангалттай
         </Badge>
       );
@@ -515,7 +477,7 @@ const CartItems = (props) => {
   };
 
   const QuantityControl = ({ item }) => (
-    <div className="flex gap-2 max-w-[5rem] items-center py-1 justify-center rounded lg:p-1">
+    <div className="flex gap-2 sm:w-[40%] items-center py-1 justify-center rounded lg:p-1">
       <ActionIcon
         variant="light"
         color="teal"
@@ -576,12 +538,12 @@ const CartItems = (props) => {
             <button
               className={`flex items-center justify-start gap-2 px-1 py-4 ${
                 index !== cartItem?.cart_items?.length - 1 && "border-b-1"
-              }`}
+              } hover:bg-grey100 ${item?.isChecked === true && "bg-grey100"}`}
               key={index}
               onClick={(e) => handleClick(item)}
             >
               <Checkbox
-                className="checkbox-input"
+                className={"checkbox-input"}
                 checked={item.isChecked}
                 id={item.id}
                 onClick={(e) => handleClick(item)}
@@ -619,24 +581,36 @@ const CartItems = (props) => {
                           />
                         </div>
                       )}
+                      <div className="flex flex-col flex-1 ">
+                        <div className="flex flex-1 flex-col ml-2 sm:flex-row">
+                          <div className="flex flex-col sm:w-[60%]">
+                            <span className="text-ss line-clamp-2 lg:text-base xl:text-lg font-medium text-start text-grey800">
+                              {item?.name}
+                            </span>
+                            <span className="text-sm lg:text-ss xl:text-base font-medium text-grey600 text-start">
+                              {numberWithCommas(item.listPrice)}₮
+                            </span>
+                            <div className="hidden items-center gap-1 sm:flex ">
+                              <span className="font-[500] lg:text-ss text-sm xl:text-base text-[#2125297a]">
+                                Үлдэгдэл:
+                              </span>
+                              {renderBalanceBadge(item?.balance)}
+                            </div>
+                          </div>
 
-                      <div className="flex flex-1 flex-col gap-1.5 ml-2">
-                        <span className="text-ss line-clamp-2 font-medium text-start text-grey800">
-                          {item?.name}
-                        </span>
-                        <span className="text-sm font-medium text-grey600 text-start">
-                          {numberWithCommas(item.listPrice)}₮
-                        </span>
-                        <div className="flex items-center justify-between ">
-                          <QuantityControl item={item} />
-                          <span className="font-medium text-ss text-[#212529]">
-                            {numberWithCommas(item.total)}₮
-                          </span>
+                          <div className="flex sm:flex-1 items-center justify-between sm:relative">
+                            <QuantityControl item={item} />
+                            <div className="flex flex-col flex-1">
+                              <span className="font-medium text-ss lg:text-lg text-[#212529]">
+                                {numberWithCommas(item.total)}₮
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-1 mt-2 justify-between ml-0">
+                  <div className="flex sm:hidden flex-1 mt-2 justify-between ml-0">
                     <div className="flex items-center gap-1">
                       <span className="font-[500] lg:text-[0.87rem] text-sm text-[#2125297a]">
                         Үлдэгдэл:
@@ -711,8 +685,8 @@ const CartItems = (props) => {
             Буцах
           </Button>
         </div> */}
-        <div className="flex md:flex-row flex-col lg:gap-10 lg:mt-8 gap-4">
-          <div className="flex relative flex-col lg:w-[70%] w-[100%] lg:gap-8">
+        <div className="flex md:flex-row flex-col lg:gap-6 lg:mt-8 gap-4">
+          <div className="flex relative flex-col lg:w-[70%] w-[100%] md:w-[65%] lg:gap-">
             <div className=" bg-white rounded-lg lg:px-10 lg:py-6 px-3 py-3 shadow-md">
               <div className="flex flex-row justify-between">
                 <span className="font-[500] lg:text-[1.3rem] text-lg text-[#212529]">
@@ -807,7 +781,7 @@ const CartItems = (props) => {
                     paddingRight: 20,
                   },
 
-                  leftIcon: {
+                  leftSection: {
                     marginRight: 15,
                   },
                 })}

@@ -57,6 +57,7 @@ const NavbarBottom = ({
           width={20}
           height={24}
           className="object-contain"
+          alt="cube"
         />
         <div className="font-open text-white font-normal text-sm">
           Бүх ангилал
@@ -133,7 +134,7 @@ const NavbarBottom = ({
       </div>
       <div className="flex flex-row justify-center">
         <div className="flex flex-row gap-2 items-center">
-          <Image width={20} height={20} src={"/icons/phone.svg"} />
+          <Image width={20} height={20} src={"/icons/phone.svg"} alt="phone" />
           <div
             className="text-sm"
             dangerouslySetInnerHTML={{ __html: htmlFrom(address?.contact) }}

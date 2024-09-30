@@ -2,7 +2,7 @@
 import ProductModal from "@/components/Profile/ProfileModal";
 import { fetchMethod } from "@/utils/fetch";
 import { UserConfigContext } from "@/utils/userConfigContext";
-import { Button, Checkbox, Skeleton } from "@mantine/core";
+import { Button, Checkbox, Chip, Skeleton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import {
@@ -83,6 +83,9 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
       });
   };
 
+  useEffect(() => {
+    console.log(value, "dasdas");
+  }, [value]);
   const openProductEditingModal = () => {
     setEditingProdData({ create: true });
     open();
@@ -155,7 +158,7 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
               Хаягийн мэдээлэл
             </span>
             <Button
-              leftIcon={<IconCirclePlus size={20} />}
+              leftSection={<IconCirclePlus size={20} />}
               variant="subtle"
               compact
               sx={(theme) => ({
@@ -182,39 +185,45 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
               </div>
             )}
 
-            <Checkbox.Group>
-              <div className="flex flex-col gap-6">
-                {shippingData?.map((item, idx) => {
-                  if (item && item.id) {
-                    return (
-                      <Checkbox.Card
-                        key={item.id}
-                        withBorder={false}
-                        className="shadow-md "
-                        style={{ backgroundColor: "#F9FAFB" }}
-                      >
-                        <div className="flex gap-3 px-3 py-4">
-                          <Checkbox.Indicator />
-                          <div className="flex flex-col gap-1">
-                            <span class="text-base font-semibold">
-                              {item.city?.name} {item.district?.name}
-                            </span>
-                            <div className="flex gap-2">
-                              <span className="text-sm text-grey600 font-medium">
-                                {item.khoroo?.name} {item.note}
-                              </span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-grey800 font-medium">
-                              Утас: {item.phone}
-                            </div>
-                          </div>
-                        </div>
-                      </Checkbox.Card>
-                    );
-                  }
-                })}
-              </div>
-            </Checkbox.Group>
+            <div className="flex flex-col gap-6">
+              {shippingData?.map((item, idx) => (
+                <Checkbox.Card
+                  key={idx}
+                  className={`${
+                    value === item?.id &&
+                    "hover:cursor-pointer transition ease-in-out delay-100 translate-x-2  scale-101"
+                  } shadow-md`}
+                  withBorder={true}
+                  style={{
+                    borderColor: value === item?.id ? "#228BE6" : "white",
+                  }}
+                  onClick={() => {
+                    setSelectedShippingData(item);
+                    setSelect(true);
+                    setValue(item?.id);
+                  }}
+                >
+                  <div className="flex gap-3 px-3 py-4">
+                    <Checkbox.Indicator
+                      checked={value === item?.id ? true : false}
+                    />
+                    <div className="flex flex-col gap-1">
+                      <span className="text-ss sm:text-base lg:text-lg font-semibold">
+                        {item.city?.name} {item.district?.name}
+                      </span>
+                      <div className="flex gap-2">
+                        <span className="text-sm text-grey600 sm:text-ss lg:text-base font-medium">
+                          {item.khoroo?.name} {item.note}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm sm:text-ss text-grey800 font-medium">
+                        Утас: {item.phone}
+                      </div>
+                    </div>
+                  </div>
+                </Checkbox.Card>
+              ))}
+            </div>
           </div>
         </>
       ) : (

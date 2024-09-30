@@ -3,12 +3,11 @@
 import {
   Autocomplete,
   Avatar,
+  Badge,
   Button,
-  Group,
   Select,
   Tooltip,
   rem,
-  Badge,
 } from "@mantine/core";
 import {
   IconCircleXFilled,
@@ -22,18 +21,17 @@ import { getCookie, setCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { forwardRef, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import useWishlist from "@/hooks/useWishlist";
 import { fetchMethod, fetcher } from "@/utils/fetch";
 import { getCart } from "@/utils/Store";
 import { UserConfigContext } from "@/utils/userConfigContext";
+import { numberWithCommas } from "@/utils/utils";
 import { useDebouncedValue } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import useSWR from "swr";
 import Notification from "../Notification/Notification";
-import { numberWithCommas } from "@/utils/utils";
-import { options } from "sanitize-html";
 const Navbar = (props) => {
   const { address } = props;
   const router = useRouter();
@@ -127,19 +125,19 @@ const Navbar = (props) => {
         </Avatar>
         <div className="flex flex-col gap-1">
           <div className="flex flex-wrap">
-            <p className="text-sm font-medium text-grey800 line-clamp-2">
+            <p className="text-sm sm:text-base font-medium  text-grey800 line-clamp-2">
               {value?.value}
             </p>
           </div>
           <div className="flex flex-row items-center gap-2 md:gap-4 lg:gap-6">
             <div className="flex items-center">
-              <p className="text-[#696A6C] text-xs md:text-sm">Үнэ : </p>
+              <p className="text-[#696A6C] text-xs sm:text-sm">Үнэ : </p>
               <p className="text-xs md:text-sm ml-1 text-start text-primary700 font-bold ">
                 {numberWithCommas(value?.price) || 0}₮
               </p>
             </div>
             <div className="flex items-center gap-1">
-              <p className="text-[#696A6C] text-xs md:text-sm">Үлдэгдэл : </p>
+              <p className="text-[#696A6C] text-xs sm:text-sm">Үлдэгдэл : </p>
               {renderRemains(value?.balance)}
             </div>
           </div>
@@ -242,7 +240,7 @@ const Navbar = (props) => {
     const token = getCookie("token");
     return (
       <>
-        {userInfo.picture ? (
+        {userInfo?.picture ? (
           <Image
             alt="user"
             src={userInfo.picture}
@@ -430,8 +428,9 @@ const Navbar = (props) => {
                     fontSize: ".95rem",
                     color: "#344054",
                   },
+
                   paddingLeft: "1.5rem",
-                  borderWidth: 0,
+                  borderWidth: 1,
                   boxShadow:
                     "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
                 },
@@ -509,7 +508,7 @@ const Navbar = (props) => {
                       color: "#344054",
                     },
                     paddingLeft: "1.5rem",
-                    borderWidth: 0,
+                    borderWidth: 1,
                     boxShadow:
                       "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
                   },

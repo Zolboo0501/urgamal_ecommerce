@@ -280,7 +280,7 @@ const Password = (props) => {
                     color: "#F9BC60",
                   },
                 })}
-                leftIcon={
+                leftSection={
                   <IconSend
                     style={{
                       width: rem(20),
