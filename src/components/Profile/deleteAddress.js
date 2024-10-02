@@ -9,7 +9,7 @@ export function DeleteConfirmationDialog({
 }) {
   return (
     <Modal opened={isOpen} onClose={close} title={confirmationText} centered>
-      <p class="text-sm font-medium p-2">{thingToDelete?.name}</p>
+      <p class="p-2 text-sm font-medium">{thingToDelete?.name}</p>
       <Group position="right" mt="xl">
         <Button variant="default" onClick={close}>
           Цуцлах

@@ -44,7 +44,7 @@ export default function Preference_modal({ close, opened, preference_cookie }) {
         onClose={close}
         padding="xl"
       >
-        <p class="font-semibold text-[20px] mb-2.5 text-center">
+        <p class="mb-2.5 text-center text-[20px] font-semibold">
           Хэрэглэгч таны сонирхож байгаа төрөл
         </p>
 
@@ -75,7 +75,7 @@ export default function Preference_modal({ close, opened, preference_cookie }) {
               />
             </Card.Section>
 
-            <p class="text-xl font-medium text-gray-800 text-center">
+            <p class="text-center text-xl font-medium text-gray-800">
               Өрхийн тариаланч
             </p>
           </Card>
@@ -99,7 +99,7 @@ export default function Preference_modal({ close, opened, preference_cookie }) {
               />
             </Card.Section>
 
-            <p class="text-xl font-medium text-gray-800 text-center">
+            <p class="text-center text-xl font-medium text-gray-800">
               Мэргэжлийн тариаланч
             </p>
           </Card>

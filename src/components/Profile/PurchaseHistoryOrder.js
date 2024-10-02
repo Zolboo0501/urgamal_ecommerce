@@ -35,10 +35,10 @@ const PurchaseHistoryOrder = (props) => {
   };
   return (
     <div
-      className="w-full py-4 px-4 flex flex-col justify-between"
+      className="flex w-full flex-col justify-between px-4 py-4"
       style={{ borderBottom: "1px solid rgba(0, 30, 29, 0.23)" }}
     >
-      <div className="flex flex-row justify-between ">
+      <div className="flex flex-row justify-between">
         <div className="flex flex-row items-center">
           <p className="text-grey">Захиалгын дугаар :</p>
           <p className="ml-1">№SM6636911</p>
@@ -48,7 +48,7 @@ const PurchaseHistoryOrder = (props) => {
           <p className="ml-1">2023-03-01</p>
         </div>
       </div>
-      <div className="flex flex-row justify-between mt-2">
+      <div className="mt-2 flex flex-row justify-between">
         <div className="flex flex-row items-center">
           <p className="text-grey">Үнийн дүн :</p>
           <p className="ml-1">150’000₮</p>
@@ -59,7 +59,7 @@ const PurchaseHistoryOrder = (props) => {
           {PayStatus(props.data.status)}
         </div>
       </div>
-      <div className="flex flex-row justify-between mt-2">
+      <div className="mt-2 flex flex-row justify-between">
         <div className="flex flex-row items-center">
           <p>Бараа {`(${props.data.productNumber})`}</p>
           <p className="ml-2 text-[#3E503C] underline underline-offset-2">

@@ -7,18 +7,18 @@ const InvoiceModal = ({ opened, onClose, handleOrder, handleInvoice }) => {
     <Modal opened={opened} onClose={onClose} title="Захиалгын төрөл" centered>
       <div className="flex flex-row">
         <div
-          className="flex flex-1 flex-col items-center justify-center  py-12  hover:bg-primary500 hover:text-white"
+          className="flex flex-1 flex-col items-center justify-center py-12 hover:bg-primary500 hover:text-white"
           onClick={() => handleOrder()}
         >
           <IconTruckDelivery stroke={1.5} size={"4.5rem"} />
-          <p className="mt-2 font-medium text-base">Захиалга</p>
+          <p className="mt-2 text-base font-medium">Захиалга</p>
         </div>
         <div
-          className="flex flex-col flex-1 items-center justify-center  hover:bg-button-yellow hover:text-white"
+          className="flex flex-1 flex-col items-center justify-center hover:bg-button-yellow hover:text-white"
           onClick={() => handleInvoice()}
         >
           <IconFileInvoice stroke={1.5} size={"4.5rem"} />
-          <p className="mt-2 font-medium text-base">Нэхэмжлэл</p>
+          <p className="mt-2 text-base font-medium">Нэхэмжлэл</p>
         </div>
       </div>
     </Modal>

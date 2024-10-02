@@ -40,7 +40,7 @@ export default function SearchResult({ initialData }) {
         (index + 1) * 20
       }&limit=${PAGE_SIZE}`,
     fetcher,
-    { revalidateFirstPage: false }
+    { revalidateFirstPage: false },
   );
 
   const isEmpty = products?.[0]?.length === 0;
@@ -88,7 +88,7 @@ export default function SearchResult({ initialData }) {
 
   return (
     <CategoryLayout>
-      <div className="flex w-full min-h-screen px-10 py-12 gap-6">
+      <div className="flex min-h-screen w-full gap-6 px-10 py-12">
         {/* //! todo */}
         {/* <div className="min-w-[350px] w-[350px] max-w-[350px] hidden lg:block relative">
         </div> */}
@@ -110,7 +110,7 @@ export default function SearchResult({ initialData }) {
               );
             })}
           </ProductGridList>
-          <div className="flex justify-center items-center mt-8">
+          <div className="mt-8 flex items-center justify-center">
             <Pagination
               total={total / 20 + 1}
               color="yellow"

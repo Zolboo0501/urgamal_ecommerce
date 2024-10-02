@@ -35,14 +35,14 @@ const InvoiceInputModal = ({ opened, onClose, handleInvoiceInput }) => {
         !value
           ? "Компани регистр хоосон байна"
           : value.length === 7
-          ? null
-          : "Компани регистр буруу байна",
+            ? null
+            : "Компани регистр буруу байна",
       contact: (value) =>
         !value
           ? "Утасны дугаар хоосон байна"
           : value.length === 8
-          ? null
-          : "Утасны дугаар буруу байна",
+            ? null
+            : "Утасны дугаар буруу байна",
       email: (value) =>
         value.length > 0
           ? /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/.test(value)
@@ -142,7 +142,7 @@ const InvoiceInputModal = ({ opened, onClose, handleInvoiceInput }) => {
             }
           />
         </div>
-        <div className="mt-3 w-full flex justify-end">
+        <div className="mt-3 flex w-full justify-end">
           <Button
             color="yellow"
             className="w-full"

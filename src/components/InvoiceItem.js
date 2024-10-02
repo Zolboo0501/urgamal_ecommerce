@@ -19,18 +19,18 @@ const InvoiceItem = ({ data, index }) => {
     <div>
       <div
         key={index}
-        className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-2 hover:bg-gray-50 hover:cursor-pointer"
+        className="flex flex-col p-2 hover:cursor-pointer hover:bg-gray-50 sm:flex-row sm:items-center sm:justify-between"
         onClick={toggle}
         style={{ borderBottom: "1px solid rgba(0, 30, 29, 0.23)" }}
       >
         <div className="flex flex-col">
           <div className="flex flex-row">
             <p className="text-base text-grey">Захиалгын дугаар :</p>
-            <p className="text-base ml-1">{data?.orderid}</p>
+            <p className="ml-1 text-base">{data?.orderid}</p>
           </div>
           <div className="flex flex-row">
             <p className="text-base text-grey">Огноо : </p>
-            <p className="text-base ml-1">
+            <p className="ml-1 text-base">
               {dayjs(data?.createdAt)?.format("YYYY-MM-DD HH:mm")}
             </p>
           </div>
@@ -39,13 +39,13 @@ const InvoiceItem = ({ data, index }) => {
       </div>
       <Collapse in={opened}>
         <div>
-          <div className="w-full py-2 flex flex-col items-center">
+          <div className="flex w-full flex-col items-center py-2">
             {data?.order?.order_item &&
               data?.order?.order_item?.map((item, index) => {
                 return (
                   <div
                     key={index}
-                    className="flex flex-col sm:flex-row p-4 w-full"
+                    className="flex w-full flex-col p-4 sm:flex-row"
                     style={{ borderBottom: "2px solid #DADEDE" }}
                   >
                     {item?.product?.additionalImage?.lengh > 0 ? (
@@ -55,20 +55,20 @@ const InvoiceItem = ({ data, index }) => {
                         alt={item?.product?.additionalImage[0]?.url}
                         width={100}
                         height={150}
-                        className="sm:w-32 sm:h-32 h-48 object-contain"
+                        className="h-48 object-contain sm:h-32 sm:w-32"
                       />
                     ) : (
-                      <div className="product-card-img flex flex-col gap-2 justify-center items-center bg-gray-50 rounded-md sm:w-32 h-48 sm:h-32">
+                      <div className="product-card-img flex h-48 flex-col items-center justify-center gap-2 rounded-md bg-gray-50 sm:h-32 sm:w-32">
                         <ThemeIcon size="lg" variant="light" color="green">
                           <IconPhotoOff size="80%" stroke={0.5} />
                         </ThemeIcon>
                       </div>
                     )}
-                    <div className="flex flex-col sm:justify-evenly sm:ml-3 ">
-                      <p className="font-semibold text-sm lg:text-base">
+                    <div className="flex flex-col sm:ml-3 sm:justify-evenly">
+                      <p className="text-sm font-semibold lg:text-base">
                         {item?.name}
                       </p>
-                      <div className="flex flex-row items-center mt-1">
+                      <div className="mt-1 flex flex-row items-center">
                         <p className="text-sm lg:text-base">
                           Ширхэг: {item?.qty}
                         </p>
@@ -107,7 +107,7 @@ const StatusButton = ({ status, data }) => {
     const res = await fetchMethod(
       "GET",
       `order/invoice/payment?orderid=${data?.orderid}`,
-      token
+      token,
     );
     if (res?.success) {
       showNotification({
@@ -134,7 +134,7 @@ const StatusButton = ({ status, data }) => {
   switch (status) {
     case 100:
       return (
-        <div className="flex flex-row justify-end sm:justify-start gap-2 mt-1 sm:mt-0">
+        <div className="mt-1 flex flex-row justify-end gap-2 sm:mt-0 sm:justify-start">
           <Button
             variant="outline"
             color="orange"
@@ -149,7 +149,7 @@ const StatusButton = ({ status, data }) => {
       );
     case 200:
       return (
-        <div className="flex flex-row justify-end sm:justify-start gap-2 mt-1 sm:mt-0">
+        <div className="mt-1 flex flex-row justify-end gap-2 sm:mt-0 sm:justify-start">
           <Button
             variant="filled"
             color="orange"

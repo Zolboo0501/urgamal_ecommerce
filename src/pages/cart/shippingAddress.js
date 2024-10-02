@@ -100,15 +100,15 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
     let khoroo = "";
     if (values?.city || values?.district || values?.committee) {
       const selectedCity = selectAddress?.find(
-        (item) => item?.name === values?.city
+        (item) => item?.name === values?.city,
       );
       city = selectedCity;
       const selectedDistrict = selectedCity?.dic_districts?.find(
-        (item) => item?.name === values?.district
+        (item) => item?.name === values?.district,
       );
       district = selectedDistrict;
       const selectedKhoroo = selectedDistrict?.dic_khoroos?.find(
-        (item) => item?.name === values?.committee
+        (item) => item?.name === values?.committee,
       );
       khoroo = selectedKhoroo;
     }
@@ -150,11 +150,11 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg lg:px-10 lg:py-8 mt-6 px-3 py-3 overflow-auto  shadow-md">
+    <div className="mt-6 overflow-auto rounded-lg bg-white px-3 py-3 shadow-md lg:px-10 lg:py-8">
       {!loading ? (
         <>
           <div className="flex flex-row justify-between">
-            <span className="font-[500] lg:text-[1.3rem] text-lg text-[#212529]">
+            <span className="text-lg font-[500] text-[#212529] lg:text-[1.3rem]">
               Хаягийн мэдээлэл
             </span>
             <Button
@@ -174,11 +174,11 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
               Шинэ хаяг нэмэх
             </Button>
           </div>
-          <div className="radio-button  gap-6 w-full flex-col mt-4 pb-4">
+          <div className="radio-button mt-4 w-full flex-col gap-6 pb-4">
             {shippingData?.length === 0 && (
-              <div className="flex flex-col w-full items-center gap-4 mt-6">
+              <div className="mt-6 flex w-full flex-col items-center gap-4">
                 <IconTruckOff size="2rem" stroke={1.5} />
-                <span className="text-grey font-medium">
+                <span className="font-medium text-grey">
                   {" "}
                   Хаягийн мэдээлэл оруулаагүй байна
                 </span>
@@ -191,7 +191,7 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
                   key={idx}
                   className={`${
                     value === item?.id &&
-                    "hover:cursor-pointer transition ease-in-out delay-100 translate-x-2  scale-101"
+                    "scale-101 translate-x-2 transition delay-100 ease-in-out hover:cursor-pointer"
                   } shadow-md`}
                   withBorder={true}
                   style={{
@@ -208,15 +208,15 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
                       checked={value === item?.id ? true : false}
                     />
                     <div className="flex flex-col gap-1">
-                      <span className="text-ss sm:text-base lg:text-lg font-semibold">
+                      <span className="text-ss font-semibold sm:text-base lg:text-lg">
                         {item.city?.name} {item.district?.name}
                       </span>
                       <div className="flex gap-2">
-                        <span className="text-sm text-grey600 sm:text-ss lg:text-base font-medium">
+                        <span className="text-sm font-medium text-grey600 sm:text-ss lg:text-base">
                           {item.khoroo?.name} {item.note}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm sm:text-ss text-grey800 font-medium">
+                      <div className="flex items-center gap-2 text-sm font-medium text-grey800 sm:text-ss">
                         Утас: {item.phone}
                       </div>
                     </div>

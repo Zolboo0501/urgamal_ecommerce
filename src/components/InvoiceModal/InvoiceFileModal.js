@@ -21,7 +21,7 @@ const InvoiceFileModal = ({ context, id, innerProps }) => {
     const res = await fetchMethod(
       "GET",
       `order/invoice/verify?orderid=${data?.order?.orderid}`,
-      token
+      token,
     );
     if (res.success) {
       showNotification({

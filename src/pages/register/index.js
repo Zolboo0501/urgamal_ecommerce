@@ -124,13 +124,13 @@ const Register = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-row absolute">
-      <div className="w-4/6 md:w-7/12 lg:w-8/12 xl:w-9/12  h-full relative hidden md:block">
+    <div className="absolute flex h-full w-full flex-row">
+      <div className="relative hidden h-full w-4/6 md:block md:w-7/12 lg:w-8/12 xl:w-9/12">
         <Image fill src={"/plant.jpg"} alt="plant" objectFit="cover" />
       </div>
-      <div className="flex flex-col relative items-center justify-center flex-1">
+      <div className="relative flex flex-1 flex-col items-center justify-center">
         <Image src="/logo.png" width={100} height={100} alt="logo" />
-        <p className="text-xl font-bold mt-4">Бүртгүүлэх</p>
+        <p className="mt-4 text-xl font-bold">Бүртгүүлэх</p>
         <form
           className="mt-5 w-4/6"
           onSubmit={form.onSubmit((values) => handleRegister(values))}
@@ -200,7 +200,7 @@ const Register = () => {
 
           {show && (
             <div
-              className="w-full py-2 px-4 rounded-lg mt-2"
+              className="mt-2 w-full rounded-lg px-4 py-2"
               style={{
                 backgroundColor:
                   checkNumber && checkSame ? "#D1FADF" : "#FEE4E2",
@@ -208,7 +208,7 @@ const Register = () => {
             >
               {renderCheck(
                 checkNumber,
-                "Нууц үг 4 оронтой тооноос бүрдсэн байна"
+                "Нууц үг 4 оронтой тооноос бүрдсэн байна",
               )}
               {renderCheck(checkSame, "Нууц үг ижилхэн байна")}
             </div>

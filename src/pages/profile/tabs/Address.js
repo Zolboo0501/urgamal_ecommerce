@@ -59,9 +59,9 @@ const Address = () => {
   };
 
   return (
-    <div className="flex flex-col w-full bg-white px-8 py-6 rounded-md">
+    <div className="flex w-full flex-col rounded-md bg-white px-8 py-6">
       {loading ? (
-        <div className="w-full h-56 flex items-center justify-center">
+        <div className="flex h-56 w-full items-center justify-center">
           <Loader color="yellow" />
         </div>
       ) : (

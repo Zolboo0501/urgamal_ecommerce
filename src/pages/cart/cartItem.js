@@ -90,12 +90,12 @@ const CartItems = (props) => {
 
   useEffect(() => {
     const allItemsChecked = cartItem?.cart_items?.every(
-      (item) => item.isChecked
+      (item) => item.isChecked,
     );
     setIsCheckAll(allItemsChecked);
 
     const checkIsChecked = cartItem?.cart_items?.filter(
-      (item) => item.isChecked
+      (item) => item.isChecked,
     );
 
     const ids = checkIsChecked?.map((item) => {
@@ -106,7 +106,7 @@ const CartItems = (props) => {
     setSelectedItemsIds(ids);
     let total = checkIsChecked?.reduce(
       (acc, item) => acc + item.quantity * item.listPrice,
-      0
+      0,
     );
     setSelectedItemsTotal(total);
   }, [cartItem]);
@@ -190,7 +190,7 @@ const CartItems = (props) => {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/order/v3`,
-        requestOption
+        requestOption,
       );
       if (res.status === 200) {
         const data = await res.json();
@@ -210,7 +210,7 @@ const CartItems = (props) => {
           axios
             .get(
               `${process.env.NEXT_PUBLIC_API_URL}/order/payment/${data.orderid}`,
-              axiosReqOption
+              axiosReqOption,
             )
             .then((res) => {
               openContextModal({
@@ -320,7 +320,7 @@ const CartItems = (props) => {
       "POST",
       "order/invoice",
       token,
-      requestOption
+      requestOption,
     )
       .then(() => {
         showNotification({
@@ -469,7 +469,7 @@ const CartItems = (props) => {
       );
     } else {
       return (
-        <span className="text-primary500 text-sm-3 sm:text-xs font-medium">
+        <span className="text-sm-3 font-medium text-primary500 sm:text-xs">
           {balance}
         </span>
       );
@@ -477,7 +477,7 @@ const CartItems = (props) => {
   };
 
   const QuantityControl = ({ item }) => (
-    <div className="flex gap-2 sm:w-[40%] items-center py-1 justify-center rounded lg:p-1">
+    <div className="flex items-center justify-center gap-2 rounded py-1 sm:w-[40%] lg:p-1">
       <ActionIcon
         variant="light"
         color="teal"
@@ -487,10 +487,10 @@ const CartItems = (props) => {
         <IconMinus
           size={24}
           color="#40C057"
-          className="w-4 h-4 lg:w-4 lg:h-4"
+          className="h-4 w-4 lg:h-4 lg:w-4"
         />
       </ActionIcon>
-      <span className="font-[500] lg:text-[1rem] text-[0.9rem] text-[#212529]">
+      <span className="text-[0.9rem] font-[500] text-[#212529] lg:text-[1rem]">
         {item?.quantity}
       </span>
       <ActionIcon
@@ -499,7 +499,7 @@ const CartItems = (props) => {
         radius={"xl"}
         onClick={(event) => addQuantity(event, item?.quantity, item)}
       >
-        <IconPlus size={24} color="#40C057" className="w-4 h-4 lg:w-4 lg:h-4" />
+        <IconPlus size={24} color="#40C057" className="h-4 w-4 lg:h-4 lg:w-4" />
       </ActionIcon>
     </div>
   );
@@ -510,9 +510,9 @@ const CartItems = (props) => {
 
     if (!hasItems) {
       return (
-        <div className="min-h-full h-72 flex flex-col items-center justify-center">
+        <div className="flex h-72 min-h-full flex-col items-center justify-center">
           <BsCartX size="2rem" stroke={1.5} />
-          <span className="mt-2 font-medium text-base text-grey">
+          <span className="mt-2 text-base font-medium text-grey">
             Таны сагс хоосон байна.
           </span>
         </div>
@@ -521,7 +521,7 @@ const CartItems = (props) => {
 
     if (isLoading) {
       return (
-        <div className="min-h-full h-72 flex flex-col items-center justify-center relative">
+        <div className="relative flex h-72 min-h-full flex-col items-center justify-center">
           <LoadingOverlay
             loaderProps={{ size: "md", color: "#f9bc60" }}
             overlayOpacity={0.1}
@@ -557,9 +557,9 @@ const CartItems = (props) => {
                   },
                 }}
               />
-              <div className="flex flex-col flex-1 gap-2" key={index}>
+              <div className="flex flex-1 flex-col gap-2" key={index}>
                 <div className="flex flex-1 flex-col">
-                  <div className="flex flex-1 gap-1 items-center justify-between">
+                  <div className="flex flex-1 items-center justify-between gap-1">
                     <div className="flex flex-1 gap-1">
                       {item?.additionalImage?.[0]?.url ? (
                         <Magnifier
@@ -573,7 +573,7 @@ const CartItems = (props) => {
                           imageClassname={"w-16 h-16"}
                         />
                       ) : (
-                        <div className="w-16 h-16 flex items-center justify-center bg-grey100 rounded">
+                        <div className="flex h-16 w-16 items-center justify-center rounded bg-grey100">
                           <IconPhotoOff
                             stroke={1.5}
                             size={20}
@@ -581,27 +581,27 @@ const CartItems = (props) => {
                           />
                         </div>
                       )}
-                      <div className="flex flex-col flex-1 ">
-                        <div className="flex flex-1 flex-col ml-2 sm:flex-row">
+                      <div className="flex flex-1 flex-col">
+                        <div className="ml-2 flex flex-1 flex-col sm:flex-row">
                           <div className="flex flex-col sm:w-[60%]">
-                            <span className="text-ss line-clamp-2 lg:text-base xl:text-lg font-medium text-start text-grey800">
+                            <span className="line-clamp-2 text-start text-ss font-medium text-grey800 lg:text-base xl:text-lg">
                               {item?.name}
                             </span>
-                            <span className="text-sm lg:text-ss xl:text-base font-medium text-grey600 text-start">
+                            <span className="text-start text-sm font-medium text-grey600 lg:text-ss xl:text-base">
                               {numberWithCommas(item.listPrice)}₮
                             </span>
-                            <div className="hidden items-center gap-1 sm:flex ">
-                              <span className="font-[500] lg:text-ss text-sm xl:text-base text-[#2125297a]">
+                            <div className="hidden items-center gap-1 sm:flex">
+                              <span className="text-sm font-[500] text-[#2125297a] lg:text-ss xl:text-base">
                                 Үлдэгдэл:
                               </span>
                               {renderBalanceBadge(item?.balance)}
                             </div>
                           </div>
 
-                          <div className="flex sm:flex-1 items-center justify-between sm:relative">
+                          <div className="flex items-center justify-between sm:relative sm:flex-1">
                             <QuantityControl item={item} />
-                            <div className="flex flex-col flex-1">
-                              <span className="font-medium text-ss lg:text-lg text-[#212529]">
+                            <div className="flex flex-1 flex-col">
+                              <span className="text-ss font-medium text-[#212529] lg:text-lg">
                                 {numberWithCommas(item.total)}₮
                               </span>
                             </div>
@@ -610,9 +610,9 @@ const CartItems = (props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex sm:hidden flex-1 mt-2 justify-between ml-0">
+                  <div className="ml-0 mt-2 flex flex-1 justify-between sm:hidden">
                     <div className="flex items-center gap-1">
-                      <span className="font-[500] lg:text-[0.87rem] text-sm text-[#2125297a]">
+                      <span className="text-sm font-[500] text-[#2125297a] lg:text-[0.87rem]">
                         Үлдэгдэл:
                       </span>
                       {renderBalanceBadge(item?.balance)}
@@ -622,7 +622,7 @@ const CartItems = (props) => {
                       onClick={(event) => deleteCartItem(event, item?.id)}
                     >
                       <span className="text-sm text-grey500">Устгах</span>
-                      <IconX className="w-5 h-5 text-red-400" />
+                      <IconX className="h-5 w-5 text-red-400" />
                     </button>
                   </div>
                 </div>
@@ -662,7 +662,7 @@ const CartItems = (props) => {
         onClose={closeInput}
         handleInvoiceInput={handleInvoiceInput}
       />
-      <div className="bg-grey-back w-full lg:px-8 px-4 py-8 relative ">
+      <div className="relative w-full bg-grey-back px-4 py-8 lg:px-8">
         {/* <div className="absolute top-9">
           <Button
             variant="subtle"
@@ -685,11 +685,11 @@ const CartItems = (props) => {
             Буцах
           </Button>
         </div> */}
-        <div className="flex md:flex-row flex-col lg:gap-6 lg:mt-8 gap-4">
-          <div className="flex relative flex-col lg:w-[70%] w-[100%] md:w-[65%] lg:gap-">
-            <div className=" bg-white rounded-lg lg:px-10 lg:py-6 px-3 py-3 shadow-md">
+        <div className="flex flex-col gap-4 md:flex-row lg:mt-8 lg:gap-6">
+          <div className="lg:gap- relative flex w-[100%] flex-col md:w-[65%] lg:w-[70%]">
+            <div className="rounded-lg bg-white px-3 py-3 shadow-md lg:px-10 lg:py-6">
               <div className="flex flex-row justify-between">
-                <span className="font-[500] lg:text-[1.3rem] text-lg text-[#212529]">
+                <span className="text-lg font-[500] text-[#212529] lg:text-[1.3rem]">
                   Миний сагс
                 </span>
                 <Button
@@ -719,11 +719,11 @@ const CartItems = (props) => {
             )}
           </div>
 
-          <div className="flex flex-1 h-2/5	bg-white rounded-lg lg:px-10 lg:py-8 px-4 py-4 shadow-md">
-            <div className="flex flex-col lg:gap-5 gap-3 flex-1">
-              <span className="flex justify-between font-[400] lg:text-[1.05rem] text-ss text-[#2125297a]">
+          <div className="flex h-2/5 flex-1 rounded-lg bg-white px-4 py-4 shadow-md lg:px-10 lg:py-8">
+            <div className="flex flex-1 flex-col gap-3 lg:gap-5">
+              <span className="flex justify-between text-ss font-[400] text-[#2125297a] lg:text-[1.05rem]">
                 Нийт үнэ
-                <span className="font-[500] lg:text-[1.05rem] text-sm text-[#212529]">
+                <span className="text-sm font-[500] text-[#212529] lg:text-[1.05rem]">
                   {numberWithCommas(selectedItemsTotal) || 0}₮
                 </span>
               </span>
@@ -733,25 +733,25 @@ const CartItems = (props) => {
                   0 ₮
                 </span>
               </span> */}
-              <span className="flex justify-between font-[400] lg:text-[1.05rem] text-ss text-[#2125297a]">
+              <span className="flex justify-between text-ss font-[400] text-[#2125297a] lg:text-[1.05rem]">
                 Хүргэлт
-                <span className="font-[500] lg:text-[1.05rem] text-ss text-[#212529]">
+                <span className="text-ss font-[500] text-[#212529] lg:text-[1.05rem]">
                   {numberWithCommas(shippingPee)}₮
                 </span>
               </span>
-              <div className="flex flex-row justify-between items-center">
+              <div className="flex flex-row items-center justify-between">
                 <div className="flex items-center">
-                  <span className="flex justify-between font-[400] lg:text-[1.05rem] text-ss text-[#2125297a]">
+                  <span className="flex justify-between text-ss font-[400] text-[#2125297a] lg:text-[1.05rem]">
                     Очиж авах
                     <Tooltip label="Очиж авах бол заавал баруун гар талд байгаа товчийг идэвхжүүлнэ үү">
                       <IconAlertCircle
-                        className="h-5 w-5 self-center ml-2 "
+                        className="ml-2 h-5 w-5 self-center"
                         color="black"
                       />
                     </Tooltip>
                   </span>
                 </div>
-                <span className="font-[500] lg:text-[1.05rem] text-sm text-[#212529]">
+                <span className="text-sm font-[500] text-[#212529] lg:text-[1.05rem]">
                   <Switch
                     checked={checked}
                     onChange={(event) =>
@@ -760,14 +760,14 @@ const CartItems = (props) => {
                   />
                 </span>
               </div>
-              <hr className="h-px my-1 border-0 border-t-dashed bg-gray-300" />
-              <span className="flex justify-between mb-1 font-[400] lg:text-[1.1rem] text-sm text-[#212529af]">
+              <hr className="border-t-dashed my-1 h-px border-0 bg-gray-300" />
+              <span className="mb-1 flex justify-between text-sm font-[400] text-[#212529af] lg:text-[1.1rem]">
                 Нийлбэр үнэ
-                <span className="font-[500] lg:text-[1.1rem] text-sm text-[#212529]">
+                <span className="text-sm font-[500] text-[#212529] lg:text-[1.1rem]">
                   {numberWithCommas(
                     shippingPee
                       ? selectedItemsTotal + shippingPee
-                      : selectedItemsTotal || 0
+                      : selectedItemsTotal || 0,
                   )}
                   ₮
                 </span>

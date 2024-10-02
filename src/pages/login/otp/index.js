@@ -96,13 +96,13 @@ const OTP = () => {
   }, [seconds]);
 
   return (
-    <div className="w-full h-full flex flex-row absolute">
-      <div className="w-4/6 lg:w-8/12 xl:w-9/12 h-full relative hidden md:block">
+    <div className="absolute flex h-full w-full flex-row">
+      <div className="relative hidden h-full w-4/6 md:block lg:w-8/12 xl:w-9/12">
         <Image fill src={"/plant.jpg"} alt="plant" objectFit="cover" />
       </div>
-      <div className="flex flex-col relative items-center justify-center flex-1">
+      <div className="relative flex flex-1 flex-col items-center justify-center">
         <Image src="/logo.png" width={100} height={100} alt="logo" />
-        <p className="text-xl font-bold mt-4 font-sans">Нэг удаагийн код</p>
+        <p className="mt-4 font-sans text-xl font-bold">Нэг удаагийн код</p>
         <div className="mt-5 w-4/6">
           <Input.Wrapper label="Утасны дугаар" size="md">
             <Input

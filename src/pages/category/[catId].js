@@ -14,7 +14,7 @@ export async function getServerSideProps({ query }) {
   try {
     const data = await fetchMethod(
       "GET",
-      `product?offset=0&limit=${PAGE_SIZE}&query=&categoryId=${catId}`
+      `product?offset=0&limit=${PAGE_SIZE}&query=&categoryId=${catId}`,
     );
 
     return {
@@ -53,7 +53,7 @@ const CategoryPage = ({ initialData }) => {
         (index + 1) * 20
       }&limit=${PAGE_SIZE}&query=&categoryId=${catId}`,
     fetcher,
-    { revalidateFirstPage: false }
+    { revalidateFirstPage: false },
   );
 
   const isEmpty = products?.length === 0;
@@ -112,21 +112,21 @@ const CategoryPage = ({ initialData }) => {
   return (
     <CategoryLayout>
       <div className="flex-1">
-        <div className="px-4 md:px-5 h-full">
-          <div className="h-full flex flex-row py-6 md:py-6 justify-between gap-10">
+        <div className="h-full px-4 md:px-5">
+          <div className="flex h-full flex-row justify-between gap-10 py-6 md:py-6">
             <div
-              className="flex flex-row w-full h-full"
+              className="flex h-full w-full flex-row"
               style={{ gap: "30px", flexWrap: "wrap" }}
               id={"content"}
             >
-              <div className="flex flex-row items-center ">
-                <span className="text-grey700 text-xl">Нийт бүтээгдэхүүн</span>
-                <span className="font-bold text-[#ff8c00] text-2xl ml-2">
+              <div className="flex flex-row items-center">
+                <span className="text-xl text-grey700">Нийт бүтээгдэхүүн</span>
+                <span className="ml-2 text-2xl font-bold text-[#ff8c00]">
                   {total}
                 </span>
               </div>
 
-              <div className="flex flex-col w-full items-center">
+              <div className="flex w-full flex-col items-center">
                 <ProductGridList
                   showSkeleton={loading}
                   emptyStateMessage="Ангиллын бараа олдсонгүй"
@@ -141,7 +141,7 @@ const CategoryPage = ({ initialData }) => {
                     />
                   ))}
                 </ProductGridList>
-                <div className="flex justify-center items-center mt-8">
+                <div className="mt-8 flex items-center justify-center">
                   <Pagination
                     total={calculateTotal()}
                     color="yellow"

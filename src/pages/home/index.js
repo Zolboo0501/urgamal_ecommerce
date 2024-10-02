@@ -21,11 +21,11 @@ export default function Home() {
         <Banner />
       </div>
       <div className="mb-16">
-        <div className="flex flex-col justify-between relative">
+        <div className="relative flex flex-col justify-between">
           <div className="flex flex-col lg:w-[100%]">
             {/* <FeatureProductList /> */}
             {/* <NewProduct /> */}
-            <div className="hidden lg:flex flex-col lg:flex-row">
+            <div className="hidden flex-col lg:flex lg:flex-row">
               {/* <div className="py-3 text-xxl h-[390px] overflow-x-hidden overflow-y-auto">
                 {configId && categories && (
                   <AllCategory
@@ -34,7 +34,7 @@ export default function Home() {
                   />
                 )}
               </div> */}
-              <div className="relative  w-full">
+              <div className="relative w-full">
                 <Banner />
               </div>
             </div>

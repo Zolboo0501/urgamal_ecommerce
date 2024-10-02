@@ -28,12 +28,12 @@ export async function getServerSideProps({ params }) {
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/product/id/${params.id}`,
-    requestOption
+    requestOption,
   );
   const data = await res.json();
   const specialDeal = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/product/specials`,
-    requestOption
+    requestOption,
   );
   const dealData = await specialDeal.json();
   const sortOrder = data?.category?.sortOrder;
@@ -44,7 +44,7 @@ export async function getServerSideProps({ params }) {
     if (index < 3) {
       const category = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/product/cats/code/${element}`,
-        requestOption
+        requestOption,
       );
       const categoryData = await category.json();
       arr.push({
@@ -88,7 +88,7 @@ const ProductDetail = ({ product, dealData, category }) => {
         "POST",
         "user/wishlist",
         token,
-        requestOption
+        requestOption,
       );
       if (data.success) {
         wishlist.addItem(data);
@@ -140,10 +140,10 @@ const ProductDetail = ({ product, dealData, category }) => {
     const [[imgWidth, imgHeight], setSize] = useState([0, 0]);
     const [showMagnifier, setShowMagnifier] = useState(false);
     return (
-      <div className="relative w-full h-full overflow-hidden">
+      <div className="relative h-full w-full overflow-hidden">
         <Image
           src={src}
-          className="w-full h-full"
+          className="h-full w-full"
           fill
           objectFit="contain"
           onMouseEnter={(e) => {
@@ -202,14 +202,14 @@ const ProductDetail = ({ product, dealData, category }) => {
 
   return (
     <CategoryLayout title={product?.name}>
-      <div className="flex flex-col min-h-screen xl:px-10 lg:px-20 md:px-16 sm:px-11 lg:py-12  items-start py-4 px-4 min-w-96">
+      <div className="flex min-h-screen min-w-96 flex-col items-start px-4 py-4 sm:px-11 md:px-16 lg:px-20 lg:py-12 xl:px-10">
         <div className="mb-4 flex flex-row gap-3">
           {category?.map((item, index) => {
             if (index !== category?.length - 1) {
               return (
                 <button
                   key={item?.name}
-                  className="flex flex-row items-center gap-3 text-gray-600 hover:underline hover:font-semibold"
+                  className="flex flex-row items-center gap-3 text-gray-600 hover:font-semibold hover:underline"
                   onClick={() =>
                     index === 0
                       ? router.push(
@@ -220,7 +220,7 @@ const ProductDetail = ({ product, dealData, category }) => {
                             },
                           },
                           undefined,
-                          { shallow: false }
+                          { shallow: false },
                         )
                       : router.push(
                           {
@@ -231,7 +231,7 @@ const ProductDetail = ({ product, dealData, category }) => {
                             },
                           },
                           undefined,
-                          { shallow: false }
+                          { shallow: false },
                         )
                   }
                 >
@@ -253,11 +253,11 @@ const ProductDetail = ({ product, dealData, category }) => {
                         },
                       },
                       undefined,
-                      { shallow: false }
+                      { shallow: false },
                     )
                   }
                   key={item?.name}
-                  className="text-gray-600 hover:underline hover:font-semibold"
+                  className="text-gray-600 hover:font-semibold hover:underline"
                 >
                   {item?.name}
                 </button>
@@ -265,10 +265,10 @@ const ProductDetail = ({ product, dealData, category }) => {
             }
           })}
         </div>
-        <div className="flex w-full lg:gap-20 justify-start ">
-          <div className="flex lg:gap-14 gap-4 justify-center xl:flex-row lg:flex-col md:flex-col  sm:flex-col xs:flex-col xs2:flex-col flex-col lg:none w-full">
+        <div className="flex w-full justify-start lg:gap-20">
+          <div className="xs2:flex-col lg:none flex w-full flex-col justify-center gap-4 xs:flex-col sm:flex-col md:flex-col lg:flex-col lg:gap-14 xl:flex-row">
             <div className="flex flex-col">
-              <div className="relative h-[50vh] lg:w-[100%] xl:w-[33vw] lg:h-[33vw] sm:w-[100%] sm:h-[66vw] xs:w-[100%] xs:h-[66vw]  xs2:w-[66vw] xs2:h-[66vw] bg-gray-100 border-2 rounded-md w-full">
+              <div className="xs2:w-[66vw] xs2:h-[66vw] relative h-[50vh] w-full rounded-md border-2 bg-gray-100 xs:h-[66vw] xs:w-[100%] sm:h-[66vw] sm:w-[100%] lg:h-[33vw] lg:w-[100%] xl:w-[33vw]">
                 {product?.additionalImage?.length > 0 ? (
                   <ImageMagnifier
                     src={
@@ -278,10 +278,10 @@ const ProductDetail = ({ product, dealData, category }) => {
                     }
                     width={400}
                     fill
-                    className="object-contain rounded-md"
+                    className="rounded-md object-contain"
                   />
                 ) : (
-                  <div className="h-full flex flex-col gap-2 justify-center items-center bg-gray-50 rounded-md">
+                  <div className="flex h-full flex-col items-center justify-center gap-2 rounded-md bg-gray-50">
                     <ThemeIcon
                       size="lg"
                       variant="light"
@@ -303,8 +303,8 @@ const ProductDetail = ({ product, dealData, category }) => {
                         <div
                           className={
                             renderImage === item?.url
-                              ? "relative w-full h-32 rounded-md border-2 border-button-yellow"
-                              : "relative h-32 rounded-md hover:border-2 border-gray-300 w-full"
+                              ? "relative h-32 w-full rounded-md border-2 border-button-yellow"
+                              : "relative h-32 w-full rounded-md border-gray-300 hover:border-2"
                           }
                           onClick={() => clickImage(item)}
                         >
@@ -312,7 +312,7 @@ const ProductDetail = ({ product, dealData, category }) => {
                             alt="item"
                             src={item.url}
                             fill
-                            className="object-cover rounded-md p-1"
+                            className="rounded-md object-cover p-1"
                           />
                         </div>
                       </Grid.Col>
@@ -335,11 +335,11 @@ const ProductDetail = ({ product, dealData, category }) => {
             </div>
             <div className="flex flex-col justify-between lg:gap-6">
               <div className="flex flex-col gap-6">
-                <div className="lg:text-2xl text-lg font-semibold">
+                <div className="text-lg font-semibold lg:text-2xl">
                   {product?.name}
                 </div>
-                <div className="flex font-semibold gap-2">
-                  <span className="text-greenish-grey text-base">
+                <div className="flex gap-2 font-semibold">
+                  <span className="text-base text-greenish-grey">
                     Ширхэгийн үнэ:
                   </span>
                   <span className="text-base">
@@ -347,23 +347,23 @@ const ProductDetail = ({ product, dealData, category }) => {
                   </span>
                 </div>
                 {product?.wholePrice > 0 && (
-                  <div className="flex font-semibold gap-2">
-                    <span className="text-greenish-grey text-base  ">
+                  <div className="flex gap-2 font-semibold">
+                    <span className="text-base text-greenish-grey">
                       Бөөний үнэ:
                     </span>
-                    <span className="text-greenish-grey line-through text-base ">
+                    <span className="text-base text-greenish-grey line-through">
                       {" "}
                       {Intl.NumberFormat("mn-MN").format(product?.listPrice)}₮
                     </span>
-                    <span className="text-greenish-grey text-base "> / </span>
+                    <span className="text-base text-greenish-grey"> / </span>
                     <span className="text-base">
                       {" "}
                       {Intl.NumberFormat("mn-MN").format(product?.wholePrice)}₮
                     </span>
                   </div>
                 )}
-                <div className="flex font-semibold  gap-2 items-center">
-                  <span className="text-greenish-grey text-base  ">
+                <div className="flex items-center gap-2 font-semibold">
+                  <span className="text-base text-greenish-grey">
                     Үлдэгдэл:
                   </span>
                   {product?.balance > 10 ? (
@@ -371,29 +371,29 @@ const ProductDetail = ({ product, dealData, category }) => {
                   ) : product?.balance == 0 ? (
                     <Badge color="yellow">Үлдэгдэлгүй</Badge>
                   ) : (
-                    <span className="text-greenish-grey text-base  ">
+                    <span className="text-base text-greenish-grey">
                       {product?.balance}
                     </span>
                   )}
                 </div>
-                <div className="flex gap-2 font-semibold text-base flex-row ">
-                  <span className="text-greenish-grey text-base ">Төрөл:</span>
+                <div className="flex flex-row gap-2 text-base font-semibold">
+                  <span className="text-base text-greenish-grey">Төрөл:</span>
                   <div className="flex flex-row gap-3 lg:flex-col">
-                    <span className="text-base	">
+                    <span className="text-base">
                       {product?.categoryName + " " + product?.groupName}
                     </span>
                   </div>
                 </div>
                 {product?.instruction && (
                   <div className="flex flex-col gap-4">
-                    <span className="flex font-semibold text-greenish-grey text-base">
+                    <span className="flex text-base font-semibold text-greenish-grey">
                       Хэрэглэх заавар
                     </span>
                     <textarea
                       cols={80}
                       rows={15}
                       readOnly
-                      className="w-full overflow-x-hidden overflow-y-auto focus: outline-0 py-3 px-3 rounded-md text-base bg-[#F8FAFC]"
+                      className="focus: w-full overflow-y-auto overflow-x-hidden rounded-md bg-[#F8FAFC] px-3 py-3 text-base outline-0"
                       value={product.instruction}
                     ></textarea>
                   </div>
@@ -414,7 +414,7 @@ const ProductDetail = ({ product, dealData, category }) => {
                 )} */}
               </div>
 
-              <div className="flex gap-6 w-full mt-5">
+              <div className="mt-5 flex w-full gap-6">
                 <Button
                   variant={"outline"}
                   rightIcon={<IconHeart size={20} stroke={2} />}
@@ -423,7 +423,7 @@ const ProductDetail = ({ product, dealData, category }) => {
                     label: { fontWeight: 500 },
                   }}
                   color={"red"}
-                  className=" flex justify-between items-center px-5 py-3 rounded-md"
+                  className="flex items-center justify-between rounded-md px-5 py-3"
                   onClick={() => addToWishlist()}
                 >
                   Хадгалах
@@ -432,7 +432,7 @@ const ProductDetail = ({ product, dealData, category }) => {
                   variant={"filled"}
                   size="md"
                   color={"orange"}
-                  className="flex justify-between items-center px-5 py-3 rounded-md"
+                  className="flex items-center justify-between rounded-md px-5 py-3"
                   disabled={loading}
                   rightIcon={
                     loading ? (
@@ -452,13 +452,13 @@ const ProductDetail = ({ product, dealData, category }) => {
             </div>
           </div>
         </div>
-        <hr className="my-12 lg:my-14 w-full border" />
+        <hr className="my-12 w-full border lg:my-14" />
         <div className="container flex flex-col">
           <div className="flex flex-row gap-10">
             <button
-              className={`text-black text-lg py-3 ${
+              className={`py-3 text-lg text-black ${
                 toggle === "description"
-                  ? "font-semibold border-b-1  border-[#F9BC60]"
+                  ? "border-b-1 border-[#F9BC60] font-semibold"
                   : "font-normal text-[#98A2B3]"
               }`}
               onClick={() => setToggle("description")}
@@ -468,7 +468,7 @@ const ProductDetail = ({ product, dealData, category }) => {
             <button
               className={`text-lg ${
                 toggle === "detailed_description"
-                  ? "font-semibold text-black border-b-1  border-[#F9BC60]"
+                  ? "border-b-1 border-[#F9BC60] font-semibold text-black"
                   : "font-normal text-[#98A2B3]"
               }`}
               onClick={() => setToggle("detailed_description")}
@@ -478,7 +478,7 @@ const ProductDetail = ({ product, dealData, category }) => {
             <button
               className={`text-lg ${
                 toggle === "note"
-                  ? "font-semibold text-black border-b-1  border-[#F9BC60]"
+                  ? "border-b-1 border-[#F9BC60] font-semibold text-black"
                   : "font-normal text-[#98A2B3]"
               }`}
               onClick={() => setToggle("note")}
@@ -487,19 +487,19 @@ const ProductDetail = ({ product, dealData, category }) => {
             </button>
           </div>
           {toggle === "description" && (
-            <div className="mt-4 bg-white p-4 rounded-md">
+            <div className="mt-4 rounded-md bg-white p-4">
               {product?.description ? (
                 <textarea
                   cols={60}
                   rows={8}
                   readOnly
-                  className="w-full overflow-x-hidden overflow-y-auto focus: outline-0 py-3 px-3 rounded-md text-base font-normal"
+                  className="focus: w-full overflow-y-auto overflow-x-hidden rounded-md px-3 py-3 text-base font-normal outline-0"
                   value={product?.description}
                 />
               ) : (
-                <div className="flex justify-center items-center h-40 flex-col">
+                <div className="flex h-40 flex-col items-center justify-center">
                   <IconNotesOff size="2.5rem" stroke={1.5} color="orange" />
-                  <span className="mt-2 font-medium text-base text-grey">
+                  <span className="mt-2 text-base font-medium text-grey">
                     Тайлбар хоосон байна.
                   </span>
                 </div>
@@ -507,7 +507,7 @@ const ProductDetail = ({ product, dealData, category }) => {
             </div>
           )}
           {toggle === "detailed_description" && (
-            <div className="mt-4 bg-[#F8FAFC] p-4 rounded-md">
+            <div className="mt-4 rounded-md bg-[#F8FAFC] p-4">
               {product?.detailed_description ? (
                 <div
                   dangerouslySetInnerHTML={{
@@ -515,9 +515,9 @@ const ProductDetail = ({ product, dealData, category }) => {
                   }}
                 />
               ) : (
-                <div className="flex justify-center items-center h-40 flex-col">
+                <div className="flex h-40 flex-col items-center justify-center">
                   <IconNotesOff size="2.5rem" stroke={1.5} color="orange" />
-                  <span className="mt-2 font-medium text-base text-grey">
+                  <span className="mt-2 text-base font-medium text-grey">
                     Дэлгэрэнгүй тайлбар хоосон байна.
                   </span>
                 </div>
@@ -525,19 +525,19 @@ const ProductDetail = ({ product, dealData, category }) => {
             </div>
           )}
           {toggle === "note" && (
-            <div className="mt-4 bg-[#F8FAFC] p-4 rounded-md">
+            <div className="mt-4 rounded-md bg-[#F8FAFC] p-4">
               {product?.description ? (
                 <textarea
                   cols={60}
                   rows={8}
                   readOnly
-                  className="w-full overflow-x-hidden overflow-y-auto focus: outline-0 py-3 px-3 rounded-md text-base"
+                  className="focus: w-full overflow-y-auto overflow-x-hidden rounded-md px-3 py-3 text-base outline-0"
                   value={product?.note}
                 />
               ) : (
-                <div className="flex justify-center items-center h-40 flex-col">
+                <div className="flex h-40 flex-col items-center justify-center">
                   <IconNotesOff size="2.5rem" stroke={1.5} color="orange" />
-                  <span className="mt-2 font-medium text-base text-grey">
+                  <span className="mt-2 text-base font-medium text-grey">
                     Тэмдэглэл хоосон байна.
                   </span>
                 </div>
@@ -545,7 +545,7 @@ const ProductDetail = ({ product, dealData, category }) => {
             </div>
           )}
         </div>
-        <div className="w-full mt-12">
+        <div className="mt-12 w-full">
           {dealData &&
             dealData?.data &&
             dealData?.data.map((item, index) => {

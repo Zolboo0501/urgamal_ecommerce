@@ -53,8 +53,8 @@ function ProductModal({
         !value.length
           ? "Заавал бөглөх"
           : value.length < 8
-          ? "Утасны дугаар буруу байна"
-          : null,
+            ? "Утасны дугаар буруу байна"
+            : null,
     },
     validateInputOnChange: true,
   });
@@ -69,7 +69,7 @@ function ProductModal({
   useEffect(() => {
     if (form.values.province || form.values.city) {
       const districtsOfProvince = address?.filter(
-        (item) => item?.name == form.values.city
+        (item) => item?.name == form.values.city,
       )[0]?.dic_districts;
 
       setDistricts(
@@ -78,7 +78,7 @@ function ProductModal({
           label: item?.name,
           key: item?.id,
           dic_khoroos: item?.dic_khoroos,
-        })) || []
+        })) || [],
       );
     }
   }, [form.values.province, form.values.city]);
@@ -86,14 +86,14 @@ function ProductModal({
   useEffect(() => {
     if (form.values.district) {
       const committeeOfDistrict = districts?.filter(
-        (item) => item?.value == form.values.district
+        (item) => item?.value == form.values.district,
       )[0]?.dic_khoroos;
       setCommittee(
         committeeOfDistrict?.map((item) => ({
           value: item?.name,
           label: item?.name,
           key: item?.id,
-        })) || []
+        })) || [],
       );
     }
   }, [form.values.district]);

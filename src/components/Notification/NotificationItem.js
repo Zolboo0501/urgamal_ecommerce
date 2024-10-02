@@ -12,7 +12,7 @@ const NotificationItem = ({ data, index }) => {
           alt="notification-image"
           width={24}
           height={24}
-          className="w-12 h-12 object-fill"
+          className="h-12 w-12 object-fill"
         />
       ) : (
         <Avatar color="yellow" radius={"xl"} size={"md"}>
@@ -20,8 +20,8 @@ const NotificationItem = ({ data, index }) => {
         </Avatar>
       )}
       <div className="flex flex-col">
-        <p className="font-semibold text-sm">{data.title}</p>
-        <p className="font-normal text-xs">{data.content}</p>
+        <p className="text-sm font-semibold">{data.title}</p>
+        <p className="text-xs font-normal">{data.content}</p>
       </div>
     </div>
   );

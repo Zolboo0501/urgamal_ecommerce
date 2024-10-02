@@ -18,7 +18,7 @@ export default function CategoryLayout({
   const [type, setType] = useState();
   const userContext = useContext(UserConfigContext);
   const [userConfigValue, setUserConfigValue] = useState(
-    userContext.preferenceConfig
+    userContext.preferenceConfig,
   );
   const route = useRouter();
   useEffect(() => {
@@ -57,7 +57,7 @@ export default function CategoryLayout({
         <title>{title}</title>
         <ColorSchemeScript />
       </Head>
-      <div className="shadow bg-white">
+      <div className="bg-white shadow">
         <main
           className="flex flex-col justify-between bg-main"
           style={{
@@ -68,7 +68,7 @@ export default function CategoryLayout({
         >
           <Navbar getValue={getValue} address={userContext?.address} />
           <div className="flex flex-row">
-            <aside className=" hidden lg:block h-screen sticky top-0">
+            <aside className="sticky top-0 hidden h-screen lg:block">
               <Category />
             </aside>
             {children}

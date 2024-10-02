@@ -35,13 +35,13 @@ const PurchaseHistory = () => {
   };
 
   return (
-    <div className="flex flex-col w-full bg-white px-8 py-6 rounded-md">
+    <div className="flex w-full flex-col rounded-md bg-white px-8 py-6">
       <Title order={3}>Худалдан авсан түүх</Title>
-      <div className="bg-white w-full rounded-md mt-4">
-        <div className="flex flex-row justify-around items-center ">
+      <div className="mt-4 w-full rounded-md bg-white">
+        <div className="flex flex-row items-center justify-around">
           {tabs === 1 ? (
             <p
-              className="text-base py-2 w-full text-center border-b-2 border-background-sort"
+              className="w-full border-b-2 border-background-sort py-2 text-center text-base"
               id={1}
               onClick={() => clickTabs(1)}
             >
@@ -49,7 +49,7 @@ const PurchaseHistory = () => {
             </p>
           ) : (
             <p
-              className="text-base text-grey hover:bg-button-yellow hover:text-black w-full py-2 text-center"
+              className="w-full py-2 text-center text-base text-grey hover:bg-button-yellow hover:text-black"
               id={1}
               onClick={() => clickTabs(1)}
             >
@@ -58,7 +58,7 @@ const PurchaseHistory = () => {
           )}
           {tabs === 2 ? (
             <p
-              className="text-base w-full py-2 text-center border-b-2 border-background-sort"
+              className="w-full border-b-2 border-background-sort py-2 text-center text-base"
               id={2}
               onClick={() => clickTabs(2)}
             >
@@ -66,7 +66,7 @@ const PurchaseHistory = () => {
             </p>
           ) : (
             <p
-              className="text-base text-grey hover:bg-button-yellow w-full py-2 text-center  hover:text-black"
+              className="w-full py-2 text-center text-base text-grey hover:bg-button-yellow hover:text-black"
               id={2}
               onClick={() => clickTabs(2)}
             >

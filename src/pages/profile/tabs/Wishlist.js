@@ -39,11 +39,11 @@ const Wishlist = () => {
   };
 
   return (
-    <div className="flex flex-col w-full bg-white px-4 lg:px-8 py-6 rounded-md">
+    <div className="flex w-full flex-col rounded-md bg-white px-4 py-6 lg:px-8">
       <Title order={3}>Хадгалсан бараа</Title>
-      <div className="mt-4 overflow-auto max-h-96 w-full">
+      <div className="mt-4 max-h-96 w-full overflow-auto">
         {loading ? (
-          <div className="w-full flex items-center justify-center h-96">
+          <div className="flex h-96 w-full items-center justify-center">
             <Loader color="yellow" />
           </div>
         ) : wishlist.length > 0 ? (
@@ -51,15 +51,15 @@ const Wishlist = () => {
             <ProductWishlist data={item} key={index} refresh={getWishlist} />
           ))
         ) : (
-          <div className="min-h-full h-72 flex flex-col items-center justify-center">
+          <div className="flex h-72 min-h-full flex-col items-center justify-center">
             <IconHeartOff size="2rem" stroke={1.5} />
-            <span className="mt-2 font-medium text-base text-grey">
+            <span className="mt-2 text-base font-medium text-grey">
               Таны таалагдсан бараа хоосон байна.
             </span>
           </div>
         )}
       </div>
-      <div className="mt-4 flex flex-row justify-end items-center">
+      <div className="mt-4 flex flex-row items-center justify-end">
         {/* <Button
           variant="transparent"
           styles={(theme) => ({

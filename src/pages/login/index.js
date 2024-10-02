@@ -72,7 +72,7 @@ const Login = () => {
       };
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/google/callback?code=${router.query.code}&scope=${router.query.scope}&authuser=${router.query.authuser}&prompt=${router.query.prompt}`,
-        requestOption
+        requestOption,
       );
       const data = await res.json();
 
@@ -102,7 +102,7 @@ const Login = () => {
       };
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/facebook/callback?code=${router.query.code}`,
-        requestOption
+        requestOption,
       );
       const data = await res.json();
       if (data.success) {
@@ -197,13 +197,13 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-row absolute">
-      <div className="w-4/6 h-full relative hidden md:block lg:w-8/12 xl:w-9/12">
+    <div className="absolute flex h-full w-full flex-row">
+      <div className="relative hidden h-full w-4/6 md:block lg:w-8/12 xl:w-9/12">
         <Image fill src={"/plant.jpg"} alt="plant" objectFit="cover" />
       </div>
-      <div className="flex flex-col relative items-center justify-center flex-1">
+      <div className="relative flex flex-1 flex-col items-center justify-center">
         <Image src="/logo.png" width={100} height={100} alt="logo" />
-        <p className="text-xl font-bold mt-4">Нэвтрэх</p>
+        <p className="mt-4 text-xl font-bold">Нэвтрэх</p>
         <div className="mt-5 px-8 xl:px-12">
           <form onSubmit={form.onSubmit((values) => loginFetchData(values))}>
             <TextInput
@@ -245,7 +245,7 @@ const Login = () => {
                 },
               })}
             />
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <Checkbox
                 label="Сануулах"
                 size={"xs"}

@@ -12,8 +12,8 @@ export default function ProductGridList({
   className,
 }) {
   return isEmpty ? (
-    <div className={`w-full h-screen flex justify-center items-start mt-32`}>
-      <Stack align="center" className=" grow">
+    <div className={`mt-32 flex h-screen w-full items-start justify-center`}>
+      <Stack align="center" className="grow">
         <IconSearch size="2rem" stroke={1.5} />
         <p class="text-lg font-normal">Ангилал дээрх бараа олдсонгүй...</p>
       </Stack>

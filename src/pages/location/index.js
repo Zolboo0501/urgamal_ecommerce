@@ -44,9 +44,9 @@ const Location = ({ data }) => {
 
   return (
     <GlobalLayout>
-      <div className="sm:px-6 sm:py-6 bg-nav-background px-4 py-4 h-full ">
-        <div className="border rounded">
-          <div className="p-4 md:p-10 flex flex-col gap-10">
+      <div className="h-full bg-nav-background px-4 py-4 sm:px-6 sm:py-6">
+        <div className="rounded border">
+          <div className="flex flex-col gap-10 p-4 md:p-10">
             <Carousel
               withIndicators
               height={"100%"}
@@ -59,7 +59,7 @@ const Location = ({ data }) => {
                 return (
                   <Carousel.Slide key={(el, idx)}>
                     <div
-                      className="relative w-full h-[20rem] lg:h-[34rem] "
+                      className="relative h-[20rem] w-full lg:h-[34rem]"
                       key={el}
                     >
                       <Image
@@ -67,15 +67,15 @@ const Location = ({ data }) => {
                         src={el}
                         alt="image"
                         fill
-                        className="object-contain rounded-lg"
+                        className="rounded-lg object-contain"
                       />
                     </div>
                   </Carousel.Slide>
                 );
               })}
             </Carousel>
-            <div className="flex justify-center ">
-              <div className="overflow-x-auto w-[50%]">
+            <div className="flex justify-center">
+              <div className="w-[50%] overflow-x-auto">
                 <SegmentedControl
                   data={data?.map((location, index) => ({
                     value: location?.name,
@@ -94,8 +94,8 @@ const Location = ({ data }) => {
                 />
               </div>
             </div>
-            <div className="relative flex h-full md:h-96 flex-col md:flex-row gap-10 justify-center items-center">
-              <div className="w-full h-80 md:h-full rounded-lg border shadow-lg">
+            <div className="relative flex h-full flex-col items-center justify-center gap-10 md:h-96 md:flex-row">
+              <div className="h-80 w-full rounded-lg border shadow-lg md:h-full">
                 {!loadingMap && (
                   <Map center={loc} zoom={14} key={location?.name}>
                     {({ TileLayer, Marker, Popup }) => (
@@ -114,9 +114,9 @@ const Location = ({ data }) => {
                   </Map>
                 )}
               </div>
-              <ul className="h-full w-full md:text-lg list-none text-start">
-                <li className="flex gap-4 gtext-start">
-                  <div className="flex items-start gap-4 ">
+              <ul className="h-full w-full list-none text-start md:text-lg">
+                <li className="gtext-start flex gap-4">
+                  <div className="flex items-start gap-4">
                     <IconLocation
                       width={25}
                       height={25}
@@ -132,7 +132,7 @@ const Location = ({ data }) => {
                     }}
                   />
                 </li>
-                <li className="flex items-center gap-4 mt-5">
+                <li className="mt-5 flex items-center gap-4">
                   <IconPhoneCall width={25} height={25} color={"#f9bc60"} />{" "}
                   <span className="font-semibold">Утас :</span>{" "}
                   <span
@@ -141,7 +141,7 @@ const Location = ({ data }) => {
                     }}
                   />
                 </li>
-                <li className="flex items-center gap-4 mt-5">
+                <li className="mt-5 flex items-center gap-4">
                   <IconClock width={25} height={25} color={"#f9bc60"} />{" "}
                   <span className="font-semibold">Цагийн хуваарь :</span>{" "}
                   <span
@@ -162,7 +162,7 @@ const Location = ({ data }) => {
 export async function getServerSideProps() {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/config/branch`
+      `${process.env.NEXT_PUBLIC_API_URL}/config/branch`,
     );
     const data = await response?.data?.data;
 

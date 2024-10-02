@@ -62,24 +62,24 @@ const BottomNavBar = () => {
       >
         <Category closeCategoryDrawer={closeCategoryDrawer} />
       </Drawer>
-      <div className="block lg:hidden sticky bottom-0 z-50">
+      <div className="sticky bottom-0 z-50 block lg:hidden">
         <div className="relative">
-          <div className="bg-white h-full">
-            <div className="grid h-full max-w-lg grid-cols-4 mx-auto">
+          <div className="h-full bg-white">
+            <div className="mx-auto grid h-full max-w-lg grid-cols-4">
               <button
                 type="button"
-                className={`inline-flex flex-col items-center justify-center font-medium px-5 hover:bg-gray-50 group py-3`}
+                className={`group inline-flex flex-col items-center justify-center px-5 py-3 font-medium hover:bg-gray-50`}
                 onClick={openCategoryDrawer}
               >
                 <IconCategory2 size={"1.5rem"} color="#475467" />
-                <span className="text-sm text-grey700 font-medium">
+                <span className="text-sm font-medium text-grey700">
                   Ангилал
                 </span>
               </button>
               <button
                 type="button"
                 onClick={() => router.push("/home")}
-                className={`inline-flex flex-col  items-center justify-center font-medium px-5 hover:bg-gray-50 group py-3 ${
+                className={`group inline-flex flex-col items-center justify-center px-5 py-3 font-medium hover:bg-gray-50 ${
                   router.pathname === "/home" && "border-t-3 border-primary"
                 }`}
               >
@@ -102,13 +102,13 @@ const BottomNavBar = () => {
               <button
                 onClick={() => linkToCart()}
                 type="button"
-                className={`inline-flex flex-col  items-center justify-center font-medium px-5 hover:bg-gray-50 group py-3 ${
+                className={`group inline-flex flex-col items-center justify-center px-5 py-3 font-medium hover:bg-gray-50 ${
                   router.pathname === "/cart/cartItem" &&
                   "border-t-3 border-primary"
                 }`}
               >
                 <div className="absolute">
-                  <div className="w-5 h-5 bg-number flex justify-center items-center text-white -mt-8 rounded-full text-sm ml-8">
+                  <div className="-mt-8 ml-8 flex h-5 w-5 items-center justify-center rounded-full bg-number text-sm text-white">
                     <p className="text-xs">
                       {cartItem?.cart_items ? cartItem?.cart_items?.length : 0}
                     </p>
@@ -132,7 +132,7 @@ const BottomNavBar = () => {
               </button>
               <button
                 type="button"
-                className={`inline-flex flex-col  items-center justify-center font-medium px-5 hover:bg-gray-50 group  ${
+                className={`group inline-flex flex-col items-center justify-center px-5 font-medium hover:bg-gray-50 ${
                   router.pathname === "/profile" && "border-t-3 border-primary"
                 }`}
                 onClick={() => {

@@ -1,9 +1,9 @@
 import { Skeleton } from "@mantine/core";
 const MySkeleton = ({ key }) => {
   return (
-    <div key={key || ""} className="bg-white rounded-md h-full w-full">
+    <div key={key || ""} className="h-full w-full rounded-md bg-white">
       <Skeleton mb="xl" width={"100%"} height={"40%"} />
-      <div className="p-3 -mt-4">
+      <div className="-mt-4 p-3">
         <Skeleton height={12} />
         <Skeleton height={12} mt={10} />
         <Skeleton height={12} mt={10} width="80%" />

@@ -22,10 +22,10 @@ const Loyalty = ({ userInfo }) => {
     setLoading(false);
   };
   return (
-    <div className="flex flex-col w-full bg-white px-8 py-6 rounded-md">
+    <div className="flex w-full flex-col rounded-md bg-white px-8 py-6">
       <Title order={3}>Loyalty</Title>
       {loading ? (
-        <div className="w-full h-[20rem] flex items-center justify-center">
+        <div className="flex h-[20rem] w-full items-center justify-center">
           <Loader color="yellow" />
         </div>
       ) : loyalty?.length > 0 ? (
@@ -33,23 +33,23 @@ const Loyalty = ({ userInfo }) => {
           {loyalty?.map((item, index) => (
             <div
               key={index}
-              className="flex flex-row justify-between items-center p-2 hover:bg-gray-50 hover:cursor-pointer"
+              className="flex flex-row items-center justify-between p-2 hover:cursor-pointer hover:bg-gray-50"
               style={{ borderBottom: "1px solid rgba(0, 30, 29, 0.23)" }}
             >
               <div className="flex flex-col">
                 <div className="flex flex-row">
                   <p className="text-base text-grey">Захиалгын дугаар :</p>
-                  <p className="text-base ml-1">{item?.orderid}</p>
+                  <p className="ml-1 text-base">{item?.orderid}</p>
                 </div>
                 <div className="flex flex-row">
                   <p className="text-base text-grey">Огноо : </p>
-                  <p className="text-base ml-1">
+                  <p className="ml-1 text-base">
                     {dayjs(item?.createdAt).format("YYYY-MM-DD HH:mm")}
                     {/* {data?.createdAt} */}
                   </p>
                 </div>
               </div>
-              <div className="flex flex-row gap-2 items-center">
+              <div className="flex flex-row items-center gap-2">
                 <p class="text-base font-semibold">{item.amount}</p>
 
                 <IconStarFilled
@@ -77,9 +77,9 @@ const Loyalty = ({ userInfo }) => {
           </div>
         </div>
       ) : (
-        <div className="w-full h-80 flex justify-center items-center flex-col">
+        <div className="flex h-80 w-full flex-col items-center justify-center">
           <IconGiftOff size="2rem" stroke={1.5} />
-          <span className="mt-2 font-medium text-base text-grey">
+          <span className="mt-2 text-base font-medium text-grey">
             Таны loyalty хоосон байна.
           </span>
         </div>

@@ -55,12 +55,12 @@ const Feedback = () => {
   };
 
   return (
-    <div className="flex flex-col w-full bg-white px-8 py-6 rounded-md">
+    <div className="flex w-full flex-col rounded-md bg-white px-8 py-6">
       <Title order={3}>Санал хүсэлт илгээх</Title>{" "}
       <p class="text-sm text-gray-500">
         Таньд ямар нэгэн асуудал гарсан бол бидэнд мэдэгдээрэй
       </p>
-      <div className="w-full flex flex-row gap-8 mt-4">
+      <div className="mt-4 flex w-full flex-row gap-8">
         <div className="w-full">
           <TextInput
             size="sm"
@@ -124,7 +124,7 @@ const Feedback = () => {
           />
         </div>
       </div>
-      <div className="w-full flex flex-row gap-8 mt-4">
+      <div className="mt-4 flex w-full flex-row gap-8">
         <div className="w-full">
           <Select
             placeholder="Төрөл"
@@ -157,7 +157,7 @@ const Feedback = () => {
           <RickText onChange={onChange} />
         </Grid.Col>
       </Grid>
-      <div className="w-full flex justify-end mt-6">
+      <div className="mt-6 flex w-full justify-end">
         <Button
           color="yellow"
           leftSection={

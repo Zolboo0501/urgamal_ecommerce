@@ -40,7 +40,7 @@ const Mail = () => {
             "POST",
             "auth/verify/mail",
             token,
-            requestOption
+            requestOption,
           );
           if (data.success) {
             setEmailRequested(true);
@@ -107,7 +107,7 @@ const Mail = () => {
           "POST",
           "auth/verify",
           token,
-          requestOption
+          requestOption,
         );
         if (data.success) {
           showNotification({
@@ -147,7 +147,7 @@ const Mail = () => {
 
   return (
     <div className="mt-4">
-      <div className="w-full flex flex-col gap-8 mt-4 py-10">
+      <div className="mt-4 flex w-full flex-col gap-8 py-10">
         <Center>
           <Stack justify="center">
             <Center>

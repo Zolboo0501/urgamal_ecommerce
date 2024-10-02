@@ -5,7 +5,7 @@ const Checkout = () => {
   return (
     <>
       <GlobalLayout>
-        <div className="bg-grey-back w-full h-full px-32 py-8">
+        <div className="h-full w-full bg-grey-back px-32 py-8">
           <div className="flex gap-2">
             <Link href="cartItem" shallow={true}>
               Сагс

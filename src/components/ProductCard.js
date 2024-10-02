@@ -65,7 +65,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
           "POST",
           "user/wishlist",
           token,
-          requestOption
+          requestOption,
         );
         if (res.success) {
           wishlist.addItem(data);
@@ -146,7 +146,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
         );
       }
       if (convertInt <= 10 && convertInt > 0) {
-        return <p className="text-xs font-semibold ">{balance}</p>;
+        return <p className="text-xs font-semibold">{balance}</p>;
       }
     } else {
       return (
@@ -169,7 +169,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
       }}
       className={`hover:cursor-pointer hover:bg-grey25 ${
         shouldScale &&
-        "transition ease-in-out delay-100 hover:-translate-y-2 hover:scale-101"
+        "hover:scale-101 transition delay-100 ease-in-out hover:-translate-y-2"
       }`}
       style={{ border: "0.5px solid #f3f3f3" }}
     >
@@ -206,7 +206,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
                     <Box
                       key={addImg?.key}
                       pos="relative"
-                      className="h-full z-20"
+                      className="z-20 h-full"
                       onMouseEnter={() => {
                         setCurrentImage({ key: addImg?.key, src: addImg?.url });
                       }}
@@ -239,17 +239,17 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
         </div>
       </Card.Section>
       <div className="mt-3">
-        <p class="text-lg font-medium mt-1 text-start grow line-clamp-1">
+        <p class="mt-1 line-clamp-1 grow text-start text-lg font-medium">
           {data?.name}
         </p>
         <div className="flex flex-row items-center gap-1">
-          <p className="text-[#696A6C] font-semibold text-xs">Үлдэгдэл : </p>
+          <p className="text-xs font-semibold text-[#696A6C]">Үлдэгдэл : </p>
           {renderRemains(data?.balance)}
         </div>
       </div>
-      <div className="flex flex-col w-full">
-        <div className="flex flex-row justify-between items-center">
-          <p className="text-lg mt-1 text-start text-primary600 font-bold">
+      <div className="flex w-full flex-col">
+        <div className="flex flex-row items-center justify-between">
+          <p className="mt-1 text-start text-lg font-bold text-primary600">
             {numberWithCommas(data?.listPrice)}₮
           </p>
           <ActionIcon
@@ -272,9 +272,9 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
           </ActionIcon>
         </div>
         {data?.barCode ? (
-          <div className="flex flex-row gap-1 items-center">
+          <div className="flex flex-row items-center gap-1">
             <IoIosBarcode size={"2rem"} color="#696A6C" />{" "}
-            <p className="text-grey800 text-sm">{data?.barCode}</p>
+            <p className="text-sm text-grey800">{data?.barCode}</p>
           </div>
         ) : (
           <IoIosBarcode size={"2rem"} color="white" />
@@ -286,7 +286,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
             variant="light"
             size="md"
             radius="xl"
-            className="flex justify-center items-center border rounded-md"
+            className="flex items-center justify-center rounded-md border"
             color="green"
             onClick={(event) => {
               event.preventDefault();
@@ -295,14 +295,14 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
           >
             <IconMinus stroke={2} size={"1.2rem"} />
           </ActionIcon>
-          <p className="text-center text-sm ml-2 mr-2 font-semibold">
+          <p className="ml-2 mr-2 text-center text-sm font-semibold">
             {productCount}
           </p>
           <ActionIcon
             variant="light"
             size="md"
             radius="xl"
-            className="flex justify-center items-center rounded-md"
+            className="flex items-center justify-center rounded-md"
             color="green"
             onClick={(event) => {
               event.preventDefault();

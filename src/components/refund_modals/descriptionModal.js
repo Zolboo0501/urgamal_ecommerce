@@ -29,7 +29,7 @@ export default function RefundRichText({ innerProps, context, id }) {
 
       await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/order/refund`,
-        requestOption
+        requestOption,
       )
         .then((response) => {
           return response.json();

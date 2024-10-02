@@ -23,7 +23,7 @@ const ProductWishlist = ({ data, refresh }) => {
       "DELETE",
       "user/wishlist",
       token,
-      requestOption
+      requestOption,
     );
     if (res.success) {
       showNotification({
@@ -94,10 +94,10 @@ const ProductWishlist = ({ data, refresh }) => {
 
   return (
     <div
-      className="divide-b-4 divide-slate-700 w-full"
+      className="divide-b-4 w-full divide-slate-700"
       style={{ borderBottom: "2px solid #DADEDE" }}
     >
-      <div className="flex flex-col sm:flex-row p-4">
+      <div className="flex flex-col p-4 sm:flex-row">
         <div>
           {data?.product?.additionalImage?.length > 0 ? (
             <Image
@@ -106,19 +106,19 @@ const ProductWishlist = ({ data, refresh }) => {
               alt={data?.product?.additionalImage[0]?.url}
               width={128}
               height={128}
-              className="sm:w-32 sm:h-32 h-48 object-contain"
+              className="h-48 object-contain sm:h-32 sm:w-32"
             />
           ) : (
-            <div className="product-card-img flex flex-col gap-2 justify-center items-center bg-gray-50 rounded-md sm:w-32 h-48 sm:h-32">
+            <div className="product-card-img flex h-48 flex-col items-center justify-center gap-2 rounded-md bg-gray-50 sm:h-32 sm:w-32">
               <ThemeIcon size="lg" variant="light" color="green">
                 <IconPhotoOff size="80%" stroke={0.5} />
               </ThemeIcon>
             </div>
           )}
         </div>
-        <div className="flex flex-col justify-evenly sm:ml-3 mt-2 sm:mt-0">
-          <p className="font-semibold text-sm lg:text-base">{data.name}</p>
-          <div className="flex flex-row items-center mt-1">
+        <div className="mt-2 flex flex-col justify-evenly sm:ml-3 sm:mt-0">
+          <p className="text-sm font-semibold lg:text-base">{data.name}</p>
+          <div className="mt-1 flex flex-row items-center">
             <p className="text-sm lg:text-base">
               Ширхэг: {data?.product.balance}
             </p>
@@ -126,7 +126,7 @@ const ProductWishlist = ({ data, refresh }) => {
               Нэгж үнэ: {data?.product.listPrice}₮
             </p>
           </div>
-          <div className="flex flex-row mt-2">
+          <div className="mt-2 flex flex-row">
             <Button
               variant={"filled"}
               className="mr-4"

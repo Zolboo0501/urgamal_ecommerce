@@ -50,26 +50,14 @@ export default function ProductListWithCategory({ cols, className, suggest }) {
           key={product?.id}
           className={`flex flex-col justify-center ${className}`}
         >
-          <div className="flex justify-between items-end">
-            <div className="flex items-center gap-4 ml-2">
+          <div className="flex items-end justify-between">
+            <div className="ml-2 flex items-center gap-4">
               {categoryIcon && (
-                <div
-                  className="relative
-            h-10 w-10
-            md:h-16 md:w-16
-            sm:h-14 sm:w-14
-            xs:h-12 xs:w-12"
-                >
+                <div className="relative h-10 w-10 xs:h-12 xs:w-12 sm:h-14 sm:w-14 md:h-16 md:w-16">
                   <Image src={categoryIcon} fill alt={categoryIcon} />
                 </div>
               )}
-              <p
-                className="
-          text-xl font-medium
-     md:text-xxl md:font-bold
-     sm:font-medium sm:text-xl
-     xs:font-medium xs:text-xl"
-              >
+              <p className="text-xl font-medium xs:text-xl xs:font-medium sm:text-xl sm:font-medium md:text-xxl md:font-bold">
                 {categoryName}
               </p>
             </div>
@@ -143,15 +131,9 @@ export default function ProductListWithCategory({ cols, className, suggest }) {
             key={product?.id}
             className={`flex flex-col justify-center ${className}`}
           >
-            <div className="flex justify-between items-end">
-              <div className="flex items-center gap-4 ml-2">
-                <p
-                  className="
-          text-xl font-medium
-     md:text-xxl md:font-bold
-     sm:font-medium sm:text-xl
-     xs:font-medium xs:text-xl"
-                >
+            <div className="flex items-end justify-between">
+              <div className="ml-2 flex items-center gap-4">
+                <p className="text-xl font-medium xs:text-xl xs:font-medium sm:text-xl sm:font-medium md:text-xxl md:font-bold">
                   {categoryName}
                 </p>
               </div>

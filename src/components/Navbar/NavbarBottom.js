@@ -47,9 +47,9 @@ const NavbarBottom = ({
   }, []);
 
   return (
-    <div className="py-2 px-12 max-sm:px-2 flex flex-row justify-between relative">
+    <div className="relative flex flex-row justify-between px-12 py-2 max-sm:px-2">
       <button
-        className="flex flex-row bg-button-yellow items-center justify-center rounded-md gap-1 px-3"
+        className="flex flex-row items-center justify-center gap-1 rounded-md bg-button-yellow px-3"
         onMouseEnter={() => setIsHovered(true)}
       >
         <Image
@@ -59,7 +59,7 @@ const NavbarBottom = ({
           className="object-contain"
           alt="cube"
         />
-        <div className="font-open text-white font-normal text-sm">
+        <div className="font-open text-sm font-normal text-white">
           Бүх ангилал
         </div>
       </button>
@@ -71,7 +71,7 @@ const NavbarBottom = ({
         />
       )}
 
-      <div className="hidden md:block flex-grow mx-12">
+      <div className="mx-12 hidden flex-grow md:block">
         <Autocomplete
           className="w-full"
           size={"md"}
@@ -114,7 +114,7 @@ const NavbarBottom = ({
           }
           rightSection={
             <button
-              className="m-auto h-full  bg-background-sort p-2 px-4 rounded-md max-xs:w-11 max-xs:flex max-xs:items-center max-xs:justify-center max-xs:p-0 max-xs:px-0 "
+              className="m-auto h-full rounded-md bg-background-sort p-2 px-4 max-xs:flex max-xs:w-11 max-xs:items-center max-xs:justify-center max-xs:p-0 max-xs:px-0"
               onClick={() => {
                 router.push({
                   pathname: "/products",
@@ -126,14 +126,14 @@ const NavbarBottom = ({
                 color="white"
                 size="1.2rem"
                 stroke={2.5}
-                className="max-xs:w-4 max-xs:h-4"
+                className="max-xs:h-4 max-xs:w-4"
               />
             </button>
           }
         />
       </div>
       <div className="flex flex-row justify-center">
-        <div className="flex flex-row gap-2 items-center">
+        <div className="flex flex-row items-center gap-2">
           <Image width={20} height={20} src={"/icons/phone.svg"} alt="phone" />
           <div
             className="text-sm"

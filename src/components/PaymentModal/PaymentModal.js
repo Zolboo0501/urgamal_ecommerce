@@ -44,7 +44,7 @@ export default function PaymentModal({ context, id, innerProps }) {
     axios
       .get(
         `${process.env.NEXT_PUBLIC_API_URL}/order/payment/inquiry/${invoiceId}`,
-        axiosReqOption
+        axiosReqOption,
       )
       .then((res) => {
         if (res.data?.result.success) {
@@ -74,7 +74,7 @@ export default function PaymentModal({ context, id, innerProps }) {
     setLoading(false);
   };
   return (
-    <div className="flex flex-col mt-2 gap-4 items-center">
+    <div className="mt-2 flex flex-col items-center gap-4">
       <Tabs defaultValue="qpay" classNames={{ panel: "mt-6" }} color="yellow">
         <Tabs.List grow>
           <Tabs.Tab value="qpay">Qpay- р төлөх</Tabs.Tab>
@@ -87,7 +87,7 @@ export default function PaymentModal({ context, id, innerProps }) {
             <p class="text-sm">
               Та Qpay ашиглан төлбөрөө доорх зургийг уншуулан төлөөрэй
             </p>
-            <div className="relative w-64 h-64 lg:h-96 lg:w-96">
+            <div className="relative h-64 w-64 lg:h-96 lg:w-96">
               <Image
                 src={`data:image/png;base64,${innerProps.paymentData?.qr_image}`}
                 alt="qpay QR"
@@ -105,13 +105,13 @@ export default function PaymentModal({ context, id, innerProps }) {
             <p class="text-sm font-medium text-gray-500">
               Зөвхөн гар утаснаас үйлдлийг хийх боломжтой
             </p>
-            <div className="flex flex-wrap gap-4 justify-center mt-1">
+            <div className="mt-1 flex flex-wrap justify-center gap-4">
               {innerProps.paymentData?.urls?.map((e, index) => {
                 return (
                   <Card component="a" href={e?.link} radius="lg" key={index}>
                     <div
                       key={e?.name}
-                      className="flex flex-col gap-2 w-14 max-w-14 justify-center items-center"
+                      className="flex w-14 max-w-14 flex-col items-center justify-center gap-2"
                     >
                       <div className="relative h-12 w-12">
                         <Image
@@ -122,7 +122,7 @@ export default function PaymentModal({ context, id, innerProps }) {
                           className="rounded-md"
                         />
                       </div>
-                      <p class="text-xs text-center">{e?.description}</p>
+                      <p class="text-center text-xs">{e?.description}</p>
                     </div>
                   </Card>
                 );

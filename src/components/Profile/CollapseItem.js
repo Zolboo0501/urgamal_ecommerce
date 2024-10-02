@@ -2,13 +2,13 @@ import Image from "next/image";
 const CollapseItem = ({ data, total, orderItems }) => {
   return (
     <div
-      className="divide-b-4 divide-slate-700 w-full"
+      className="divide-b-4 w-full divide-slate-700"
       style={{ borderBottom: "2px solid #DADEDE" }}
     >
       <div className="flex flex-col p-4">
         <div className="flex flex-col">
           {orderItems?.map((e, index) => (
-            <div className="flex flex-row mb-2 h-[90px]" key={index}>
+            <div className="mb-2 flex h-[90px] flex-row" key={index}>
               <Image
                 alt={e.product?.name}
                 loader={() => e.product?.image}
@@ -17,14 +17,14 @@ const CollapseItem = ({ data, total, orderItems }) => {
                 height={90}
               />
               <div className="flex flex-col justify-around">
-                <p className="text-md font-semibold ml-2">{e.product?.name}</p>
-                <div className="flex flex-row ml-2">
-                  <p className="text-grey text-xs">Ширхэг :</p>
-                  <p className="text-xs ml-1 font-semibold">{e?.qty}</p>
+                <p className="ml-2 text-md font-semibold">{e.product?.name}</p>
+                <div className="ml-2 flex flex-row">
+                  <p className="text-xs text-grey">Ширхэг :</p>
+                  <p className="ml-1 text-xs font-semibold">{e?.qty}</p>
                 </div>
-                <div className="flex flex-row ml-2">
-                  <p className="text-grey text-xs">Нэгж үнэ :</p>
-                  <p className="text-xs ml-1 font-semibold">
+                <div className="ml-2 flex flex-row">
+                  <p className="text-xs text-grey">Нэгж үнэ :</p>
+                  <p className="ml-1 text-xs font-semibold">
                     {e.product?.price}₮
                   </p>
                 </div>

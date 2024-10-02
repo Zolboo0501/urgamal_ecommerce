@@ -28,9 +28,9 @@ export default function ShippingAddressCard({
           </ActionIcon>
         </Group>
       </Group>
-      <div className="flex flex-col items-start gap-3 w-full">
-        <div className="flex flex-col gap-2 w-full">{address.type}</div>
-        <div className="flex flex-col gap-4 w-full pr-8">
+      <div className="flex w-full flex-col items-start gap-3">
+        <div className="flex w-full flex-col gap-2">{address.type}</div>
+        <div className="flex w-full flex-col gap-4 pr-8">
           <p class="text-sm font-medium text-gray-500">
             {`${address.city ? address.city?.name : ""}, ${
               address.district ? address.district?.name : ""

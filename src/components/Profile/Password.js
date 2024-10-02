@@ -120,7 +120,7 @@ const Password = (props) => {
         "POST",
         "auth/changepass",
         token,
-        requestOption
+        requestOption,
       );
       if (data.success) {
         showNotification({
@@ -195,7 +195,7 @@ const Password = (props) => {
 
   return (
     <div className="mt-4">
-      <div className="w-full flex flex-col gap-8 mt-4 py-10">
+      <div className="mt-4 flex w-full flex-col gap-8 py-10">
         <Center>
           <Stack justify="center">
             <Center>
@@ -297,7 +297,7 @@ const Password = (props) => {
           </Stack>
         </Center>
       </div>
-      <div className="w-full flex flex-row gap-8">
+      <div className="flex w-full flex-row gap-8">
         <div className="w-full">
           <PasswordInput
             disabled={otp?.length < 6}
@@ -357,7 +357,7 @@ const Password = (props) => {
       </div>
       {show && (
         <div
-          className="w-full py-2 px-4 rounded-lg mt-2"
+          className="mt-2 w-full rounded-lg px-4 py-2"
           style={{
             backgroundColor: checkNumber && checkSame ? "#D1FADF" : "#FEE4E2",
           }}
@@ -366,7 +366,7 @@ const Password = (props) => {
           {renderCheck(checkSame, "Нууц үг ижилхэн байна")}
         </div>
       )}
-      <div className="w-full flex flex-row justify-end gap-8 mt-4">
+      <div className="mt-4 flex w-full flex-row justify-end gap-8">
         <Button variant="outline" color="red">
           Арилгах
         </Button>

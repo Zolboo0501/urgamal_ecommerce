@@ -61,9 +61,9 @@ export default function UserBasicInfo({ data, refresh }) {
   };
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="flex flex-row items-center w-full bg-white drop-shadow-lg px-6 py-4">
-        <div className="flex justify-center items-centerp-3 rounded-full bg-background-sort">
+    <div className="flex w-full flex-col">
+      <div className="flex w-full flex-row items-center bg-white px-6 py-4 drop-shadow-lg">
+        <div className="items-centerp-3 flex justify-center rounded-full bg-background-sort">
           <IconUserShield
             style={{ width: rem(64), height: rem(64), color: "black" }}
             stroke={1.5}

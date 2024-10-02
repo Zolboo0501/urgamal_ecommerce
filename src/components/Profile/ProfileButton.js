@@ -77,7 +77,7 @@ const ProfileButton = ({ handleTabs, tabs }) => {
   ];
 
   return (
-    <div className="mt-4 flex flex-col sm:flex-row w-full gap-6 flex-wrap">
+    <div className="mt-4 flex w-full flex-col flex-wrap gap-6 sm:flex-row">
       {changeDate.map((item, index) => {
         return (
           <div
@@ -87,14 +87,14 @@ const ProfileButton = ({ handleTabs, tabs }) => {
             onClick={() => item.onClick()}
             key={index}
             id="profile-button"
-            className="flex flex-row bg-white rounded-md drop-shadow-lg py-4 px-3 transition ease-in-out delay-50 hover:-translate-y-1  duration-100 hover:font-semibold"
+            className="delay-50 flex flex-row rounded-md bg-white px-3 py-4 drop-shadow-lg transition duration-100 ease-in-out hover:-translate-y-1 hover:font-semibold"
           >
-            <div className="w-full flex flex-row">
+            <div className="flex w-full flex-row">
               {item.icon}
               <div className="ml-4 flex flex-col">
                 <p
                   class={`text-base ${
-                    tabs === item.tabs ? "text-white font-semibold" : ""
+                    tabs === item.tabs ? "font-semibold text-white" : ""
                   }`}
                 >
                   {item.title}
@@ -102,7 +102,7 @@ const ProfileButton = ({ handleTabs, tabs }) => {
                 <p
                   class={`text-xs ${
                     tabs === item.tabs
-                      ? "text-white font-medium"
+                      ? "font-medium text-white"
                       : "text-gray-500"
                   }`}
                 >

@@ -4,7 +4,7 @@ import Link from "next/link";
 const Bundle = ({ src, name, count, price, productIndex }) => {
   return (
     <div
-      className="py-4 flex flex-col justify-center items-center"
+      className="flex flex-col items-center justify-center py-4"
       style={{ height: "350px" }}
     >
       <Image
@@ -15,15 +15,15 @@ const Bundle = ({ src, name, count, price, productIndex }) => {
         alt={name}
         className="bundle-img"
       />
-      <p className="text-base mt-1">{name}</p>
-      <div className="flex flex-row mt-1">
+      <p className="mt-1 text-base">{name}</p>
+      <div className="mt-1 flex flex-row">
         <p className="text-sm text-grey">Үлдэгдэл : </p>
         <p className="text-sm">{count}</p>
       </div>
-      <p className="font-semibold text-xl mt-1">{price}</p>
+      <p className="mt-1 text-xl font-semibold">{price}</p>
       <Link
         href={`product/${productIndex}`}
-        className="flex flex-row justify-center items-center bg-green2 text-white py-1 px-4 rounded-md mt-2"
+        className="mt-2 flex flex-row items-center justify-center rounded-md bg-green2 px-4 py-1 text-white"
       >
         <p className="text-base">Дэлгэрэнгүй</p>
         <Image

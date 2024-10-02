@@ -62,7 +62,7 @@ const Navbar = (props) => {
     {
       revalidateOnFocus: false,
       revalidateIfStale: false,
-    }
+    },
   );
 
   const suggestions = data
@@ -91,7 +91,7 @@ const Navbar = (props) => {
         );
       }
       if (convertInt <= 10 && convertInt > 0) {
-        return <p className="text-xs font-semibold ">{balance}</p>;
+        return <p className="text-xs font-semibold">{balance}</p>;
       }
     } else {
       return (
@@ -110,11 +110,11 @@ const Navbar = (props) => {
   // eslint-disable-next-line react/display-name
   const renderOptionItem = ({ option }) => {
     const value = suggestions?.filter(
-      (item) => item?.value === option?.value
+      (item) => item?.value === option?.value,
     )?.[0];
 
     return (
-      <div className=" hover:bg-gray-100 hover:rounded-md flex items-center gap-2 p-2">
+      <div className="flex items-center gap-2 p-2 hover:rounded-md hover:bg-gray-100">
         <Avatar
           src={value?.image}
           alt="Зураг"
@@ -125,19 +125,19 @@ const Navbar = (props) => {
         </Avatar>
         <div className="flex flex-col gap-1">
           <div className="flex flex-wrap">
-            <p className="text-sm sm:text-base font-medium  text-grey800 line-clamp-2">
+            <p className="line-clamp-2 text-sm font-medium text-grey800 sm:text-base">
               {value?.value}
             </p>
           </div>
           <div className="flex flex-row items-center gap-2 md:gap-4 lg:gap-6">
             <div className="flex items-center">
-              <p className="text-[#696A6C] text-xs sm:text-sm">Үнэ : </p>
-              <p className="text-xs md:text-sm ml-1 text-start text-primary700 font-bold ">
+              <p className="text-xs text-[#696A6C] sm:text-sm">Үнэ : </p>
+              <p className="ml-1 text-start text-xs font-bold text-primary700 md:text-sm">
                 {numberWithCommas(value?.price) || 0}₮
               </p>
             </div>
             <div className="flex items-center gap-1">
-              <p className="text-[#696A6C] text-xs sm:text-sm">Үлдэгдэл : </p>
+              <p className="text-xs text-[#696A6C] sm:text-sm">Үлдэгдэл : </p>
               {renderRemains(value?.balance)}
             </div>
           </div>
@@ -220,7 +220,7 @@ const Navbar = (props) => {
   }, []);
 
   const [userConfigValue, setUserConfigValue] = useState(
-    userContext.preferenceConfig
+    userContext.preferenceConfig,
   );
 
   useEffect(() => {
@@ -246,7 +246,7 @@ const Navbar = (props) => {
             src={userInfo.picture}
             width={40}
             height={40}
-            className="w-8 h-8 rounded-full"
+            className="h-8 w-8 rounded-full"
           />
         ) : token ? (
           <Image
@@ -254,7 +254,7 @@ const Navbar = (props) => {
             src="/farmer.png"
             width={40}
             height={40}
-            className="w-8 h-8"
+            className="h-8 w-8"
           />
         ) : (
           <Image
@@ -262,7 +262,7 @@ const Navbar = (props) => {
             src="/user.png"
             width={40}
             height={40}
-            className="w-8 h-8"
+            className="h-8 w-8"
           />
         )}
       </>
@@ -277,11 +277,11 @@ const Navbar = (props) => {
           src="/icons/trolley.svg"
           width={23}
           height={23}
-          className="max-xs:w-6 h-6"
+          className="h-6 max-xs:w-6"
         />
         <div className="absolute">
           {cartItem?.cart_items?.length > 0 && (
-            <div className="w-3.5 h-3.5 bg-primary600 flex justify-center items-center -mt-5 rounded-full text-xs ml-5">
+            <div className="-mt-5 ml-5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary600 text-xs">
               <p className="text-sm-5 text-white">
                 {cartItem?.cart_items && cartItem?.cart_items?.length}
               </p>
@@ -300,11 +300,11 @@ const Navbar = (props) => {
           src="/icons/hearth.svg"
           width={23}
           height={23}
-          className="max-xs:w-6 h-6"
+          className="h-6 max-xs:w-6"
         />
         <div className="absolute">
           {wishlist.get.length > 0 && (
-            <div className="w-3.5 h-3.5 bg-primary600 flex justify-center items-center -mt-5 rounded-full text-xs ml-5">
+            <div className="-mt-5 ml-5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary600 text-xs">
               <p className="text-sm-5 text-white">{wishlist.get.length}</p>
             </div>
           )}
@@ -320,19 +320,19 @@ const Navbar = (props) => {
         backgroundColor: address?.header_color ? address?.header_color : "#fff",
       }}
     >
-      <div className="flex justify-between items-center py-2 px-4 md:px-4 lg:px-8">
+      <div className="flex items-center justify-between px-4 py-2 md:px-4 lg:px-8">
         {!showSearch && (
           <Link href={"/home"} className="flex flex-row items-center gap-2">
-            <div className="font-open hidden lg:block text-base font-medium">
+            <div className="font-open hidden text-base font-medium lg:block">
               ТАРИМАЛ
             </div>
-            <div className="flex justify-center items-center ">
+            <div className="flex items-center justify-center">
               {userContext?.address?.logo ? (
                 <Image
                   src={userContext?.address?.logo}
                   width={42}
                   height={42}
-                  className="w-12 h-112"
+                  className="h-112 w-12"
                   alt={userContext?.address?.logo}
                 />
               ) : (
@@ -340,21 +340,21 @@ const Navbar = (props) => {
                   src={"/logo.png"}
                   width={36}
                   height={36}
-                  className="w-12 h-12"
+                  className="h-12 w-12"
                   alt={"logo"}
                 />
               )}
             </div>
-            <div className="font-open hidden lg:block font-medium">УРГАМАЛ</div>
+            <div className="font-open hidden font-medium lg:block">УРГАМАЛ</div>
           </Link>
         )}
-        <div className="flex justify-end md:flex-1 md:justify-center items-center gap-8 md:gap-3 lg:flex-grow lg:ml-6 md:mx-2 lg:mx-4">
+        <div className="flex items-center justify-end gap-8 md:mx-2 md:flex-1 md:justify-center md:gap-3 lg:mx-4 lg:ml-6 lg:flex-grow">
           {catsError && <div>error</div>}
           {categories && (
             <Tooltip
               withArrow
               label="Танд зөвхөн уг төрлийн бараа, ангиллууд харагдана"
-              className=" md:block"
+              className="md:block"
             >
               <Select
                 size="md"
@@ -409,7 +409,7 @@ const Navbar = (props) => {
               </>
             )}
           </div> */}
-          <div className="hidden md:block flex-grow pl-2">
+          <div className="hidden flex-grow pl-2 md:block">
             <Autocomplete
               className="w-full"
               size={"md"}
@@ -454,7 +454,7 @@ const Navbar = (props) => {
               }}
               onOptionSubmit={(option) => {
                 const value = suggestions?.filter(
-                  (item) => item?.value === option
+                  (item) => item?.value === option,
                 )?.[0];
                 router.push({
                   pathname: "/product/[id]",
@@ -463,7 +463,7 @@ const Navbar = (props) => {
               }}
               rightSection={
                 <button
-                  className="m-auto h-full  bg-primary rounded-r-full p-2 px-3.5 max-xs:w-11 max-xs:flex max-xs:items-center max-xs:justify-center max-xs:p-0 max-xs:px-0 "
+                  className="m-auto h-full rounded-r-full bg-primary p-2 px-3.5 max-xs:flex max-xs:w-11 max-xs:items-center max-xs:justify-center max-xs:p-0 max-xs:px-0"
                   onClick={() => {
                     router.push({
                       pathname: "/products",
@@ -475,7 +475,7 @@ const Navbar = (props) => {
                     color="white"
                     size="1.2rem"
                     stroke={2.5}
-                    className="max-xs:w-4 max-xs:h-4"
+                    className="max-xs:h-4 max-xs:w-4"
                   />
                 </button>
               }
@@ -483,12 +483,12 @@ const Navbar = (props) => {
           </div>
         </div>
         <div
-          className={`flex md:hidden flex-1 items-center ${
+          className={`flex flex-1 items-center md:hidden ${
             !showSearch && "justify-end"
           }`}
         >
           {showSearch && (
-            <div className="flex flex-1 my-[0.3rem]">
+            <div className="my-[0.3rem] flex flex-1">
               <Autocomplete
                 className="w-full"
                 size={"sm"}
@@ -541,7 +541,7 @@ const Navbar = (props) => {
                 }}
                 onOptionSubmit={(option) => {
                   const value = suggestions?.filter(
-                    (item) => item?.value === option
+                    (item) => item?.value === option,
                   )?.[0];
                   router.push({
                     pathname: "/product/[id]",
@@ -553,7 +553,7 @@ const Navbar = (props) => {
           )}
           {!showSearch && (
             <button
-              className="bg-primary p-2 rounded-full"
+              className="rounded-full bg-primary p-2"
               onClick={() => {
                 setShowSearch(!showSearch);
               }}
@@ -584,9 +584,9 @@ const Navbar = (props) => {
               size="md"
               leftSection={<TrolleyButtonImage />}
             >
-              <div className="hidden lg:flex flex-col font-regular text-sm-2 text-[#000] gap-1 ml-2">
+              <div className="ml-2 hidden flex-col gap-1 text-sm-2 font-regular text-[#000] lg:flex">
                 Таны сагсанд
-                <div className="font-open font-semibold text-xs text-primary700">
+                <div className="font-open text-xs font-semibold text-primary700">
                   {numberWithCommas(cartItem?.total) || 0}₮
                 </div>
               </div>
@@ -608,9 +608,9 @@ const Navbar = (props) => {
               }}
             >
               {userContext.auth && (
-                <div className="flex flex-col font-regular text-sm-2 text-[#000] gap-1">
+                <div className="flex flex-col gap-1 text-sm-2 font-regular text-[#000]">
                   Сайн байна уу?
-                  <div className="font-open font-semibold text-xs text-grey700">
+                  <div className="font-open text-xs font-semibold text-grey700">
                     {userInfo.name ? userInfo?.name : userInfo?.mobile}
                   </div>
                 </div>

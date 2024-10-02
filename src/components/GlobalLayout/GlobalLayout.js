@@ -16,7 +16,7 @@ export default function GlobalLayout({
   const [type, setType] = useState();
   const userContext = useContext(UserConfigContext);
   const [userConfigValue, setUserConfigValue] = useState(
-    userContext.preferenceConfig
+    userContext.preferenceConfig,
   );
   const route = useRouter();
   useEffect(() => {
@@ -61,7 +61,7 @@ export default function GlobalLayout({
 
         <title>{title}</title>
       </Head>
-      <div className="shadow bg-white">
+      <div className="bg-white shadow">
         {/* <Search /> */}
         <main
           className="flex flex-col justify-between bg-main"

@@ -12,13 +12,13 @@ const CategoryHoverResult = ({ item, index }) => {
   };
 
   return (
-    <div className="z-30 flex flex-row items-center justify-center bg-red-300 absolute left-[707px] top-0 rounded-md py-6 px-6 w-full max-w-[20rem] h-[32rem] overflow-auto">
+    <div className="absolute left-[707px] top-0 z-30 flex h-[32rem] w-full max-w-[20rem] flex-row items-center justify-center overflow-auto rounded-md bg-red-300 px-6 py-6">
       <div className="flex flex-col flex-wrap items-start px-8" key={index}>
         {item?.map((item, index) => (
           <Link
             href={`/category/${item.id}`}
             key={index}
-            className="py-2 text-sm hover:text-primary text-grey600 font-semibold flex flex-row justify-between w-96"
+            className="flex w-96 flex-row justify-between py-2 text-sm font-semibold text-grey600 hover:text-primary"
             onMouseEnter={() => {
               handleEnter(item);
             }}

@@ -19,7 +19,7 @@ const Invoice = () => {
       { value: "300", title: "Цуцалсан" },
       { value: "301", title: "Хугацаа дууссан" },
     ],
-    []
+    [],
   );
   const [tabs, setTabs] = useState();
   const config = {
@@ -32,7 +32,7 @@ const Invoice = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/order/invoice?status=${
           tabs === "all" ? "" : tabs
         }`,
-        config
+        config,
       );
       return response.data.invoice;
     } catch (error) {
@@ -49,11 +49,11 @@ const Invoice = () => {
     `${process.env.NEXT_PUBLIC_API_URL}/order/invoice?status=${
       tabs === "all" ? "" : tabs
     }`,
-    fetcher
+    fetcher,
   );
 
   return (
-    <div className="flex flex-col w-full bg-white px-8 py-6 rounded-md">
+    <div className="flex w-full flex-col rounded-md bg-white px-8 py-6">
       <Tabs
         color="yellow"
         variant="default"
@@ -74,14 +74,14 @@ const Invoice = () => {
           {invoiceType.map((e) => (
             <Tabs.Panel key={e.title} value={e.value}>
               {isLoading && (
-                <div className="h-full w-full flex items-center justify-center">
+                <div className="flex h-full w-full items-center justify-center">
                   <Loader color="yellow" variant="dots" />
                 </div>
               )}
 
               {invoice && invoice.length === 0 ? (
-                <div className="w-full flex items-center justify-center h-56">
-                  <div className="flex flex-col gap-2 items-center">
+                <div className="flex h-56 w-full items-center justify-center">
+                  <div className="flex flex-col items-center gap-2">
                     <IconFileOff size={"3rem"} stroke={1.2} />
                     <span class="font-medium">
                       {
@@ -89,7 +89,7 @@ const Invoice = () => {
                           .title
                       }
                     </span>
-                    <span className="mt-2 font-medium text-base text-grey">
+                    <span className="mt-2 text-base font-medium text-grey">
                       нэхэмжлэл одоогоор байхгүй байна.
                     </span>
                   </div>

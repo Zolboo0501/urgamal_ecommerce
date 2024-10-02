@@ -60,7 +60,7 @@ const UserEdit = (props) => {
   return (
     <>
       <div className="mt-4">
-        <div className="w-full flex flex-col sm:flex-row lg:gap-8 sm:gap-4 lg:mt-4">
+        <div className="flex w-full flex-col sm:flex-row sm:gap-4 lg:mt-4 lg:gap-8">
           <div className="w-full">
             <TextInput
               size="sm"
@@ -124,7 +124,7 @@ const UserEdit = (props) => {
             />
           </div>
         </div>
-        <div className="w-full flex flex-col sm:flex-row lg:gap-8 sm:gap-4 lg:mt-4">
+        <div className="flex w-full flex-col sm:flex-row sm:gap-4 lg:mt-4 lg:gap-8">
           <div className="w-full">
             <TextInput
               size="sm"
@@ -188,7 +188,7 @@ const UserEdit = (props) => {
             />
           </div>
         </div>
-        <div className="w-full flex flex-col sm:flex-row lg:gap-8 sm:gap-4 lg:mt-4">
+        <div className="flex w-full flex-col sm:flex-row sm:gap-4 lg:mt-4 lg:gap-8">
           <div className="w-full">
             <PasswordInput
               size="sm"
@@ -248,7 +248,7 @@ const UserEdit = (props) => {
             />
           </div>
         </div>
-        <div className="w-full flex flex-col sm:flex-row lg:gap-8 sm:gap-4 lg:mt-4">
+        <div className="flex w-full flex-col sm:flex-row sm:gap-4 lg:mt-4 lg:gap-8">
           <div className="w-full">
             <Select
               placeholder="Хүйс"
@@ -286,7 +286,7 @@ const UserEdit = (props) => {
           </div>
           <div className="w-full"></div>
         </div>
-        <div className="w-full flex flex-row justify-end gap-8 mt-4">
+        <div className="mt-4 flex w-full flex-row justify-end gap-8">
           <Button
             onClick={() => editProfile()}
             variant="filled"

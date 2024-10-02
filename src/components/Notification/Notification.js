@@ -90,7 +90,7 @@ const Notification = () => {
         </Button>
       </Popover.Target>
       <Popover.Dropdown>
-        <div className="w-80 flex flex-col gap-2 max-h-96 overflow-auto">
+        <div className="flex max-h-96 w-80 flex-col gap-2 overflow-auto">
           {list?.map((item, index) => (
             <NotificationItem key={index} data={item} index={index} />
           ))}
@@ -108,11 +108,11 @@ const NotificationButtonImage = ({ list }) => {
         src="/icons/notification.svg"
         width={25}
         height={23}
-        className="max-xs:w-6 h-6"
+        className="h-6 max-xs:w-6"
       />
       <div className="absolute">
         {list?.length > 0 && (
-          <div className="w-3.5 h-3.5 bg-primary600 flex justify-center items-center  -mt-8 rounded-full text-xs ml-4">
+          <div className="-mt-8 ml-4 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary600 text-xs">
             <p className="text-sm-5 text-white">{list?.length}</p>
           </div>
         )}

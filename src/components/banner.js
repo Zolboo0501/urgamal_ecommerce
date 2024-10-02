@@ -22,14 +22,14 @@ const Banner = () => {
   const user = useContext(UserConfigContext);
 
   return (
-    <div className="mt-8 flex relative mx-auto w-[100%] h-[320px] sm:h-[380px] lg:h-[36rem] md:h-[24rem] p-1">
+    <div className="relative mx-auto mt-8 flex h-[320px] w-[100%] p-1 sm:h-[380px] md:h-[24rem] lg:h-[36rem]">
       <div
-        className="flex-row hidden relative lg:flex bg-white"
+        className="relative hidden flex-row bg-white lg:flex"
         onMouseLeave={() => {
           setHoveredCategory([]);
         }}
       >
-        <div className="p-3  h-full  overscroll-contain overflow-y-auto shadow-inner">
+        <div className="h-full overflow-y-auto overscroll-contain p-3 shadow-inner">
           {categories &&
             categories?.categories?.map((item, idx) => {
               return (
@@ -38,14 +38,14 @@ const Banner = () => {
                     pathname: `/category/${item?.id}`,
                     query: { parent_id: item?.id },
                   }}
-                  className="py-2 hover:cursor-pointer transition ease-in-out delay-100 hover:translate-x-2  hover:scale-101 rounded-full hover:shadow-2xl flex flex-row justify-between items-center hover:text-primary"
+                  className="hover:scale-101 flex flex-row items-center justify-between rounded-full py-2 transition delay-100 ease-in-out hover:translate-x-2 hover:cursor-pointer hover:text-primary hover:shadow-2xl"
                   key={idx}
                   onMouseEnter={() => {
                     setHoveredCategory(item?.secondary_cats);
                     setParentId(item?.id);
                   }}
                 >
-                  <div className="flex felx-row items-center gap-3 mx-4">
+                  <div className="felx-row mx-4 flex items-center gap-3">
                     {item?.icon && (
                       <Image
                         src={item?.icon ?? ""}
@@ -61,7 +61,7 @@ const Banner = () => {
             })}
         </div>
         {hoveredCategory?.length > 0 ? (
-          <div className="z-10 absolute lg:left-[270px] xl:left-[285px] 2xl:left-[300px] 3xl:left-[310px] bg-white py-4 pr-6 h-full max-w-[45rem] overflow-auto flex flex-row items-center justify-start rounded-md">
+          <div className="absolute z-10 flex h-full max-w-[45rem] flex-row items-center justify-start overflow-auto rounded-md bg-white py-4 pr-6 lg:left-[270px] xl:left-[285px] 2xl:left-[300px] 3xl:left-[310px]">
             <CategoryHover
               parentId={parentId}
               setIsHovered={setHoveredCategory}
@@ -111,7 +111,7 @@ const Banner = () => {
                   alt={item}
                   src={item}
                   fill
-                  className="object-cover h-full w-full md:object-cover max-h-full rounded-r-xl "
+                  className="h-full max-h-full w-full rounded-r-xl object-cover md:object-cover"
                   draggable={false}
                 />
               </SwiperSlide>

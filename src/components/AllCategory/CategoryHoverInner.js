@@ -8,7 +8,7 @@ const CategoryHoverInner = ({ item }) => {
     <div>
       {item?.child_cats?.length > 0 ? (
         <>
-          <span className="mt-1 mb-3 text-grey600 text-base">
+          <span className="mb-3 mt-1 text-base text-grey600">
             Дотоод ангилал
           </span>
           {item?.child_cats?.map((item, index) => {
@@ -17,7 +17,7 @@ const CategoryHoverInner = ({ item }) => {
                 <Link
                   href={`/category/${item.id}`}
                   key={index}
-                  className="py-2 text-sm hover:text-primary text-grey600 font-semibold flex flex-row justify-between w-96"
+                  className="flex w-96 flex-row justify-between py-2 text-sm font-semibold text-grey600 hover:text-primary"
                 >
                   {item?.name}
                 </Link>
@@ -25,7 +25,7 @@ const CategoryHoverInner = ({ item }) => {
             }
           })}
           <Link
-            className="mt-4 text-md text-primary flex flex-row items-center gap-2"
+            className="mt-4 flex flex-row items-center gap-2 text-md text-primary"
             href={`/category/${item.id}`}
           >
             Бүгдийг үзэх
@@ -33,7 +33,7 @@ const CategoryHoverInner = ({ item }) => {
           </Link>
         </>
       ) : (
-        <div className="flex justify-center items-center w-[32rem] h-60 flex-col">
+        <div className="flex h-60 w-[32rem] flex-col items-center justify-center">
           <IconMacroOff color="#F9BC60" size={40} />
           Ангилал хоосон байна.
         </div>

@@ -34,7 +34,7 @@ const Category = ({ padding, closeCategoryDrawer }) => {
   };
 
   return (
-    <div className="font-open pl-2 pt-2 rounded-md bg-white max-h-screen xl:block lg:block md:block z-10 w-full lg:min-w-[300px] lg:w-[350px] lg:max-w-[450px] lg:overflow-y-auto">
+    <div className="font-open z-10 max-h-screen w-full rounded-md bg-white pl-2 pt-2 md:block lg:block lg:w-[350px] lg:min-w-[300px] lg:max-w-[450px] lg:overflow-y-auto xl:block">
       <Accordion
         showDivider={false}
         itemClasses={itemClasses}
@@ -74,7 +74,7 @@ const Category = ({ padding, closeCategoryDrawer }) => {
                       },
                     },
                     undefined,
-                    { shallow: false }
+                    { shallow: false },
                   );
                 }}
               >
@@ -119,7 +119,7 @@ const Category = ({ padding, closeCategoryDrawer }) => {
                                 },
                               },
                               undefined,
-                              { shallow: false }
+                              { shallow: false },
                             );
                           }}
                         >
@@ -128,20 +128,18 @@ const Category = ({ padding, closeCategoryDrawer }) => {
                               return (
                                 <div
                                   key={idx}
-                                  className={`overflow-auto scrollbar-hide flex flex-row justify-between cursor-pointer hover:text-[#F9BC60]
-                                  ${
+                                  className={`flex cursor-pointer flex-row justify-between overflow-auto scrollbar-hide hover:text-[#F9BC60] ${
                                     item?.id === tertiary_id
                                       ? "text-[#F9BC60]"
                                       : ""
-                                  }
-                                  `}
+                                  } `}
                                 >
                                   <span
                                     onClick={() => {
                                       closeCategoryDrawer &&
                                         setTimeout(
                                           () => closeCategoryDrawer(),
-                                          1500
+                                          1500,
                                         );
                                       router.push(
                                         {
@@ -157,7 +155,7 @@ const Category = ({ padding, closeCategoryDrawer }) => {
                                           },
                                         },
                                         undefined,
-                                        { shallow: false }
+                                        { shallow: false },
                                       );
                                     }}
                                   >

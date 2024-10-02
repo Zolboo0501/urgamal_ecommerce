@@ -29,7 +29,7 @@ const Forget = () => {
           "POST",
           "auth/resetpass/mail",
           "",
-          requestOption
+          requestOption,
         );
         if (data.success) {
           showNotification({
@@ -53,13 +53,13 @@ const Forget = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-row absolute">
-      <div className="w-4/6 h-full relative">
+    <div className="absolute flex h-full w-full flex-row">
+      <div className="relative h-full w-4/6">
         <Image fill src={"/plant.jpg"} alt="plant" objectFit="cover" />
       </div>
-      <div className="flex flex-col relative items-center justify-center w-2/6">
+      <div className="relative flex w-2/6 flex-col items-center justify-center">
         <Image src="/logo.png" width={100} height={100} alt="logo" />
-        <p className="text-xl font-bold mt-4 font-sans">Нууц үг сэргээх</p>
+        <p className="mt-4 font-sans text-xl font-bold">Нууц үг сэргээх</p>
         <div className="mt-5 w-4/6">
           <TextInput
             label="Цахим шуудан"

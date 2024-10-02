@@ -21,7 +21,7 @@ const MyOrder = () => {
         {
           status: tabs === "all" ? "all" : tabs,
         },
-        config
+        config,
       );
 
       return response.data.data;
@@ -39,7 +39,7 @@ const MyOrder = () => {
     `${process.env.NEXT_PUBLIC_API_URL}/user/order?status=${
       tabs === "all" ? "" : tabs
     }`,
-    fetcher
+    fetcher,
   );
 
   const orderTypes = useMemo(
@@ -50,7 +50,7 @@ const MyOrder = () => {
       { value: "201", title: "Хүлээн авсан" },
       { value: "301", title: "Цуцалсан" },
     ],
-    []
+    [],
   );
 
   return (
@@ -74,19 +74,19 @@ const MyOrder = () => {
       {orderTypes.map((e) => (
         <Tabs.Panel key={e.title} value={e.value}>
           {isLoading && (
-            <div className="h-full w-full flex items-center justify-center">
+            <div className="flex h-full w-full items-center justify-center">
               <Loader color="yellow" variant="dots" />
             </div>
           )}
 
           {orders && orders.length === 0 ? (
-            <div className="w-full flex items-center justify-center h-56">
-              <div className="flex flex-col gap-2 items-center">
+            <div className="flex h-56 w-full items-center justify-center">
+              <div className="flex flex-col items-center gap-2">
                 <IconPackageOff size={"3rem"} stroke={1.2} />
                 <span class="font-medium">
                   {orderTypes.find((types) => types.value === e.value).title}
                 </span>
-                <span className="mt-2 font-medium text-base text-grey">
+                <span className="mt-2 text-base font-medium text-grey">
                   захиалга одоогоор байхгүй байна.
                 </span>
               </div>

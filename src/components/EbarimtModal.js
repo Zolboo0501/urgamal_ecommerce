@@ -10,18 +10,18 @@ const EbarimtModal = ({ context, innerProps }) => {
         alt="Base64 Qr"
         width={64}
         height={64}
-        className="w-64 h-64"
+        className="h-64 w-64"
       />
       <div className="container w-[90%] flex-col">
         <div className="flex flex-row justify-between">
           <span className="text-grey600">Сугалааны дугаар :</span>
-          <span className="font-semibold text-base">
+          <span className="text-base font-semibold">
             {innerProps?.paymentData?.lottery_code}
           </span>
         </div>
         <div className="flex flex-row justify-between">
           <span className="text-grey600">Нийт дүн :</span>
-          <span className="font-semibold text-base">
+          <span className="text-base font-semibold">
             {innerProps?.paymentData?.total}₮
           </span>
         </div>

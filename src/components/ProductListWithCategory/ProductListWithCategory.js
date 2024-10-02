@@ -24,46 +24,27 @@ export default function ProductListWithCategory({
     `${
       process.env.NEXT_PUBLIC_API_URL
     }/product?categoryId=${categoryId}&offset=${0}&limit=${PAGE_SIZE}`,
-    fetcher
+    fetcher,
   );
 
   return (
     <div className={`flex flex-col justify-center ${className}`}>
-      <div className="flex justify-between items-end">
-        <div className="flex items-center gap-4 ml-2">
-          <p
-            className="
-            text-xl font-medium
-		   md:text-xxl md:font-bold
-		   sm:font-medium sm:text-xl
-		   xs:font-medium xs:text-xl"
-          >
+      <div className="flex items-end justify-between">
+        <div className="ml-2 flex items-center gap-4">
+          <p className="text-xl font-medium xs:text-xl xs:font-medium sm:text-xl sm:font-medium md:text-xxl md:font-bold">
             {categoryName}
           </p>
           {categoryIcon && (
-            <div
-              className="relative
-              h-8 w-8
-              md:h-12 md:w-12
-              sm:h-10 sm:w-10
-              xs:h-8 xs:w-8"
-            >
+            <div className="relative h-8 w-8 xs:h-8 xs:w-8 sm:h-10 sm:w-10 md:h-12 md:w-12">
               <Image src={categoryIcon} fill alt={categoryIcon} />
             </div>
           )}
         </div>
         <Link
           href={`/category/${categoryId}`}
-          className="flex flex-row items-center gap-2 hover:underline text-greenish-grey"
+          className="flex flex-row items-center gap-2 text-greenish-grey hover:underline"
         >
-          <p
-            className="
-            text-sm
-		   md:font-medium md:text-base
-		   sm:font-normal sm:text-sm
-		   xs:font-light xs:text-sm
-		   "
-          >
+          <p className="text-sm xs:text-sm xs:font-light sm:text-sm sm:font-normal md:text-base md:font-medium">
             Бүгдийг үзэх
           </p>
           <IconChevronRight size={"1.1rem"} />

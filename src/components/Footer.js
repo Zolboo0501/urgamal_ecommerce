@@ -8,7 +8,7 @@ const BottomFooter = ({ address, links }) => {
       {/* desktop */}
       <div className="hidden md:block">
         <div
-          className="flex md:flex-col lg:flex-row justify-between py-8 bg-green2 w-full px-6 xl:px-8 "
+          className="flex w-full justify-between bg-green2 px-6 py-8 md:flex-col lg:flex-row xl:px-8"
           style={{
             backgroundColor: address?.footer_color
               ? address?.footer_color
@@ -16,60 +16,60 @@ const BottomFooter = ({ address, links }) => {
           }}
         >
           <div className="flex flex-row gap-24">
-            <div className="flex flex-col gap-3 ">
-              <span className="font-bold text-xs text-[#000] md:text-lg pb-3">
+            <div className="flex flex-col gap-3">
+              <span className="pb-3 text-xs font-bold text-[#000] md:text-lg">
                 Тусламж
               </span>
               <Link
                 href={""}
-                className="text-sm md:text-base font-medium text-[#1C3F11]"
+                className="text-sm font-medium text-[#1C3F11] md:text-base"
               >
                 Хэрэглэх заавар
               </Link>
               <Link
                 href={""}
-                className="text-sm md:text-base font-medium text-[#1C3F11]"
+                className="text-sm font-medium text-[#1C3F11] md:text-base"
               >
                 Түгээмэл асуулт
               </Link>
               <Link
                 href={""}
-                className="text-sm md:text-base font-medium text-[#1C3F11]"
+                className="text-sm font-medium text-[#1C3F11] md:text-base"
               >
                 Үйлчилгээний нөхцөл
               </Link>
               <Link
                 href={""}
-                className="text-sm md:text-base font-medium text-[#1C3F11]"
+                className="text-sm font-medium text-[#1C3F11] md:text-base"
               >
                 Нууцлалын баталгаа
               </Link>
             </div>
-            <div className="flex flex-col gap-1 ">
-              <span className="font-bold text-[#000] md:text-lg pb-3">
+            <div className="flex flex-col gap-1">
+              <span className="pb-3 font-bold text-[#000] md:text-lg">
                 Тухай
               </span>
               <Link
                 href={""}
-                className="text-sm md:text-base font-medium text-[#1C3F11]"
+                className="text-sm font-medium text-[#1C3F11] md:text-base"
               >
                 Бидний тухай
               </Link>
               <Link
                 href={""}
-                className="text-sm md:text-base font-medium mt-2 text-[#1C3F11] "
+                className="mt-2 text-sm font-medium text-[#1C3F11] md:text-base"
               >
                 Вэб үйлчилгээ
               </Link>
               <Link
                 href={""}
-                className="text-sm md:text-base font-medium mt-2 text-[#1C3F11]"
+                className="mt-2 text-sm font-medium text-[#1C3F11] md:text-base"
               >
                 Бүтээгдэхүүн үйлчилгээ
               </Link>
             </div>
             <div className="flex flex-col gap-2">
-              <span className="font-bold text-[#000] md:text-lg pb-1">
+              <span className="pb-1 font-bold text-[#000] md:text-lg">
                 Холбоо барих
               </span>
               <div className="flex flex-row items-center gap-2">
@@ -81,7 +81,7 @@ const BottomFooter = ({ address, links }) => {
                   height={24}
                 />
                 <div
-                  className="text-sm md:text-base font-medium text-[#1C3F11]"
+                  className="text-sm font-medium text-[#1C3F11] md:text-base"
                   dangerouslySetInnerHTML={{
                     __html: htmlFrom(address?.contact),
                   }}
@@ -90,13 +90,13 @@ const BottomFooter = ({ address, links }) => {
               <div className="flex flex-row items-center gap-2">
                 <Image
                   alt="mail"
-                  className="m-1 max-xs:w-3 max-xs:h-3  "
+                  className="m-1 max-xs:h-3 max-xs:w-3"
                   src={"/icons/mail.svg"}
                   width={20}
                   height={20}
                 />
                 <Link href={`mailto:${"tarimalurgamal2016@gmail.com"}`}>
-                  <p className="text-sm md:text-base font-medium text-[#1C3F11]">
+                  <p className="text-sm font-medium text-[#1C3F11] md:text-base">
                     tarimalurgamal2016@gmail.com
                   </p>
                 </Link>
@@ -104,13 +104,13 @@ const BottomFooter = ({ address, links }) => {
               <div className="flex flex-row items-center gap-2">
                 <Image
                   alt="mail"
-                  className="m-1 max-xs:w-3 max-xs:h-3  "
+                  className="m-1 max-xs:h-3 max-xs:w-3"
                   src={"/icons/time.svg"}
                   width={20}
                   height={20}
                 />
                 <div
-                  className="text-sm md:text-base font-medium text-[#1C3F11]"
+                  className="text-sm font-medium text-[#1C3F11] md:text-base"
                   dangerouslySetInnerHTML={{
                     __html: htmlFrom(address?.work_hours),
                   }}
@@ -118,27 +118,27 @@ const BottomFooter = ({ address, links }) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col mt-4 items-start justify-start  lg:items-end">
+          <div className="mt-4 flex flex-col items-start justify-start lg:items-end">
             {address?.logo && (
               <Image
                 alt={address?.logo}
                 src={address?.logo}
                 width={90}
                 height={80}
-                className="w-32 h-32 rounded"
+                className="h-32 w-32 rounded"
               />
             )}
-            <p className="mt-4 text-sm md:text-lg lg:text-end font-semibold text-black w-[40%] lg:w-[70%] xl:w-[60%]">
+            <p className="mt-4 w-[40%] text-sm font-semibold text-black md:text-lg lg:w-[70%] lg:text-end xl:w-[60%]">
               Тэжээл, нөхөн сэргээлт, зүлгэнд зориулсан үрийн худалдаа
             </p>
-            <div className="flex mt-3 gap-4">
+            <div className="mt-3 flex gap-4">
               <Link href={"https://www.facebook.com/tarimalurgamal"}>
                 <Image
                   alt={"facebook"}
                   src={"/icons/facebook-fill.svg"}
                   width={90}
                   height={80}
-                  className=" w-8 h-8 "
+                  className="h-8 w-8"
                 />
               </Link>
               <Link href="https://www.instagram.com/urga.mn/">
@@ -147,7 +147,7 @@ const BottomFooter = ({ address, links }) => {
                   src={"/icons/instagram-fill.svg"}
                   width={90}
                   height={80}
-                  className=" w-8 h-8 hover:text-[#1C3F11]"
+                  className="h-8 w-8 hover:text-[#1C3F11]"
                 />
               </Link>
               <Link href={""}>
@@ -156,27 +156,27 @@ const BottomFooter = ({ address, links }) => {
                   src={"/icons/twitter-fill.svg"}
                   width={90}
                   height={80}
-                  className=" w-8 h-8 "
+                  className="h-8 w-8"
                 />
               </Link>
             </div>
           </div>
         </div>
         <div
-          className="justify-center items-center flex shadow-inner py-2 bg-primary200 border-t-1"
+          className="flex items-center justify-center border-t-1 bg-primary200 py-2 shadow-inner"
           style={{
             backgroundColor: address?.footer_color
               ? address?.footer_color
               : null,
           }}
         >
-          <div className="w-[80%] flex items-center justify-center ">
+          <div className="flex w-[80%] items-center justify-center">
             <Link
-              className="flex flex-row mt-1 hover:text-white items-center text-center"
+              className="mt-1 flex flex-row items-center text-center hover:text-white"
               href="/location"
             >
               <div
-                className="text-base ml-2 max-xs:text-sm-5 text-[#1C3F11]  font-bold"
+                className="ml-2 text-base font-bold text-[#1C3F11] max-xs:text-sm-5"
                 dangerouslySetInnerHTML={{
                   __html: htmlFrom(address?.location),
                 }}
@@ -199,12 +199,12 @@ const BottomFooter = ({ address, links }) => {
         >
           <div className="mx-auto w-full max-w-screen-xl p-4 py-6">
             <div className="block">
-              <div className="grid grid-cols-2 gap-8 mb-12">
+              <div className="mb-12 grid grid-cols-2 gap-8">
                 <div>
-                  <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
+                  <h2 className="mb-6 text-sm font-semibold uppercase text-gray-900">
                     Тухай
                   </h2>
-                  <ul className="text-gray-600 font-medium">
+                  <ul className="font-medium text-gray-600">
                     <li className="mb-4">
                       <a
                         href="https://flowbite.com/"
@@ -232,14 +232,14 @@ const BottomFooter = ({ address, links }) => {
                   </ul>
                 </div>
                 <div>
-                  <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
+                  <h2 className="mb-6 text-sm font-semibold uppercase text-gray-900">
                     Тусламж
                   </h2>
-                  <ul className="text-gray-600 font-medium">
+                  <ul className="font-medium text-gray-600">
                     <li className="mb-4">
                       <a
                         href="https://github.com/themesberg/flowbite"
-                        className="hover:underline "
+                        className="hover:underline"
                       >
                         Хэрэглэх заавар
                       </a>
@@ -247,7 +247,7 @@ const BottomFooter = ({ address, links }) => {
                     <li className="mb-4">
                       <a
                         href="https://github.com/themesberg/flowbite"
-                        className="hover:underline "
+                        className="hover:underline"
                       >
                         Түгээмэл асуулт
                       </a>
@@ -255,7 +255,7 @@ const BottomFooter = ({ address, links }) => {
                     <li className="mb-4">
                       <a
                         href="https://github.com/themesberg/flowbite"
-                        className="hover:underline "
+                        className="hover:underline"
                       >
                         Үйлчилгээний нөхцөл
                       </a>
@@ -272,7 +272,7 @@ const BottomFooter = ({ address, links }) => {
                 </div>
               </div>
               <div>
-                <ul className="text-gray-600 font-medium">
+                <ul className="font-medium text-gray-600">
                   <li className="mb-4">
                     <a
                       href="#"
@@ -310,10 +310,10 @@ const BottomFooter = ({ address, links }) => {
             </div>
             <hr className="my-6 border-gray-200" />
             <div className="block">
-              <div className="flex mt-4 space-x-6">
+              <div className="mt-4 flex space-x-6">
                 <a href="#" className="text-gray-500 hover:text-gray-900">
                   <svg
-                    className="w-5 h-5"
+                    className="h-5 w-5"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                     aria-hidden="true"
@@ -328,7 +328,7 @@ const BottomFooter = ({ address, links }) => {
                 </a>
                 <a href="#" className="text-gray-500 hover:text-gray-900">
                   <svg
-                    className="w-5 h-5"
+                    className="h-5 w-5"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                     aria-hidden="true"
@@ -343,7 +343,7 @@ const BottomFooter = ({ address, links }) => {
                 </a>
                 <a href="#" className="text-gray-500 hover:text-gray-900">
                   <svg
-                    className="w-5 h-5"
+                    className="h-5 w-5"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                     aria-hidden="true"

@@ -36,15 +36,15 @@ export default function UserAddress({ data, refresh, selectAddress }) {
     let khoroo = "";
     if (values?.city || values?.district || values?.committee) {
       const selectedCity = selectAddress?.find(
-        (item) => item?.name === values?.city
+        (item) => item?.name === values?.city,
       );
       city = selectedCity;
       const selectedDistrict = selectedCity?.dic_districts?.find(
-        (item) => item?.name === values?.district
+        (item) => item?.name === values?.district,
       );
       district = selectedDistrict;
       const selectedKhoroo = selectedDistrict?.dic_khoroos?.find(
-        (item) => item?.name === values?.committee
+        (item) => item?.name === values?.committee,
       );
       khoroo = selectedKhoroo;
     }
@@ -144,7 +144,7 @@ export default function UserAddress({ data, refresh, selectAddress }) {
 
     fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/user/address-v2/${id}`,
-      requestOption
+      requestOption,
     )
       .then((response) => response.json())
       .then((result) => {
@@ -165,9 +165,9 @@ export default function UserAddress({ data, refresh, selectAddress }) {
     handlers.close();
   };
   return (
-    <div className="flex flex-col w-full h-full">
-      <div className="lg:mt-3 h-full w-full">
-        <div className="flex flex-col lg:flex-row gap-3 h-full w-full flex-wrap">
+    <div className="flex h-full w-full flex-col">
+      <div className="h-full w-full lg:mt-3">
+        <div className="flex h-full w-full flex-col flex-wrap gap-3 lg:flex-row">
           {data?.map((e) => {
             return (
               <div key={`user-address-card-${e.id}`} className="w-full">
@@ -184,14 +184,14 @@ export default function UserAddress({ data, refresh, selectAddress }) {
             <Paper
               withBorder
               radius="md"
-              className="w-28 h-28 hover:bg-[#1970c221] "
+              className="h-28 w-28 hover:bg-[#1970c221]"
               component="button"
               onClick={(e) => {
                 e.preventDefault();
                 openProductEditingModal(selectAddress, "creation");
               }}
             >
-              <div className="w-28 h-28 cursor-pointer flex flex-col justify-center items-center gap-1 ">
+              <div className="flex h-28 w-28 cursor-pointer flex-col items-center justify-center gap-1">
                 <IconPlus stroke={1.5} color="#228BE6" />
                 <p class="text-sm text-blue-500">Нэмэх</p>
               </div>
