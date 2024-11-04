@@ -114,6 +114,7 @@ module.exports = {
         primary500: "#40C057",
         primary600: "#369A46",
         primary700: "#2D7E39",
+        primary2: "#48BE5B",
       },
       backgroundColor: {
         main: "#F1F4F0",

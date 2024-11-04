@@ -65,12 +65,12 @@ const UserEdit = (props) => {
             <TextInput
               size="sm"
               label="Овог"
-              icon={
+              leftSection={
                 <IconUser
                   style={{
                     width: rem(20),
                     height: rem(20),
-                    color: "#F9BC60",
+                    color: "#48BE5B",
                   }}
                   stroke={2}
                 />
@@ -104,12 +104,12 @@ const UserEdit = (props) => {
                   given_name: event.currentTarget.value,
                 })
               }
-              icon={
+              leftSection={
                 <IconUserCircle
                   style={{
                     width: rem(20),
                     height: rem(20),
-                    color: "#F9BC60",
+                    color: "#48BE5B",
                   }}
                   stroke={2}
                 />
@@ -136,12 +136,12 @@ const UserEdit = (props) => {
                   email: event.currentTarget.value,
                 })
               }
-              icon={
+              leftSection={
                 <IconMail
                   style={{
                     width: rem(20),
                     height: rem(20),
-                    color: "#F9BC60",
+                    color: "#48BE5B",
                   }}
                   stroke={2}
                 />
@@ -168,12 +168,12 @@ const UserEdit = (props) => {
                   mobile: event.currentTarget.value,
                 })
               }
-              icon={
+              leftSection={
                 <IconPhone
                   style={{
                     width: rem(20),
                     height: rem(20),
-                    color: "#F9BC60",
+                    color: "#48BE5B",
                   }}
                   stroke={2}
                 />
@@ -195,12 +195,12 @@ const UserEdit = (props) => {
               label="Нууц үг"
               placeholder="*********"
               disabled
-              icon={
+              leftSection={
                 <IconShieldLock
                   style={{
                     width: rem(20),
                     height: rem(20),
-                    color: "#F9BC60",
+                    color: "#48BE5B",
                   }}
                   stroke={2}
                 />
@@ -222,12 +222,12 @@ const UserEdit = (props) => {
                 }
                 return new Date(input);
               }}
-              icon={
+              leftSection={
                 <IconCalendarClock
                   style={{
                     width: rem(20),
                     height: rem(20),
-                    color: "#F9BC60",
+                    color: "#48BE5B",
                   }}
                   stroke={2}
                 />
@@ -256,12 +256,12 @@ const UserEdit = (props) => {
               data={["Эрэгтэй", "Эмэгтэй"]}
               value={data?.gender}
               onChange={(value) => setUserInfo({ ...data, gender: value })}
-              icon={
+              leftSection={
                 <IconGenderMale
                   style={{
                     width: rem(20),
                     height: rem(20),
-                    color: "#F9BC60",
+                    color: "#48BE5B",
                   }}
                   stroke={2}
                 />
@@ -276,7 +276,7 @@ const UserEdit = (props) => {
                   // applies styles to selected item
                   "&[data-selected]": {
                     "&, &:hover": {
-                      backgroundColor: "#F9BC60",
+                      backgroundColor: "#48BE5B",
                       color: "white",
                     },
                   },
@@ -293,7 +293,7 @@ const UserEdit = (props) => {
             color="orange"
             styles={(theme) => ({
               root: {
-                backgroundColor: "#F9BC60",
+                backgroundColor: "#48BE5B",
               },
             })}
             type="submit"

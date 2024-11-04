@@ -9,7 +9,7 @@ import Order from "../../../components/Profile/Order";
 const MyOrder = () => {
   const [tabs, setTabs] = useState("all");
   const accessToken = getCookie("token");
-
+  console.log(tabs, "tabs");
   const config = {
     headers: { Authorization: `Bearer ${accessToken}` },
   };
@@ -57,12 +57,12 @@ const MyOrder = () => {
     <Tabs
       variant="default"
       value={tabs}
-      onTabChange={setTabs}
+      onChange={setTabs}
       classNames={{
         root: "bg-white w-full rounded-md px-4 py-2 overflow-y-auto",
         panel: "my-4 pl-2 flex-grow h-full ",
       }}
-      color="yellow"
+      color="teal"
     >
       <Tabs.List>
         {orderTypes.map((e) => (
@@ -92,7 +92,7 @@ const MyOrder = () => {
               </div>
             </div>
           ) : (
-            <div className="max-h-96 overflow-auto">
+            <div className="flex flex-col gap-4 p-1">
               {orders?.map((e, index) => {
                 return <Order data={e} key={index} />;
               })}

@@ -532,7 +532,7 @@ const CartItems = (props) => {
     }
 
     return (
-      <div className="mt-0 flex flex-col overflow-auto">
+      <div className="flex flex-col overflow-auto">
         {cartItem?.cart_items?.map((item, index) => {
           return (
             <button
@@ -600,7 +600,7 @@ const CartItems = (props) => {
 
                           <div className="flex items-center justify-between sm:relative sm:flex-1">
                             <QuantityControl item={item} />
-                            <div className="flex flex-1 flex-col">
+                            <div className="flex sm:flex-1 sm:flex-col">
                               <span className="text-ss font-medium text-[#212529] lg:text-lg">
                                 {numberWithCommas(item.total)}₮
                               </span>
@@ -689,9 +689,21 @@ const CartItems = (props) => {
           <div className="lg:gap- relative flex w-[100%] flex-col md:w-[65%] lg:w-[70%]">
             <div className="rounded-lg bg-white px-3 py-3 shadow-md lg:px-10 lg:py-6">
               <div className="flex flex-row justify-between">
-                <span className="text-lg font-[500] text-[#212529] lg:text-[1.3rem]">
-                  Миний сагс
-                </span>
+                <div className="">
+                  <span className="text-lg font-[500] text-[#212529] lg:text-[1.3rem]">
+                    Миний сагс
+                  </span>
+                  <div className="mt-2 flex items-center gap-2 py-1 text-ss font-regular text-grey500">
+                    <Checkbox
+                      value="selectAll"
+                      onClick={handleSelectAll}
+                      checked={isCheckAll}
+                      size="xs"
+                      className="px-1"
+                    />
+                    Бүгдийг сонгох
+                  </div>
+                </div>
                 <Button
                   component="a"
                   href="#"

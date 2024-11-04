@@ -152,7 +152,7 @@ const Feedback = () => {
         </div>
         <div className="w-full" />
       </div>
-      <Grid sx={{ marginTop: rem(10) }}>
+      <Grid style={{ marginTop: rem(20) }}>
         <Grid.Col>
           <RickText onChange={onChange} />
         </Grid.Col>

@@ -29,6 +29,7 @@ import "swiper/css/scrollbar";
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import "@mantine/dates/styles.css";
+import "@mantine/tiptap/styles.css";
 import classes from "@/styles/focus.module.css";
 export default function App({ Component, pageProps }) {
   const theme = createTheme({

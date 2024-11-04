@@ -1,6 +1,10 @@
 import { fetchMethod } from "@/utils/fetch";
 import { Loader, Title, rem } from "@mantine/core";
-import { IconGiftOff, IconStarFilled } from "@tabler/icons-react";
+import {
+  IconCarambola,
+  IconGiftOff,
+  IconStarFilled,
+} from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -23,18 +27,40 @@ const Loyalty = ({ userInfo }) => {
   };
   return (
     <div className="flex w-full flex-col rounded-md bg-white px-8 py-6">
-      <Title order={3}>Loyalty</Title>
+      <div className="flex flex-row pb-2">
+        <Title order={3} className="flex flex-1">
+          Loyalty
+        </Title>
+        <div className="flex flex-row items-center gap-1">
+          <p className="text-base text-[#696A6C] lg:text-base">Нийт оноо :</p>
+          <p className="ml-1 text-start text-base font-bold lg:text-base">
+            {userInfo?.loyalty_wallet?.balance || 0}
+          </p>
+          <IconCarambola color="#ffd27d" />
+        </div>
+      </div>
+      {/* <div className="mt-2 w-full justify-between">
+        {userInfo?.loyalty_wallet?.balance && (
+          <span className="font-semibold">
+            Нийт оноо : {userInfo?.loyalty_wallet?.balance}
+          </span>
+        )}
+        {userInfo?.loyalty_wallet?.onhold > 0 && (
+          <span className="font-semibold">
+            Хүлээгдэж буй оноо : {userInfo?.loyalty_wallet?.onhold}
+          </span>
+        )}
+      </div> */}
       {loading ? (
         <div className="flex h-[20rem] w-full items-center justify-center">
           <Loader color="yellow" />
         </div>
       ) : loyalty?.length > 0 ? (
-        <div className="mt-4 max-h-96 overflow-auto">
+        <div className="flex flex-col gap-3 overflow-auto px-2 py-2">
           {loyalty?.map((item, index) => (
             <div
               key={index}
-              className="flex flex-row items-center justify-between p-2 hover:cursor-pointer hover:bg-gray-50"
-              style={{ borderBottom: "1px solid rgba(0, 30, 29, 0.23)" }}
+              className="hover:scale-101 flex flex-row items-center justify-between rounded-md p-3 shadow-md transition delay-100 ease-in-out hover:translate-x-2 hover:cursor-pointer hover:shadow-2xl"
             >
               <div className="flex flex-col">
                 <div className="flex flex-row">
@@ -51,30 +77,10 @@ const Loyalty = ({ userInfo }) => {
               </div>
               <div className="flex flex-row items-center gap-2">
                 <p class="text-base font-semibold">{item.amount}</p>
-
-                <IconStarFilled
-                  style={{
-                    width: rem(20),
-                    height: rem(20),
-                    color: "#F9BC60",
-                  }}
-                  stroke={2}
-                />
+                <IconCarambola color="#ffd27d" />
               </div>
             </div>
           ))}
-          <div className="mt-2 w-full justify-between">
-            {userInfo?.loyalty_wallet?.balance && (
-              <span className="font-semibold">
-                Нийт оноо : {userInfo?.loyalty_wallet?.balance}
-              </span>
-            )}
-            {userInfo?.loyalty_wallet?.onhold > 0 && (
-              <span className="font-semibold">
-                Хүлээгдэж буй оноо : {userInfo?.loyalty_wallet?.onhold}
-              </span>
-            )}
-          </div>
         </div>
       ) : (
         <div className="flex h-80 w-full flex-col items-center justify-center">

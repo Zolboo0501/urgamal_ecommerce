@@ -41,14 +41,16 @@ const Wishlist = () => {
   return (
     <div className="flex w-full flex-col rounded-md bg-white px-4 py-6 lg:px-8">
       <Title order={3}>Хадгалсан бараа</Title>
-      <div className="mt-4 max-h-96 w-full overflow-auto">
+      <div className="mt-4 w-full overflow-auto">
         {loading ? (
           <div className="flex h-96 w-full items-center justify-center">
             <Loader color="yellow" />
           </div>
         ) : wishlist.length > 0 ? (
           wishlist.map((item, index) => (
-            <ProductWishlist data={item} key={index} refresh={getWishlist} />
+            <div className="m-2 gap-3">
+              <ProductWishlist data={item} key={index} refresh={getWishlist} />
+            </div>
           ))
         ) : (
           <div className="flex h-72 min-h-full flex-col items-center justify-center">

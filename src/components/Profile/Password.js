@@ -151,9 +151,7 @@ const Password = (props) => {
   const renderCheck = (state, text) => {
     return (
       <p
-        class={`text-sm font-semibold ${
-          state ? "text-green-500" : "text-red-500"
-        }`}
+        class={`text-sm font-semibold ${state ? "text-primary600" : "text-red-500"}`}
       >
         - {text}
       </p>
@@ -200,7 +198,7 @@ const Password = (props) => {
           <Stack justify="center">
             <Center>
               <IconDeviceMobile
-                style={{ width: rem(46), height: rem(46), color: "#F9BC60" }}
+                style={{ width: rem(46), height: rem(46), color: "#48BE5B" }}
                 stroke={2}
               />
             </Center>
@@ -250,7 +248,7 @@ const Password = (props) => {
                   <Loader variant="dots" color="yellow" />
                 ) : (
                   <button
-                    class="text-xs text-yellow-500 underline"
+                    class="text-xs text-blue-400 underline lg:text-sm"
                     onClick={() => {
                       setOtp("");
                       fetchOTP();
@@ -261,7 +259,7 @@ const Password = (props) => {
                 )
               ) : (
                 <Center>
-                  <p class="text-xs text-orange-500">
+                  <p class="text-xs text-primary500">
                     {seconds} секунд хүлээнэ үү
                   </p>
                 </Center>
@@ -274,10 +272,10 @@ const Password = (props) => {
                 styles={(theme) => ({
                   root: {
                     marginTop: rem(10),
-                    borderColor: "#F9BC60",
+                    borderColor: "#48BE5B",
                   },
                   label: {
-                    color: "#F9BC60",
+                    color: "#48BE5B",
                   },
                 })}
                 leftSection={
@@ -285,7 +283,7 @@ const Password = (props) => {
                     style={{
                       width: rem(20),
                       height: rem(20),
-                      color: "#F9BC60",
+                      color: "#48BE5B",
                     }}
                     stroke={2}
                   />
@@ -307,7 +305,7 @@ const Password = (props) => {
             onChange={(event) => setPassword(event.currentTarget.value)}
             icon={
               <IconLock
-                style={{ width: rem(20), height: rem(20), color: "#F9BC60" }}
+                style={{ width: rem(20), height: rem(20), color: "#48BE5B" }}
                 stroke={2}
               />
             }
@@ -336,7 +334,7 @@ const Password = (props) => {
             placeholder="*********"
             icon={
               <IconShieldLock
-                style={{ width: rem(20), height: rem(20), color: "#F9BC60" }}
+                style={{ width: rem(20), height: rem(20), color: "#48BE5B" }}
                 stroke={2}
               />
             }
@@ -376,7 +374,7 @@ const Password = (props) => {
           onClick={() => handleSave()}
           styles={(theme) => ({
             root: {
-              backgroundColor: "#F9BC60",
+              backgroundColor: "#48BE5B",
             },
           })}
         >

@@ -33,7 +33,6 @@ function Magnifier({
         className={imageClassname}
         style={{
           borderRadius: 10,
-          objectFit: "contain",
           userSelect: "none",
         }}
         // Set the magnifier state on every move of the mouse over the image.

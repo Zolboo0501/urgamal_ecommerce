@@ -167,7 +167,7 @@ const Mobile = () => {
           <Stack justify="center">
             <Center>
               <IconDeviceMobile
-                style={{ width: rem(46), height: rem(46), color: "#F9BC60" }}
+                style={{ width: rem(46), height: rem(46), color: "#48BE5B" }}
                 stroke={2}
               />
             </Center>
@@ -243,10 +243,10 @@ const Mobile = () => {
                 styles={(theme) => ({
                   root: {
                     marginTop: rem(10),
-                    borderColor: "#F9BC60",
+                    borderColor: "#48BE5B",
                   },
                   label: {
-                    color: "#F9BC60",
+                    color: "#48BE5B",
                   },
                 })}
                 leftSection={
@@ -254,7 +254,7 @@ const Mobile = () => {
                     style={{
                       width: rem(20),
                       height: rem(20),
-                      color: "#F9BC60",
+                      color: "#48BE5B",
                     }}
                     stroke={2}
                   />
@@ -270,10 +270,10 @@ const Mobile = () => {
                 styles={(theme) => ({
                   root: {
                     marginTop: rem(10),
-                    borderColor: "#F9BC60",
+                    borderColor: "#48BE5B",
                   },
                   label: {
-                    color: "#F9BC60",
+                    color: "#48BE5B",
                   },
                 })}
                 leftSection={
@@ -281,7 +281,7 @@ const Mobile = () => {
                     style={{
                       width: rem(20),
                       height: rem(20),
-                      color: "#F9BC60",
+                      color: "#48BE5B",
                     }}
                     stroke={2}
                   />

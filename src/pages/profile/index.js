@@ -33,6 +33,87 @@ const Profile = () => {
   const [userInfo, setUserInfo] = useState();
   const userContext = useContext(UserConfigContext);
   const token = getCookie("token");
+
+  const tabData = [
+    {
+      id: 1,
+      icon: IconUserEdit,
+      text: "Хувийн мэдээлэл",
+      activeColor: "#fff",
+      inactiveColor: "#48BE5B",
+    },
+    {
+      id: 2,
+      icon: IconTruck,
+      text: "Хаяг",
+      activeColor: "#fff",
+      inactiveColor: "#48BE5B",
+    },
+    {
+      id: 3,
+      icon: IconHeart,
+      text: "Хадгалсан",
+      activeColor: "#fff",
+      inactiveColor: "#48BE5B",
+    },
+    {
+      id: 4,
+      icon: IconBoxSeam,
+      text: "Захиалга",
+      activeColor: "#fff",
+      inactiveColor: "#48BE5B",
+    },
+    {
+      id: 5,
+      icon: IconClipboardText,
+      text: "Санал хүсэлт илгээх",
+      activeColor: "#fff",
+      inactiveColor: "#48BE5B",
+    },
+    {
+      id: 6,
+      icon: IconGift,
+      text: "Loyalty",
+      activeColor: "#fff",
+      inactiveColor: "#48BE5B",
+    },
+    {
+      id: 7,
+      icon: IconClipboard,
+      text: "Нэхэмжлэл",
+      activeColor: "#fff",
+      inactiveColor: "#48BE5B",
+    },
+  ];
+
+  const renderProfileTab = ({
+    id,
+    icon: Icon,
+    text,
+    activeColor,
+    inactiveColor,
+  }) => {
+    const isActive = tabs === id;
+    return (
+      <ProfileTabs
+        icon={
+          <Icon
+            style={{
+              width: rem(30),
+              height: rem(30),
+              color: isActive ? activeColor : inactiveColor,
+            }}
+            stroke={1.5}
+          />
+        }
+        text={text}
+        onClickTabs={() => onClickTabs(id)}
+        id={id}
+        first={isActive}
+      />
+    );
+  };
+
   const getUserInfo = async () => {
     setLoading(true);
     const data = await fetchMethod("GET", "user/profile", token);
@@ -109,8 +190,8 @@ const Profile = () => {
           <div className="w-full" style={{ height: "50%" }}>
             <Image
               src={"/profile-back.jpg"}
-              height={1000}
-              width={1000}
+              height={2500}
+              width={2500}
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>
@@ -143,244 +224,7 @@ const Profile = () => {
         </div>
         <div className="mt-4 flex flex-col lg:flex-row">
           <div className="mx-4 rounded-md bg-white py-6 lg:mx-0 lg:w-4/12">
-            {tabs === 1 ? (
-              <ProfileTabs
-                icon={
-                  <IconUserEdit
-                    style={{
-                      width: rem(30),
-                      height: rem(30),
-                      color: "#fff",
-                    }}
-                    stroke={1.5}
-                  />
-                }
-                text={"Хувийн мэдээлэл"}
-                onClickTabs={() => onClickTabs(1)}
-                id={1}
-                first={true}
-              />
-            ) : (
-              <ProfileTabs
-                icon={
-                  <IconUserEdit
-                    style={{
-                      width: rem(30),
-                      height: rem(30),
-                      color: "#F9BC60",
-                    }}
-                    stroke={1.5}
-                  />
-                }
-                text={"Хувийн мэдээлэл"}
-                onClickTabs={() => onClickTabs(1)}
-                id={1}
-              />
-            )}
-            {tabs === 2 ? (
-              <ProfileTabs
-                icon={
-                  <IconTruck
-                    style={{
-                      width: rem(30),
-                      height: rem(30),
-                      color: "#fff",
-                    }}
-                    stroke={1.5}
-                  />
-                }
-                text={"Хаяг"}
-                onClickTabs={() => onClickTabs(2)}
-                id={2}
-                first={true}
-              />
-            ) : (
-              <ProfileTabs
-                icon={
-                  <IconTruck
-                    style={{
-                      width: rem(30),
-                      height: rem(30),
-                      color: "#F9BC60",
-                    }}
-                    stroke={1.5}
-                  />
-                }
-                text={"Хаяг"}
-                onClickTabs={() => onClickTabs(2)}
-                id={2}
-              />
-            )}
-            {tabs === 3 ? (
-              <ProfileTabs
-                icon={
-                  <IconHeart
-                    style={{
-                      width: rem(30),
-                      height: rem(30),
-                      color: "#fff",
-                    }}
-                    stroke={1.5}
-                  />
-                }
-                text={"Хадгалсан"}
-                onClickTabs={() => onClickTabs(3)}
-                id={3}
-                first={true}
-              />
-            ) : (
-              <ProfileTabs
-                icon={
-                  <IconHeart
-                    style={{
-                      width: rem(30),
-                      height: rem(30),
-                      color: "#F9BC60",
-                    }}
-                    stroke={1.5}
-                  />
-                }
-                text={"Хадгалсан"}
-                onClickTabs={() => onClickTabs(3)}
-                id={3}
-              />
-            )}
-            {tabs === 4 ? (
-              <ProfileTabs
-                icon={
-                  <IconBoxSeam
-                    style={{
-                      width: rem(30),
-                      height: rem(30),
-                      color: "#fff",
-                    }}
-                    stroke={1.5}
-                  />
-                }
-                text={"Захиалга"}
-                onClickTabs={() => onClickTabs(4)}
-                id={4}
-                first={true}
-              />
-            ) : (
-              <ProfileTabs
-                icon={
-                  <IconBoxSeam
-                    style={{
-                      width: rem(30),
-                      height: rem(30),
-                      color: "#F9BC60",
-                    }}
-                    stroke={1.5}
-                  />
-                }
-                text={"Захиалга"}
-                onClickTabs={() => onClickTabs(4)}
-                id={4}
-              />
-            )}
-            {tabs === 5 ? (
-              <ProfileTabs
-                icon={
-                  <IconClipboardText
-                    style={{
-                      width: rem(30),
-                      height: rem(30),
-                      color: "#fff",
-                    }}
-                    stroke={1.5}
-                  />
-                }
-                text={"Санал хүсэлт илгээх"}
-                onClickTabs={() => onClickTabs(5)}
-                id={5}
-                first={true}
-              />
-            ) : (
-              <ProfileTabs
-                icon={
-                  <IconClipboardText
-                    style={{
-                      width: rem(30),
-                      height: rem(30),
-                      color: "#F9BC60",
-                    }}
-                    stroke={1.5}
-                  />
-                }
-                text={"Санал хүсэлт илгээх"}
-                onClickTabs={() => onClickTabs(5)}
-                id={5}
-              />
-            )}
-            {tabs === 6 ? (
-              <ProfileTabs
-                icon={
-                  <IconGift
-                    style={{
-                      width: rem(30),
-                      height: rem(30),
-                      color: "#fff",
-                    }}
-                    stroke={1.5}
-                  />
-                }
-                text={"Loyalty"}
-                onClickTabs={() => onClickTabs(6)}
-                id={6}
-                first={true}
-              />
-            ) : (
-              <ProfileTabs
-                icon={
-                  <IconGift
-                    style={{
-                      width: rem(30),
-                      height: rem(30),
-                      color: "#F9BC60",
-                    }}
-                    stroke={1.5}
-                  />
-                }
-                text={"Loyalty"}
-                onClickTabs={() => onClickTabs(6)}
-                id={6}
-              />
-            )}
-            {tabs === 7 ? (
-              <ProfileTabs
-                icon={
-                  <IconClipboard
-                    style={{
-                      width: rem(30),
-                      height: rem(30),
-                      color: "#fff",
-                    }}
-                    stroke={1.5}
-                  />
-                }
-                text={"Нэхэмжлэл"}
-                onClickTabs={() => onClickTabs(7)}
-                id={7}
-                first={true}
-              />
-            ) : (
-              <ProfileTabs
-                icon={
-                  <IconClipboard
-                    style={{
-                      width: rem(30),
-                      height: rem(30),
-                      color: "#F9BC60",
-                    }}
-                    stroke={1.5}
-                  />
-                }
-                text={"Нэхэмжлэл"}
-                onClickTabs={() => onClickTabs(7)}
-                id={7}
-              />
-            )}
+            {tabData?.map((item) => renderProfileTab(item))}
           </div>
           <div className="w-full py-6 lg:py-0 lg:pl-4">
             {loading ? (

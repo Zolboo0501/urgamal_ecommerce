@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { IconAward, IconPremiumRights } from "@tabler/icons-react";
 import Image from "next/image";
 import React from "react";
 
@@ -12,16 +13,24 @@ const EbarimtModal = ({ context, innerProps }) => {
         height={64}
         className="h-64 w-64"
       />
-      <div className="container w-[90%] flex-col">
+      <div className="container mt-2 flex w-[90%] flex-col gap-2">
         <div className="flex flex-row justify-between">
-          <span className="text-grey600">Сугалааны дугаар :</span>
-          <span className="text-base font-semibold">
+          <div className="flex flex-row items-center gap-1">
+            <IconAward color="#475467" />
+            <p className="text-base text-[#696A6C] lg:text-base">
+              Сугалааны дугаар :
+            </p>
+          </div>
+          <span className="text-base font-bold">
             {innerProps?.paymentData?.lottery_code}
           </span>
         </div>
         <div className="flex flex-row justify-between">
-          <span className="text-grey600">Нийт дүн :</span>
-          <span className="text-base font-semibold">
+          <div className="flex flex-row items-center gap-1">
+            <IconPremiumRights color="#475467" />
+            <p className="text-base text-[#696A6C] lg:text-base">Нийт дүн :</p>
+          </div>
+          <span className="text-base font-bold">
             {innerProps?.paymentData?.total}₮
           </span>
         </div>

@@ -1,9 +1,11 @@
 import Image from "next/image";
-import { Button, Loader, ThemeIcon, rem } from "@mantine/core";
+import { Badge, Button, Loader, ThemeIcon, rem } from "@mantine/core";
 import {
   IconCheck,
   IconCircleXFilled,
+  IconHeartX,
   IconPhotoOff,
+  IconShoppingCartPlus,
 } from "@tabler/icons-react";
 import { fetchMethod } from "@/utils/fetch";
 import { getCookie } from "cookies-next";
@@ -11,6 +13,9 @@ import { showNotification } from "@mantine/notifications";
 import { addCart } from "@/utils/Store";
 import { useState } from "react";
 import useWishlist from "@/hooks/useWishlist";
+import { numberWithCommas, renderRemains } from "@/utils/utils";
+import Magnifier from "./Magnifier/Magnifier";
+
 const ProductWishlist = ({ data, refresh }) => {
   const [loading, setLoading] = useState(false);
   const wishlist = useWishlist();
@@ -92,21 +97,40 @@ const ProductWishlist = ({ data, refresh }) => {
     }
   };
 
+  const renderRemains = (balance) => {
+    if (balance > 0) {
+      const convertInt = parseInt(balance);
+      if (convertInt > 10) {
+        return (
+          <Badge size="xs" color="teal">
+            Хангалттай
+          </Badge>
+        );
+      }
+      if (convertInt <= 10 && convertInt > 0) {
+        return <p className="text-xs font-semibold">{balance}</p>;
+      }
+    } else {
+      return (
+        <Badge size="xs" color="gray">
+          Үлдэгдэлгүй
+        </Badge>
+      );
+    }
+  };
+
   return (
-    <div
-      className="divide-b-4 w-full divide-slate-700"
-      style={{ borderBottom: "2px solid #DADEDE" }}
-    >
-      <div className="flex flex-col p-4 sm:flex-row">
+    <div className="w-full rounded p-4 shadow-md hover:bg-gray-50">
+      <div className="flex flex-col gap-2 p-4 sm:flex-row">
         <div>
           {data?.product?.additionalImage?.length > 0 ? (
-            <Image
+            <Magnifier
               loader={() => data?.product?.additionalImage[0]?.url}
-              src={data?.product?.additionalImage[0]?.url}
-              alt={data?.product?.additionalImage[0]?.url}
-              width={128}
-              height={128}
-              className="h-48 object-contain sm:h-32 sm:w-32"
+              imgSrc={data?.product?.additionalImage[0]?.url}
+              imgWidth={0}
+              imgHeight={0}
+              magnifierRadius={40}
+              imageClassname="h-48 rounded object-cover sm:h-32 sm:w-32"
             />
           ) : (
             <div className="product-card-img flex h-48 flex-col items-center justify-center gap-2 rounded-md bg-gray-50 sm:h-32 sm:w-32">
@@ -116,41 +140,50 @@ const ProductWishlist = ({ data, refresh }) => {
             </div>
           )}
         </div>
-        <div className="mt-2 flex flex-col justify-evenly sm:ml-3 sm:mt-0">
-          <p className="text-sm font-semibold lg:text-base">{data.name}</p>
-          <div className="mt-1 flex flex-row items-center">
-            <p className="text-sm lg:text-base">
-              Ширхэг: {data?.product.balance}
-            </p>
-            <p className="ml-4 text-sm lg:text-base">
-              Нэгж үнэ: {data?.product.listPrice}₮
-            </p>
+        <div className="flex flex-col justify-around sm:ml-3">
+          <p className="text-lg font-semibold lg:text-lg">{data.name}</p>
+          <div className="mt-1 flex flex-row flex-wrap items-center gap-5">
+            <div className="flex flex-row items-center">
+              <p className="text-base text-[#696A6C] lg:text-base">Үнэ :</p>
+              <p className="ml-1 text-start text-base font-bold text-primary700 lg:text-base">
+                {numberWithCommas(data?.product.listPrice) || 0}₮
+              </p>
+            </div>
+            <div className="flex items-center gap-1">
+              <p className="text-base text-[#696A6C] lg:text-base">
+                Үлдэгдэл :
+              </p>
+              {renderRemains(data?.product.balance)}
+            </div>
           </div>
-          <div className="mt-2 flex flex-row">
+          <div className="mt-4 flex flex-row gap-3">
             <Button
-              variant={"filled"}
-              className="mr-4"
+              color="green"
+              variant="filled"
+              radius="xl"
               onClick={handleCart}
-              style={{
-                backgroundColor: "#F9BC60",
-                padding: "6px",
-              }}
             >
               {loading ? (
                 <div className="w-full items-center justify-center">
                   <Loader color="white" size={"xs"} />
                 </div>
               ) : (
-                <p className="text-xs lg:text-base"> Сагсанд хийх</p>
+                <div className="flex items-center gap-2 text-base font-semibold lg:text-ss">
+                  <IconShoppingCartPlus />
+                  Сагслах
+                </div>
               )}
             </Button>
             <Button
               variant={"outline"}
               color={"red"}
-              style={{ fontWeight: "normal", padding: "6px" }}
               onClick={handleDelete}
+              radius="xl"
             >
-              <p className="text-xs lg:text-base">Арилгах</p>
+              <div className="flex items-center gap-2 text-base font-semibold lg:text-ss">
+                <IconHeartX />
+                Устгах
+              </div>
             </Button>
           </div>
         </div>

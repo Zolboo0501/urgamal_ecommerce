@@ -25,7 +25,7 @@ function RickText({ onChange }) {
 
   return (
     <>
-      <RichTextEditor editor={editor} sx={{ minHeight: "300px" }}>
+      <RichTextEditor editor={editor} style={{ minHeight: "300px" }}>
         <RichTextEditor.Toolbar sticky stickyOffset={60}>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.Bold />

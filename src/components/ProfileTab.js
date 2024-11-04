@@ -5,12 +5,12 @@ const ProfileTabs = ({ icon, text, id, onClickTabs, first }) => {
       key={id}
       onClick={(values) => onClickTabs(id)}
       style={
-        first === true ? { backgroundColor: "#F9BC60", color: "white" } : {}
+        first === true ? { backgroundColor: "#48BE5B", color: "white" } : {}
       }
     >
       <div className="flex w-4/6 flex-row items-center py-3">
         {icon}
-        <p class="ml-4 text-base">{text}</p>
+        <p class="ml-4 text-base font-medium">{text}</p>
       </div>
     </div>
   );

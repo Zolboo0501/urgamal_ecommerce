@@ -15,7 +15,7 @@ const ProfileButton = ({ handleTabs, tabs }) => {
           style={{
             width: rem(20),
             height: rem(20),
-            color: tabs === "info" ? "#fff" : "#F9BC60",
+            color: tabs === "info" ? "#fff" : "#48BE5B",
           }}
           className="profile-icon"
           stroke={2}
@@ -31,7 +31,7 @@ const ProfileButton = ({ handleTabs, tabs }) => {
           style={{
             width: rem(20),
             height: rem(20),
-            color: tabs === "change" ? "#fff" : "#F9BC60",
+            color: tabs === "change" ? "#fff" : "#48BE5B",
           }}
           stroke={2}
           className="profile-icon"
@@ -48,7 +48,7 @@ const ProfileButton = ({ handleTabs, tabs }) => {
           style={{
             width: rem(20),
             height: rem(20),
-            color: tabs === "mobile" ? "#fff" : "#F9BC60",
+            color: tabs === "mobile" ? "#fff" : "#48BE5B",
           }}
           stroke={2}
         />
@@ -64,7 +64,7 @@ const ProfileButton = ({ handleTabs, tabs }) => {
           style={{
             width: rem(20),
             height: rem(20),
-            color: tabs === "email" ? "#fff" : "#F9BC60",
+            color: tabs === "email" ? "#fff" : "#48BE5B",
           }}
           stroke={2}
         />
@@ -82,7 +82,7 @@ const ProfileButton = ({ handleTabs, tabs }) => {
         return (
           <div
             style={{
-              backgroundColor: item.tabs === tabs ? "#F9BC60" : "#fff",
+              backgroundColor: item.tabs === tabs ? "#48BE5B" : "#fff",
             }}
             onClick={() => item.onClick()}
             key={index}

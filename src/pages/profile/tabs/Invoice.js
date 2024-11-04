@@ -55,14 +55,14 @@ const Invoice = () => {
   return (
     <div className="flex w-full flex-col rounded-md bg-white px-8 py-6">
       <Tabs
-        color="yellow"
+        color="teal"
         variant="default"
         value={tabs}
-        onTabChange={setTabs}
+        onChange={setTabs}
         defaultValue="all"
         classNames={{
           root: "bg-white w-full rounded-md  py-2 overflow-y-auto",
-          panel: "my-4 pl-2 flex-grow h-full ",
+          panel: "my-4 pl-2 flex-grow h-full w-full",
         }}
       >
         <Tabs.List>
@@ -71,45 +71,42 @@ const Invoice = () => {
               {item.title}
             </Tabs.Tab>
           ))}
-          {invoiceType.map((e) => (
-            <Tabs.Panel key={e.title} value={e.value}>
-              {isLoading && (
-                <div className="flex h-full w-full items-center justify-center">
-                  <Loader color="yellow" variant="dots" />
-                </div>
-              )}
-
-              {invoice && invoice.length === 0 ? (
-                <div className="flex h-56 w-full items-center justify-center">
-                  <div className="flex flex-col items-center gap-2">
-                    <IconFileOff size={"3rem"} stroke={1.2} />
-                    <span class="font-medium">
-                      {
-                        invoiceType.find((types) => types.value === e.value)
-                          .title
-                      }
-                    </span>
-                    <span className="mt-2 text-base font-medium text-grey">
-                      нэхэмжлэл одоогоор байхгүй байна.
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                <div className="max-h-96 overflow-auto">
-                  {invoice?.map((e, index) => {
-                    return (
-                      <InvoiceItem
-                        data={e}
-                        key={index}
-                        length={invoice?.length}
-                      />
-                    );
-                  })}
-                </div>
-              )}
-            </Tabs.Panel>
-          ))}
         </Tabs.List>
+        {invoiceType.map((e) => (
+          <Tabs.Panel key={e.title} value={e.value}>
+            {isLoading && (
+              <div className="flex h-full w-full items-center justify-center">
+                <Loader color="yellow" variant="dots" />
+              </div>
+            )}
+
+            {invoice && invoice.length === 0 ? (
+              <div className="flex h-56 w-full items-center justify-center">
+                <div className="flex flex-col items-center gap-2">
+                  <IconFileOff size={"3rem"} stroke={1.2} />
+                  <span class="font-medium">
+                    {invoiceType.find((types) => types.value === e.value).title}
+                  </span>
+                  <span className="mt-2 text-base font-medium text-grey">
+                    нэхэмжлэл одоогоор байхгүй байна.
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-4 p-1">
+                {invoice?.map((e, index) => {
+                  return (
+                    <InvoiceItem
+                      data={e}
+                      key={index}
+                      length={invoice?.length}
+                    />
+                  );
+                })}
+              </div>
+            )}
+          </Tabs.Panel>
+        ))}
       </Tabs>
     </div>
   );
