@@ -14,4 +14,7 @@ export default [
       "no-undef": "error",
     },
   },
+  {
+    ignores: [".next/*"]
+}
 ];
