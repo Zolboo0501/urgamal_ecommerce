@@ -2,10 +2,10 @@
 /* eslint-disable react/prop-types */
 import Head from "next/head";
 import React, { useContext, useEffect, useState } from "react";
-import Navbar from "../Navbar/Navbar";
 import BottomFooter from "../Footer";
 import { UserConfigContext } from "@/utils/userConfigContext";
-import BottomNavBar from "../BottomNavigation";
+import BottomNavBar from "../BottomNavBar";
+import Navbar from "../Navbar/Navbar";
 
 export default function GlobalLayout({
   children,

@@ -17,7 +17,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import GlobalLayout from "../../components/GlobalLayout/GlobalLayout";
-import ProfileTabs from "../../components/ProfileTab";
+import ProfileTab from "../../components/ProfileTab.js";
 import Address from "./tabs/Address";
 import Feedback from "./tabs/Feedback";
 import Invoice from "./tabs/Invoice";
@@ -95,7 +95,7 @@ const Profile = () => {
   }) => {
     const isActive = tabs === id;
     return (
-      <ProfileTabs
+      <ProfileTab
         icon={
           <Icon
             style={{
