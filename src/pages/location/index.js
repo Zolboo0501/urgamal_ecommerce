@@ -96,33 +96,34 @@ const Location = ({ data }) => {
             </div>
             <div className="relative flex h-full flex-col items-center justify-center gap-4 md:h-96 md:flex-row">
               <div className="h-80 w-full rounded-lg shadow-lg md:h-full">
-                {!loadingMap &&
-                  loc?.length >
-                    0 &&(
-                      <Map center={loc} zoom={14} key={location?.name}>
-                        {({ TileLayer, Marker, Popup }) => (
-                          <>
-                            <TileLayer
-                              key={location?.name}
-                              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                            />
+                {!loadingMap && loc?.length > 0 && (
+                  <Map center={loc} zoom={14} key={location?.name}>
+                    {({ TileLayer, Marker, Popup }) => (
+                      <>
+                        <TileLayer
+                          key={location?.name}
+                          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        />
 
-                            <Marker position={loc} key={location?.name}>
-                              <Popup key={location?.name}>
-                                {location?.name}
-                              </Popup>
-                            </Marker>
-                          </>
-                        )}
-                      </Map>,
+                        <Marker position={loc} key={location?.name}>
+                          <Popup key={location?.name}>{location?.name}</Popup>
+                        </Marker>
+                      </>
                     )}
+                  </Map>
+                )}
               </div>
               <ul className="h-full w-full list-none text-start md:text-lg">
                 <li className="flex gap-4 text-start">
                   <div className="flex items-start gap-4">
-                    <IconLocation color={"#40C057"} className="h-5 w-5 lg:h-6 lg:w-6 2xl:w-8 2xl:h-8" />
-                    <span className="text-sm text-grey600 lg:text-base">Хаяг:</span>
+                    <IconLocation
+                      color={"#40C057"}
+                      className="h-5 w-5 lg:h-6 lg:w-6 2xl:h-8 2xl:w-8"
+                    />
+                    <span className="text-sm text-grey600 lg:text-base">
+                      Хаяг:
+                    </span>
                   </div>
                   <span
                     className="text-sm font-bold lg:text-base"
@@ -132,8 +133,13 @@ const Location = ({ data }) => {
                   />
                 </li>
                 <li className="mt-5 flex items-center gap-4">
-                  <IconPhoneCall color={"#40C057"} className="h-5 w-5 lg:h-6 lg:w-6 2xl:w-8 2xl:h-8" />
-                  <span className="text-sm text-grey600 lg:text-base">Утас :</span>
+                  <IconPhoneCall
+                    color={"#40C057"}
+                    className="h-5 w-5 lg:h-6 lg:w-6 2xl:h-8 2xl:w-8"
+                  />
+                  <span className="text-sm text-grey600 lg:text-base">
+                    Утас :
+                  </span>
                   <span
                     className="text-sm font-bold lg:text-base"
                     dangerouslySetInnerHTML={{
@@ -142,8 +148,13 @@ const Location = ({ data }) => {
                   />
                 </li>
                 <li className="mt-5 flex items-center gap-4">
-                  <IconClock className="h-5 w-5 lg:h-6 lg:w-6 2xl:w-8 2xl:h-8"  color={"#40C057"} />
-                  <span className="text-sm text-grey600 lg:text-base">Хуваарь :</span>
+                  <IconClock
+                    className="h-5 w-5 lg:h-6 lg:w-6 2xl:h-8 2xl:w-8"
+                    color={"#40C057"}
+                  />
+                  <span className="text-sm text-grey600 lg:text-base">
+                    Хуваарь :
+                  </span>
                   <span
                     className="text-sm font-bold lg:text-base"
                     dangerouslySetInnerHTML={{

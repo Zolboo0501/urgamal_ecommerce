@@ -111,7 +111,7 @@ const Banner = () => {
                   alt={item}
                   src={item}
                   fill
-                  className="h-full max-h-full w-full rounded-r-xl object-cover md:object-cover"
+                  className="h-full max-h-full w-full rounded-r-xl object-cover md:object-fill"
                   draggable={false}
                 />
               </SwiperSlide>
