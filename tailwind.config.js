@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { nextui } from "@nextui-org/react";
 /** @type {import('tailwindcss').Config} */
 

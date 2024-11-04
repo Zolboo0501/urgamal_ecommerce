@@ -14,7 +14,7 @@ import { IconPhoneCall } from "@tabler/icons-react";
 import { setCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const icon = (
   <IconPhoneCall
@@ -114,7 +114,7 @@ const OTP = () => {
               required
               value={number}
               onChange={(event) => setNumber(event.currentTarget.value)}
-              styles={(theme) => ({
+              styles={() => ({
                 input: {
                   "&:focus-within": {
                     outline: "0.01rem solid green",
@@ -130,8 +130,8 @@ const OTP = () => {
           </Input.Wrapper>
           {otpRequested && (
             <Stack mt="md" spacing={8} align="center">
-              <label for="otp-input">
-                <p class="font-medium">Нэг удаагийн нууц үг</p>
+              <label htmlFor="otp-input">
+                <p className="font-medium">Нэг удаагийн нууц үг</p>
               </label>
               <Group position="center">
                 <PinInput
@@ -147,14 +147,14 @@ const OTP = () => {
                 />
 
                 <Group position="right">
-                  <p class="text-xs">Код очоогүй юу?</p>
+                  <p className="text-xs">Код очоогүй юу?</p>
 
                   {seconds === 0 ? (
                     loading ? (
                       <Loader variant="dots" color="teal" />
                     ) : (
                       <button
-                        class="text-xs text-primary underline"
+                        className="text-xs text-primary underline"
                         onClick={() => {
                           setOtp("");
                           fetchOTP();
@@ -164,7 +164,7 @@ const OTP = () => {
                       </button>
                     )
                   ) : (
-                    <p class="text-xs text-orange-500">
+                    <p className="text-xs text-orange-500">
                       {seconds} секунд хүлээнэ үү
                     </p>
                   )}

@@ -1,8 +1,8 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/react-in-jsx-scope */
+// eslint-disable-next-line no-undef
 const { createContext, useState, useEffect } = require("react");
-import axios from "axios";
-import useSWR from "swr";
-import { fetchMethod, fetcher } from "./fetch";
-import { getCookie } from "cookies-next";
+import { fetchMethod } from "./fetch";
 
 export const CategoryContext = createContext();
 

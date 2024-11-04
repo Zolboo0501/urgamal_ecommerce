@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 import { ORDER_STATUS } from "@/utils/constant";
 import { errorNotification, numberWithCommas } from "@/utils/utils";
 import { Badge, Button, Collapse, ThemeIcon } from "@mantine/core";
@@ -9,16 +11,14 @@ import {
   IconPhotoOff,
 } from "@tabler/icons-react";
 import axios from "axios";
-import { getCookie } from "cookies-next";
 import dayjs from "dayjs";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const Order = ({ data }) => {
   const Router = useRouter();
   const [opened, { toggle }] = useDisclosure(false);
-  const userToken = getCookie("token");
   const [loading, setLoading] = useState(false);
   const [refundStatus, setRefundStatus] = useState("");
 
@@ -75,12 +75,7 @@ const Order = ({ data }) => {
   };
   const fetchPaymentData = async (orderId) => {
     setLoading(true);
-    const axiosReqOption = {
-      headers: {
-        Authorization: "Bearer " + userToken,
-        "Content-Type": "application/json",
-      },
-    };
+
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/order/payment/${orderId}`)
       .then((res) => {

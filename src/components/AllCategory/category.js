@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 import { useRouter } from "next/router";
 import { IconChevronRight } from "@tabler/icons-react";
 import Image from "next/image";
 import useCategories from "@/hooks/useCategories";
-import { rem } from "@mantine/core";
 import { Accordion, AccordionItem } from "@nextui-org/react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const Category = ({ closeCategoryDrawer }) => {
   const router = useRouter();

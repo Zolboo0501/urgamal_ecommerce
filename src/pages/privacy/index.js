@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-undef */
 import GlobalLayout from "@/components/GlobalLayout/GlobalLayout";
 import parse from "html-react-parser";
 import React from "react";
@@ -18,7 +20,7 @@ export async function getServerSideProps() {
         data,
       },
     };
-  } catch (err) {
+  } catch {
     return {
       props: {
         data: [],
@@ -36,7 +38,7 @@ const Privacy = ({ data }) => {
 
   return (
     <GlobalLayout>
-      <div class="px-12 py-12 text-2xl">
+      <div className="px-12 py-12 text-2xl">
         {htmlFrom(data?.data?.section_data?.[0]?.value)}
       </div>
     </GlobalLayout>

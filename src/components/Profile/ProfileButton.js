@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { rem } from "@mantine/core";
 import {
   IconDeviceMobile,
@@ -5,6 +6,7 @@ import {
   IconMail,
   IconUserEdit,
 } from "@tabler/icons-react";
+import React from "react";
 
 const ProfileButton = ({ handleTabs, tabs }) => {
   const changeDate = [
@@ -93,14 +95,14 @@ const ProfileButton = ({ handleTabs, tabs }) => {
               {item.icon}
               <div className="ml-4 flex flex-col">
                 <p
-                  class={`text-base ${
+                  className={`text-base ${
                     tabs === item.tabs ? "font-semibold text-white" : ""
                   }`}
                 >
                   {item.title}
                 </p>
                 <p
-                  class={`text-xs ${
+                  className={`text-xs ${
                     tabs === item.tabs
                       ? "font-medium text-white"
                       : "text-gray-500"

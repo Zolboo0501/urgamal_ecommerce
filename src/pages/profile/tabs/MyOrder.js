@@ -1,8 +1,9 @@
+/* eslint-disable no-undef */
 import { Loader, Tabs } from "@mantine/core";
 import { IconPackageOff } from "@tabler/icons-react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import useSWR from "swr";
 import Order from "../../../components/Profile/Order";
 
@@ -31,11 +32,7 @@ const MyOrder = () => {
     }
   };
 
-  const {
-    data: orders,
-    error,
-    isLoading,
-  } = useSWR(
+  const { data: orders, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/user/order?status=${
       tabs === "all" ? "" : tabs
     }`,
@@ -83,7 +80,7 @@ const MyOrder = () => {
             <div className="flex h-56 w-full items-center justify-center">
               <div className="flex flex-col items-center gap-2">
                 <IconPackageOff size={"3rem"} stroke={1.2} />
-                <span class="font-medium">
+                <span className="font-medium">
                   {orderTypes.find((types) => types.value === e.value).title}
                 </span>
                 <span className="mt-2 text-base font-medium text-grey">

@@ -1,8 +1,10 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 //packages
 import { useEffect, useState } from "react";
 import React from "react";
 import { IconLocation, IconPhoneCall, IconClock } from "@tabler/icons-react";
-import { SegmentedControl, Center, Box, rem } from "@mantine/core";
+import { SegmentedControl, Center, Box } from "@mantine/core";
 import Image from "next/image";
 import sanitizeHtml from "sanitize-html";
 import Map from "@/components/Map";
@@ -96,7 +98,7 @@ const Location = ({ data }) => {
             </div>
             <div className="relative flex h-full flex-col items-center justify-center gap-4 md:h-96 md:flex-row">
               <div className="h-80 w-full rounded-lg shadow-lg md:h-full">
-                {!loadingMap && loc?.length > 0 && (
+                {!loadingMap && !loadingData && (
                   <Map center={loc} zoom={14} key={location?.name}>
                     {({ TileLayer, Marker, Popup }) => (
                       <>
@@ -183,7 +185,7 @@ export async function getServerSideProps() {
         data: data || null,
       },
     };
-  } catch (error) {
+  } catch {
     return {
       props: {
         data: null,

@@ -1,21 +1,20 @@
-/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/prop-types */
 import { SimpleGrid, Stack } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import MySkeleton from "../MySkeleton";
+import React from "react";
 
 export default function ProductGridList({
   children,
   showSkeleton,
   isEmpty,
-  emptyStateMessage,
-  query,
   className,
 }) {
   return isEmpty ? (
     <div className={`mt-32 flex h-screen w-full items-start justify-center`}>
       <Stack align="center" className="grow">
         <IconSearch size="2rem" stroke={1.5} />
-        <p class="text-lg font-normal">Ангилал дээрх бараа олдсонгүй...</p>
+        <p className="text-lg font-normal">Ангилал дээрх бараа олдсонгүй...</p>
       </Stack>
     </div>
   ) : (

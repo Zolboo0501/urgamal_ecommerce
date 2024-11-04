@@ -1,12 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, PasswordInput, rem, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconAt, IconLock, IconShieldLock } from "@tabler/icons-react";
 import { setCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
 import { regexNumber } from "@/utils/constant";
 import { fetchMethod } from "@/utils/fetch";
 import { UserConfigContext } from "@/utils/userConfigContext";
@@ -113,7 +111,7 @@ const Register = () => {
   const renderCheck = (state, text) => {
     return (
       <p
-        class={`text-sm font-medium ${
+        className={`text-sm font-medium ${
           state ? "text-green-500" : "text-red-500"
         }`}
       >
@@ -141,7 +139,7 @@ const Register = () => {
             radius={"xl"}
             {...form.getInputProps("email")}
             icon={icon}
-            styles={(theme) => ({
+            styles={() => ({
               label: {
                 marginBottom: rem(4),
                 fontSize: rem(15),
@@ -162,7 +160,7 @@ const Register = () => {
             radius={"xl"}
             icon={passIcon}
             {...form.getInputProps("password")}
-            styles={(theme) => ({
+            styles={() => ({
               label: {
                 marginBottom: rem(4),
                 fontSize: rem(15),
@@ -183,7 +181,7 @@ const Register = () => {
             radius={"xl"}
             icon={shieldIcon}
             {...form.getInputProps("confirmPass")}
-            styles={(theme) => ({
+            styles={() => ({
               label: {
                 marginBottom: rem(4),
                 fontSize: rem(15),

@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
-import { ThemeIcon, rem } from "@mantine/core";
+import { ThemeIcon } from "@mantine/core";
 import CategoryHover from "./AllCategory/CategoryHover";
 import useCategories from "@/hooks/useCategories";
 import { IconPhotoOff } from "@tabler/icons-react";
@@ -17,7 +17,6 @@ import { UserConfigContext } from "@/utils/userConfigContext";
 const Banner = () => {
   const [hoveredCategory, setHoveredCategory] = useState([]);
   const [parentId, setParentId] = useState("");
-  const [loading, setLoading] = useState(false);
   const categories = useCategories();
   const user = useContext(UserConfigContext);
 
@@ -66,7 +65,6 @@ const Banner = () => {
               parentId={parentId}
               setIsHovered={setHoveredCategory}
               categories={hoveredCategory}
-              loading={loading}
             />
           </div>
         ) : null}
@@ -122,7 +120,7 @@ const Banner = () => {
             <ThemeIcon size="lg" variant="light" color="green">
               <IconPhotoOff size="80%" stroke={0.5} />
             </ThemeIcon>
-            <p class="text-xs font-light text-gray-500">Зураггүй байна</p>
+            <p className="text-xs font-light text-gray-500">Зураггүй байна</p>
           </div>
         )}
       </Swiper>

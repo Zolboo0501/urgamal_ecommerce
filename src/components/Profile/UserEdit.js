@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+import React from "react";
 import { fetchMethod } from "@/utils/fetch";
 import { errorNotification, successNotification } from "@/utils/utils";
 import { Button, PasswordInput, rem, Select, TextInput } from "@mantine/core";
@@ -13,20 +15,16 @@ import {
   IconUserCircle,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import { useState } from "react";
 const UserEdit = (props) => {
   const { data, refresh, setUserInfo } = props;
-  const [loading, setLoading] = useState(false);
 
   const editProfile = async () => {
     const token = getCookie("token");
     const requestOption = {
       ...data,
     };
-    setLoading(true);
     const res = await fetchMethod("PUT", "user/profile", token, requestOption);
     if (res?.success) {
-      setLoading(false);
       refresh();
       successNotification({
         message: res.message,
@@ -73,7 +71,7 @@ const UserEdit = (props) => {
                   family_name: event.currentTarget.value,
                 })
               }
-              styles={(theme) => ({
+              styles={() => ({
                 label: {
                   marginBottom: rem(4),
                   fontSize: rem(15),
@@ -104,7 +102,7 @@ const UserEdit = (props) => {
                   stroke={2}
                 />
               }
-              styles={(theme) => ({
+              styles={() => ({
                 label: {
                   marginBottom: rem(4),
                   fontSize: rem(15),
@@ -137,7 +135,7 @@ const UserEdit = (props) => {
                 />
               }
               placeholder="Цахим шуудан"
-              styles={(theme) => ({
+              styles={() => ({
                 label: {
                   marginBottom: rem(4),
                   fontSize: rem(15),
@@ -168,7 +166,7 @@ const UserEdit = (props) => {
                   stroke={2}
                 />
               }
-              styles={(theme) => ({
+              styles={() => ({
                 label: {
                   marginBottom: rem(4),
                   fontSize: rem(15),
@@ -195,7 +193,7 @@ const UserEdit = (props) => {
                   stroke={2}
                 />
               }
-              styles={(theme) => ({
+              styles={() => ({
                 label: {
                   marginBottom: rem(4),
                   fontSize: rem(15),
@@ -228,7 +226,7 @@ const UserEdit = (props) => {
               label="Төрсөн огноо"
               placeholder="Төрсөн огноо"
               mx="auto"
-              styles={(theme) => ({
+              styles={() => ({
                 label: {
                   marginBottom: rem(4),
                   fontSize: rem(15),
@@ -256,7 +254,7 @@ const UserEdit = (props) => {
                   stroke={2}
                 />
               }
-              styles={(theme) => ({
+              styles={() => ({
                 label: {
                   marginBottom: rem(4),
                   fontSize: rem(15),
@@ -281,7 +279,7 @@ const UserEdit = (props) => {
             onClick={() => editProfile()}
             variant="filled"
             color="orange"
-            styles={(theme) => ({
+            styles={() => ({
               root: {
                 backgroundColor: "#48BE5B",
               },

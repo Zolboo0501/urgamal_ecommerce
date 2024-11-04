@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
 import {
   Modal,
   Button,
@@ -10,7 +10,7 @@ import {
   Textarea,
 } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function ProductModal({
   initialData,
@@ -19,7 +19,6 @@ function ProductModal({
   onSubmit,
   loading,
   address,
-  handleClick,
 }) {
   const [districts, setDistricts] = useState([]);
   const [committee, setCommittee] = useState([]);
@@ -118,7 +117,7 @@ function ProductModal({
     >
       <LoadingOverlay visible={loading} overlayBlur={2} />
       <form
-        onSubmit={form.onSubmit(async (values, e) => {
+        onSubmit={form.onSubmit(async (values) => {
           await onSubmit(values);
           form.setValues(initialData);
         })}

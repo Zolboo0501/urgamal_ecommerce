@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { fetchMethod } from "@/utils/fetch";
 import { errorNotification, successNotification } from "@/utils/utils";
 import { Button, TextInput, rem } from "@mantine/core";
@@ -10,6 +11,7 @@ import {
   IconPhone,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
+import React from "react";
 
 const InvoiceFileModal = ({ context, id, innerProps }) => {
   const { data } = innerProps;
@@ -57,7 +59,7 @@ const InvoiceFileModal = ({ context, id, innerProps }) => {
             stroke={2}
           />
         }
-        styles={(theme) => ({
+        styles={() => ({
           label: {
             marginBottom: rem(4),
             fontSize: rem(15),
@@ -79,7 +81,7 @@ const InvoiceFileModal = ({ context, id, innerProps }) => {
             stroke={2}
           />
         }
-        styles={(theme) => ({
+        styles={() => ({
           label: {
             marginBottom: rem(4),
             fontSize: rem(15),
@@ -101,7 +103,7 @@ const InvoiceFileModal = ({ context, id, innerProps }) => {
             stroke={2}
           />
         }
-        styles={(theme) => ({
+        styles={() => ({
           label: {
             marginBottom: rem(4),
             fontSize: rem(15),
@@ -123,7 +125,7 @@ const InvoiceFileModal = ({ context, id, innerProps }) => {
             stroke={2}
           />
         }
-        styles={(theme) => ({
+        styles={() => ({
           label: {
             marginBottom: rem(4),
             fontSize: rem(15),
@@ -145,7 +147,7 @@ const InvoiceFileModal = ({ context, id, innerProps }) => {
             stroke={2}
           />
         }
-        styles={(theme) => ({
+        styles={() => ({
           label: {
             marginBottom: rem(4),
             fontSize: rem(15),

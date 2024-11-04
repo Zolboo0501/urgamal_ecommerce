@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import Mail from "@/components/Profile/Mail";
 import Mobile from "@/components/Profile/Mobile";
 import Password from "@/components/Profile/Password";
 import ProfileButton from "@/components/Profile/ProfileButton";
 import UserEdit from "@/components/Profile/UserEdit";
 import { Title } from "@mantine/core";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const ProfileInfo = (props) => {
   const { data, setUserInfo, refresh } = props;

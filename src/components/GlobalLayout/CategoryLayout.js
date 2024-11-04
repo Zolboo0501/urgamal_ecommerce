@@ -1,13 +1,13 @@
-/* eslint-disable @next/next/no-page-custom-font */
+/* eslint-disable react/prop-types */
 import Head from "next/head";
 import React, { useContext, useEffect, useState } from "react";
-import Navbar from "../Navbar/navbar";
+import Navbar from "../Navbar/Navbar";
 import BottomFooter from "../Footer";
 import { UserConfigContext } from "@/utils/userConfigContext";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import BottomNavBar from "../BottomNavigation";
-import Category from "@/components/AllCategory/category";
+import Category from "@/components/AllCategory/Category";
 import { ColorSchemeScript } from "@mantine/core";
 
 export default function CategoryLayout({
@@ -15,7 +15,6 @@ export default function CategoryLayout({
   footer = true,
   title = "Таримал Ургамал ХХК",
 }) {
-  const [type, setType] = useState();
   const userContext = useContext(UserConfigContext);
   const [userConfigValue, setUserConfigValue] = useState(
     userContext.preferenceConfig,
@@ -24,10 +23,6 @@ export default function CategoryLayout({
   useEffect(() => {
     setUserConfigValue(userContext.configId);
   }, [userContext.preferenceConfig, userContext.configId]);
-
-  const getValue = (data) => {
-    setType(data);
-  };
 
   const handleConfigSelection = (value) => {
     if (userConfigValue !== value) {
@@ -66,7 +61,7 @@ export default function CategoryLayout({
               : null,
           }}
         >
-          <Navbar getValue={getValue} address={userContext?.address} />
+          <Navbar address={userContext?.address} />
           <div className="flex flex-row">
             <aside className="sticky top-0 hidden h-screen lg:block">
               <Category />

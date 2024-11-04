@@ -10,7 +10,7 @@ import {
   IconTextSize,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const Feedback = () => {
   const [feedback, setFeedback] = useState({
@@ -57,7 +57,7 @@ const Feedback = () => {
   return (
     <div className="flex w-full flex-col rounded-md bg-white px-8 py-6">
       <Title order={3}>Санал хүсэлт илгээх</Title>{" "}
-      <p class="text-sm text-gray-500">
+      <p className="text-sm text-gray-500">
         Таньд ямар нэгэн асуудал гарсан бол бидэнд мэдэгдээрэй
       </p>
       <div className="mt-4 flex w-full flex-row gap-8">
@@ -83,7 +83,7 @@ const Feedback = () => {
               />
             }
             placeholder="Гарчиг"
-            styles={(theme) => ({
+            styles={() => ({
               label: {
                 marginBottom: rem(4),
                 fontSize: rem(15),
@@ -114,7 +114,7 @@ const Feedback = () => {
               />
             }
             placeholder="Цахим шуудан"
-            styles={(theme) => ({
+            styles={() => ({
               label: {
                 marginBottom: rem(4),
                 fontSize: rem(15),
@@ -132,7 +132,7 @@ const Feedback = () => {
             data={["Санал хүсэлт", "Гомдол"]}
             value={feedback.type}
             onChange={(value) => setFeedback({ ...feedback, type: value })}
-            styles={(theme) => ({
+            styles={() => ({
               label: {
                 marginBottom: rem(4),
                 fontSize: rem(15),

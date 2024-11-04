@@ -15,7 +15,7 @@ import {
 import { getCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import GlobalLayout from "../../components/GlobalLayout/GlobalLayout";
 import ProfileTabs from "../../components/ProfileTab";
 import Address from "./tabs/Address";
@@ -146,10 +146,10 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    if (router.query.hasOwnProperty("wishlist")) {
+    if (Object.prototype.hasOwnProperty.call(router.query, "wishlist")) {
       setTabs(3);
     }
-    if (router.query.hasOwnProperty("cr")) {
+    if (Object.prototype.hasOwnProperty.call(router.query, "cr")) {
       if (router.query?.cr === "order") {
         setTabs(4);
       }

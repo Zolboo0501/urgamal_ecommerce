@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
 import { Button, Loader, Modal, TextInput, rem } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import {

@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
 import Image from "next/image";
-const { useState } = require("react");
+// eslint-disable-next-line no-undef
+const { useState, default: React } = require("react");
 
 function Magnifier({
   imgSrc,

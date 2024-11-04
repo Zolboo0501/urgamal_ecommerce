@@ -16,7 +16,7 @@ import {
   IconSend,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Mobile = () => {
   const [seconds, setSeconds] = useState(60);
@@ -166,14 +166,14 @@ const Mobile = () => {
               />
             </Center>
             <Center>
-              <p class="text-base font-semibold">
+              <p className="text-base font-semibold">
                 {otpRequested
                   ? "Нэг удаагийн код"
                   : "Утасны дугаар баталгаажуулах"}
               </p>
             </Center>
             <Center>
-              <p class="text-sm text-gray-500">
+              <p className="text-sm text-gray-500">
                 {otpRequested
                   ? "Та 6 оронтой код оруулна уу"
                   : "Та зөвхөн өөрийн утасны дугаарыг оруулна уу"}
@@ -213,7 +213,7 @@ const Mobile = () => {
                   <Loader variant="dots" color="teal" />
                 ) : (
                   <button
-                    class="text-xs text-primary underline"
+                    className="text-xs text-primary underline"
                     onClick={() => {
                       setOtp("");
                       fetchOTP();
@@ -224,7 +224,7 @@ const Mobile = () => {
                 )
               ) : (
                 <Center>
-                  <p class="text-xs text-orange-500">
+                  <p className="text-xs text-orange-500">
                     {seconds} секунд хүлээнэ үү
                   </p>
                 </Center>
@@ -234,7 +234,7 @@ const Mobile = () => {
                 onClick={() => handleConfirm()}
                 variant="outline"
                 color="orange"
-                styles={(theme) => ({
+                styles={() => ({
                   root: {
                     marginTop: rem(10),
                     borderColor: "#48BE5B",
@@ -261,7 +261,7 @@ const Mobile = () => {
                 onClick={() => handleSend()}
                 variant="outline"
                 color="orange"
-                styles={(theme) => ({
+                styles={() => ({
                   root: {
                     marginTop: rem(10),
                     borderColor: "#48BE5B",

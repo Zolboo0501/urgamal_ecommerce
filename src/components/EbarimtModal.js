@@ -1,9 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react/prop-types */
 import { IconAward, IconPremiumRights } from "@tabler/icons-react";
-import Image from "next/image";
+
 import React from "react";
 
-const EbarimtModal = ({ context, innerProps }) => {
+const EbarimtModal = ({ innerProps }) => {
   return (
     <div className="flex flex-col items-center justify-center">
       <img

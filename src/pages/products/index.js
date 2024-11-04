@@ -1,15 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 import ProductGridList from "@/components/ProductGridList/ProductGridList";
 import { PAGE_SIZE } from "@/utils/constant";
-import { fetchMethod, getCategory } from "@/utils/fetch";
+import { fetchMethod } from "@/utils/fetch";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 // import { Virtuoso, VirtuosoGrid } from "react-virtuoso";
-import useSWRInfinite from "swr/infinite";
-import { Pagination } from "@mantine/core";
 import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
-import axios from "axios";
 import ProductCard from "@/components/ProductCard";
+import { Pagination } from "@mantine/core";
+import axios from "axios";
+import useSWRInfinite from "swr/infinite";
 
 export async function getServerSideProps() {
   const data = await fetchMethod("GET", "product");
@@ -34,7 +35,7 @@ export default function SearchResult({ initialData }) {
       })
       .catch((error) => console.log(error, "err in fetcher"));
 
-  const { data, size, setSize, isValidating, isLoading } = useSWRInfinite(
+  const { data, setSize, isLoading } = useSWRInfinite(
     (index) =>
       `${process.env.NEXT_PUBLIC_API_URL}/product?offset=${
         (index + 1) * 20
@@ -44,8 +45,6 @@ export default function SearchResult({ initialData }) {
   );
 
   const isEmpty = products?.[0]?.length === 0;
-
-  const [isFetch, setIsFetch] = useState(false);
 
   // useEffect(() => {
   //   if (isFetch) {

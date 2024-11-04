@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Button, rem } from "@mantine/core";
 import React from "react";
 import {

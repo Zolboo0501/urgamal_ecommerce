@@ -1,11 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import UserAddress from "@/components/UserProfileForms/UserAddress";
 import { fetchMethod } from "@/utils/fetch";
 import { errorNotification } from "@/utils/utils";
-import { Loader, Title } from "@mantine/core";
+import { Loader, rem, Title } from "@mantine/core";
 import { IconCircleXFilled } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+
 const Address = () => {
   const [addressData, setAddressData] = useState(null);
   const [selectAddress, setSelectAddress] = useState([]);
@@ -66,7 +66,7 @@ const Address = () => {
       ) : (
         <div>
           <Title order={3}>Хүргэлтийн хаяг</Title>
-          <p class="text-sm text-gray-500">
+          <p className="text-sm text-gray-500">
             Та хүргэлтийн хаягаа оруулж захиалгаа хялбар хийгээрэй
           </p>
           <div className="w-full">

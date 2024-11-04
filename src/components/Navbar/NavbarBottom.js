@@ -1,4 +1,5 @@
-/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable react/prop-types */
+
 import { htmlFrom } from "@/utils/constant";
 import { fetchMethod } from "@/utils/fetch";
 import { errorNotification } from "@/utils/utils";
@@ -6,7 +7,7 @@ import { Autocomplete, rem } from "@mantine/core";
 import { IconCircleXFilled, IconSearch } from "@tabler/icons-react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CategoryHover from "../AllCategory/CategoryHover";
 
 const NavbarBottom = ({

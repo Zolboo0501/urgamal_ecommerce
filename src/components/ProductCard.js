@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import useWishlist from "@/hooks/useWishlist";
 import { fetchMethod } from "@/utils/fetch";
 import {
@@ -14,7 +15,6 @@ import {
   Card,
   Group,
   Image,
-  LoadingOverlay,
   rem,
   ThemeIcon,
 } from "@mantine/core";
@@ -29,7 +29,7 @@ import {
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import React, { useState } from "react";
 import { IoIosBarcode } from "react-icons/io";
 import { addCart } from "../utils/Store";
 
@@ -39,7 +39,6 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
     key: src?.key,
     src: src?.url,
   });
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const token = getCookie("token");
   const [toggle, setToggle] = useState(false);
@@ -183,7 +182,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
                   <ThemeIcon size="lg" variant="light" color="green">
                     <IconPhotoOff size="80%" stroke={0.5} />
                   </ThemeIcon>
-                  <p class="text-xs font-light text-gray-500">Зураггүй</p>
+                  <p className="text-xs font-light text-gray-500">Зураггүй</p>
                 </div>
               }
               alt={currentImage?.src}
@@ -236,7 +235,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
         </div>
       </Card.Section>
       <div className="mt-3">
-        <p class="mt-1 line-clamp-1 grow text-start text-lg font-medium">
+        <p className="mt-1 line-clamp-1 grow text-start text-lg font-medium">
           {data?.name}
         </p>
         <div className="flex flex-row items-center gap-1">
@@ -318,17 +317,9 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
             addToCartHandler(event);
           }}
         >
-          {loading === true ? (
-            <LoadingOverlay
-              loaderProps={{ size: "sm", color: "white" }}
-              overlayOpacity={0.1}
-              visible={loading}
-            />
-          ) : (
-            <div className="flex items-center">
-              <IconShoppingCartPlus />
-            </div>
-          )}
+          <div className="flex items-center">
+            <IconShoppingCartPlus />
+          </div>
         </Button>
       </Group>
     </Card>

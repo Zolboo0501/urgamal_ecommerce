@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-undef */
 import { fetchMethod } from "@/utils/fetch";
 import { rememberMe, rememberMeRemove } from "@/utils/Store";
 import { UserConfigContext } from "@/utils/userConfigContext";
@@ -11,12 +11,13 @@ import {
   rem,
   TextInput,
 } from "@mantine/core";
+
 import { useForm } from "@mantine/form";
 import { IconAt, IconLock } from "@tabler/icons-react";
 import { setCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Buttons from "../../components/Buttons";
 
 const Login = () => {
@@ -206,7 +207,7 @@ const Login = () => {
               radius={"xl"}
               icon={icon}
               {...form.getInputProps("email")}
-              styles={(theme) => ({
+              styles={() => ({
                 label: {
                   marginBottom: rem(10),
                   fontSize: rem(15),
@@ -226,7 +227,7 @@ const Login = () => {
               radius={"xl"}
               icon={passIcon}
               {...form.getInputProps("password")}
-              styles={(theme) => ({
+              styles={() => ({
                 label: {
                   marginBottom: rem(10),
                   fontSize: rem(15),
@@ -253,7 +254,7 @@ const Login = () => {
                 color="gray"
                 onClick={() => router.push("/login/forget")}
               >
-                <p class="text-xs text-gray-500">Нууц үгээ мартсан уу?</p>
+                <p className="text-xs text-gray-500">Нууц үгээ мартсан уу?</p>
               </Button>
             </div>
             <Button

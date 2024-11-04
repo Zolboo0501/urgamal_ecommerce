@@ -4,7 +4,7 @@ import { Button, Input, rem, TextInput } from "@mantine/core";
 import { IconMailCode } from "@tabler/icons-react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const icon = (
   <IconMailCode
@@ -65,7 +65,7 @@ const Forget = () => {
             icon={icon}
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            styles={(theme) => ({
+            styles={() => ({
               label: {
                 marginBottom: rem(15),
                 fontSize: rem(15),

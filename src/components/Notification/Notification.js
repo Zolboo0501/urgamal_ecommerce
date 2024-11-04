@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
 import useSocket from "@/hooks/useSocket";
 import { fetchMethod } from "@/utils/fetch";
 import { errorNotification, tokenDecode } from "@/utils/utils";
@@ -7,7 +7,7 @@ import { IconCircleXFilled } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import NotificationItem from "./NotificationItem";
 
 const Notification = () => {

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Image from "next/image";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -8,8 +9,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import ProductCard from "./ProductCard";
+import React from "react";
 
-export default function ProductListWithCategory({ cols, className, suggest }) {
+export default function ProductListWithCategory({ className, suggest }) {
   const { data, isLoading } = useSpecialDeals();
   if (isLoading)
     return (

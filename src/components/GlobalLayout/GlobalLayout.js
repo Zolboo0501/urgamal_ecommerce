@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-page-custom-font */
+/* eslint-disable react/prop-types */
 import Head from "next/head";
 import React, { useContext, useEffect, useState } from "react";
-import Navbar from "../Navbar/navbar";
+import Navbar from "../Navbar/Navbar";
 import BottomFooter from "../Footer";
 import { UserConfigContext } from "@/utils/userConfigContext";
 import { setCookie } from "cookies-next";
@@ -13,7 +13,6 @@ export default function GlobalLayout({
   footer = true,
   title = "Таримал Ургамал ХХК",
 }) {
-  const [type, setType] = useState();
   const userContext = useContext(UserConfigContext);
   const [userConfigValue, setUserConfigValue] = useState(
     userContext.preferenceConfig,
@@ -22,10 +21,6 @@ export default function GlobalLayout({
   useEffect(() => {
     setUserConfigValue(userContext.configId);
   }, [userContext.preferenceConfig, userContext.configId]);
-
-  const getValue = (data) => {
-    setType(data);
-  };
 
   const handleConfigSelection = (value) => {
     if (userConfigValue !== value) {
@@ -53,7 +48,7 @@ export default function GlobalLayout({
           rel="stylesheet"
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
         <link
           href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
           rel="stylesheet"
@@ -71,7 +66,7 @@ export default function GlobalLayout({
               : null,
           }}
         >
-          <Navbar getValue={getValue} address={userContext?.address} />
+          <Navbar address={userContext?.address} />
           {children}
           {footer && (
             <BottomFooter

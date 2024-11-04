@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import axios from "axios";
 export const fetchMethod = async (method, path, token, body) => {
   const headerWithToken = {

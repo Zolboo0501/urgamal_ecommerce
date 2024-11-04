@@ -1,4 +1,7 @@
+/* eslint-disable react/prop-types */
 import { Skeleton } from "@mantine/core";
+import React from "react";
+
 const MySkeleton = ({ key }) => {
   return (
     <div key={key || ""} className="h-full w-full rounded-md bg-white">

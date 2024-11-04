@@ -1,4 +1,5 @@
-import { Badge, Button, Collapse, ThemeIcon } from "@mantine/core";
+/* eslint-disable react/prop-types */
+import { Badge, Button, Collapse, rem, ThemeIcon } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
   IconCalendarEvent,

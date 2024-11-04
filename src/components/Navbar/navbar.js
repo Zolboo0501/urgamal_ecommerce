@@ -1,5 +1,5 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 import {
   Autocomplete,
   Avatar,
@@ -21,8 +21,7 @@ import { getCookie, setCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
 import useWishlist from "@/hooks/useWishlist";
 import { fetchMethod, fetcher } from "@/utils/fetch";
 import { getCart } from "@/utils/Store";
@@ -46,13 +45,13 @@ const Navbar = (props) => {
     mobile: "",
   });
   const route = useRouter();
-  const {
-    data: categories,
-    error: catsError,
-    isLoading: catsLoading,
-  } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/product/cats`, fetcher, {
-    refreshInterval: 0,
-  });
+  const { data: categories, error: catsError } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL}/product/cats`,
+    fetcher,
+    {
+      refreshInterval: 0,
+    },
+  );
   const { data, mutate } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/product?limit=${10}${
       debounced && `&query=${debounced}`
@@ -106,7 +105,6 @@ const Navbar = (props) => {
   //   }
   // }, [categories]);
 
-  // eslint-disable-next-line react/display-name
   const renderOptionItem = ({ option }) => {
     const value = suggestions?.filter(
       (item) => item?.value === option?.value,
@@ -360,7 +358,7 @@ const Navbar = (props) => {
                 radius="xl"
                 value={userConfigValue}
                 onChange={(value) => handleConfigSelection(value)}
-                styles={(theme) => ({
+                styles={() => ({
                   item: {
                     "&[data-selected]": {
                       "&, &:hover": {

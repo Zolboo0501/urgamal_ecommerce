@@ -1,4 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 import useSocket from "@/hooks/useSocket";
 import { errorNotification, successNotification } from "@/utils/utils";
 import { Button, Card, Stack, Tabs, rem } from "@mantine/core";
@@ -7,7 +8,7 @@ import axios from "axios";
 import { getCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function PaymentModal({ context, id, innerProps }) {
   const router = useRouter();
@@ -82,7 +83,7 @@ export default function PaymentModal({ context, id, innerProps }) {
         </Tabs.List>
         <Tabs.Panel value="qpay">
           <Stack align="center">
-            <p class="text-sm">
+            <p className="text-sm">
               Та Qpay ашиглан төлбөрөө доорх зургийг уншуулан төлөөрэй
             </p>
             <div className="relative h-64 w-64 lg:h-96 lg:w-96">
@@ -96,11 +97,11 @@ export default function PaymentModal({ context, id, innerProps }) {
         </Tabs.Panel>
         <Tabs.Panel value="others">
           <Stack align="start" spacing={6}>
-            <p class="text-sm">
+            <p className="text-sm">
               Та доорх төлбөрийн хэрэгслүүдээр төлбөрөө гар утаснаасаа шууд хийх
               боломжтой
             </p>
-            <p class="text-sm font-medium text-gray-500">
+            <p className="text-sm font-medium text-gray-500">
               Зөвхөн гар утаснаас үйлдлийг хийх боломжтой
             </p>
             <div className="mt-1 flex flex-wrap justify-center gap-4">
@@ -120,7 +121,7 @@ export default function PaymentModal({ context, id, innerProps }) {
                           className="rounded-md"
                         />
                       </div>
-                      <p class="text-center text-xs">{e?.description}</p>
+                      <p className="text-center text-xs">{e?.description}</p>
                     </div>
                   </Card>
                 );

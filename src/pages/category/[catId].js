@@ -1,4 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
 import ProductCard from "@/components/ProductCard";
 import ProductGridList from "@/components/ProductGridList/ProductGridList";
@@ -7,8 +8,9 @@ import { fetchMethod } from "@/utils/fetch";
 import { Pagination } from "@mantine/core";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
+
 export async function getServerSideProps({ query }) {
   const { catId } = query;
   try {
@@ -47,7 +49,7 @@ const CategoryPage = ({ initialData }) => {
       })
       .catch((error) => console.log(error, "err in fetcher"));
 
-  const { data, size, setSize, isLoading, isValidating } = useSWRInfinite(
+  const { data, setSize } = useSWRInfinite(
     (index) =>
       `${process.env.NEXT_PUBLIC_API_URL}/product?offset=${
         (index + 1) * 20
@@ -88,7 +90,7 @@ const CategoryPage = ({ initialData }) => {
 
   function categoryPositioner() {
     var navbar = document.getElementById("category-menu");
-    var content = document.getElementById("content");
+
     var sticky = navbar?.offsetTop;
     if (window.pageYOffset >= sticky) {
       navbar?.classList.add("fixed", "top-16");

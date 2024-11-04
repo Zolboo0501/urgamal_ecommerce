@@ -1,5 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from "react";
 import { UserConfigContext } from "./userConfigContext";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { useRouter } from "next/router";

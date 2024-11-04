@@ -1,4 +1,5 @@
-import { Modal, rem } from "@mantine/core";
+/* eslint-disable react/prop-types */
+import { Modal } from "@mantine/core";
 import { IconFileInvoice, IconTruckDelivery } from "@tabler/icons-react";
 import React from "react";
 

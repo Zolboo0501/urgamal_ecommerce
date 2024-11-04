@@ -1,7 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { createContext, useEffect, useRef, useState } from "react";
-import socket from "./Socket";
+/* eslint-disable react/prop-types */
 import { getCookie } from "cookies-next";
+import React, { createContext, useEffect, useState } from "react";
+import socket from "./Socket";
 import { tokenDecode } from "./utils";
 
 export const SocketContext = createContext();

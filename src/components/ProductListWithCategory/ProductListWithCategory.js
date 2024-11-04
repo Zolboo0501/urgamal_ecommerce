@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 import MySkeleton from "../MySkeleton";
 import { IconChevronRight } from "@tabler/icons-react";
 import Image from "next/image";
@@ -6,21 +8,17 @@ import Link from "next/link";
 import { fetcher } from "@/utils/fetch";
 import { PAGE_SIZE } from "@/utils/constant";
 import { Pagination, Navigation } from "swiper/modules";
-import Swiper from "swiper/react";
+import Swiper, { SwiperSlide } from "swiper/react";
 import ProductCard from "../ProductCard";
+import React from "react";
 
 export default function ProductListWithCategory({
   categoryName,
   categoryIcon,
   categoryId,
-  cols,
   className,
 }) {
-  const {
-    data: product,
-    isLoading,
-    error,
-  } = useSWR(
+  const { data: product, isLoading } = useSWR(
     `${
       process.env.NEXT_PUBLIC_API_URL
     }/product?categoryId=${categoryId}&offset=${0}&limit=${PAGE_SIZE}`,

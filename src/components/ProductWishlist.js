@@ -1,23 +1,21 @@
-import Image from "next/image";
+/* eslint-disable react/prop-types */
+import useWishlist from "@/hooks/useWishlist";
+import { fetchMethod } from "@/utils/fetch";
+import { addCart } from "@/utils/Store";
+import {
+  errorNotification,
+  numberWithCommas,
+  successNotification,
+} from "@/utils/utils";
 import { Badge, Button, Loader, ThemeIcon, rem } from "@mantine/core";
 import {
-  IconCheck,
   IconCircleXFilled,
   IconHeartX,
   IconPhotoOff,
   IconShoppingCartPlus,
 } from "@tabler/icons-react";
-import { fetchMethod } from "@/utils/fetch";
 import { getCookie } from "cookies-next";
-import { addCart } from "@/utils/Store";
-import { useState } from "react";
-import useWishlist from "@/hooks/useWishlist";
-import {
-  errorNotification,
-  numberWithCommas,
-  renderRemains,
-  successNotification,
-} from "@/utils/utils";
+import React, { useState } from "react";
 import Magnifier from "./Magnifier/Magnifier";
 
 const ProductWishlist = ({ data, refresh }) => {
@@ -57,7 +55,6 @@ const ProductWishlist = ({ data, refresh }) => {
   };
 
   const handleCart = async () => {
-    const token = getCookie("token");
     setLoading(true);
     console.log(data, "addCart");
     addCart({ ...data?.product, quantity: 1 });

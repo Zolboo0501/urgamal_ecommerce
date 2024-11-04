@@ -1,9 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 import ProductModal from "@/components/Profile/ProfileModal";
 import { fetchMethod } from "@/utils/fetch";
 import { UserConfigContext } from "@/utils/userConfigContext";
 import { errorNotification, successNotification } from "@/utils/utils";
-import { Button, Checkbox, Skeleton } from "@mantine/core";
+import { Button, Checkbox, rem, Skeleton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
   IconCirclePlus,
@@ -11,7 +12,7 @@ import {
   IconTruckOff,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const Address = ({ setSelectedShippingData, setSelect }) => {
   const [value, setValue] = useState(1);

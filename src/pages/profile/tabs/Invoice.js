@@ -1,11 +1,13 @@
+/* eslint-disable no-undef */
 import InvoiceItem from "@/components/InvoiceItem";
 import { Loader, Tabs } from "@mantine/core";
 import { getCookie } from "cookies-next";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { IconFileOff } from "@tabler/icons-react";
 import axios from "axios";
 import useSWR from "swr";
+
 const Invoice = () => {
   const accessToken = getCookie("token");
   const invoiceType = useMemo(
@@ -41,11 +43,7 @@ const Invoice = () => {
     }
   };
 
-  const {
-    data: invoice,
-    error,
-    isLoading,
-  } = useSWR(
+  const { data: invoice, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/order/invoice?status=${
       tabs === "all" ? "" : tabs
     }`,
@@ -84,7 +82,7 @@ const Invoice = () => {
               <div className="flex h-56 w-full items-center justify-center">
                 <div className="flex flex-col items-center gap-2">
                   <IconFileOff size={"3rem"} stroke={1.2} />
-                  <span class="font-medium">
+                  <span className="font-medium">
                     {invoiceType.find((types) => types.value === e.value).title}
                   </span>
                   <span className="mt-2 text-base font-medium text-grey">

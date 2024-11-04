@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { RichTextEditor, Link } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
@@ -6,6 +7,7 @@ import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
+import React from "react";
 
 function RickText({ onChange }) {
   const editor = useEditor({

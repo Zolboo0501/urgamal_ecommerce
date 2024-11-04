@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+/* eslint-disable react/prop-types */
+import React, { useEffect } from "react";
 import Leaflet from "leaflet";
 import * as ReactLeaflet from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -13,7 +14,7 @@ function ChangeView({ center, zoom }) {
   return null;
 }
 
-const Map = ({ children, className, width, height, ...rest }) => {
+const Map = ({ children, className, ...rest }) => {
   let mapClassName = styles.map;
 
   if (className) {

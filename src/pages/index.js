@@ -1,4 +1,4 @@
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   return {
     redirect: {
       permanent: false,
@@ -6,8 +6,4 @@ export async function getServerSideProps(context) {
     },
     props: {},
   };
-}
-
-export default function Index() {
-  return <div></div>;
 }

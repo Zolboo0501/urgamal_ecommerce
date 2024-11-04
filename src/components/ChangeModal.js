@@ -1,7 +1,7 @@
-import { IconAlertHexagon, IconAlertHexagonFilled } from "@tabler/icons-react";
+import { IconAlertHexagon } from "@tabler/icons-react";
 import React from "react";
 
-const ChangeModal = ({ context, id }) => {
+const ChangeModal = () => {
   return (
     <div className="flex flex-col items-center justify-center">
       <IconAlertHexagon color="#F9BC60" size={64} stroke={1} />

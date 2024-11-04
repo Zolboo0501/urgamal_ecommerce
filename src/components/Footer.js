@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types */
 import { htmlFrom } from "@/utils/constant";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
-const BottomFooter = ({ address, links }) => {
+import React from "react";
+
+const BottomFooter = ({ address }) => {
   return (
     <>
       {/* desktop */}

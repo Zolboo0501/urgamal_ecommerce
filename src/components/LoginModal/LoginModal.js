@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { fetchMethod } from "@/utils/fetch";
 import { UserConfigContext } from "@/utils/userConfigContext";
 import { errorNotification, successNotification } from "@/utils/utils";
@@ -12,7 +13,7 @@ import {
   Stack,
 } from "@mantine/core";
 import { setCookie } from "cookies-next";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 export default function LoginModal({ context, id }) {
   const { login } = useContext(UserConfigContext);
@@ -77,8 +78,8 @@ export default function LoginModal({ context, id }) {
     <Container>
       <Stack spacing="lg">
         <Stack mt="lg" spacing={8}>
-          <label for="mobile-number-input">
-            <p class="font-medium">Утасны дугаар</p>
+          <label htmlFor="mobile-number-input">
+            <p className="font-medium">Утасны дугаар</p>
           </label>
           <Input
             id="mobile-number-input"
@@ -93,8 +94,8 @@ export default function LoginModal({ context, id }) {
         {otpRequested && <Divider />}
         {otpRequested && (
           <Stack mt="md" spacing={8} align="center">
-            <label for="otp-input">
-              <p class="font-medium">Нэг удаагийн нууц үг</p>
+            <label htmlFor="otp-input">
+              <p className="font-medium">Нэг удаагийн нууц үг</p>
             </label>
             <Group position="center">
               <PinInput
@@ -110,7 +111,7 @@ export default function LoginModal({ context, id }) {
               />
               {/* <Button size="xs">Дахин илгээх</Button> */}
               <Group position="right">
-                <p class="text-xs">Код очоогүй юу?</p>
+                <p className="text-xs">Код очоогүй юу?</p>
 
                 {/* <ActionIcon size="lg">
                     <IconReload size="1.6rem" />
@@ -121,7 +122,7 @@ export default function LoginModal({ context, id }) {
                     <Loader variant="dots" color="teal" />
                   ) : (
                     <button
-                      class="text-xs text-primary underline"
+                      className="text-xs text-primary underline"
                       onClick={() => {
                         setOtp("");
                         fetchOTP();
@@ -131,7 +132,7 @@ export default function LoginModal({ context, id }) {
                     </button>
                   )
                 ) : (
-                  <p class="text-xs text-orange-500">
+                  <p className="text-xs text-orange-500">
                     {seconds} секунд хүлээнэ үү
                   </p>
                 )}

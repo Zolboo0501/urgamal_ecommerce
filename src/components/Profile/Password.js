@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
 import { regexNumber } from "@/utils/constant";
 import { fetchMethod } from "@/utils/fetch";
 import { errorNotification, successNotification } from "@/utils/utils";
@@ -21,7 +21,7 @@ import {
   IconShieldLock,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Password = (props) => {
   const { setTabs } = props;
@@ -149,7 +149,7 @@ const Password = (props) => {
   const renderCheck = (state, text) => {
     return (
       <p
-        class={`text-sm font-semibold ${state ? "text-primary600" : "text-red-500"}`}
+        className={`text-sm font-semibold ${state ? "text-primary600" : "text-red-500"}`}
       >
         - {text}
       </p>
@@ -200,12 +200,12 @@ const Password = (props) => {
               />
             </Center>
             <Center>
-              <p class="text-base font-semibold">
+              <p className="text-base font-semibold">
                 {otpRequested ? "Нэг удаагийн код" : "Утасны дугаар"}
               </p>
             </Center>
             <Center>
-              <p class="text-sm text-gray-500">
+              <p className="text-sm text-gray-500">
                 {otpRequested
                   ? "Та 6 оронтой код оруулна уу"
                   : "Та нэг удаагийн код авах дугаараа оруулна уу"}
@@ -245,7 +245,7 @@ const Password = (props) => {
                   <Loader variant="dots" color="teal" />
                 ) : (
                   <button
-                    class="text-xs text-blue-400 underline lg:text-sm"
+                    className="text-xs text-blue-400 underline lg:text-sm"
                     onClick={() => {
                       setOtp("");
                       fetchOTP();
@@ -256,7 +256,7 @@ const Password = (props) => {
                 )
               ) : (
                 <Center>
-                  <p class="text-xs text-primary500">
+                  <p className="text-xs text-primary500">
                     {seconds} секунд хүлээнэ үү
                   </p>
                 </Center>
@@ -266,7 +266,7 @@ const Password = (props) => {
                 onClick={() => handleSend()}
                 variant="outline"
                 color="orange"
-                styles={(theme) => ({
+                styles={() => ({
                   root: {
                     marginTop: rem(10),
                     borderColor: "#48BE5B",
@@ -307,7 +307,7 @@ const Password = (props) => {
               />
             }
             placeholder="*********"
-            styles={(theme) => ({
+            styles={() => ({
               label: {
                 marginBottom: rem(4),
                 fontSize: rem(15),
@@ -335,7 +335,7 @@ const Password = (props) => {
                 stroke={2}
               />
             }
-            styles={(theme) => ({
+            styles={() => ({
               label: {
                 marginBottom: rem(4),
                 fontSize: rem(15),
@@ -369,7 +369,7 @@ const Password = (props) => {
           variant="filled"
           color="orange"
           onClick={() => handleSave()}
-          styles={(theme) => ({
+          styles={() => ({
             root: {
               backgroundColor: "#48BE5B",
             },

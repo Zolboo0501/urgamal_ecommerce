@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Card,
   Container,
@@ -8,6 +9,7 @@ import {
 } from "@mantine/core";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/router";
+import React from "react";
 
 const useStyles = createStyles(() => ({
   description: {
@@ -44,12 +46,12 @@ export default function Preference_modal({ close, opened, preference_cookie }) {
         onClose={close}
         padding="xl"
       >
-        <p class="mb-2.5 text-center text-[20px] font-semibold">
+        <p className="mb-2.5 text-center text-[20px] font-semibold">
           Хэрэглэгч таны сонирхож байгаа төрөл
         </p>
 
         <Container p={10} size={600} mb={20}>
-          <p class="text-lg text-gray-500">
+          <p className="text-lg text-gray-500">
             Та доорх хоёр төрлөөс аль нэгийн сонгож өөрт тохирсон бараагаа харах
             боломжтой.
           </p>
@@ -75,7 +77,7 @@ export default function Preference_modal({ close, opened, preference_cookie }) {
               />
             </Card.Section>
 
-            <p class="text-center text-xl font-medium text-gray-800">
+            <p className="text-center text-xl font-medium text-gray-800">
               Өрхийн тариаланч
             </p>
           </Card>
@@ -99,7 +101,7 @@ export default function Preference_modal({ close, opened, preference_cookie }) {
               />
             </Card.Section>
 
-            <p class="text-center text-xl font-medium text-gray-800">
+            <p className="text-center text-xl font-medium text-gray-800">
               Мэргэжлийн тариаланч
             </p>
           </Card>

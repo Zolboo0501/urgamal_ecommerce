@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { rem } from "@mantine/core";
 import React from "react";
 import { IoIosArrowForward } from "react-icons/io";

@@ -1,7 +1,7 @@
-import { Badge } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { IconAlertCircle, IconCheck } from "@tabler/icons-react";
 import { jwtDecode } from "jwt-decode";
+import React from "react";
 
 export const tokenDecode = (token) => {
   const decoded = jwtDecode(token);

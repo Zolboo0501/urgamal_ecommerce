@@ -1,5 +1,7 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 import { getCookie } from "cookies-next";
-import { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 export const WishlistContext = createContext();
 
 const WishlistProvider = ({ children }) => {

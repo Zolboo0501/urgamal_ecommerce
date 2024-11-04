@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { rem } from "@mantine/core";
 import { IconArrowBigRight, IconMacroOff } from "@tabler/icons-react";
 import Link from "next/link";

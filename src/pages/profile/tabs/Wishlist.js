@@ -4,7 +4,7 @@ import { errorNotification } from "@/utils/utils";
 import { Loader, Title, rem } from "@mantine/core";
 import { IconCircleXFilled, IconHeartOff } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
@@ -47,7 +47,7 @@ const Wishlist = () => {
           </div>
         ) : wishlist.length > 0 ? (
           wishlist.map((item, index) => (
-            <div className="m-2 gap-3">
+            <div className="m-2 gap-3" key={index}>
               <ProductWishlist data={item} key={index} refresh={getWishlist} />
             </div>
           ))

@@ -1,4 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-undef */
 import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
 import useWishlist from "@/hooks/useWishlist";
 import { addCart } from "@/utils/Store";
@@ -8,7 +9,7 @@ import {
   numberWithCommas,
   successNotification,
 } from "@/utils/utils";
-import { Badge, Button, Grid, Loader, ThemeIcon, rem } from "@mantine/core";
+import { Badge, Button, Grid, ThemeIcon, rem } from "@mantine/core";
 import {
   IconChevronRight,
   IconCircleXFilled,
@@ -20,8 +21,7 @@ import {
 import { getCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import React, { useState } from "react";
 import SpecialDeal from "../../components/SpecialDeal";
 export async function getServerSideProps({ params }) {
   const requestOption = {
@@ -66,9 +66,7 @@ export async function getServerSideProps({ params }) {
     },
   };
 }
-
 const ProductDetail = ({ product, dealData, category }) => {
-  const [loading, setLoading] = useState(false);
   const [renderImage, setRenderImage] = useState("");
   const wishlist = useWishlist();
   const [toggle, setToggle] = useState("description");
@@ -155,7 +153,7 @@ const ProductDetail = ({ product, dealData, category }) => {
           onMouseMove={(e) => {
             // update cursor position
             const elem = e.currentTarget;
-            const { top, left, width, height } = elem.getBoundingClientRect();
+            const { top, left } = elem.getBoundingClientRect();
             // calculate cursor position on the image
             const x = e.pageX - left - window.pageXOffset;
             const y = e.pageY - top - window.pageYOffset;
@@ -308,7 +306,7 @@ const ProductDetail = ({ product, dealData, category }) => {
                       <IconPhotoOff size="80%" stroke={0.5} />
                     </ThemeIcon>
 
-                    <p class="text-sm font-light">Зураггүй </p>
+                    <p className="text-sm font-light">Зураггүй </p>
                   </div>
                 )}
               </div>
@@ -443,16 +441,8 @@ const ProductDetail = ({ product, dealData, category }) => {
                   radius={"xl"}
                   color={"teal"}
                   className="flex items-center justify-between rounded-md px-5 py-3"
-                  disabled={loading}
                   rightSection={
-                    loading ? (
-                      <Loader size="xs" color="yeal" />
-                    ) : (
-                      <IconShoppingCartPlus
-                        className="font-semibold"
-                        size={20}
-                      />
-                    )
+                    <IconShoppingCartPlus className="font-semibold" size={20} />
                   }
                   onClick={addToCartHandler}
                 >

@@ -18,7 +18,7 @@ import {
   IconSend,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const Mail = () => {
   const [emailRequested, setEmailRequested] = useState(false);
@@ -156,14 +156,14 @@ const Mail = () => {
               />
             </Center>
             <Center>
-              <p class="text-base font-semibold">
+              <p className="text-base font-semibold">
                 {emailRequested
                   ? "Нэг удаагийн код"
                   : "Цахим шуудан баталгаажуулах"}
               </p>
             </Center>
             <Center>
-              <p class="text-sm text-gray-500">
+              <p className="text-sm text-gray-500">
                 {emailRequested
                   ? "Таны цахим шуудан дээрх 6 оронтой код оруулна уу"
                   : "Та зөвхөн өөрийн цахим шууданг оруулна уу"}
@@ -198,7 +198,7 @@ const Mail = () => {
                 }
                 onChange={(event) => setEmail(event.currentTarget.value)}
                 value={email}
-                styles={(theme) => ({
+                styles={() => ({
                   label: {
                     fontSize: rem(15),
                     fontWeight: "400",
@@ -213,7 +213,7 @@ const Mail = () => {
                 onClick={() => handleConfirm()}
                 variant="outline"
                 color="orange"
-                styles={(theme) => ({
+                styles={() => ({
                   root: {
                     marginTop: rem(10),
                     borderColor: "#48BE5B",
@@ -240,7 +240,7 @@ const Mail = () => {
                 onClick={() => handleSend()}
                 variant="outline"
                 color="orange"
-                styles={(theme) => ({
+                styles={() => ({
                   root: {
                     marginTop: rem(10),
                     borderColor: "#48BE5B",

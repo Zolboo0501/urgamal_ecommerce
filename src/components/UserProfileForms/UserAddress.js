@@ -1,13 +1,14 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 import { errorNotification, successNotification } from "@/utils/utils";
 import { Paper } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import { useState } from "react";
-import { DeleteConfirmationDialog } from "../Profile/deleteAddress";
+import React, { useState } from "react";
+import { DeleteConfirmationDialog } from "../Profile/DeleteAddress";
 import ProductModal from "../Profile/ProfileModal";
 import ShippingAddressCard from "../ShippingAddressCard/ShippingAddressCard";
-
 export default function UserAddress({ data, refresh, selectAddress }) {
   const cookie = getCookie("token");
   const [opened, { open, close }] = useDisclosure(false);
@@ -187,7 +188,7 @@ export default function UserAddress({ data, refresh, selectAddress }) {
             >
               <div className="flex h-28 w-28 cursor-pointer flex-col items-center justify-center gap-1">
                 <IconPlus stroke={1.5} color="#228BE6" />
-                <p class="text-sm text-blue-500">Нэмэх</p>
+                <p className="text-sm text-blue-500">Нэмэх</p>
               </div>
             </Paper>
           </div>

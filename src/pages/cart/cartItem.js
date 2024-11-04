@@ -1,4 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-undef */
 import GlobalLayout from "@/components/GlobalLayout/GlobalLayout";
 import InvoiceInputModal from "@/components/InvoiceModal/InvoiceInputModal";
 import InvoiceModal from "@/components/InvoiceModal/InvoiceModal";
@@ -43,12 +44,12 @@ import {
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BsCartX } from "react-icons/bs";
 
 import Address from "./shippingAddress";
 
-const CartItems = (props) => {
+const CartItems = () => {
   const [isCheckAll, setIsCheckAll] = useState(true);
   const router = useRouter();
   const { auth } = useContext(UserConfigContext);
@@ -57,10 +58,8 @@ const CartItems = (props) => {
   const [addressVisible, setAddressVisible] = useState(false);
   const userToken = getCookie("token");
   const [shippingPee, setShippingPee] = useState(0);
-  const [loadingOrder, setLoadingOrder] = useState(false);
   const [selectedShippingData, setSelectedShippingData] = useState({});
   const [select, setSelect] = useState(false);
-  const [loadingCart, setLoadingCart] = useState(false);
   const [selectedItemsTotal, setSelectedItemsTotal] = useState(0);
   const [selectedItemsIds, setSelectedItemsIds] = useState([]);
   const [loaderOpened, { open: openLoader, close: closeLoader }] =
@@ -69,9 +68,6 @@ const CartItems = (props) => {
     useDisclosure(false);
   const [inputOpened, { open: openInput, close: closeInput }] =
     useDisclosure(false);
-  const handleBack = () => {
-    router.push("/");
-  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -135,7 +131,7 @@ const CartItems = (props) => {
 
   const deleteCartItem = (event, id) => {
     event.stopPropagation();
-    const temp = [...cartItem?.cart_items];
+    const temp = [...(cartItem?.cart_items || [])];
     const filter = temp?.filter((item) => item?.id !== id);
     setCartItem({ ...cartItem, cart_items: filter });
     removeFromCart(filter);
@@ -143,7 +139,7 @@ const CartItems = (props) => {
 
   const deleteFromCart = async () => {
     let isSelected = true;
-    let temp = [...cartItem?.cart_items];
+    let temp = [...(cartItem?.cart_items || [])];
 
     const filter = temp?.filter((item) => {
       if (item?.isChecked) {
@@ -510,7 +506,6 @@ const CartItems = (props) => {
 
   const renderCartContent = () => {
     const hasItems = cartItem?.cart_items?.length > 0;
-    const isLoading = loadingCart;
 
     if (!hasItems) {
       return (
@@ -544,13 +539,13 @@ const CartItems = (props) => {
                 index !== cartItem?.cart_items?.length - 1 && "border-b-1"
               } hover:bg-grey100 ${item?.isChecked === true && "bg-grey100"}`}
               key={index}
-              onClick={(e) => handleClick(item)}
+              onClick={() => handleClick(item)}
             >
               <Checkbox
                 className={"checkbox-input"}
                 checked={item.isChecked}
                 id={item.id}
-                onClick={(e) => handleClick(item)}
+                onClick={() => handleClick(item)}
                 size={"xs"}
                 sx={{
                   "@media (max-width: 40em)": {
@@ -649,7 +644,7 @@ const CartItems = (props) => {
         size="xs"
       >
         <Stack align="center" my="lg" spacing="lg">
-          <p class="text-center">Уншиж байна...</p>
+          <p className="text-center">Уншиж байна...</p>
           <Loader size="lg" color="teal" />
         </Stack>
       </Modal>
@@ -789,7 +784,7 @@ const CartItems = (props) => {
                 </span>
               </span>
               <Button
-                styles={(theme) => ({
+                styles={() => ({
                   root: {
                     border: 0,
                     height: 42,
@@ -807,16 +802,16 @@ const CartItems = (props) => {
                   },
                 })}
                 color="green"
-                disabled={loadingOrder && true}
+                // disabled={loadingOrder && true}
                 variant="filled"
                 radius="md"
                 size="md"
                 uppercase
                 onClick={() => makeOrder()}
               >
-                {loadingOrder && (
+                {/* {loadingOrder && (
                   <Loader size={"xs"} color="white" className="mr-2" />
-                )}
+                )} */}
                 Захиалга хийх
               </Button>
             </div>

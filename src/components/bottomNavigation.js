@@ -1,8 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { UserConfigContext } from "@/utils/userConfigContext";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
 import { getCart } from "@/utils/Store";
 import { Drawer, ScrollArea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -14,7 +12,7 @@ import {
   IconUserCircle,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import Category from "./AllCategory/category";
+import Category from "./AllCategory/Category";
 
 const BottomNavBar = () => {
   const router = useRouter();
@@ -56,7 +54,7 @@ const BottomNavBar = () => {
         padding={10}
         opened={categoryDrawerOpened}
         onClose={closeCategoryDrawer}
-        title={<p class="text-xl font-light">Ангилал</p>}
+        title={<p className="text-xl font-light">Ангилал</p>}
         scrollAreaComponent={ScrollArea.Autosize}
       >
         <Category closeCategoryDrawer={closeCategoryDrawer} />
@@ -139,7 +137,7 @@ const BottomNavBar = () => {
                     openContextModal({
                       modal: "login",
                       title: (
-                        <p class="text-sm font-normal">
+                        <p className="text-sm font-normal">
                           Хэрэглэгч та өөрийн утасны дугаараар нэвтрэнэ үү
                         </p>
                       ),

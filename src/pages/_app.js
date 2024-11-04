@@ -1,23 +1,18 @@
+/* eslint-disable react/prop-types */
 import ChangeModal from "@/components/ChangeModal";
 import EbarimtModal from "@/components/EbarimtModal";
 import InvoiceFileModal from "@/components/InvoiceModal/InvoiceFileModal";
 import InvoiceModal from "@/components/InvoiceModal/InvoiceModal";
 import LoginModal from "@/components/LoginModal/LoginModal";
 import PaymentModal from "@/components/PaymentModal/PaymentModal";
-import BankInfoModal from "@/components/refund_modals/bankInformationmodal";
-import RefundRichText from "@/components/refund_modals/descriptionModal";
+import BankInfoModal from "@/components/refund_modals/BankInfoModal";
+import RefundRichText from "@/components/refund_modals/RefundRichText";
 import "@/styles/globals.css";
 import CategoryContextProvider from "@/utils/categoryContextProvider";
 import SocketProvider from "@/utils/SocketProvider";
 import { UserConfigProvider } from "@/utils/userConfigProvider";
 import WishlistProvider from "@/utils/wishlistProvider";
-import {
-  createTheme,
-  Input,
-  MantineProvider,
-  rem,
-  TextInput,
-} from "@mantine/core";
+import { createTheme, MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 import { NextUIProvider } from "@nextui-org/react";
@@ -32,6 +27,8 @@ import "@mantine/dates/styles.css";
 import "@mantine/tiptap/styles.css";
 import classes from "@/styles/focus.module.css";
 import "@mantine/carousel/styles.css";
+import React from "react";
+
 export default function App({ Component, pageProps }) {
   const theme = createTheme({
     fontFamily: sfProRounded.style.fontFamily,

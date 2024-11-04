@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import CategoryHoverInner from "./CategoryHoverInner";
 import { IoIosArrowForward } from "react-icons/io";

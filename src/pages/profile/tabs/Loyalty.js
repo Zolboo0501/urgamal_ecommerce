@@ -1,13 +1,10 @@
+/* eslint-disable react/prop-types */
 import { fetchMethod } from "@/utils/fetch";
-import { Loader, Title, rem } from "@mantine/core";
-import {
-  IconCarambola,
-  IconGiftOff,
-  IconStarFilled,
-} from "@tabler/icons-react";
+import { Loader, Title } from "@mantine/core";
+import { IconCarambola, IconGiftOff } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Loyalty = ({ userInfo }) => {
   const [loyalty, setLoyalty] = useState();
@@ -76,7 +73,7 @@ const Loyalty = ({ userInfo }) => {
                 </div>
               </div>
               <div className="flex flex-row items-center gap-2">
-                <p class="text-base font-semibold">{item.amount}</p>
+                <p className="text-base font-semibold">{item.amount}</p>
                 <IconCarambola color="#ffd27d" />
               </div>
             </div>

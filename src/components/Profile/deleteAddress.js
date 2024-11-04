@@ -1,4 +1,6 @@
+/* eslint-disable react/prop-types */
 import { Button, Group, Modal } from "@mantine/core";
+import React from "react";
 export function DeleteConfirmationDialog({
   isOpen,
   close,
@@ -9,7 +11,7 @@ export function DeleteConfirmationDialog({
 }) {
   return (
     <Modal opened={isOpen} onClose={close} title={confirmationText} centered>
-      <p class="p-2 text-sm font-medium">{thingToDelete?.name}</p>
+      <p className="p-2 text-sm font-medium">{thingToDelete?.name}</p>
       <Group position="right" mt="xl">
         <Button variant="default" onClick={close}>
           Цуцлах
@@ -17,7 +19,7 @@ export function DeleteConfirmationDialog({
         <Button
           type="submit"
           loading={loading}
-          onClick={(e) => onConfirm(thingToDelete?.id)}
+          onClick={() => onConfirm(thingToDelete?.id)}
           color="red"
         >
           Устгах

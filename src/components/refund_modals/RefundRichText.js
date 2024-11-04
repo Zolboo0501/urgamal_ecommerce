@@ -1,8 +1,10 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 import { errorNotification, successNotification } from "@/utils/utils";
 import { Button } from "@mantine/core";
 import { IconAlertCircle } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import { useState } from "react";
+import React, { useState } from "react";
 import RickText from "../RickText";
 
 export default function RefundRichText({ innerProps, context, id }) {

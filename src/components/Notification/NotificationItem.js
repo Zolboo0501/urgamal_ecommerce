@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import { Avatar } from "@mantine/core";
 import { IconBellFilled } from "@tabler/icons-react";
 import Image from "next/image";
 import React from "react";
 
-const NotificationItem = ({ data, index }) => {
+const NotificationItem = ({ data }) => {
   return (
     <div className="flex flex-row gap-2">
       {data?.image ? (

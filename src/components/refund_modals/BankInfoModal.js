@@ -1,9 +1,11 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 import { errorNotification, successNotification } from "@/utils/utils";
 import { Button, Grid, Group, Select, TextInput } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { IconAlertCircle } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 export default function BankInfoModal({
   initialData,
@@ -82,7 +84,7 @@ export default function BankInfoModal({
 
   return (
     <form
-      onSubmit={form.onSubmit(async (values, e) => {
+      onSubmit={form.onSubmit(async (values) => {
         await handleSubmit(values);
         form.setValues(initialData);
       })}
