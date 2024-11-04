@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
+import Banner from "@/components/Banner";
 import FacebookMsg from "@/components/FacebookMsg";
 import SpecialDeal from "@/components/SpecialDeal";
-import { useEffect } from "react";
 import GlobalLayout from "../../components/GlobalLayout/GlobalLayout";
-import Banner from "@/components/Banner";
 
 export default function Home() {
   return (

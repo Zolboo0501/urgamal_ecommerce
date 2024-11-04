@@ -6,7 +6,7 @@ import BottomFooter from "../Footer";
 import { UserConfigContext } from "@/utils/userConfigContext";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/router";
-import BottomNavBar from "../bottomNavigation";
+import BottomNavBar from "../BottomNavigation";
 
 export default function GlobalLayout({
   children,

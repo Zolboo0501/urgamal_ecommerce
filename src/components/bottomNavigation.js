@@ -14,7 +14,6 @@ import {
   IconUserCircle,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import Link from "next/link";
 import Category from "./AllCategory/category";
 
 const BottomNavBar = () => {
