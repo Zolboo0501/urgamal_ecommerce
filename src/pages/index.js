@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 export async function getServerSideProps() {
   return {
     redirect: {
@@ -6,4 +7,8 @@ export async function getServerSideProps() {
     },
     props: {},
   };
+}
+
+export default function Index() {
+  return <div></div>;
 }
