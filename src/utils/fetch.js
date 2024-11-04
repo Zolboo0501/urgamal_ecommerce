@@ -1,5 +1,4 @@
 import axios from "axios";
-import { ErrorNotification } from "../utils/SuccessNotification";
 export const fetchMethod = async (method, path, token, body) => {
   const headerWithToken = {
     "Content-Type": "application/json",
@@ -18,7 +17,7 @@ export const fetchMethod = async (method, path, token, body) => {
 
   const data = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/${path}`,
-    requestOption
+    requestOption,
   )
     .then(async (res) => {
       if (res.status === 200) {

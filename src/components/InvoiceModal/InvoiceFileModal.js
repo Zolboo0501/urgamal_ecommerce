@@ -1,6 +1,6 @@
 import { fetchMethod } from "@/utils/fetch";
+import { errorNotification, successNotification } from "@/utils/utils";
 import { Button, TextInput, rem } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import {
   IconBuilding,
   IconCheck,
@@ -10,7 +10,6 @@ import {
   IconPhone,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import React from "react";
 
 const InvoiceFileModal = ({ context, id, innerProps }) => {
   const { data } = innerProps;
@@ -24,15 +23,13 @@ const InvoiceFileModal = ({ context, id, innerProps }) => {
       token,
     );
     if (res.success) {
-      showNotification({
+      successNotification({
         message: "Амжилттай баталгаажлаа.",
         icon: <IconCheck />,
-        color: "green",
       });
     } else {
-      showNotification({
+      errorNotification({
         message: res?.message,
-        color: "red",
         icon: (
           <IconCircleXFilled
             style={{

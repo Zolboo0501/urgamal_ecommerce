@@ -2,6 +2,7 @@
 import { fetchMethod } from "@/utils/fetch";
 import { rememberMe, rememberMeRemove } from "@/utils/Store";
 import { UserConfigContext } from "@/utils/userConfigContext";
+import { errorNotification, successNotification } from "@/utils/utils";
 import {
   Button,
   Checkbox,
@@ -11,8 +12,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { showNotification } from "@mantine/notifications";
-import { IconAt, IconCheck, IconLock } from "@tabler/icons-react";
+import { IconAt, IconLock } from "@tabler/icons-react";
 import { setCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -78,10 +78,8 @@ const Login = () => {
 
       if (data.success) {
         const bigDate = 30 * 24 * 60 * 60 * 1000;
-        showNotification({
+        successNotification({
           message: "Амжилттай нэвтэрлээ.",
-          icon: <IconCheck />,
-          color: "green",
         });
         setCookie("token", data.token, {
           maxAge: bigDate,
@@ -107,10 +105,8 @@ const Login = () => {
       const data = await res.json();
       if (data.success) {
         const bigDate = 30 * 24 * 60 * 60 * 1000;
-        showNotification({
+        successNotification({
           message: "Амжилттай нэвтэрлээ.",
-          icon: <IconCheck />,
-          color: "green",
         });
         setCookie("token", data.token, {
           maxAge: bigDate,
@@ -169,9 +165,8 @@ const Login = () => {
       } else {
         rememberMeRemove();
       }
-      showNotification({
+      successNotification({
         message: "Амжилттай нэвтэрлээ.",
-        color: "green",
       });
       const token = data.token;
       const bigDate = 30 * 24 * 60 * 60 * 1000;
@@ -181,9 +176,8 @@ const Login = () => {
       router.push("/home");
     } else {
       setLoginLoading(false);
-      showNotification({
+      errorNotification({
         message: data.message,
-        color: "red",
       });
     }
   };

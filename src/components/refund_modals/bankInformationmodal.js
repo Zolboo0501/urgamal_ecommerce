@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { Button, Grid, TextInput, Select, Group } from "@mantine/core";
-import { IconAlertCircle, IconCheck } from "@tabler/icons-react";
-import { getCookie } from "cookies-next";
-import { showNotification } from "@mantine/notifications";
+import { errorNotification, successNotification } from "@/utils/utils";
+import { Button, Grid, Group, Select, TextInput } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
+import { IconAlertCircle } from "@tabler/icons-react";
+import { getCookie } from "cookies-next";
+import { useEffect } from "react";
 
 export default function BankInfoModal({
   initialData,
@@ -62,19 +62,16 @@ export default function BankInfoModal({
         .then((data) => {
           if (data.success) {
             innerProps.setStatus(data.data.status.toString());
-            showNotification({
+            successNotification({
               message:
                 "Амжилттай илгээлээ. Бид танд удахгүй мэдээлэл хүргэх болно.",
-              icon: <IconCheck />,
-              color: "green",
             });
             context.closeModal(id);
           } else {
             innerProps.setStatus(data.data.status.toString());
-            showNotification({
+            errorNotification({
               message: data.message,
               icon: <IconAlertCircle />,
-              color: "red",
             });
           }
         });

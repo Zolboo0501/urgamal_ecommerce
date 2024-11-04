@@ -1,7 +1,5 @@
-import { showNotification } from "@mantine/notifications";
-import { IconCircleXFilled } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 export const WishlistContext = createContext();
 
 const WishlistProvider = ({ children }) => {
@@ -21,7 +19,7 @@ const WishlistProvider = ({ children }) => {
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/user/wishlist`,
-          requestOption
+          requestOption,
         );
         if (res.status === 200) {
           const data = await res.json();

@@ -1,4 +1,5 @@
 import { fetchMethod } from "@/utils/fetch";
+import { errorNotification, successNotification } from "@/utils/utils";
 import {
   Button,
   Center,
@@ -8,7 +9,6 @@ import {
   Stack,
   rem,
 } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import {
   IconCheck,
   IconCircleXFilled,
@@ -32,9 +32,8 @@ const Mobile = () => {
       if (data.success) {
         setOtpRequested(true);
         setSeconds(60);
-        showNotification({
+        successNotification({
           message: "Таны утсанд 6 оронтой код амжилттай илгээлээ.!",
-          color: "green",
         });
       }
     } catch (e) {
@@ -61,9 +60,9 @@ const Mobile = () => {
 
   const handleSend = async () => {
     if (number.length < 8) {
-      showNotification({
+      errorNotification({
         message: "Дугаар буруу байна.!",
-        color: "red",
+
         icon: (
           <IconCircleXFilled
             style={{
@@ -80,14 +79,12 @@ const Mobile = () => {
         if (data.success) {
           setOtpRequested(true);
           setSeconds(60);
-          showNotification({
+          successNotification({
             message: "Таны утсанд 6 оронтой код амжилттай илгээлээ.!",
-            color: "green",
           });
         } else {
-          showNotification({
+          errorNotification({
             message: data.message,
-            color: "red",
             icon: (
               <IconCircleXFilled
                 style={{
@@ -107,9 +104,8 @@ const Mobile = () => {
 
   const handleConfirm = async () => {
     if (otp?.length < 6) {
-      showNotification({
+      errorNotification({
         message: "Нэг удаагийн коду буруу байна.!",
-        color: "red",
         icon: (
           <IconCircleXFilled
             style={{
@@ -133,17 +129,15 @@ const Mobile = () => {
           requestOption,
         );
         if (data.success) {
-          showNotification({
+          successNotification({
             message: "Таны дугаар амжилттай баталгаажлаа.!",
-            color: "green",
           });
           setOtpRequested(false);
           setNumber("");
           setOtp("");
         } else {
-          showNotification({
+          errorNotification({
             message: data.message,
-            color: "red",
             icon: (
               <IconCircleXFilled
                 style={{

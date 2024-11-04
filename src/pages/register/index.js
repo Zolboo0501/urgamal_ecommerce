@@ -10,7 +10,7 @@ import { useContext, useEffect, useState } from "react";
 import { regexNumber } from "@/utils/constant";
 import { fetchMethod } from "@/utils/fetch";
 import { UserConfigContext } from "@/utils/userConfigContext";
-import { showNotification } from "@mantine/notifications";
+import { errorNotification, successNotification } from "@/utils/utils";
 const icon = (
   <IconAt
     style={{ width: rem(16), height: rem(16), color: "green" }}
@@ -83,12 +83,11 @@ const Register = () => {
         login(token);
         setCookie("email", values?.email, { maxAge: bigDate });
         router.push("/home");
-        showNotification({
+        successNotification({
           message: "Амжилттай бүртгүүллээ.",
-          color: "green",
         });
       } else {
-        showNotification({
+        errorNotification({
           message: data.message,
           color: "red",
         });

@@ -1,7 +1,7 @@
 import RickText from "@/components/RickText";
 import { fetchMethod } from "@/utils/fetch";
+import { errorNotification, successNotification } from "@/utils/utils";
 import { Button, Grid, Select, TextInput, Title, rem } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import {
   IconCheck,
   IconCircleXFilled,
@@ -26,13 +26,13 @@ const Feedback = () => {
       ...feedback,
     });
     if (data.success) {
-      showNotification({
+      successNotification({
         message: "Амжилттай санал хүсэлт илгээгдлээ.",
         icon: <IconCheck />,
         color: "green",
       });
     } else {
-      showNotification({
+      errorNotification({
         message: data?.message,
         color: "red",
         icon: (

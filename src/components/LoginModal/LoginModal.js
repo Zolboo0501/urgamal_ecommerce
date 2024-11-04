@@ -1,5 +1,6 @@
 import { fetchMethod } from "@/utils/fetch";
 import { UserConfigContext } from "@/utils/userConfigContext";
+import { errorNotification, successNotification } from "@/utils/utils";
 import {
   Button,
   Container,
@@ -10,7 +11,6 @@ import {
   PinInput,
   Stack,
 } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { setCookie } from "cookies-next";
 import { useContext, useEffect, useState } from "react";
 
@@ -42,9 +42,8 @@ export default function LoginModal({ context, id }) {
       if (data.success) {
         setOtpRequested(true);
         setSeconds(60);
-        showNotification({
+        successNotification({
           message: "Таны утсанд 6 оронтой код амжилттай илгээлээ.!",
-          color: "green",
         });
       }
     } catch (e) {
@@ -62,15 +61,13 @@ export default function LoginModal({ context, id }) {
       login(token);
       setCookie("number", mobileNumber, { maxAge: bigDate });
       setCookie("addToCart", true);
-      showNotification({
+      successNotification({
         message: "Амжилттай нэвтэрлээ",
-        color: "green",
       });
       context.closeModal(id);
     } else {
-      showNotification({
+      errorNotification({
         message: "Код буруу эсвэл хүчинтэй хугацаа дууссан байна.",
-        color: "red",
       });
     }
 

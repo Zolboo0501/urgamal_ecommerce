@@ -1,27 +1,19 @@
-import {
-  TextInput,
-  PasswordInput,
-  Select,
-  Button,
-  rem,
-  Loader,
-} from "@mantine/core";
-import React, { useState } from "react";
+import { fetchMethod } from "@/utils/fetch";
+import { errorNotification, successNotification } from "@/utils/utils";
+import { Button, PasswordInput, rem, Select, TextInput } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import {
-  IconUser,
-  IconUserCircle,
+  IconCalendarClock,
+  IconCircleXFilled,
+  IconGenderMale,
   IconMail,
   IconPhone,
-  IconCalendarClock,
   IconShieldLock,
-  IconGenderMale,
-  IconCircleXFilled,
-  IconCheck,
+  IconUser,
+  IconUserCircle,
 } from "@tabler/icons-react";
-import { fetchMethod } from "@/utils/fetch";
 import { getCookie } from "cookies-next";
-import { showNotification } from "@mantine/notifications";
+import { useState } from "react";
 const UserEdit = (props) => {
   const { data, refresh, setUserInfo } = props;
   const [loading, setLoading] = useState(false);
@@ -36,15 +28,13 @@ const UserEdit = (props) => {
     if (res?.success) {
       setLoading(false);
       refresh();
-      showNotification({
+      successNotification({
         message: res.message,
-        icon: <IconCheck />,
-        color: "green",
       });
     } else {
-      showNotification({
+      errorNotification({
         message: res?.message,
-        color: "red",
+
         icon: (
           <IconCircleXFilled
             style={{

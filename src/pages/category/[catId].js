@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/router";
-import useSWRInfinite from "swr/infinite";
-import ProductGridList from "@/components/ProductGridList/ProductGridList";
-import { Breadcrumbs, Button, Pagination, rem } from "@mantine/core";
-import { fetchMethod, getCategory } from "@/utils/fetch";
-import { PAGE_SIZE } from "@/utils/constant";
 import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
-import axios from "axios";
 import ProductCard from "@/components/ProductCard";
+import ProductGridList from "@/components/ProductGridList/ProductGridList";
+import { PAGE_SIZE } from "@/utils/constant";
+import { fetchMethod } from "@/utils/fetch";
+import { Pagination } from "@mantine/core";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import useSWRInfinite from "swr/infinite";
 export async function getServerSideProps({ query }) {
   const { catId } = query;
   try {
@@ -120,8 +120,8 @@ const CategoryPage = ({ initialData }) => {
               id={"content"}
             >
               <div className="flex flex-row items-center">
-                <span className="text-xl text-grey700">Нийт бүтээгдэхүүн</span>
-                <span className="ml-2 text-2xl font-bold text-[#ff8c00]">
+                <span className="text-xl text-grey600">Нийт бүтээгдэхүүн</span>
+                <span className="ml-2 text-2xl font-bold text-primary">
                   {total}
                 </span>
               </div>

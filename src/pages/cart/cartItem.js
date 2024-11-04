@@ -11,7 +11,11 @@ import {
   removeQuantityProduct,
 } from "@/utils/Store";
 import { UserConfigContext } from "@/utils/userConfigContext";
-import { numberWithCommas } from "@/utils/utils";
+import {
+  errorNotification,
+  numberWithCommas,
+  successNotification,
+} from "@/utils/utils";
 import {
   ActionIcon,
   Badge,
@@ -26,7 +30,6 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { openContextModal } from "@mantine/modals";
-import { showNotification } from "@mantine/notifications";
 import {
   IconAlertCircle,
   IconCheck,
@@ -42,10 +45,7 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { BsCartX } from "react-icons/bs";
-import {
-  ErrorNotification,
-  SuccessNotification,
-} from "../../utils/SuccessNotification";
+
 import Address from "./shippingAddress";
 
 const CartItems = (props) => {
@@ -153,14 +153,13 @@ const CartItems = (props) => {
     });
 
     if (isSelected) {
-      return showNotification({
+      return errorNotification({
         message: "Устгах бараа сонгоно уу",
-        color: "red",
       });
     }
     setCartItem({ ...cartItem, cart_items: filter });
     removeFromCart(filter);
-    SuccessNotification({
+    successNotification({
       message: "Бараа амжилттай устлаа.",
       title: "Сагс",
     });
@@ -206,7 +205,7 @@ const CartItems = (props) => {
           });
           removeFromCart(temp);
           setCartItem({ ...cartItem, cart_items: temp, total: total });
-          SuccessNotification({ message: data.message, title: "Захиалга" });
+          successNotification({ message: data.message, title: "Захиалга" });
           axios
             .get(
               `${process.env.NEXT_PUBLIC_API_URL}/order/payment/${data.orderid}`,
@@ -228,35 +227,32 @@ const CartItems = (props) => {
             })
             .catch((err) => {
               if (err.response) {
-                showNotification({
+                errorNotification({
                   message: err.response.data,
-                  color: "red",
                 });
               } else {
-                showNotification({
+                errorNotification({
                   message: "Төлбөрийн мэдээлэл авахад алдаа гарлаа",
-                  color: "red",
                 });
               }
             });
         } else {
-          ErrorNotification({ title: "Алдаа гарлаа." });
+          errorNotification({ title: "Алдаа гарлаа." });
         }
       } else if (res.status === 500) {
-        showNotification({
+        errorNotification({
           message: "Сагсанд бараа байхгүй байна!",
           color: "red",
         });
       } else {
         const error = await res.json();
-        showNotification({
+        errorNotification({
           message: error?.message,
-          color: "red",
         });
       }
     } catch (error) {
       console.log(error, "error");
-      showNotification({
+      errorNotification({
         message: "Захиалга үүсгэхэд алдаа гарлаа!",
         color: "red",
       });
@@ -277,7 +273,7 @@ const CartItems = (props) => {
             optionOpen();
           } else {
             if (checked === false) {
-              showNotification({
+              errorNotification({
                 message: "Хаяг сонгоно уу эсвэл очиж авахыг идэвхжүүлнэ үү",
                 color: "red",
               });
@@ -289,13 +285,13 @@ const CartItems = (props) => {
           router.push("/login");
         }
       } else {
-        showNotification({
+        errorNotification({
           message: "Захиалга хийхийн тулд бараа сонгоно уу.",
           color: "red",
         });
       }
     } else {
-      showNotification({
+      errorNotification({
         message: "Сагс хоосон байна.",
         color: "red",
       });
@@ -323,7 +319,7 @@ const CartItems = (props) => {
       requestOption,
     )
       .then(() => {
-        showNotification({
+        successNotification({
           message: "Амжилттай нэхэмжлэл үүслээ.",
           icon: <IconCheck />,
           color: "green",
@@ -346,9 +342,9 @@ const CartItems = (props) => {
       })
       .catch(() => {
         closeInput();
-        showNotification({
+        errorNotification({
           message: data?.message,
-          color: "red",
+
           icon: (
             <IconCircleXFilled
               style={{
@@ -363,57 +359,61 @@ const CartItems = (props) => {
 
   const minusQuantity = async (event, count, product) => {
     event.stopPropagation();
-    const initialStock = product.balance;
-    count--;
-    if (initialStock >= count && count > 0) {
-      let clone = { ...product };
-      clone.quantity = count;
-      clone.total = count * clone.listPrice;
-      let temp = [...cartItem?.cart_items];
-      temp.forEach((e, index) => {
-        if (e.id === product.id) {
-          temp[index] = clone;
-        }
-      });
 
-      const total = temp
-        ?.filter((item) => item.isChecked)
-        ?.reduce((acc, item) => acc + item.quantity * item.listPrice, 0);
-      setSelectedItemsTotal(total);
+    const { balance: initialStock, id, listPrice } = product;
+    const newCount = count - 1;
 
-      setCartItem({ ...cartItem, cart_items: temp });
-      removeQuantityProduct(temp);
-    }
+    if (newCount <= 0 || newCount > initialStock) return;
+
+    const updatedProduct = {
+      ...product,
+      quantity: newCount,
+      total: newCount * listPrice,
+    };
+
+    const updatedCartItems = cartItem.cart_items.map((item) =>
+      item.id === id ? updatedProduct : item,
+    );
+
+    const totalSelectedItems = updatedCartItems
+      .filter((item) => item.isChecked)
+      .reduce((acc, item) => acc + item.quantity * item.listPrice, 0);
+
+    setSelectedItemsTotal(totalSelectedItems);
+    setCartItem((prevCart) => ({ ...prevCart, cart_items: updatedCartItems }));
+    removeQuantityProduct(updatedCartItems);
   };
 
   const addQuantity = async (event, count, product) => {
     event.stopPropagation();
-    const initialStock = product.balance;
-    count++;
-    if (initialStock >= count) {
-      let clone = { ...product };
-      clone.quantity = count;
-      clone.total = count * clone.listPrice;
-      let temp = [...cartItem?.cart_items];
-      temp.forEach((e, index) => {
-        if (e.id === product.id) {
-          temp[index] = clone;
-        }
-      });
 
-      const total = temp
-        ?.filter((item) => item.isChecked)
-        ?.reduce((acc, item) => acc + item.quantity * item.listPrice, 0);
-      setSelectedItemsTotal(total);
+    const { balance: initialStock, id, listPrice } = product;
+    const newCount = count + 1;
 
-      setCartItem({ ...cartItem, cart_items: temp });
-      addQuantityProduct(temp);
-    } else {
-      showNotification({
+    if (newCount > initialStock) {
+      errorNotification({
         message: "Барааны үлдэгдэл хүрэлцэхгүй байна.",
-        color: "red",
       });
+      return;
     }
+
+    const updatedProduct = {
+      ...product,
+      quantity: newCount,
+      total: newCount * listPrice,
+    };
+
+    const updatedCartItems = cartItem.cart_items.map((item) =>
+      item.id === id ? updatedProduct : item,
+    );
+
+    const totalSelectedItems = updatedCartItems
+      .filter((item) => item.isChecked)
+      .reduce((acc, item) => acc + item.quantity * item.listPrice, 0);
+
+    setSelectedItemsTotal(totalSelectedItems);
+    setCartItem((prevCart) => ({ ...prevCart, cart_items: updatedCartItems }));
+    addQuantityProduct(updatedCartItems);
   };
 
   const handleClick = (clickedItem) => {
@@ -532,7 +532,7 @@ const CartItems = (props) => {
     }
 
     return (
-      <div className="flex flex-col overflow-auto">
+      <div className="flex flex-col">
         {cartItem?.cart_items?.map((item, index) => {
           return (
             <button

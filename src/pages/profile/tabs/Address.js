@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import UserAddress from "@/components/UserProfileForms/UserAddress";
 import { fetchMethod } from "@/utils/fetch";
+import { errorNotification } from "@/utils/utils";
 import { Loader, Title } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { IconCircleXFilled } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
@@ -24,9 +24,8 @@ const Address = () => {
     if (data.success) {
       setSelectAddress(data?.data);
     } else {
-      showNotification({
+      errorNotification({
         message: data.message,
-        color: "red",
         icon: (
           <IconCircleXFilled
             style={{
@@ -43,7 +42,7 @@ const Address = () => {
     if (data.success) {
       setAddressData(data?.data);
     } else {
-      showNotification({
+      errorNotification({
         message: data.message,
         color: "red",
         icon: (

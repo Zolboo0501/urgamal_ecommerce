@@ -1,5 +1,6 @@
 import { fetchMethod } from "@/utils/fetch";
 import { UserConfigContext } from "@/utils/userConfigContext";
+import { errorNotification, successNotification } from "@/utils/utils";
 import {
   Button,
   Group,
@@ -9,7 +10,6 @@ import {
   rem,
   Stack,
 } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { IconPhoneCall } from "@tabler/icons-react";
 import { setCookie } from "cookies-next";
 import Image from "next/image";
@@ -44,9 +44,8 @@ const OTP = () => {
         if (data.success) {
           setOtpRequested(true);
           setSeconds(60);
-          showNotification({
+          successNotification({
             message: "Таны утсанд 6 оронтой код амжилттай илгээлээ.!",
-            color: "green",
           });
         }
       } catch (e) {
@@ -67,15 +66,13 @@ const OTP = () => {
       setCookie("number", number, { maxAge: bigDate });
       setCookie("addToCart", true);
 
-      showNotification({
+      successNotification({
         message: "Амжилттай нэвтэрлээ",
-        color: "green",
       });
       router.push("/home");
     } else {
-      showNotification({
+      errorNotification({
         message: "Код буруу эсвэл хүчинтэй хугацаа дууссан байна.",
-        color: "red",
       });
     }
     setLoading(false);

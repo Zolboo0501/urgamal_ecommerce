@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { regexNumber } from "@/utils/constant";
 import { fetchMethod } from "@/utils/fetch";
+import { errorNotification, successNotification } from "@/utils/utils";
 import {
   Button,
   Center,
@@ -12,7 +13,6 @@ import {
   Stack,
   rem,
 } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import {
   IconCircleXFilled,
   IconDeviceMobile,
@@ -76,9 +76,8 @@ const Password = (props) => {
       if (data.success) {
         setOtpRequested(true);
         setSeconds(60);
-        showNotification({
+        successNotification({
           message: "Таны утсанд 6 оронтой код амжилттай илгээлээ.!",
-          color: "green",
         });
       }
     } catch (e) {
@@ -123,7 +122,7 @@ const Password = (props) => {
         requestOption,
       );
       if (data.success) {
-        showNotification({
+        successNotification({
           message: "Таны нууц үг амжилттай солигдлоо.!",
           color: "green",
         });
@@ -132,9 +131,8 @@ const Password = (props) => {
         setPassword("");
         setConfirmPass("");
       } else {
-        showNotification({
+        errorNotification({
           message: data.message,
-          color: "red",
           icon: (
             <IconCircleXFilled
               style={{
@@ -160,7 +158,7 @@ const Password = (props) => {
 
   const handleSend = async () => {
     if (number.length < 8) {
-      showNotification({
+      errorNotification({
         message: "Дугаар буруу байна.!",
         color: "red",
         icon: (
@@ -179,9 +177,8 @@ const Password = (props) => {
         if (data.success) {
           setOtpRequested(true);
           setSeconds(60);
-          showNotification({
+          successNotification({
             message: "Таны утсанд 6 оронтой код амжилттай илгээлээ.!",
-            color: "green",
           });
         }
       } catch (e) {

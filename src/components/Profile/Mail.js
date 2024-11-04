@@ -1,4 +1,5 @@
 import { fetchMethod } from "@/utils/fetch";
+import { errorNotification, successNotification } from "@/utils/utils";
 import {
   Button,
   Center,
@@ -8,7 +9,6 @@ import {
   TextInput,
   rem,
 } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import {
   IconAt,
   IconCheck,
@@ -44,14 +44,13 @@ const Mail = () => {
           );
           if (data.success) {
             setEmailRequested(true);
-            showNotification({
+            successNotification({
               message: "Таны цахим шуудан луу код илгээлээ.!",
               color: "green",
             });
           } else {
-            showNotification({
+            errorNotification({
               message: data.message,
-              color: "red",
               icon: (
                 <IconCircleXFilled
                   style={{
@@ -66,9 +65,9 @@ const Mail = () => {
           console.log(e);
         }
       } else {
-        showNotification({
+        errorNotification({
           message: "Цахим шуудан буруу байна.",
-          color: "red",
+
           icon: (
             <IconCircleXFilled
               style={{
@@ -84,9 +83,9 @@ const Mail = () => {
 
   const handleConfirm = async () => {
     if (otp?.length < 6) {
-      showNotification({
+      errorNotification({
         message: "Нэг удаагийн коду буруу байна.!",
-        color: "red",
+
         icon: (
           <IconCircleXFilled
             style={{
@@ -110,9 +109,9 @@ const Mail = () => {
           requestOption,
         );
         if (data.success) {
-          showNotification({
+          successNotification({
             message: "Таны цахим шуудан амжилттай баталгаажлаа.!",
-            color: "green",
+
             icon: (
               <IconCircleCheckFilled
                 style={{
@@ -126,7 +125,7 @@ const Mail = () => {
           setEmail("");
           setOtp("");
         } else {
-          showNotification({
+          errorNotification({
             message: data.message,
             color: "red",
             icon: (

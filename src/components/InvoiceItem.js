@@ -13,8 +13,11 @@ import Image from "next/image";
 import React from "react";
 import { fetchMethod } from "@/utils/fetch";
 import { getCookie } from "cookies-next";
-import { showNotification } from "@mantine/notifications";
-import { numberWithCommas } from "@/utils/utils";
+import {
+  errorNotification,
+  numberWithCommas,
+  successNotification,
+} from "@/utils/utils";
 import { INVOICES_STATUS } from "@/utils/constant";
 
 const InvoiceItem = ({ data, index }) => {
@@ -204,13 +207,12 @@ const StatusButton = ({ status, data }) => {
       token,
     );
     if (res?.success) {
-      showNotification({
+      successNotification({
         message: "Төлбөрийн мэдээлэл амжилттай илгээгдлээ.",
         icon: <IconCheck />,
-        color: "green",
       });
     } else {
-      showNotification({
+      errorNotification({
         message: res?.message,
         color: "red",
         icon: (

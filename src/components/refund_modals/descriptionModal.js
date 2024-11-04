@@ -1,9 +1,9 @@
-import RickText from "../RickText";
-import { useState } from "react";
+import { errorNotification, successNotification } from "@/utils/utils";
 import { Button } from "@mantine/core";
-import { IconAlertCircle, IconCheck, IconError404 } from "@tabler/icons-react";
+import { IconAlertCircle } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import { showNotification } from "@mantine/notifications";
+import { useState } from "react";
+import RickText from "../RickText";
 
 export default function RefundRichText({ innerProps, context, id }) {
   const cookie = getCookie("token");
@@ -37,18 +37,15 @@ export default function RefundRichText({ innerProps, context, id }) {
         .then((data) => {
           if (data.success) {
             innerProps.setStatus(data.data.status.toString());
-            showNotification({
+            successNotification({
               message: "Амжилттай илгээлээ.",
-              icon: <IconCheck />,
-              color: "green",
             });
             context.closeModal(id);
           } else {
             innerProps.setStatus("400");
-            showNotification({
+            errorNotification({
               message: data.message,
               icon: <IconAlertCircle />,
-              color: "red",
             });
           }
         });

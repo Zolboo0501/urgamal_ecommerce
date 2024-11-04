@@ -1,7 +1,7 @@
 import { fetchMethod } from "@/utils/fetch";
 import { UserConfigContext } from "@/utils/userConfigContext";
+import { errorNotification } from "@/utils/utils";
 import { Button, Loader, rem } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import {
   IconBoxSeam,
   IconCircleXFilled,
@@ -121,7 +121,7 @@ const Profile = () => {
       setUserInfo(data.data);
       setLoading(false);
     } else {
-      showNotification({
+      errorNotification({
         message: data.message,
         color: "red",
         icon: (

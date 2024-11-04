@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { htmlFrom } from "@/utils/constant";
+import { fetchMethod } from "@/utils/fetch";
+import { errorNotification } from "@/utils/utils";
 import { Autocomplete, rem } from "@mantine/core";
 import { IconCircleXFilled, IconSearch } from "@tabler/icons-react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CategoryHover from "../AllCategory/CategoryHover";
-import { fetchMethod } from "@/utils/fetch";
-import { showNotification } from "@mantine/notifications";
 
 const NavbarBottom = ({
   AutocompleteItem,
@@ -26,9 +26,9 @@ const NavbarBottom = ({
     if (data.success) {
       setCategories(data.categories);
     } else {
-      showNotification({
+      errorNotification({
         message: data.message,
-        color: "red",
+
         icon: (
           <IconCircleXFilled
             style={{

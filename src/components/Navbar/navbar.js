@@ -27,9 +27,8 @@ import useWishlist from "@/hooks/useWishlist";
 import { fetchMethod, fetcher } from "@/utils/fetch";
 import { getCart } from "@/utils/Store";
 import { UserConfigContext } from "@/utils/userConfigContext";
-import { numberWithCommas } from "@/utils/utils";
+import { errorNotification, numberWithCommas } from "@/utils/utils";
 import { useDebouncedValue } from "@mantine/hooks";
-import { showNotification } from "@mantine/notifications";
 import useSWR from "swr";
 import Notification from "../Notification/Notification";
 const Navbar = (props) => {
@@ -160,9 +159,9 @@ const Navbar = (props) => {
         query: "wishlist",
       });
     } else {
-      showNotification({
+      errorNotification({
         message: "Нэвтрэх шаардлагатай",
-        color: "red",
+
         icon: (
           <IconCircleXFilled
             style={{
@@ -187,9 +186,9 @@ const Navbar = (props) => {
           mobile: data?.data?.mobile,
         });
       } else {
-        showNotification({
+        errorNotification({
           message: data?.message,
-          color: "red",
+
           icon: (
             <IconCircleXFilled
               style={{

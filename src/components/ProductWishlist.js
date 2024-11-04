@@ -9,11 +9,15 @@ import {
 } from "@tabler/icons-react";
 import { fetchMethod } from "@/utils/fetch";
 import { getCookie } from "cookies-next";
-import { showNotification } from "@mantine/notifications";
 import { addCart } from "@/utils/Store";
 import { useState } from "react";
 import useWishlist from "@/hooks/useWishlist";
-import { numberWithCommas, renderRemains } from "@/utils/utils";
+import {
+  errorNotification,
+  numberWithCommas,
+  renderRemains,
+  successNotification,
+} from "@/utils/utils";
 import Magnifier from "./Magnifier/Magnifier";
 
 const ProductWishlist = ({ data, refresh }) => {
@@ -31,14 +35,12 @@ const ProductWishlist = ({ data, refresh }) => {
       requestOption,
     );
     if (res.success) {
-      showNotification({
+      successNotification({
         message: "Амжилттай бараа устлаа.",
-        icon: <IconCheck />,
-        color: "green",
       });
       wishlist.removeItem(data?.productid);
     } else {
-      showNotification({
+      errorNotification({
         message: res?.message,
         color: "red",
         icon: (
@@ -65,17 +67,14 @@ const ProductWishlist = ({ data, refresh }) => {
       const res = await fetchMethod("POST", "cart/add", token, body);
       if (res?.success) {
         addCart({ ...data, quantity: 1 });
-        showNotification({
+        successNotification({
           message: "Сагсанд амжилттай орлоо!",
-          icon: <IconCheck />,
-          color: "green",
           title: `${data?.name}`,
         });
         setLoading(false);
       } else {
-        showNotification({
+        errorNotification({
           message: res?.message,
-          color: "red",
           icon: (
             <IconCircleXFilled
               style={{
@@ -88,10 +87,8 @@ const ProductWishlist = ({ data, refresh }) => {
       }
     } else {
       addCart({ ...data, quantity: 1 });
-      showNotification({
+      successNotification({
         message: "Сагсанд амжилттай орлоо!",
-        icon: <IconCheck />,
-        color: "green",
         title: `${data?.name}`,
       });
     }

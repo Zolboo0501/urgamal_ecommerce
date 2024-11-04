@@ -1,9 +1,8 @@
 import { ORDER_STATUS } from "@/utils/constant";
-import { numberWithCommas } from "@/utils/utils";
+import { errorNotification, numberWithCommas } from "@/utils/utils";
 import { Badge, Button, Collapse, ThemeIcon } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { openContextModal } from "@mantine/modals";
-import { showNotification } from "@mantine/notifications";
 import {
   IconCalendarEvent,
   IconPackage,
@@ -97,14 +96,12 @@ const Order = ({ data }) => {
       })
       .catch((err) => {
         if (err.response) {
-          showNotification({
+          errorNotification({
             message: err.response.data.message,
-            color: "red",
           });
         } else {
-          showNotification({
+          errorNotification({
             message: "Төлбөрийн мэдээлэл авахад алдаа гарлаа",
-            color: "red",
           });
         }
       });

@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import useSocket from "@/hooks/useSocket";
+import { errorNotification, successNotification } from "@/utils/utils";
 import { Button, Card, Stack, Tabs, rem } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
-import { IconCheck, IconCircleXFilled } from "@tabler/icons-react";
+import { IconCircleXFilled } from "@tabler/icons-react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import Image from "next/image";
@@ -48,15 +48,13 @@ export default function PaymentModal({ context, id, innerProps }) {
       )
       .then((res) => {
         if (res.data?.result.success) {
-          showNotification({
+          successNotification({
             message: "Төлбөр амжилттай төлөгдлөө устлаа.",
-            icon: <IconCheck />,
-            color: "green",
           });
         } else {
-          showNotification({
+          errorNotification({
             message: "Төлбөр төлөгдөөгүй байна",
-            color: "red",
+
             icon: (
               <IconCircleXFilled
                 style={{

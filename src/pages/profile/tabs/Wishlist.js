@@ -1,10 +1,10 @@
 import ProductWishlist from "@/components/ProductWishlist";
 import { fetchMethod } from "@/utils/fetch";
+import { errorNotification } from "@/utils/utils";
 import { Loader, Title, rem } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { IconCircleXFilled, IconHeartOff } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
@@ -22,9 +22,8 @@ const Wishlist = () => {
       setWishlist(data.data);
       setLoading(false);
     } else {
-      showNotification({
+      errorNotification({
         message: data?.message,
-        color: "red",
         icon: (
           <IconCircleXFilled
             style={{

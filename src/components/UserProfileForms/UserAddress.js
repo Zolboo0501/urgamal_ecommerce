@@ -1,6 +1,6 @@
+import { errorNotification, successNotification } from "@/utils/utils";
 import { Paper } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { showNotification } from "@mantine/notifications";
 import { IconPlus } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
 import { useState } from "react";
@@ -70,16 +70,14 @@ export default function UserAddress({ data, refresh, selectAddress }) {
       .then((response) => response.json())
       .then((result) => {
         if (result.success) {
-          showNotification({
+          successNotification({
             message: result.message,
-            color: "green",
           });
           refresh();
           close();
         } else {
-          showNotification({
+          errorNotification({
             message: result.message,
-            color: "red",
           });
         }
       });
@@ -116,16 +114,14 @@ export default function UserAddress({ data, refresh, selectAddress }) {
       .then((response) => response.json())
       .then((result) => {
         if (result.success) {
-          showNotification({
+          successNotification({
             message: result.message,
-            color: "green",
           });
           refresh();
           close();
         } else {
-          showNotification({
+          errorNotification({
             message: result.message,
-            color: "red",
           });
         }
       });
@@ -149,16 +145,14 @@ export default function UserAddress({ data, refresh, selectAddress }) {
       .then((response) => response.json())
       .then((result) => {
         if (result.success) {
-          showNotification({
+          successNotification({
             title: "Хаяг амжилттай устгалаа.",
             message: result.message,
-            color: "green",
           });
           refresh();
         } else {
-          showNotification({
+          errorNotification({
             message: result.message,
-            color: "red",
           });
         }
       });

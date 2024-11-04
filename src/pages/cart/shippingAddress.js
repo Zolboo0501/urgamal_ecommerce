@@ -2,9 +2,9 @@
 import ProductModal from "@/components/Profile/ProfileModal";
 import { fetchMethod } from "@/utils/fetch";
 import { UserConfigContext } from "@/utils/userConfigContext";
-import { Button, Checkbox, Chip, Skeleton } from "@mantine/core";
+import { errorNotification, successNotification } from "@/utils/utils";
+import { Button, Checkbox, Skeleton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { showNotification } from "@mantine/notifications";
 import {
   IconCirclePlus,
   IconCircleXFilled,
@@ -42,9 +42,8 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
     if (data.success) {
       setSelectAddress(data?.data);
     } else {
-      showNotification({
+      errorNotification({
         message: data.message,
-        color: "red",
         icon: (
           <IconCircleXFilled
             style={{
@@ -134,16 +133,14 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
       .then((response) => response.json())
       .then((result) => {
         if (result.success) {
-          showNotification({
+          successNotification({
             message: result.message,
-            color: "green",
           });
           getShippingData();
           close();
         } else {
-          showNotification({
+          errorNotification({
             message: result.message,
-            color: "red",
           });
         }
       });

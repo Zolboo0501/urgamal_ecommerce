@@ -3,10 +3,9 @@ import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
 import useWishlist from "@/hooks/useWishlist";
 import { addCart } from "@/utils/Store";
 import { fetchMethod } from "@/utils/fetch";
+import { errorNotification, successNotification } from "@/utils/utils";
 import { Badge, Button, Grid, Loader, ThemeIcon, rem } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import {
-  IconCheck,
   IconChevronRight,
   IconCircleXFilled,
   IconHeart,
@@ -19,7 +18,6 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import SpecialDeal from "../../components/SpecialDeal";
-import { SuccessNotification } from "../../utils/SuccessNotification";
 export async function getServerSideProps({ params }) {
   const requestOption = {
     method: "GET",
@@ -72,7 +70,7 @@ const ProductDetail = ({ product, dealData, category }) => {
   const router = useRouter();
   const addToCartHandler = async () => {
     addCart({ ...product, quantity: 1 });
-    SuccessNotification({
+    successNotification({
       message: "Сагсанд амжилттай орлоо!",
       title: `${product?.name}`,
     });
@@ -92,15 +90,12 @@ const ProductDetail = ({ product, dealData, category }) => {
       );
       if (data.success) {
         wishlist.addItem(data);
-        showNotification({
+        successNotification({
           message: res.message,
-          icon: <IconCheck />,
-          color: "green",
         });
       } else {
-        showNotification({
+        errorNotification({
           message: data.message,
-          color: "red",
           icon: (
             <IconCircleXFilled
               style={{
@@ -112,9 +107,8 @@ const ProductDetail = ({ product, dealData, category }) => {
         });
       }
     } else {
-      showNotification({
+      errorNotification({
         message: "Нэвтрэх шаардлагатай",
-        color: "red",
         icon: (
           <IconCircleXFilled
             style={{

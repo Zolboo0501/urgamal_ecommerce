@@ -1,10 +1,10 @@
-import Image from "next/image";
-import { rem, Input, Button, TextInput } from "@mantine/core";
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import { IconCheck, IconMailCode } from "@tabler/icons-react";
 import { fetchMethod } from "@/utils/fetch";
-import { showNotification } from "@mantine/notifications";
+import { errorNotification, successNotification } from "@/utils/utils";
+import { Button, Input, rem, TextInput } from "@mantine/core";
+import { IconMailCode } from "@tabler/icons-react";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 const icon = (
   <IconMailCode
@@ -32,16 +32,13 @@ const Forget = () => {
           requestOption,
         );
         if (data.success) {
-          showNotification({
+          successNotification({
             message: data.message,
-            icon: <IconCheck />,
-            color: "green",
           });
           router.push("/login");
         } else {
-          showNotification({
+          errorNotification({
             message: data.message,
-            color: "red",
           });
         }
       } else {

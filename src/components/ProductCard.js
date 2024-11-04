@@ -1,6 +1,10 @@
 import useWishlist from "@/hooks/useWishlist";
 import { fetchMethod } from "@/utils/fetch";
-import { numberWithCommas } from "@/utils/utils";
+import {
+  errorNotification,
+  numberWithCommas,
+  successNotification,
+} from "@/utils/utils";
 import {
   ActionIcon,
   AspectRatio,
@@ -14,9 +18,7 @@ import {
   rem,
   ThemeIcon,
 } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import {
-  IconCheck,
   IconCircleXFilled,
   IconHeart,
   IconHeartFilled,
@@ -30,7 +32,6 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { IoIosBarcode } from "react-icons/io";
 import { addCart } from "../utils/Store";
-import { SuccessNotification } from "../utils/SuccessNotification";
 
 const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
   const [productCount, setProductCount] = useState(1);
@@ -45,12 +46,13 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
   const wishlist = useWishlist();
   const addCount = (event) => {
     event.stopPropagation();
-    if (data?.balance - productCount > 0) setProductCount(productCount + 1);
-    else
-      showNotification({
+    if (data?.balance - productCount > 0) {
+      setProductCount(productCount + 1);
+    } else {
+      errorNotification({
         message: "Барааны үлдэгдэл хүрэлцэхгүй байна.",
-        color: "red",
       });
+    }
   };
 
   const handleWishlist = async (event) => {
@@ -69,15 +71,12 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
         );
         if (res.success) {
           wishlist.addItem(data);
-          showNotification({
+          successNotification({
             message: res.message,
-            icon: <IconCheck />,
-            color: "green",
           });
         } else {
-          showNotification({
+          errorNotification({
             message: res?.message,
-            color: "red",
             icon: (
               <IconCircleXFilled
                 style={{
@@ -89,9 +88,8 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
           });
         }
       } else {
-        showNotification({
+        errorNotification({
           message: "Нэвтрэх шаардлагатай",
-          color: "red",
           icon: (
             <IconCircleXFilled
               style={{
@@ -114,14 +112,13 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
     event.stopPropagation();
     if (data?.balance > 0) {
       addCart({ ...data, quantity: productCount });
-      SuccessNotification({
+      successNotification({
         message: data.name,
         title: "Сагсанд амжилттай орлоо!",
       });
     } else {
-      showNotification({
+      errorNotification({
         message: "Барааны үлдэгдэл хүрэлцэхгүй байна.",
-        color: "red",
       });
     }
   };
