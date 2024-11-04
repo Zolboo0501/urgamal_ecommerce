@@ -144,7 +144,7 @@ const CategoryPage = ({ initialData }) => {
                 <div className="mt-8 flex items-center justify-center">
                   <Pagination
                     total={calculateTotal()}
-                    color="yellow"
+                    color="teal"
                     radius="xl"
                     value={activePage}
                     siblings={2}

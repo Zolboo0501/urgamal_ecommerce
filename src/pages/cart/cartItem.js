@@ -455,23 +455,27 @@ const CartItems = (props) => {
   };
 
   const renderBalanceBadge = (balance) => {
-    if (balance > 10) {
-      return (
-        <Badge color="teal" size="xs" classNames={{ root: "text-xl" }}>
-          Хангалттай
-        </Badge>
-      );
-    } else if (balance === 0) {
+    if (balance > 0) {
+      const convertInt = parseInt(balance);
+      if (convertInt > 10) {
+        return (
+          <Badge color="teal" size="xs" classNames={{ root: "text-xl" }}>
+            Хангалттай
+          </Badge>
+        );
+      }
+      if (convertInt <= 10 && convertInt > 0) {
+        return (
+          <span className="text-sm-3 font-medium text-primary500 sm:text-xs">
+            {balance}
+          </span>
+        );
+      }
+    } else {
       return (
         <Badge color="yellow" size="xs">
           Үлдэгдэлгүй
         </Badge>
-      );
-    } else {
-      return (
-        <span className="text-sm-3 font-medium text-primary500 sm:text-xs">
-          {balance}
-        </span>
       );
     }
   };

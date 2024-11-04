@@ -113,7 +113,7 @@ export default function SearchResult({ initialData }) {
           <div className="mt-8 flex items-center justify-center">
             <Pagination
               total={total / 20 + 1}
-              color="yellow"
+              color="teal"
               radius="xl"
               value={activePage}
               onChange={(value) => {
