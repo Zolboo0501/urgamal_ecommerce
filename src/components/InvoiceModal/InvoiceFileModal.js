@@ -153,7 +153,7 @@ const InvoiceFileModal = ({ context, id, innerProps }) => {
           },
         })}
       />
-      <Button color="yellow" className="mt-6" onClick={() => confirm(id)}>
+      <Button color="teal" className="mt-6" onClick={() => confirm(id)}>
         Баталгаажуулах
       </Button>
     </div>

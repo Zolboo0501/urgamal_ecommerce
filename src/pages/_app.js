@@ -31,6 +31,7 @@ import "@mantine/notifications/styles.css";
 import "@mantine/dates/styles.css";
 import "@mantine/tiptap/styles.css";
 import classes from "@/styles/focus.module.css";
+import "@mantine/carousel/styles.css";
 export default function App({ Component, pageProps }) {
   const theme = createTheme({
     fontFamily: sfProRounded.style.fontFamily,

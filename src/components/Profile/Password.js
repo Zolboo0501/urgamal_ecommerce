@@ -242,7 +242,7 @@ const Password = (props) => {
             {otpRequested ? (
               seconds === 0 ? (
                 loading ? (
-                  <Loader variant="dots" color="yellow" />
+                  <Loader variant="dots" color="teal" />
                 ) : (
                   <button
                     class="text-xs text-blue-400 underline lg:text-sm"

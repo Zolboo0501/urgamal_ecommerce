@@ -229,7 +229,7 @@ const Profile = () => {
           <div className="w-full py-6 lg:py-0 lg:pl-4">
             {loading ? (
               <div className="flex h-full w-full items-center justify-center bg-white">
-                <Loader color="yellow" />
+                <Loader color="teal" />
               </div>
             ) : (
               tabs === 1 && (

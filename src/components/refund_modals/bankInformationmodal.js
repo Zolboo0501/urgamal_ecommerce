@@ -173,7 +173,7 @@ export default function BankInfoModal({
             />
           </Grid.Col>
           <Grid.Col span={12}>
-            <Button w="100%" size="xs" type="submit" color="yellow">
+            <Button w="100%" size="xs" type="submit" color="teal">
               Илгээх
             </Button>
           </Grid.Col>

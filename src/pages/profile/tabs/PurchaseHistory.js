@@ -41,7 +41,7 @@ const PurchaseHistory = () => {
         <div className="flex flex-row items-center justify-around">
           {tabs === 1 ? (
             <p
-              className="w-full border-b-2 border-background-sort py-2 text-center text-base"
+              className="w-full border-b-2 border-primary py-2 text-center text-base"
               id={1}
               onClick={() => clickTabs(1)}
             >
@@ -49,7 +49,7 @@ const PurchaseHistory = () => {
             </p>
           ) : (
             <p
-              className="w-full py-2 text-center text-base text-grey hover:bg-button-yellow hover:text-black"
+              className="w-full py-2 text-center text-base text-grey hover:bg-primary hover:text-black"
               id={1}
               onClick={() => clickTabs(1)}
             >
@@ -66,7 +66,7 @@ const PurchaseHistory = () => {
             </p>
           ) : (
             <p
-              className="w-full py-2 text-center text-base text-grey hover:bg-button-yellow hover:text-black"
+              className="w-full py-2 text-center text-base text-grey hover:bg-primary hover:text-black"
               id={2}
               onClick={() => clickTabs(2)}
             >

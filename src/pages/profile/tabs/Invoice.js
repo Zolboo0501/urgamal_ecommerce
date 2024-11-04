@@ -76,7 +76,7 @@ const Invoice = () => {
           <Tabs.Panel key={e.title} value={e.value}>
             {isLoading && (
               <div className="flex h-full w-full items-center justify-center">
-                <Loader color="yellow" variant="dots" />
+                <Loader color="teal" variant="dots" />
               </div>
             )}
 

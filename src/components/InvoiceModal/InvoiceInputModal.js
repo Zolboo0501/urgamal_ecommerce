@@ -144,7 +144,7 @@ const InvoiceInputModal = ({ opened, onClose, handleInvoiceInput }) => {
         </div>
         <div className="mt-3 flex w-full justify-end">
           <Button
-            color="yellow"
+            color="teal"
             className="w-full"
             disabled={loading && true}
             leftSection={

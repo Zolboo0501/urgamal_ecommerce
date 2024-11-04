@@ -159,7 +159,7 @@ const Feedback = () => {
       </Grid>
       <div className="mt-6 flex w-full justify-end">
         <Button
-          color="yellow"
+          color="teal"
           leftSection={
             <IconSend
               style={{

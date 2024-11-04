@@ -210,10 +210,10 @@ const Mobile = () => {
             {otpRequested &&
               (seconds === 0 ? (
                 loading ? (
-                  <Loader variant="dots" color="yellow" />
+                  <Loader variant="dots" color="teal" />
                 ) : (
                   <button
-                    class="text-xs text-yellow-500 underline"
+                    class="text-xs text-primary underline"
                     onClick={() => {
                       setOtp("");
                       fetchOTP();

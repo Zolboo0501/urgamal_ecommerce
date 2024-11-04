@@ -43,7 +43,7 @@ const Wishlist = () => {
       <div className="mt-4 w-full overflow-auto">
         {loading ? (
           <div className="flex h-96 w-full items-center justify-center">
-            <Loader color="yellow" />
+            <Loader color="teal" />
           </div>
         ) : wishlist.length > 0 ? (
           wishlist.map((item, index) => (

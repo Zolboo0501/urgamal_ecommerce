@@ -245,7 +245,7 @@ function ProductModal({
                 <Button variant="subtle" size="xs" color="red" onClick={close}>
                   Цуцлах
                 </Button>
-                <Button size="xs" type="submit" color="yellow">
+                <Button size="xs" type="submit" color="teal">
                   {initialData?.create ? "Үүсгэх" : "Хадгалах"}
                 </Button>
               </Group>

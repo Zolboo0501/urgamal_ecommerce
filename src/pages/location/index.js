@@ -45,7 +45,7 @@ const Location = ({ data }) => {
   return (
     <GlobalLayout>
       <div className="h-full bg-nav-background px-4 py-4 sm:px-6 sm:py-6">
-        <div className="rounded border">
+        <div className="rounded-md">
           <div className="flex flex-col gap-10 p-4 md:p-10">
             <Carousel
               withIndicators
@@ -67,7 +67,7 @@ const Location = ({ data }) => {
                         src={el}
                         alt="image"
                         fill
-                        className="rounded-lg object-contain"
+                        className="rounded-lg object-cover"
                       />
                     </div>
                   </Carousel.Slide>
@@ -75,7 +75,7 @@ const Location = ({ data }) => {
               })}
             </Carousel>
             <div className="flex justify-center">
-              <div className="w-[50%] overflow-x-auto">
+              <div className="overflow-x-auto">
                 <SegmentedControl
                   data={data?.map((location, index) => ({
                     value: location?.name,
@@ -85,66 +85,67 @@ const Location = ({ data }) => {
                       </Center>
                     ),
                   }))}
-                  color="yellow"
+                  color="teal"
                   size="md"
                   fullWidth
-                  radius="sm"
+                  radius="xl"
                   bg={"none"}
                   onChange={(value) => handleLocationChange(value)}
                 />
               </div>
             </div>
-            <div className="relative flex h-full flex-col items-center justify-center gap-10 md:h-96 md:flex-row">
-              <div className="h-80 w-full rounded-lg border shadow-lg md:h-full">
-                {!loadingMap && (
-                  <Map center={loc} zoom={14} key={location?.name}>
-                    {({ TileLayer, Marker, Popup }) => (
-                      <>
-                        <TileLayer
-                          key={location?.name}
-                          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        />
+            <div className="relative flex h-full flex-col items-center justify-center gap-4 md:h-96 md:flex-row">
+              <div className="h-80 w-full rounded-lg shadow-lg md:h-full">
+                {!loadingMap &&
+                  loc?.length >
+                    0 &&(
+                      <Map center={loc} zoom={14} key={location?.name}>
+                        {({ TileLayer, Marker, Popup }) => (
+                          <>
+                            <TileLayer
+                              key={location?.name}
+                              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            />
 
-                        <Marker position={loc} key={location?.name}>
-                          <Popup key={location?.name}>{location?.name}</Popup>
-                        </Marker>
-                      </>
+                            <Marker position={loc} key={location?.name}>
+                              <Popup key={location?.name}>
+                                {location?.name}
+                              </Popup>
+                            </Marker>
+                          </>
+                        )}
+                      </Map>,
                     )}
-                  </Map>
-                )}
               </div>
               <ul className="h-full w-full list-none text-start md:text-lg">
-                <li className="gtext-start flex gap-4">
+                <li className="flex gap-4 text-start">
                   <div className="flex items-start gap-4">
-                    <IconLocation
-                      width={25}
-                      height={25}
-                      className="mt-1"
-                      color={"#f9bc60"}
-                    />
-                    <span className="font-semibold">Хаяг:</span>
+                    <IconLocation color={"#40C057"} className="h-5 w-5 lg:h-6 lg:w-6 2xl:w-8 2xl:h-8" />
+                    <span className="text-sm text-grey600 lg:text-base">Хаяг:</span>
                   </div>
                   <span
-                    className="w-11/12"
+                    className="text-sm font-bold lg:text-base"
                     dangerouslySetInnerHTML={{
                       __html: htmlFrom(location?.address),
                     }}
                   />
                 </li>
                 <li className="mt-5 flex items-center gap-4">
-                  <IconPhoneCall width={25} height={25} color={"#f9bc60"} />{" "}
-                  <span className="font-semibold">Утас :</span>{" "}
+                  <IconPhoneCall color={"#40C057"} className="h-5 w-5 lg:h-6 lg:w-6 2xl:w-8 2xl:h-8" />
+                  <span className="text-sm text-grey600 lg:text-base">Утас :</span>
                   <span
+                    className="text-sm font-bold lg:text-base"
                     dangerouslySetInnerHTML={{
                       __html: htmlFrom(location?.phone),
                     }}
                   />
                 </li>
                 <li className="mt-5 flex items-center gap-4">
-                  <IconClock width={25} height={25} color={"#f9bc60"} />{" "}
-                  <span className="font-semibold">Цагийн хуваарь :</span>{" "}
+                  <IconClock className="h-5 w-5 lg:h-6 lg:w-6 2xl:w-8 2xl:h-8"  color={"#40C057"} />
+                  <span className="text-sm text-grey600 lg:text-base">Хуваарь :</span>
                   <span
+                    className="text-sm font-bold lg:text-base"
                     dangerouslySetInnerHTML={{
                       __html: htmlFrom(location?.time_table),
                     }}

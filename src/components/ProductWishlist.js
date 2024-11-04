@@ -58,40 +58,14 @@ const ProductWishlist = ({ data, refresh }) => {
 
   const handleCart = async () => {
     const token = getCookie("token");
-    if (token) {
-      setLoading(true);
-      const body = {
-        product_id: data?.productid,
-        quantity: 1,
-      };
-      const res = await fetchMethod("POST", "cart/add", token, body);
-      if (res?.success) {
-        addCart({ ...data, quantity: 1 });
-        successNotification({
-          message: "Сагсанд амжилттай орлоо!",
-          title: `${data?.name}`,
-        });
-        setLoading(false);
-      } else {
-        errorNotification({
-          message: res?.message,
-          icon: (
-            <IconCircleXFilled
-              style={{
-                width: rem(30),
-                height: rem(30),
-              }}
-            />
-          ),
-        });
-      }
-    } else {
-      addCart({ ...data, quantity: 1 });
-      successNotification({
-        message: "Сагсанд амжилттай орлоо!",
-        title: `${data?.name}`,
-      });
-    }
+    setLoading(true);
+    console.log(data, "addCart");
+    addCart({ ...data?.product, quantity: 1 });
+    successNotification({
+      message: "Сагсанд амжилттай орлоо!",
+      title: `${data?.name}`,
+    });
+    setLoading(false);
   };
 
   const renderRemains = (balance) => {

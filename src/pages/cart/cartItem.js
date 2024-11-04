@@ -473,7 +473,7 @@ const CartItems = (props) => {
       }
     } else {
       return (
-        <Badge color="yellow" size="xs">
+        <Badge color="gray" size="xs">
           Үлдэгдэлгүй
         </Badge>
       );
@@ -650,7 +650,7 @@ const CartItems = (props) => {
       >
         <Stack align="center" my="lg" spacing="lg">
           <p class="text-center">Уншиж байна...</p>
-          <Loader size="lg" color="yellow" />
+          <Loader size="lg" color="teal" />
         </Stack>
       </Modal>
 

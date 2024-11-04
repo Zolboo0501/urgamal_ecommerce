@@ -61,7 +61,7 @@ const Address = () => {
     <div className="flex w-full flex-col rounded-md bg-white px-8 py-6">
       {loading ? (
         <div className="flex h-56 w-full items-center justify-center">
-          <Loader color="yellow" />
+          <Loader color="teal" />
         </div>
       ) : (
         <div>

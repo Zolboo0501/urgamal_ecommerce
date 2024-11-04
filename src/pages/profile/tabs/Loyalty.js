@@ -53,7 +53,7 @@ const Loyalty = ({ userInfo }) => {
       </div> */}
       {loading ? (
         <div className="flex h-[20rem] w-full items-center justify-center">
-          <Loader color="yellow" />
+          <Loader color="teal" />
         </div>
       ) : loyalty?.length > 0 ? (
         <div className="flex flex-col gap-3 overflow-auto px-2 py-2">

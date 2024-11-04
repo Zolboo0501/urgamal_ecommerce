@@ -11,7 +11,7 @@ const CategoryHover = ({ loading, categories, parentId }) => {
 
   return loading ? (
     <div className="flex h-96 w-full items-center justify-center">
-      <Loader color="yellow" />
+      <Loader color="teal" />
     </div>
   ) : categories?.length > 0 ? (
     <div className="flex h-full w-full flex-row">

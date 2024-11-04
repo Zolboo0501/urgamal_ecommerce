@@ -73,7 +73,7 @@ export default function PaymentModal({ context, id, innerProps }) {
   };
   return (
     <div className="mt-2 flex flex-col items-center gap-4">
-      <Tabs defaultValue="qpay" classNames={{ panel: "mt-6" }} color="yellow">
+      <Tabs defaultValue="qpay" classNames={{ panel: "mt-6" }} color="teal">
         <Tabs.List grow>
           <Tabs.Tab value="qpay">Qpay- р төлөх</Tabs.Tab>
           <div className="flex flex-1 lg:hidden">
@@ -131,7 +131,7 @@ export default function PaymentModal({ context, id, innerProps }) {
       </Tabs>
       <Button
         variant="subtle"
-        color="yellow"
+        color="teal"
         fullWidth
         loading={loading}
         onClick={() => {

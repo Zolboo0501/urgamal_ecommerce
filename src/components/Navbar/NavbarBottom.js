@@ -49,7 +49,7 @@ const NavbarBottom = ({
   return (
     <div className="relative flex flex-row justify-between px-12 py-2 max-sm:px-2">
       <button
-        className="flex flex-row items-center justify-center gap-1 rounded-md bg-button-yellow px-3"
+        className="flex flex-row items-center justify-center gap-1 rounded-md px-3"
         onMouseEnter={() => setIsHovered(true)}
       >
         <Image

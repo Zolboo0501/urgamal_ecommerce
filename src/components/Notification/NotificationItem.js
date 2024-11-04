@@ -15,7 +15,7 @@ const NotificationItem = ({ data, index }) => {
           className="h-12 w-12 object-fill"
         />
       ) : (
-        <Avatar color="yellow" radius={"xl"} size={"md"}>
+        <Avatar color="teal" radius={"xl"} size={"md"}>
           <IconBellFilled size={24} />
         </Avatar>
       )}

@@ -118,10 +118,10 @@ export default function LoginModal({ context, id }) {
 
                 {seconds === 0 ? (
                   loading ? (
-                    <Loader variant="dots" color="yellow" />
+                    <Loader variant="dots" color="teal" />
                   ) : (
                     <button
-                      class="text-xs text-yellow-500 underline"
+                      class="text-xs text-primary underline"
                       onClick={() => {
                         setOtp("");
                         fetchOTP();
@@ -141,7 +141,7 @@ export default function LoginModal({ context, id }) {
         )}
         <Button
           mt="md"
-          color="yellow"
+          color="teal"
           loading={loading}
           onClick={otpRequested ? handleLogin : fetchOTP}
         >

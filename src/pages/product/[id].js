@@ -446,7 +446,7 @@ const ProductDetail = ({ product, dealData, category }) => {
                   disabled={loading}
                   rightSection={
                     loading ? (
-                      <Loader size="xs" color="yellow" />
+                      <Loader size="xs" color="yeal" />
                     ) : (
                       <IconShoppingCartPlus
                         className="font-semibold"
