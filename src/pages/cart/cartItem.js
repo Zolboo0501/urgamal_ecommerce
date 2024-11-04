@@ -23,7 +23,6 @@ import {
   Button,
   Checkbox,
   Loader,
-  LoadingOverlay,
   Modal,
   Stack,
   Switch,
@@ -514,18 +513,6 @@ const CartItems = () => {
           <span className="mt-2 text-base font-medium text-grey">
             Таны сагс хоосон байна.
           </span>
-        </div>
-      );
-    }
-
-    if (isLoading) {
-      return (
-        <div className="relative flex h-72 min-h-full flex-col items-center justify-center">
-          <LoadingOverlay
-            loaderProps={{ size: "md", color: "#f9bc60" }}
-            overlayOpacity={0.1}
-            visible={isLoading}
-          />
         </div>
       );
     }
