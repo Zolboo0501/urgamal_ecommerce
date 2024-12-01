@@ -1,4 +1,4 @@
-import { UserConfigContext } from "@/provider/userConfigProvider";
+import { UserConfigContext } from "../provider/UserConfigProvider";
 import { useContext } from "react";
 
 const useUser = () => {
