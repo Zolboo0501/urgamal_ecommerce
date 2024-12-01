@@ -327,9 +327,9 @@ const Navbar = (props) => {
               {userContext?.address?.logo ? (
                 <Image
                   src={userContext?.address?.logo}
-                  width={42}
-                  height={42}
-                  className="h-112 w-12"
+                  width={500}
+                  height={500}
+                  className="h-11 w-11 object-cover"
                   alt={userContext?.address?.logo}
                 />
               ) : (

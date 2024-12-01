@@ -257,6 +257,21 @@ const Login = () => {
                 <p className="text-xs text-gray-500">Нууц үгээ мартсан уу?</p>
               </Button>
             </div>
+            <div className="mt-4 text-justify text-md leading-relaxed">
+              <p className="">
+                Үргэлжлүүлэх товчийг дарж, Facebook эрхээрээ нэвтрэх болон
+                бүртгэл үүсгэснээр Та манай{" "}
+                <button className="m-0 p-0 font-semibold text-blue-600 hover:underline">
+                  Үйлчилгээний нөхцөл
+                </button>{" "}
+                болон{" "}
+                <button className="font-semibold text-blue-600 hover:underline">
+                  Нууцлалын бодлогыг
+                </button>{" "}
+                хүлээн зөвшөөрч буй болно.
+              </p>
+            </div>
+
             <Button
               variant="outline"
               color="green"

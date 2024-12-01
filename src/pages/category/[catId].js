@@ -92,7 +92,7 @@ const CategoryPage = () => {
                 </span>
               </div>
 
-              <div className="flex w-full flex-col items-center">
+              <div className="flex w-full flex-col">
                 <ProductGridList
                   showSkeleton={loading}
                   emptyStateMessage="Ангиллын бараа олдсонгүй"

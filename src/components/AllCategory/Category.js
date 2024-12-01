@@ -64,7 +64,7 @@ const Category = ({ closeCategoryDrawer, initPage }) => {
                   )
                 }
                 onPress={() => {
-                  initPage();
+                  initPage && initPage();
                   closeCategoryDrawer &&
                     setTimeout(() => closeCategoryDrawer(), 1500);
                   router.push(
@@ -105,7 +105,7 @@ const Category = ({ closeCategoryDrawer, initPage }) => {
                             )
                           }
                           onPress={() => {
-                            initPage();
+                            initPage && initPage();
                             closeCategoryDrawer &&
                               setTimeout(() => closeCategoryDrawer(), 1500);
                             router.push(
@@ -141,7 +141,7 @@ const Category = ({ closeCategoryDrawer, initPage }) => {
                                           () => closeCategoryDrawer(),
                                           1500,
                                         );
-                                      initPage();
+                                      initPage && initPage();
                                       router.push(
                                         {
                                           pathname: `/category/${item.id}`,

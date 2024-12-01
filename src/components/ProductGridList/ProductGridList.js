@@ -19,24 +19,24 @@ export default function ProductGridList({
     </div>
   ) : (
     <SimpleGrid
-      cols={4}
+      type="container"
+      cols={{
+        "300px": 1,
+        "400px": 2,
+        "640px": 3,
+        "900px": 4,
+        "1200px": 5,
+        "1500px": 6,
+      }}
       spacing={20}
       verticalSpacing={20}
       className={className}
-      breakpoints={[
-        { maxWidth: "110em", cols: 4, spacing: "md" },
-        { maxWidth: "90em", cols: 3, spacing: "md" },
-        { maxWidth: "74em", cols: 3, spacing: "md" },
-        { maxWidth: "64em", cols: 3, spacing: "md" },
-        { maxWidth: "48rem", cols: 2, spacing: "sm" },
-        { maxWidth: "30em", cols: 1, spacing: "xs" },
-      ]}
     >
       {children}
       {showSkeleton &&
-        new Array(5).fill(null).map((e, index) => {
-          return <MySkeleton key={`product-skeleton-${index}`} />;
-        })}
+        new Array(5)
+          .fill(null)
+          .map((e, index) => <MySkeleton key={`product-skeleton-${index}`} />)}
     </SimpleGrid>
   );
 }

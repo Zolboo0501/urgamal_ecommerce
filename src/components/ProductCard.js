@@ -56,49 +56,45 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
 
   const handleWishlist = async (event) => {
     event.stopPropagation();
-    setToggle(!toggle);
-    if (!toggle) {
-      if (token) {
-        const requestOption = {
-          productid: data.id,
-        };
-        const res = await fetchMethod(
-          "POST",
-          "user/wishlist",
-          token,
-          requestOption,
-        );
-        if (res.success) {
-          wishlist.addItem(data);
-          successNotification({
-            message: res.message,
-          });
-        } else {
-          errorNotification({
-            message: res?.message,
-            icon: (
-              <IconCircleXFilled
-                style={{
-                  width: rem(30),
-                  height: rem(30),
-                }}
-              />
-            ),
-          });
-        }
-      } else {
-        errorNotification({
-          message: "Нэвтрэх шаардлагатай",
-          icon: (
-            <IconCircleXFilled
-              style={{
-                width: rem(30),
-                height: rem(30),
-              }}
-            />
-          ),
-        });
+
+    // Toggle the wishlist state
+    const updatedToggle = !toggle;
+    setToggle(updatedToggle);
+
+    // Only proceed if we need to add to the wishlist
+    if (!updatedToggle) {
+      if (!token) {
+        return showErrorNotification("Нэвтрэх шаардлагатай");
       }
+
+      // Add product to the wishlist
+      await addToWishlist(data.id, token);
+    }
+  };
+
+  const showErrorNotification = (message) => {
+    errorNotification({
+      message,
+      icon: <IconCircleXFilled style={{ width: rem(30), height: rem(30) }} />,
+    });
+  };
+
+  const addToWishlist = async (productId, token) => {
+    const requestOption = { productid: productId };
+    const res = await fetchMethod(
+      "POST",
+      "user/wishlist",
+      token,
+      requestOption,
+    );
+
+    if (res.success) {
+      wishlist.addItem(data);
+      successNotification({
+        message: res.message,
+      });
+    } else {
+      showErrorNotification(res?.message);
     }
   };
 

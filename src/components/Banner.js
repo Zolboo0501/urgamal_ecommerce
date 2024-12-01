@@ -21,7 +21,7 @@ const Banner = () => {
   const user = useUser();
 
   return (
-    <div className="relative mx-auto mt-8 flex h-[320px] w-[100%] p-1 sm:h-[380px] md:h-[24rem] lg:h-[36rem]">
+    <div className="relative mx-auto flex h-[320px] w-[100%] sm:h-[380px] md:h-[24rem] lg:h-[36rem]">
       <div
         className="relative hidden flex-row bg-white lg:flex"
         onMouseLeave={() => {
@@ -113,8 +113,11 @@ const Banner = () => {
                   alt={item}
                   src={item}
                   fill
-                  className="h-full max-h-full w-full rounded-r-xl object-cover md:object-fill"
-                  draggable={false}
+                  style={{
+                    width: "100%",
+                    aspectRatio: "70 / 45", // Ensures correct aspect ratio
+                  }}
+                  className="relative h-auto w-full md:object-fill"
                 />
               </SwiperSlide>
             );

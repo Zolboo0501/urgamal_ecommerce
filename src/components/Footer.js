@@ -74,6 +74,16 @@ const BottomFooter = ({ address }) => {
               <span className="pb-1 font-bold text-[#000] md:text-lg">
                 Холбоо барих
               </span>
+              <div className="flex flex-row items-center">
+                <Link href={"/location"}>
+                  <div
+                    className="text-sm font-medium text-[#1C3F11] md:text-base"
+                    dangerouslySetInnerHTML={{
+                      __html: htmlFrom(address?.location),
+                    }}
+                  />
+                </Link>
+              </div>
               <div className="flex flex-row items-center gap-2">
                 <Image
                   alt="time"
@@ -97,10 +107,13 @@ const BottomFooter = ({ address }) => {
                   width={20}
                   height={20}
                 />
-                <Link href={`mailto:${"tarimalurgamal2016@gmail.com"}`}>
-                  <p className="text-sm font-medium text-[#1C3F11] md:text-base">
-                    tarimalurgamal2016@gmail.com
-                  </p>
+                <Link href={`mailto:${address?.email}`}>
+                  <div
+                    className="text-sm font-medium text-[#1C3F11] md:text-base"
+                    dangerouslySetInnerHTML={{
+                      __html: htmlFrom(address?.email),
+                    }}
+                  />
                 </Link>
               </div>
               <div className="flex flex-row items-center gap-2">
@@ -125,9 +138,9 @@ const BottomFooter = ({ address }) => {
               <Image
                 alt={address?.logo}
                 src={address?.logo}
-                width={90}
-                height={80}
-                className="h-32 w-32 rounded"
+                width={500}
+                height={500}
+                className="h-32 w-32 rounded object-cover"
               />
             )}
             <p className="mt-4 w-[40%] text-sm font-semibold text-black md:text-lg lg:w-[70%] lg:text-end xl:w-[60%]">
@@ -162,28 +175,6 @@ const BottomFooter = ({ address }) => {
                 />
               </Link>
             </div>
-          </div>
-        </div>
-        <div
-          className="flex items-center justify-center border-t-1 bg-primary200 py-2 shadow-inner"
-          style={{
-            backgroundColor: address?.footer_color
-              ? address?.footer_color
-              : null,
-          }}
-        >
-          <div className="flex w-[80%] items-center justify-center">
-            <Link
-              className="mt-1 flex flex-row items-center text-center hover:text-white"
-              href="/location"
-            >
-              <div
-                className="ml-2 text-base font-bold text-[#1C3F11] max-xs:text-sm-5"
-                dangerouslySetInnerHTML={{
-                  __html: htmlFrom(address?.location),
-                }}
-              ></div>
-            </Link>
           </div>
         </div>
       </div>
@@ -313,7 +304,10 @@ const BottomFooter = ({ address }) => {
             <hr className="my-6 border-gray-200" />
             <div className="block">
               <div className="mt-4 flex space-x-6">
-                <a href="#" className="text-gray-500 hover:text-gray-900">
+                <Link
+                  href="https://www.facebook.com/tarimalurgamal"
+                  className="text-gray-500 hover:text-gray-900"
+                >
                   <svg
                     className="h-5 w-5"
                     fill="currentColor"
@@ -327,8 +321,11 @@ const BottomFooter = ({ address }) => {
                     />
                   </svg>
                   <span className="sr-only">Facebook page</span>
-                </a>
-                <a href="#" className="text-gray-500 hover:text-gray-900">
+                </Link>
+                <Link
+                  href="https://www.instagram.com/urga.mn/"
+                  className="text-gray-500 hover:text-gray-900"
+                >
                   <svg
                     className="h-5 w-5"
                     fill="currentColor"
@@ -342,18 +339,7 @@ const BottomFooter = ({ address }) => {
                     />
                   </svg>
                   <span className="sr-only">Instagram page</span>
-                </a>
-                <a href="#" className="text-gray-500 hover:text-gray-900">
-                  <svg
-                    className="h-5 w-5"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                  </svg>
-                  <span className="sr-only">Twitter page</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
