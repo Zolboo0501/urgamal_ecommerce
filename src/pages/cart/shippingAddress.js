@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import ProductModal from "@/components/Profile/ProfileModal";
+import useUser from "@/hooks/useUser";
 import { fetchMethod } from "@/utils/fetch";
-import { UserConfigContext } from "@/utils/userConfigContext";
 import { errorNotification, successNotification } from "@/utils/utils";
 import { Button, Checkbox, rem, Skeleton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -12,7 +12,7 @@ import {
   IconTruckOff,
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Address = ({ setSelectedShippingData, setSelect }) => {
   const [value, setValue] = useState(1);
@@ -23,7 +23,7 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
   const [cookie, setCookie] = useState();
   const token = getCookie("token");
   const [selectAddress, setSelectAddress] = useState([]);
-  const { auth } = useContext(UserConfigContext);
+  const { auth } = useUser();
   const [isAddAddress, setIsAddAddress] = useState(false);
   useEffect(() => {
     const cookie = getCookie("token");

@@ -21,22 +21,22 @@ import { getCookie, setCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useWishlist from "@/hooks/useWishlist";
 import { fetchMethod, fetcher } from "@/utils/fetch";
 import { getCart } from "@/utils/Store";
-import { UserConfigContext } from "@/utils/userConfigContext";
 import { errorNotification, numberWithCommas } from "@/utils/utils";
 import { useDebouncedValue } from "@mantine/hooks";
 import useSWR from "swr";
 import Notification from "../Notification/Notification";
+import useUser from "@/hooks/useUser";
 const Navbar = (props) => {
   const { address } = props;
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const wishlist = useWishlist();
   const [debounced] = useDebouncedValue(searchQuery, 250);
-  const userContext = useContext(UserConfigContext);
+  const userContext = useUser();
   const [showSearch, setShowSearch] = useState(false);
   const [cartItem, setCartItem] = useState([]);
   const [userInfo, setUserInfo] = useState({

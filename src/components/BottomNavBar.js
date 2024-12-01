@@ -1,6 +1,5 @@
-import { UserConfigContext } from "@/utils/userConfigContext";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getCart } from "@/utils/Store";
 import { Drawer, ScrollArea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -13,10 +12,11 @@ import {
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
 import Category from "./AllCategory/Category";
+import useUser from "@/hooks/useUser";
 
 const BottomNavBar = () => {
   const router = useRouter();
-  const userContext = useContext(UserConfigContext);
+  const userContext = useUser();
   const [cartItem, setCartItem] = useState();
   const userToken = getCookie("token");
   const [

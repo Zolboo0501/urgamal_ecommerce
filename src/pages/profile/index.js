@@ -1,5 +1,4 @@
 import { fetchMethod } from "@/utils/fetch";
-import { UserConfigContext } from "@/utils/userConfigContext";
 import { errorNotification } from "@/utils/utils";
 import { Button, Loader, rem } from "@mantine/core";
 import {
@@ -15,7 +14,7 @@ import {
 import { getCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import GlobalLayout from "../../components/GlobalLayout/GlobalLayout";
 import ProfileTab from "../../components/ProfileTab.js";
 import Address from "./tabs/Address";
@@ -25,13 +24,14 @@ import Loyalty from "./tabs/Loyalty";
 import MyOrder from "./tabs/MyOrder";
 import ProfileInfo from "./tabs/ProfileInfo";
 import Wishlist from "./tabs/Wishlist";
+import useUser from "@/hooks/useUser";
 
 const Profile = () => {
   const router = useRouter();
   const [tabs, setTabs] = useState(1);
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState();
-  const userContext = useContext(UserConfigContext);
+  const userContext = useUser();
   const token = getCookie("token");
 
   const tabData = [

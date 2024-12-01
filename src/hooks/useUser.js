@@ -1,3 +1,10 @@
-import { getCookie } from "cookies-next";
+import { UserConfigContext } from "@/provider/userConfigProvider";
+import { useContext } from "react";
 
-export const useUserToken = () => getCookie("token");
+const useUser = () => {
+  const mContext = useContext(UserConfigContext);
+
+  return mContext;
+};
+
+export default useUser;

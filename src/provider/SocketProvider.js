@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { getCookie } from "cookies-next";
 import React, { createContext, useEffect, useState } from "react";
-import socket from "./Socket";
-import { tokenDecode } from "./utils";
+
+import socket from "@/utils/Socket";
+import { tokenDecode } from "@/utils/utils";
 
 export const SocketContext = createContext();
 const SocketProvider = ({ children }) => {

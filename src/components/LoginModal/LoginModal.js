@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
+import useUser from "@/hooks/useUser";
 import { fetchMethod } from "@/utils/fetch";
-import { UserConfigContext } from "@/utils/userConfigContext";
 import { errorNotification, successNotification } from "@/utils/utils";
 import {
   Button,
@@ -13,10 +13,10 @@ import {
   Stack,
 } from "@mantine/core";
 import { setCookie } from "cookies-next";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function LoginModal({ context, id }) {
-  const { login } = useContext(UserConfigContext);
+  const { login } = useUser();
   const [mobileNumber, setMobileNumber] = useState("");
   const [otp, setOtp] = useState("");
   const [otpRequested, setOtpRequested] = useState(false);

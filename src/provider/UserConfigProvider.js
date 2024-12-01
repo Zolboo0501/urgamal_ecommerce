@@ -1,17 +1,17 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
-import { UserConfigContext } from "./userConfigContext";
+import React, { createContext, useEffect, useState } from "react";
+import { tokenDecode } from "@/utils/utils";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
-import { tokenDecode } from "./utils";
 import useSocket from "@/hooks/useSocket";
 
 const userToken = getCookie("token");
 const userConfigs = getCookie("preference_config");
 
+export const UserConfigContext = createContext();
 export const UserConfigProvider = ({ children }) => {
   const router = useRouter();
   //state
@@ -90,19 +90,19 @@ export const UserConfigProvider = ({ children }) => {
     }
   }, []);
 
+  const mContext = {
+    preferenceConfig: userConfigs ? userConfigs : null,
+    auth,
+    login,
+    logout,
+    configId,
+    preference_cookie,
+    address,
+    links,
+  };
+
   return (
-    <UserConfigContext.Provider
-      value={{
-        preferenceConfig: userConfigs ? userConfigs : null,
-        auth,
-        login,
-        logout,
-        configId,
-        preference_cookie,
-        address,
-        links,
-      }}
-    >
+    <UserConfigContext.Provider value={mContext}>
       {children}
     </UserConfigContext.Provider>
   );

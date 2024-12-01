@@ -6,7 +6,7 @@ import useCategories from "@/hooks/useCategories";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import React, { useState } from "react";
 
-const Category = ({ closeCategoryDrawer }) => {
+const Category = ({ closeCategoryDrawer, initPage }) => {
   const router = useRouter();
   const { parent_id, secondary_id, tertiary_id } = router.query;
   const categories = useCategories();
@@ -64,6 +64,7 @@ const Category = ({ closeCategoryDrawer }) => {
                   )
                 }
                 onPress={() => {
+                  initPage();
                   closeCategoryDrawer &&
                     setTimeout(() => closeCategoryDrawer(), 1500);
                   router.push(
@@ -104,6 +105,7 @@ const Category = ({ closeCategoryDrawer }) => {
                             )
                           }
                           onPress={() => {
+                            initPage();
                             closeCategoryDrawer &&
                               setTimeout(() => closeCategoryDrawer(), 1500);
                             router.push(
@@ -139,6 +141,7 @@ const Category = ({ closeCategoryDrawer }) => {
                                           () => closeCategoryDrawer(),
                                           1500,
                                         );
+                                      initPage();
                                       router.push(
                                         {
                                           pathname: `/category/${item.id}`,

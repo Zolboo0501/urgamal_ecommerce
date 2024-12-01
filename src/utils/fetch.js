@@ -1,39 +1,46 @@
 /* eslint-disable no-undef */
 import axios from "axios";
 export const fetchMethod = async (method, path, token, body) => {
-  const headerWithToken = {
+  const headers = {
     "Content-Type": "application/json",
-    Authorization: "Bearer " + token,
+    ...(token && { Authorization: `Bearer ${token}` }),
   };
 
-  const headerWithOutToken = {
-    "Content-Type": "application/json",
-  };
-
-  const requestOption = {
+  const requestOptions = {
     method,
-    headers: token ? headerWithToken : headerWithOutToken,
+    headers,
     ...(body && { body: JSON.stringify(body) }),
   };
 
-  const data = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/${path}`,
-    requestOption,
-  )
-    .then(async (res) => {
-      if (res.status === 200) {
-        return await res.json();
-      } else {
-        return await res.json();
-      }
-    })
-    .catch((err) => err);
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${path}`,
+      requestOptions,
+    );
 
-  return data;
+    // Check for a successful response and return the JSON body
+    if (!response.ok) {
+      // You can handle non-200 status codes differently if needed
+      const errorData = await response.json();
+      console.log(errorData.message || "An error occurred");
+    }
+
+    // If status is 200, return the response as JSON
+    return await response.json();
+  } catch (err) {
+    // Handle any errors that occur during the fetch
+    console.log("Fetch error:", err);
+    return { error: err.message || "An error occurred" };
+  }
 };
 
-export const fetcher = async (url) =>
-  axios
-    .get(url, { headers: { "Content-Type": "application/json" } })
-    .then((res) => res.data.result)
-    .catch((error) => console.log(error, "err in fetcher"));
+export const fetcher = async (url) => {
+  try {
+    const response = await axios.get(url, {
+      headers: { "Content-Type": "application/json" },
+    });
+    return response.data.result;
+  } catch (error) {
+    console.log("Error in fetcher:", error);
+  }
+};

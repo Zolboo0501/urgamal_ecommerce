@@ -56,7 +56,6 @@ const ProductWishlist = ({ data, refresh }) => {
 
   const handleCart = async () => {
     setLoading(true);
-    console.log(data, "addCart");
     addCart({ ...data?.product, quantity: 1 });
     successNotification({
       message: "Сагсанд амжилттай орлоо!",
@@ -114,14 +113,14 @@ const ProductWishlist = ({ data, refresh }) => {
             <div className="flex flex-row items-center">
               <p className="text-base text-[#696A6C] lg:text-base">Үнэ :</p>
               <p className="ml-1 text-start text-base font-bold text-primary700 lg:text-base">
-                {numberWithCommas(data?.product.listPrice) || 0}₮
+                {numberWithCommas(data?.product?.listPrice) || 0}₮
               </p>
             </div>
             <div className="flex items-center gap-1">
               <p className="text-base text-[#696A6C] lg:text-base">
                 Үлдэгдэл :
               </p>
-              {renderRemains(data?.product.balance)}
+              {renderRemains(data?.product?.balance)}
             </div>
           </div>
           <div className="mt-4 flex flex-row gap-3">

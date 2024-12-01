@@ -29,3 +29,5 @@ export const INVOICES_STATUS = {
   DECLINED: 300,
   EXPIRED: 301,
 };
+
+export const REMINDER_SLUG = "getIt";

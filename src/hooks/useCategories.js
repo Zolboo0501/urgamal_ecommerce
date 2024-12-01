@@ -1,4 +1,4 @@
-import { CategoryContext } from "@/utils/categoryContextProvider";
+import { CategoryContext } from "@/provider/CategoryContextProvider";
 import { useContext } from "react";
 
 const useCategories = () => {

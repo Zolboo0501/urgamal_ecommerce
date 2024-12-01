@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 import { nextui } from "@nextui-org/react";
-/** @type {import('tailwindcss').Config} */
 
-module.exports = {
+/** @type {import('tailwindcss').Config} */
+const config = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
@@ -19,11 +19,11 @@ module.exports = {
       "3xl": "1890px",
     },
     fontSize: {
-      "sm-5": " 0.5rem",
-      "sm-4": " 0.5.5rem",
-      "sm-3": " 0.6rem",
-      "sm-2": " 0.65rem",
-      "sm-1": " 0.7rem",
+      "sm-5": "0.5rem",
+      "sm-4": "0.55rem",
+      "sm-3": "0.6rem",
+      "sm-2": "0.65rem",
+      "sm-1": "0.7rem",
       xs: "0.75rem",
       md: "0.8rem",
       "md-2": "0.85rem",
@@ -31,7 +31,7 @@ module.exports = {
       ss: "0.95rem",
       base: "1rem",
       lg: "1.125rem",
-      xl: " 1.25rem",
+      xl: "1.25rem",
       "2xl": "1.5rem",
       xxl: "2rem",
     },
@@ -131,3 +131,5 @@ module.exports = {
   },
   plugins: [nextui()],
 };
+
+export default config;

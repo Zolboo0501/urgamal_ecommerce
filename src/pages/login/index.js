@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 import { fetchMethod } from "@/utils/fetch";
 import { rememberMe, rememberMeRemove } from "@/utils/Store";
-import { UserConfigContext } from "@/utils/userConfigContext";
 import { errorNotification, successNotification } from "@/utils/utils";
 import {
   Button,
@@ -17,12 +16,13 @@ import { IconAt, IconLock } from "@tabler/icons-react";
 import { setCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Buttons from "../../components/Buttons";
+import useUser from "@/hooks/useUser";
 
 const Login = () => {
   const router = useRouter();
-  const { login } = useContext(UserConfigContext);
+  const { login } = useUser();
   const [remember, setRemember] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
   const form = useForm({

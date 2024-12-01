@@ -11,7 +11,6 @@ import {
   removeFromCart,
   removeQuantityProduct,
 } from "@/utils/Store";
-import { UserConfigContext } from "@/utils/userConfigContext";
 import {
   errorNotification,
   numberWithCommas,
@@ -43,18 +42,21 @@ import {
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCartX } from "react-icons/bs";
 
 import Address from "./shippingAddress";
+import { REMINDER_SLUG } from "@/utils/constant";
+import useUser from "@/hooks/useUser";
 
 const CartItems = () => {
   const [isCheckAll, setIsCheckAll] = useState(true);
   const router = useRouter();
-  const { auth } = useContext(UserConfigContext);
+  const { auth } = useUser();
   const [cartItem, setCartItem] = useState();
   const [checked, setChecked] = useState(false);
   const [addressVisible, setAddressVisible] = useState(false);
+  const [reminderText, setReminderText] = useState("");
   const userToken = getCookie("token");
   const [shippingPee, setShippingPee] = useState(0);
   const [selectedShippingData, setSelectedShippingData] = useState({});
@@ -81,6 +83,7 @@ const CartItems = () => {
     if (data) {
       setCartItem(data);
     }
+    getReminder();
   }, []);
 
   useEffect(() => {
@@ -163,96 +166,135 @@ const CartItems = () => {
   const handleOrder = async () => {
     optionClose();
     openLoader();
-    let data = checked ? null : selectedShippingData?.id;
-    const axiosReqOption = {
-      headers: {
-        Authorization: "Bearer " + userToken,
-        "Content-Type": "application/json",
-      },
+
+    const addressId = checked ? null : selectedShippingData?.id;
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+      "Content-Type": "application/json",
     };
-    const requestOption = {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + userToken,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        address_id: data,
-        cart_items: selectedItemsIds,
-      }),
+
+    const requestBody = {
+      address_id: addressId,
+      cart_items: selectedItemsIds,
     };
+
+    console.log(requestBody, "requestBody");
     try {
-      const res = await fetch(
+      const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/order/v3`,
-        requestOption,
+        {
+          method: "POST",
+          headers,
+          body: JSON.stringify(requestBody),
+        },
       );
-      if (res.status === 200) {
-        const data = await res.json();
-        if (data.success === true) {
-          let total = 0;
-          const temp = cartItem?.cart_items.filter((item, index) => {
-            if (item?.id !== selectedItemsIds[index]?.product_id) {
-              total +=
-                parseInt(item.total) ||
-                parseInt(item.quantity * item.listPrice);
-              return item;
-            }
-          });
-          removeFromCart(temp);
-          setCartItem({ ...cartItem, cart_items: temp, total: total });
-          successNotification({ message: data.message, title: "Захиалга" });
-          axios
-            .get(
-              `${process.env.NEXT_PUBLIC_API_URL}/order/payment/${data.orderid}`,
-              axiosReqOption,
-            )
-            .then((res) => {
-              openContextModal({
-                modal: "payment",
-                title: "Төлбөр төлөлт",
-                innerProps: {
-                  paymentData: res.data?.invoice,
-                  shouldRedirect: true,
-                },
-                centered: true,
-                size: "lg",
-                closeOnClickOutside: false,
-                withCloseButton: false,
-              });
-            })
-            .catch((err) => {
-              if (err.response) {
-                errorNotification({
-                  message: err.response.data,
-                });
-              } else {
-                errorNotification({
-                  message: "Төлбөрийн мэдээлэл авахад алдаа гарлаа",
-                });
-              }
-            });
+
+      if (response.ok) {
+        const responseData = await response.json();
+
+        if (responseData.success) {
+          handleOrderSuccess(responseData);
         } else {
           errorNotification({ title: "Алдаа гарлаа." });
         }
-      } else if (res.status === 500) {
-        errorNotification({
-          message: "Сагсанд бараа байхгүй байна!",
-          color: "red",
-        });
       } else {
-        const error = await res.json();
-        errorNotification({
-          message: error?.message,
-        });
+        await handleOrderError(response);
       }
     } catch (error) {
-      console.log(error, "error");
+      console.error("Error creating order:", error);
       errorNotification({
         message: "Захиалга үүсгэхэд алдаа гарлаа!",
         color: "red",
       });
+    } finally {
+      closeLoader();
     }
-    closeLoader();
+  };
+
+  const handleOrderSuccess = async (data) => {
+    let total = 0;
+
+    const updatedCartItems = cartItem?.cart_items.filter((item, index) => {
+      if (item?.id !== selectedItemsIds[index]?.product_id) {
+        total +=
+          parseInt(item.total) || parseInt(item.quantity * item.listPrice);
+        return item;
+      }
+    });
+
+    removeFromCart(updatedCartItems);
+    setCartItem({ ...cartItem, cart_items: updatedCartItems, total });
+
+    successNotification({ message: data.message, title: "Захиалга" });
+
+    try {
+      const axiosResponse = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/order/payment/${data.orderid}`,
+        { headers: { Authorization: `Bearer ${userToken}` } },
+      );
+
+      openContextModal({
+        modal: "payment",
+        title: "Төлбөр төлөлт",
+        innerProps: {
+          paymentData: axiosResponse.data?.invoice,
+          shouldRedirect: true,
+        },
+        centered: true,
+        size: "lg",
+        closeOnClickOutside: false,
+        withCloseButton: false,
+      });
+    } catch (err) {
+      handlePaymentError(err);
+    }
+  };
+
+  const getReminder = async () => {
+    try {
+      const response = await fetchMethod(
+        "GET",
+        `config/misc?slug=${REMINDER_SLUG}`,
+      );
+
+      // Check if response contains an error
+      if (response.error) {
+        errorNotification({ message: response.error, color: "red" });
+        return;
+      }
+
+      // Handle the successful response
+      setReminderText(response.data);
+      // You can process the response here, e.g., set it to state or perform other actions
+    } catch (err) {
+      errorNotification({ message: err.message, color: "red" });
+    }
+  };
+
+  const handleOrderError = async (response) => {
+    if (response.status === 500) {
+      errorNotification({
+        message: "Сагсанд бараа байхгүй байна!",
+        color: "red",
+      });
+    } else {
+      const errorData = await response.json();
+      errorNotification({
+        message: errorData?.message || "Захиалга үүсгэхэд алдаа гарлаа!",
+      });
+    }
+  };
+
+  const handlePaymentError = (err) => {
+    if (err.response) {
+      errorNotification({
+        message: err.response.data,
+      });
+    } else {
+      errorNotification({
+        message: "Төлбөрийн мэдээлэл авахад алдаа гарлаа",
+      });
+    }
   };
 
   const handleInvoice = () => {
@@ -261,42 +303,39 @@ const CartItems = () => {
   };
 
   const makeOrder = async () => {
-    if (cartItem?.cart_items?.length > 0) {
-      if (selectedItemsIds.length > 0) {
-        if (auth) {
-          if (select) {
-            optionOpen();
-          } else {
-            if (checked === false) {
-              errorNotification({
-                message: "Хаяг сонгоно уу эсвэл очиж авахыг идэвхжүүлнэ үү",
-                color: "red",
-              });
-            } else {
-              optionOpen();
-            }
-          }
-        } else {
-          router.push("/login");
-        }
-      } else {
-        errorNotification({
-          message: "Захиалга хийхийн тулд бараа сонгоно уу.",
-          color: "red",
-        });
-      }
-    } else {
-      errorNotification({
+    if (!cartItem?.cart_items?.length) {
+      return errorNotification({
         message: "Сагс хоосон байна.",
         color: "red",
       });
     }
+
+    if (selectedItemsIds.length === 0) {
+      return errorNotification({
+        message: "Захиалга хийхийн тулд бараа сонгоно уу.",
+        color: "red",
+      });
+    }
+
+    if (!auth) {
+      return router.push("/login");
+    }
+
+    if (!select && !checked) {
+      return errorNotification({
+        message: "Хаяг сонгоно уу эсвэл очиж авахыг идэвхжүүлнэ үү",
+        color: "red",
+      });
+    }
+
+    optionOpen();
   };
 
   const handleInvoiceInput = async (values) => {
-    let addressData = checked
+    const addressData = checked
       ? "Очиж авна"
       : `Хот: ${selectedShippingData?.city}, Дүүрэг: ${selectedShippingData?.district}, Хороо: ${selectedShippingData?.committee}, Гудамж: ${selectedShippingData?.street}, Байр: ${selectedShippingData?.apartment}, Тоот: ${selectedShippingData?.number}`;
+
     const requestOption = {
       address: addressData,
       method: "invoice",
@@ -306,50 +345,65 @@ const CartItems = () => {
       registry: values?.registry,
       cart_items: selectedItemsIds,
     };
-    const token = getCookie("token");
-    const data = await fetchMethod(
-      "POST",
-      "order/invoice",
-      token,
-      requestOption,
-    )
-      .then(() => {
-        successNotification({
-          message: "Амжилттай нэхэмжлэл үүслээ.",
-          icon: <IconCheck />,
-          color: "green",
-        });
-        let total = 0;
-        const temp = cartItem?.cart_items.filter((item, index) => {
-          if (item?.id !== selectedItemsIds[index]?.product_id) {
-            total +=
-              parseInt(item.total) || parseInt(item.quantity * item.listPrice);
-            return item;
-          }
-        });
-        removeFromCart(temp);
-        setCartItem({ ...cartItem, cart_items: temp, total: total });
-        closeInput();
-        router.push({
-          pathname: "/profile",
-          query: { cr: "invoice" },
-        });
-      })
-      .catch(() => {
-        closeInput();
-        errorNotification({
-          message: data?.message,
 
-          icon: (
-            <IconCircleXFilled
-              style={{
-                width: rem(30),
-                height: rem(30),
-              }}
-            />
-          ),
-        });
+    const token = getCookie("token");
+
+    try {
+      await fetchMethod("POST", "order/invoice", token, requestOption);
+
+      successNotification({
+        message: "Амжилттай нэхэмжлэл үүслээ.",
+        icon: <IconCheck />,
+        color: "green",
       });
+
+      updateCartAfterInvoice();
+
+      closeInput();
+      router.push({
+        pathname: "/profile",
+        query: { cr: "invoice" },
+      });
+    } catch (error) {
+      handleInvoiceError(error);
+    }
+  };
+
+  const updateCartAfterInvoice = () => {
+    let total = 0;
+    const updatedCartItems = cartItem?.cart_items.filter((item, index) => {
+      if (item?.id !== selectedItemsIds[index]?.product_id) {
+        total +=
+          parseInt(item.total) || parseInt(item.quantity * item.listPrice);
+        return item;
+      }
+    });
+
+    removeFromCart(updatedCartItems);
+    setCartItem({ ...cartItem, cart_items: updatedCartItems, total });
+  };
+
+  const handleInvoiceError = (error) => {
+    closeInput();
+
+    errorNotification({
+      message: error?.message || "Нэхэмжлэл үүсгэхэд алдаа гарлаа.",
+      icon: (
+        <IconCircleXFilled
+          style={{
+            width: rem(30),
+            height: rem(30),
+          }}
+        />
+      ),
+    });
+  };
+
+  // Helper function to calculate the total price of selected items
+  const calculateTotalSelectedItems = (cartItems) => {
+    return cartItems
+      .filter((item) => item.isChecked)
+      .reduce((acc, item) => acc + item.quantity * item.listPrice, 0);
   };
 
   const minusQuantity = async (event, count, product) => {
@@ -360,22 +414,26 @@ const CartItems = () => {
 
     if (newCount <= 0 || newCount > initialStock) return;
 
+    // Update the product quantity and total
     const updatedProduct = {
       ...product,
       quantity: newCount,
       total: newCount * listPrice,
     };
 
+    // Update the cart items with the modified product
     const updatedCartItems = cartItem.cart_items.map((item) =>
       item.id === id ? updatedProduct : item,
     );
 
-    const totalSelectedItems = updatedCartItems
-      .filter((item) => item.isChecked)
-      .reduce((acc, item) => acc + item.quantity * item.listPrice, 0);
+    // Calculate the total for selected items
+    const totalSelectedItems = calculateTotalSelectedItems(updatedCartItems);
 
+    // Update state
     setSelectedItemsTotal(totalSelectedItems);
     setCartItem((prevCart) => ({ ...prevCart, cart_items: updatedCartItems }));
+
+    // Trigger quantity removal
     removeQuantityProduct(updatedCartItems);
   };
 
@@ -385,73 +443,78 @@ const CartItems = () => {
     const { balance: initialStock, id, listPrice } = product;
     const newCount = count + 1;
 
+    // Check stock availability
     if (newCount > initialStock) {
-      errorNotification({
+      return errorNotification({
         message: "Барааны үлдэгдэл хүрэлцэхгүй байна.",
       });
-      return;
     }
 
+    // Update product with the new quantity
     const updatedProduct = {
       ...product,
       quantity: newCount,
       total: newCount * listPrice,
     };
 
+    // Update cart items
     const updatedCartItems = cartItem.cart_items.map((item) =>
       item.id === id ? updatedProduct : item,
     );
 
-    const totalSelectedItems = updatedCartItems
-      .filter((item) => item.isChecked)
-      .reduce((acc, item) => acc + item.quantity * item.listPrice, 0);
+    // Calculate the total for selected items
+    const totalSelectedItems = calculateTotalSelectedItems(updatedCartItems);
 
+    // Update state
     setSelectedItemsTotal(totalSelectedItems);
     setCartItem((prevCart) => ({ ...prevCart, cart_items: updatedCartItems }));
+
+    // Trigger quantity addition
     addQuantityProduct(updatedCartItems);
   };
 
   const handleClick = (clickedItem) => {
-    const updatedCartItems = cartItem.cart_items.map((item) => {
-      if (item.id === clickedItem.id) {
-        return { ...item, isChecked: !item.isChecked };
-      }
-      return item;
-    });
+    // Toggle the `isChecked` property for the clicked item
+    const updatedCartItems = cartItem.cart_items.map((item) =>
+      item.id === clickedItem.id
+        ? { ...item, isChecked: !item.isChecked }
+        : item,
+    );
 
-    const total = updatedCartItems
+    // Calculate the total for selected items using the existing helper function
+    const totalSelectedItems = calculateTotalSelectedItems(updatedCartItems);
+
+    // Update state
+    setSelectedItemsTotal(totalSelectedItems);
+    setCartItem((prevCart) => ({ ...prevCart, cart_items: updatedCartItems }));
+  };
+  const handleSelectAll = () => {
+    // Toggle the select all status
+    const newIsCheckAll = !isCheckAll;
+
+    // Update the `isChecked` property for all cart items based on `newIsCheckAll`
+    const newData = cartItem?.cart_items?.map((item) => ({
+      ...item,
+      isChecked: newIsCheckAll,
+    }));
+
+    // Update state with the new data and selection status
+    setCartItem({ ...cartItem, cart_items: newData });
+    setIsCheckAll(newIsCheckAll);
+
+    // Calculate the total for selected items
+    const totalSelectedItems = newData
       .filter((item) => item.isChecked)
       .reduce((acc, item) => acc + item.quantity * item.listPrice, 0);
 
-    setSelectedItemsTotal(total);
-    setCartItem({ ...cartItem, cart_items: updatedCartItems });
-  };
-
-  const handleSelectAll = () => {
-    setIsCheckAll(!isCheckAll);
-    const newData = cartItem?.cart_items?.map((item) => {
-      if (isCheckAll) {
-        item.isChecked = false;
-        setIsCheckAll(false);
-        return item;
-      } else {
-        item.isChecked = true;
-        setIsCheckAll(true);
-        return item;
-      }
-    });
-    setCartItem({ ...cartItem, cart_items: newData });
-
-    const total = newData
-      ?.filter((item) => item.isChecked)
-      ?.reduce((acc, item) => acc + item.quantity * item.listPrice, 0);
-
-    setSelectedItemsTotal(total);
+    // Update the total selected items state
+    setSelectedItemsTotal(totalSelectedItems);
   };
 
   const renderBalanceBadge = (balance) => {
-    if (balance > 0) {
-      const convertInt = parseInt(balance);
+    const convertInt = parseInt(balance);
+
+    if (convertInt > 0) {
       if (convertInt > 10) {
         return (
           <Badge color="teal" size="xs" classNames={{ root: "text-xl" }}>
@@ -459,49 +522,62 @@ const CartItems = () => {
           </Badge>
         );
       }
-      if (convertInt <= 10 && convertInt > 0) {
-        return (
-          <span className="text-sm-3 font-medium text-primary500 sm:text-xs">
-            {balance}
-          </span>
-        );
-      }
-    } else {
       return (
-        <Badge color="gray" size="xs">
-          Үлдэгдэлгүй
-        </Badge>
+        <span className="text-sm-3 font-medium text-primary500 sm:text-xs">
+          {balance}
+        </span>
       );
     }
+
+    return (
+      <Badge color="gray" size="xs">
+        Үлдэгдэлгүй
+      </Badge>
+    );
   };
 
-  const QuantityControl = ({ item }) => (
-    <div className="flex items-center justify-center gap-2 rounded py-1 sm:w-[40%] lg:p-1">
-      <ActionIcon
-        variant="light"
-        color="teal"
-        radius={"xl"}
-        onClick={(event) => minusQuantity(event, item?.quantity, item)}
-      >
-        <IconMinus
-          size={24}
-          color="#40C057"
-          className="h-4 w-4 lg:h-4 lg:w-4"
-        />
-      </ActionIcon>
-      <span className="text-[0.9rem] font-[500] text-[#212529] lg:text-[1rem]">
-        {item?.quantity}
-      </span>
-      <ActionIcon
-        variant="light"
-        color="teal"
-        radius={"xl"}
-        onClick={(event) => addQuantity(event, item?.quantity, item)}
-      >
-        <IconPlus size={24} color="#40C057" className="h-4 w-4 lg:h-4 lg:w-4" />
-      </ActionIcon>
-    </div>
-  );
+  const QuantityControl = ({ item }) => {
+    const handleQuantityChange = (event, action) => {
+      event.stopPropagation();
+      if (action === "minus") {
+        minusQuantity(event, item?.quantity, item);
+      } else {
+        addQuantity(event, item?.quantity, item);
+      }
+    };
+
+    return (
+      <div className="flex items-center justify-center gap-2 rounded py-1 sm:w-[40%] lg:p-1">
+        <ActionIcon
+          variant="light"
+          color="teal"
+          radius="xl"
+          onClick={(event) => handleQuantityChange(event, "minus")}
+        >
+          <IconMinus
+            size={24}
+            color="#40C057"
+            className="h-4 w-4 lg:h-4 lg:w-4"
+          />
+        </ActionIcon>
+        <span className="text-[0.9rem] font-[500] text-[#212529] lg:text-[1rem]">
+          {item?.quantity}
+        </span>
+        <ActionIcon
+          variant="light"
+          color="teal"
+          radius="xl"
+          onClick={(event) => handleQuantityChange(event, "plus")}
+        >
+          <IconPlus
+            size={24}
+            color="#40C057"
+            className="h-4 w-4 lg:h-4 lg:w-4"
+          />
+        </ActionIcon>
+      </div>
+    );
+  };
 
   const renderCartContent = () => {
     const hasItems = cartItem?.cart_items?.length > 0;
@@ -519,103 +595,91 @@ const CartItems = () => {
 
     return (
       <div className="flex flex-col">
-        {cartItem?.cart_items?.map((item, index) => {
-          return (
-            <button
-              className={`flex items-center justify-start gap-2 px-1 py-4 ${
-                index !== cartItem?.cart_items?.length - 1 && "border-b-1"
-              } hover:bg-grey100 ${item?.isChecked === true && "bg-grey100"}`}
-              key={index}
+        {cartItem?.cart_items?.map((item, index) => (
+          <button
+            key={item.id}
+            className={`flex items-center justify-start gap-2 px-1 py-4 ${index !== cartItem.cart_items.length - 1 && "border-b-1"} hover:bg-grey100 ${item?.isChecked ? "bg-grey100" : ""}`}
+            onClick={() => handleClick(item)}
+          >
+            <Checkbox
+              className="checkbox-input"
+              checked={item.isChecked}
+              id={item.id}
               onClick={() => handleClick(item)}
-            >
-              <Checkbox
-                className={"checkbox-input"}
-                checked={item.isChecked}
-                id={item.id}
-                onClick={() => handleClick(item)}
-                size={"xs"}
-                sx={{
-                  "@media (max-width: 40em)": {
-                    ".mantine-Checkbox-input": {
-                      width: "16px",
-                      height: "16px",
-                    },
+              size="xs"
+              sx={{
+                "@media (max-width: 40em)": {
+                  ".mantine-Checkbox-input": {
+                    width: "16px",
+                    height: "16px",
                   },
-                }}
-              />
-              <div className="flex flex-1 flex-col gap-2" key={index}>
-                <div className="flex flex-1 flex-col">
-                  <div className="flex flex-1 items-center justify-between gap-1">
-                    <div className="flex flex-1 gap-1">
-                      {item?.additionalImage?.[0]?.url ? (
-                        <Magnifier
-                          imgSrc={item?.additionalImage?.[0]?.url}
-                          imgWidth={32}
-                          imgHeight={32}
-                          magnifierRadius={50}
-                          containerClassname={
-                            "self-center shrink-0 bg-grey100 rounded"
-                          }
-                          imageClassname={"w-16 h-16"}
-                        />
-                      ) : (
-                        <div className="flex h-16 w-16 items-center justify-center rounded bg-grey100">
-                          <IconPhotoOff
-                            stroke={1.5}
-                            size={20}
-                            color="#40C057"
-                          />
+                },
+              }}
+            />
+            <div className="flex flex-1 flex-col gap-2">
+              <div className="flex flex-1 items-center justify-between gap-1">
+                <div className="flex flex-1 gap-1">
+                  {item?.additionalImage?.[0]?.url ? (
+                    <Magnifier
+                      imgSrc={item?.additionalImage?.[0]?.url}
+                      imgWidth={32}
+                      imgHeight={32}
+                      magnifierRadius={50}
+                      containerClassname="self-center shrink-0 bg-grey100 rounded"
+                      imageClassname="w-16 h-16"
+                    />
+                  ) : (
+                    <div className="flex h-16 w-16 items-center justify-center rounded bg-grey100">
+                      <IconPhotoOff stroke={1.5} size={20} color="#40C057" />
+                    </div>
+                  )}
+                  <div className="flex flex-1 flex-col">
+                    <div className="ml-2 flex flex-1 flex-col sm:flex-row">
+                      <div className="flex flex-col sm:w-[60%]">
+                        <span className="line-clamp-2 text-start text-ss font-medium text-grey800 lg:text-base xl:text-lg">
+                          {item?.name}
+                        </span>
+                        <span className="text-start text-sm font-medium text-grey600 lg:text-ss xl:text-base">
+                          {numberWithCommas(item.listPrice)}₮
+                        </span>
+                        <div className="hidden items-center gap-1 sm:flex">
+                          <span className="text-sm font-[500] text-[#2125297a] lg:text-ss xl:text-base">
+                            Үлдэгдэл:
+                          </span>
+                          {renderBalanceBadge(item?.balance)}
                         </div>
-                      )}
-                      <div className="flex flex-1 flex-col">
-                        <div className="ml-2 flex flex-1 flex-col sm:flex-row">
-                          <div className="flex flex-col sm:w-[60%]">
-                            <span className="line-clamp-2 text-start text-ss font-medium text-grey800 lg:text-base xl:text-lg">
-                              {item?.name}
-                            </span>
-                            <span className="text-start text-sm font-medium text-grey600 lg:text-ss xl:text-base">
-                              {numberWithCommas(item.listPrice)}₮
-                            </span>
-                            <div className="hidden items-center gap-1 sm:flex">
-                              <span className="text-sm font-[500] text-[#2125297a] lg:text-ss xl:text-base">
-                                Үлдэгдэл:
-                              </span>
-                              {renderBalanceBadge(item?.balance)}
-                            </div>
-                          </div>
+                      </div>
 
-                          <div className="flex items-center justify-between sm:relative sm:flex-1">
-                            <QuantityControl item={item} />
-                            <div className="flex sm:flex-1 sm:flex-col">
-                              <span className="text-ss font-medium text-[#212529] lg:text-lg">
-                                {numberWithCommas(item.total)}₮
-                              </span>
-                            </div>
-                          </div>
+                      <div className="flex items-center justify-between sm:relative sm:flex-1">
+                        <QuantityControl item={item} />
+                        <div className="flex sm:flex-1 sm:flex-col">
+                          <span className="text-ss font-medium text-[#212529] lg:text-lg">
+                            {numberWithCommas(item.total)}₮
+                          </span>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="ml-0 mt-2 flex flex-1 justify-between sm:hidden">
-                    <div className="flex items-center gap-1">
-                      <span className="text-sm font-[500] text-[#2125297a] lg:text-[0.87rem]">
-                        Үлдэгдэл:
-                      </span>
-                      {renderBalanceBadge(item?.balance)}
-                    </div>
-                    <button
-                      className="flex flex-row items-center gap-1 px-2"
-                      onClick={(event) => deleteCartItem(event, item?.id)}
-                    >
-                      <span className="text-sm text-grey500">Устгах</span>
-                      <IconX className="h-5 w-5 text-red-400" />
-                    </button>
-                  </div>
                 </div>
               </div>
-            </button>
-          );
-        })}
+              <div className="ml-0 mt-2 flex flex-1 justify-between sm:hidden">
+                <div className="flex items-center gap-1">
+                  <span className="text-sm font-[500] text-[#2125297a] lg:text-[0.87rem]">
+                    Үлдэгдэл:
+                  </span>
+                  {renderBalanceBadge(item?.balance)}
+                </div>
+                <button
+                  className="flex flex-row items-center gap-1 px-2"
+                  onClick={(event) => deleteCartItem(event, item?.id)}
+                >
+                  <span className="text-sm text-grey500">Устгах</span>
+                  <IconX className="h-5 w-5 text-red-400" />
+                </button>
+              </div>
+            </div>
+          </button>
+        ))}
       </div>
     );
   };
@@ -649,28 +713,6 @@ const CartItems = () => {
         handleInvoiceInput={handleInvoiceInput}
       />
       <div className="relative w-full bg-grey-back px-4 py-8 lg:px-8">
-        {/* <div className="absolute top-9">
-          <Button
-            variant="subtle"
-            color=""
-            leftIcon={<IconArrowLeft />}
-            px={0}
-            size="lg"
-            styles={(theme) => ({
-              root: {
-                color: theme.fn.darken("#F9BC60", 0.04),
-                "&:hover": theme.fn.hover({
-                  color: theme.fn.darken("#F9BC60", 0.06),
-                  background: "none",
-                  textDecoration: "underline",
-                }),
-              },
-            })}
-            onClick={handleBack}
-          >
-            Буцах
-          </Button>
-        </div> */}
         <div className="flex flex-col gap-4 md:flex-row lg:mt-8 lg:gap-6">
           <div className="lg:gap- relative flex w-[100%] flex-col md:w-[65%] lg:w-[70%]">
             <div className="rounded-lg bg-white px-3 py-3 shadow-md lg:px-10 lg:py-6">
@@ -801,6 +843,14 @@ const CartItems = () => {
                 )} */}
                 Захиалга хийх
               </Button>
+              {checked && (
+                <div className="rounded-md border-2 border-primary p-2 text-lg font-semibold text-gray-700">
+                  Санамж
+                  <p className="mt-1 text-base font-regular text-gray-600">
+                    {reminderText?.value || ""}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

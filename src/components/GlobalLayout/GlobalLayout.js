@@ -3,17 +3,18 @@
 import Head from "next/head";
 import React, { useContext, useEffect, useState } from "react";
 import BottomFooter from "../Footer";
-import { UserConfigContext } from "@/utils/userConfigContext";
 import BottomNavBar from "../BottomNavBar";
 import Navbar from "../Navbar/Navbar";
+import useUser from "@/hooks/useUser";
 
 export default function GlobalLayout({
   children,
   footer = true,
   title = "Таримал Ургамал ХХК",
 }) {
-  const userContext = useContext(UserConfigContext);
+  const userContext = useUser();
   const [_, setUserConfigValue] = useState(userContext.preferenceConfig);
+
   useEffect(() => {
     setUserConfigValue(userContext.configId);
   }, [userContext.preferenceConfig, userContext.configId]);

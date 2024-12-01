@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { ThemeIcon } from "@mantine/core";
 import CategoryHover from "./AllCategory/CategoryHover";
@@ -11,14 +11,14 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
-import { Navigation, Pagination } from "swiper/modules";
-import { UserConfigContext } from "@/utils/userConfigContext";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import useUser from "@/hooks/useUser";
 
 const Banner = () => {
   const [hoveredCategory, setHoveredCategory] = useState([]);
   const [parentId, setParentId] = useState("");
   const categories = useCategories();
-  const user = useContext(UserConfigContext);
+  const user = useUser();
 
   return (
     <div className="relative mx-auto mt-8 flex h-[320px] w-[100%] p-1 sm:h-[380px] md:h-[24rem] lg:h-[36rem]">
@@ -75,9 +75,13 @@ const Banner = () => {
         pagination={{
           dynamicBullets: true,
         }}
+        autoplay={{
+          delay: 3000, // Adjust the delay (in ms) between slides
+          disableOnInteraction: false, // Keep autoplay running after user interaction
+        }}
         loop={true}
         className="mySwiper"
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, Pagination, Autoplay]}
         slidesPerView={1}
         style={{
           "--swiper-pagination-bullet-inactive-color": "#40C057",

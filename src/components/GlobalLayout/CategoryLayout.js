@@ -4,17 +4,18 @@ import Head from "next/head";
 import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import BottomFooter from "../Footer";
-import { UserConfigContext } from "@/utils/userConfigContext";
 import BottomNavBar from "../BottomNavBar";
 import Category from "@/components/AllCategory/Category";
 import { ColorSchemeScript } from "@mantine/core";
+import useUser from "@/hooks/useUser";
 
 export default function CategoryLayout({
   children,
   footer = true,
   title = "Таримал Ургамал ХХК",
+  initPage,
 }) {
-  const userContext = useContext(UserConfigContext);
+  const userContext = useUser();
   const [_, setUserConfigValue] = useState(userContext.preferenceConfig);
   useEffect(() => {
     setUserConfigValue(userContext.configId);
@@ -60,7 +61,7 @@ export default function CategoryLayout({
           <Navbar address={userContext?.address} />
           <div className="flex flex-row">
             <aside className="sticky top-0 hidden h-screen lg:block">
-              <Category />
+              <Category initPage={initPage} />
             </aside>
             {children}
           </div>

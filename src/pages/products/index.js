@@ -5,7 +5,6 @@ import { PAGE_SIZE } from "@/utils/constant";
 import { fetchMethod } from "@/utils/fetch";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-// import { Virtuoso, VirtuosoGrid } from "react-virtuoso";
 import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
 import ProductCard from "@/components/ProductCard";
 import { Pagination } from "@mantine/core";
@@ -46,25 +45,6 @@ export default function SearchResult({ initialData }) {
 
   const isEmpty = products?.[0]?.length === 0;
 
-  // useEffect(() => {
-  //   if (isFetch) {
-  //     setSize((prevSize) => prevSize + 1);
-  //   }
-  // }, [isFetch]);
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", infiniteScroll);
-  //   return () => window.removeEventListener("scroll", infiniteScroll);
-  // }, [data]);
-
-  // useEffect(() => {
-  //   if (data?.length > 0 && !isEmpty) {
-  //     setProducts(products.concat(...data[data.length - 1]));
-  //     setIsFetch(false);
-  //   }
-  //   // data && !isEmpty && setProducts(products.concat(...data.result));
-  // }, [data]);
-
   useEffect(() => {
     if (data?.length > 0) {
       setProducts(data?.[data?.length - 1]?.data);
@@ -88,9 +68,6 @@ export default function SearchResult({ initialData }) {
   return (
     <CategoryLayout>
       <div className="flex min-h-screen w-full gap-6 px-10 py-12">
-        {/* //! todo */}
-        {/* <div className="min-w-[350px] w-[350px] max-w-[350px] hidden lg:block relative">
-        </div> */}
         <div className="flex flex-col">
           <ProductGridList
             showSkeleton={isLoading}

@@ -5,7 +5,7 @@ export const addCart = (product) => {
     if (get) {
       let state = JSON.parse(get);
       const existingItemIndex = state?.cart_items?.findIndex(
-        (item) => item.id === product.id
+        (item) => item.id === product.id,
       );
       let updatedCartItems;
       if (existingItemIndex !== -1) {

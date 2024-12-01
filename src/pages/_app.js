@@ -8,10 +8,6 @@ import PaymentModal from "@/components/PaymentModal/PaymentModal";
 import BankInfoModal from "@/components/refund_modals/BankInfoModal";
 import RefundRichText from "@/components/refund_modals/RefundRichText";
 import "@/styles/globals.css";
-import CategoryContextProvider from "@/utils/categoryContextProvider";
-import SocketProvider from "@/utils/SocketProvider";
-import { UserConfigProvider } from "@/utils/userConfigProvider";
-import WishlistProvider from "@/utils/wishlistProvider";
 import { createTheme, MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
@@ -28,7 +24,11 @@ import "@mantine/tiptap/styles.css";
 import classes from "@/styles/focus.module.css";
 import "@mantine/carousel/styles.css";
 import React from "react";
-
+import SocketProvider from "@/provider/SocketProvider";
+import { UserConfigProvider } from "@/provider/userConfigProvider";
+import WishlistProvider from "@/provider/WishlistProvider";
+import CategoryContextProvider from "@/provider/CategoryContextProvider";
+import { ActivePageProvider } from "@/provider/ActivePageProvider";
 export default function App({ Component, pageProps }) {
   const theme = createTheme({
     fontFamily: sfProRounded.style.fontFamily,
@@ -54,36 +54,38 @@ export default function App({ Component, pageProps }) {
         <SocketProvider>
           <Notifications />
           <UserConfigProvider>
-            <WishlistProvider>
-              <ModalsProvider
-                modals={{
-                  login: LoginModal,
-                  payment: PaymentModal,
-                  invoice: InvoiceModal,
-                  bankInfo: BankInfoModal,
-                  refundDescription: RefundRichText,
-                  invoiceFile: InvoiceFileModal,
-                  changeModal: ChangeModal,
-                  ebarimt: EbarimtModal,
-                }}
-              >
-                <CategoryContextProvider>
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  >
-                    <main
-                      className={`${sfProRounded.variable}`}
-                      style={{ width: "100%", height: "100%" }}
+            <ActivePageProvider>
+              <WishlistProvider>
+                <ModalsProvider
+                  modals={{
+                    login: LoginModal,
+                    payment: PaymentModal,
+                    invoice: InvoiceModal,
+                    bankInfo: BankInfoModal,
+                    refundDescription: RefundRichText,
+                    invoiceFile: InvoiceFileModal,
+                    changeModal: ChangeModal,
+                    ebarimt: EbarimtModal,
+                  }}
+                >
+                  <CategoryContextProvider>
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                      }}
                     >
-                      <Component {...pageProps} />
-                    </main>
-                  </div>
-                </CategoryContextProvider>
-              </ModalsProvider>
-            </WishlistProvider>
+                      <main
+                        className={`${sfProRounded.variable}`}
+                        style={{ width: "100%", height: "100%" }}
+                      >
+                        <Component {...pageProps} />
+                      </main>
+                    </div>
+                  </CategoryContextProvider>
+                </ModalsProvider>
+              </WishlistProvider>
+            </ActivePageProvider>
           </UserConfigProvider>
         </SocketProvider>
       </MantineProvider>

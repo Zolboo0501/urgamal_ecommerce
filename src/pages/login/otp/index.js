@@ -1,5 +1,5 @@
+import useUser from "@/hooks/useUser";
 import { fetchMethod } from "@/utils/fetch";
-import { UserConfigContext } from "@/utils/userConfigContext";
 import { errorNotification, successNotification } from "@/utils/utils";
 import {
   Button,
@@ -14,7 +14,7 @@ import { IconPhoneCall } from "@tabler/icons-react";
 import { setCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const icon = (
   <IconPhoneCall
@@ -25,7 +25,7 @@ const icon = (
 
 const OTP = () => {
   const router = useRouter();
-  const { login } = useContext(UserConfigContext);
+  const { login } = useUser();
   const [otpRequested, setOtpRequested] = useState(false);
   const [otp, setOtp] = useState("");
   const [number, setNumber] = useState("");

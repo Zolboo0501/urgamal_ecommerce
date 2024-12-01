@@ -2,7 +2,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 // eslint-disable-next-line no-undef
 const { createContext, useState, useEffect } = require("react");
-import { fetchMethod } from "./fetch";
+import { fetchMethod } from "../utils/fetch";
 
 export const CategoryContext = createContext();
 

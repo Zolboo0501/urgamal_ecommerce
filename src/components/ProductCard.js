@@ -152,6 +152,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
       );
     }
   };
+
   return (
     <Card
       shadow="md"

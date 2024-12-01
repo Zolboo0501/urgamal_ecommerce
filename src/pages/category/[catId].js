@@ -1,92 +1,48 @@
 /* eslint-disable no-undef */
-/* eslint-disable react/prop-types */
 import CategoryLayout from "@/components/GlobalLayout/CategoryLayout";
 import ProductCard from "@/components/ProductCard";
 import ProductGridList from "@/components/ProductGridList/ProductGridList";
+import useActivePage from "@/hooks/useActivePage";
 import { PAGE_SIZE } from "@/utils/constant";
-import { fetchMethod } from "@/utils/fetch";
 import { Pagination } from "@mantine/core";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 
-export async function getServerSideProps({ query }) {
-  const { catId } = query;
-  try {
-    const data = await fetchMethod(
-      "GET",
-      `product?offset=0&limit=${PAGE_SIZE}&query=&categoryId=${catId}`,
-    );
-
-    return {
-      props: {
-        initialData: data,
-      },
-    };
-  } catch (err) {
-    console.log(err, "err");
-    return {
-      props: {
-        initialData: [],
-      },
-    };
-  }
-}
-
-const CategoryPage = ({ initialData }) => {
+const CategoryPage = () => {
   const router = useRouter();
   const { catId } = router.query;
-  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [total, setTotal] = useState(0);
-  const [activePage, setActivePage] = useState(1);
-  const fetcher = async (url) =>
-    axios
-      .get(url, { headers: { "Content-Type": "application/json" } })
-      .then((res) => {
-        return { data: res?.data?.result, total: res.data?.meta?.total };
-      })
-      .catch((error) => console.log(error, "err in fetcher"));
+  const [products, setProducts] = useState([]);
+  const { activePage, setActivePage } = useActivePage();
 
-  const { data, setSize } = useSWRInfinite(
-    (index) =>
-      `${process.env.NEXT_PUBLIC_API_URL}/product?offset=${
-        (index + 1) * 20
-      }&limit=${PAGE_SIZE}&query=&categoryId=${catId}`,
-    fetcher,
-    { revalidateFirstPage: false },
-  );
-
-  const isEmpty = products?.length === 0;
-  const fetchMore = async (value) => {
-    setLoading(true);
-    setSize(value);
-    setLoading(false);
+  const fetcher = async (url) => {
+    try {
+      const res = await axios.get(url, {
+        headers: { "Content-Type": "application/json" },
+      });
+      return { data: res?.data?.result, total: res?.data?.meta?.total };
+    } catch (error) {
+      console.log("Error in fetcher", error);
+    }
   };
 
-  useEffect(() => {
-    if (data?.length > 0) {
-      setProducts(data?.[data?.length - 1]?.data);
-      setTotal(data?.[data?.length - 1]?.total);
-      // setProducts(data?.[data?.length - 1]);
-    } else {
-      setProducts(initialData?.result);
-      setTotal(initialData?.meta?.total);
-    }
-  }, [data]);
+  const getKey = (pageIndex, previousPageData) => {
+    if (previousPageData && previousPageData.data?.length === 0) return null; // End of pagination
+    return `${process.env.NEXT_PUBLIC_API_URL}/product?offset=${
+      pageIndex * PAGE_SIZE
+    }&limit=${PAGE_SIZE}&query=&categoryId=${catId}`;
+  };
 
-  useEffect(() => {
-    setSize(0);
+  const { data, setSize } = useSWRInfinite(getKey, fetcher, {
+    revalidateFirstPage: false,
+  });
+
+  const initPage = () => {
+    setSize(1);
     setActivePage(1);
-  }, [catId]);
-
-  useEffect(() => {
-    setLoading(true);
-    setProducts(initialData?.result);
-    setLoading(false);
-    setTotal(initialData?.meta?.total);
-  }, [initialData]);
+  };
 
   function categoryPositioner() {
     var navbar = document.getElementById("category-menu");
@@ -99,6 +55,11 @@ const CategoryPage = ({ initialData }) => {
     }
   }
 
+  const fetchMore = (page) => {
+    setActivePage(page);
+    setSize(page);
+  };
+
   useEffect(() => {
     window.addEventListener("scroll", categoryPositioner);
     return () => {
@@ -106,13 +67,16 @@ const CategoryPage = ({ initialData }) => {
     };
   }, []);
 
-  const calculateTotal = () => {
-    let page = total / 20;
-    const pageMore = total % 20;
-    return pageMore > 0 ? page + 1 : page;
-  };
+  useEffect(() => {
+    if (data?.length > 0 && data?.[0]?.data) {
+      setLoading(true);
+      setProducts(data?.[data?.length - 1]?.data);
+      setLoading(false);
+    }
+  }, [data]);
+
   return (
-    <CategoryLayout>
+    <CategoryLayout initPage={initPage}>
       <div className="flex-1">
         <div className="h-full px-4 md:px-5">
           <div className="flex h-full flex-row justify-between gap-10 py-6 md:py-6">
@@ -124,7 +88,7 @@ const CategoryPage = ({ initialData }) => {
               <div className="flex flex-row items-center">
                 <span className="text-xl text-grey600">Нийт бүтээгдэхүүн</span>
                 <span className="ml-2 text-2xl font-bold text-primary">
-                  {total}
+                  {data?.length > 0 ? data?.[0]?.total : 0}
                 </span>
               </div>
 
@@ -132,41 +96,32 @@ const CategoryPage = ({ initialData }) => {
                 <ProductGridList
                   showSkeleton={loading}
                   emptyStateMessage="Ангиллын бараа олдсонгүй"
-                  isEmpty={isEmpty}
+                  isEmpty={!products || products?.length === 0}
                 >
-                  {products?.map((e, index) => (
-                    <ProductCard
-                      key={`product-card-key-${index}-${e?.id}`}
-                      src={e?.additionalImage?.[0]}
-                      additionalImages={e.additionalImage?.slice(1)}
-                      data={e}
-                    />
-                  ))}
+                  {products?.length > 0 &&
+                    products.map((e, index) => (
+                      <ProductCard
+                        key={`product-card-key-${index}-${e?.id}`}
+                        src={e?.additionalImage?.[0]}
+                        additionalImages={e.additionalImage?.slice(1)}
+                        data={e}
+                      />
+                    ))}
                 </ProductGridList>
                 <div className="mt-8 flex items-center justify-center">
                   <Pagination
-                    total={calculateTotal()}
+                    total={
+                      data?.[0]?.total
+                        ? Math.ceil(data[0].total / PAGE_SIZE)
+                        : 0
+                    }
                     color="teal"
                     radius="xl"
                     value={activePage}
                     siblings={2}
-                    onChange={(value) => {
-                      setActivePage(value);
-                      fetchMore(value - 1);
-                    }}
+                    onChange={(value) => fetchMore(value)}
                   />
                 </div>
-                {/* {total !== products?.length && (
-                  <div className="flex justify-center items-center mt-8">
-                    <Button
-                      variant="outline"
-                      color="yellow"
-                      onClick={() => fetchMore()}
-                    >
-                      Цааш үзэх
-                    </Button>
-                  </div>
-                )} */}
               </div>
             </div>
           </div>
