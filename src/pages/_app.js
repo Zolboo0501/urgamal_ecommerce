@@ -25,7 +25,7 @@ import classes from "@/styles/focus.module.css";
 import "@mantine/carousel/styles.css";
 import React from "react";
 import SocketProvider from "@/provider/SocketProvider";
-import { UserConfigProvider } from "@/provider/userConfigProvider";
+import { UserConfigProvider } from "../provider/UserConfigProvider";
 import WishlistProvider from "@/provider/WishlistProvider";
 import CategoryContextProvider from "@/provider/CategoryContextProvider";
 import { ActivePageProvider } from "@/provider/ActivePageProvider";
