@@ -6,6 +6,8 @@ import BottomFooter from "../Footer";
 import BottomNavBar from "../BottomNavBar";
 import Navbar from "../Navbar/Navbar";
 import useUser from "@/hooks/useUser";
+import Image from "next/image";
+import FloatButtons from "../FloatButtons";
 
 export default function GlobalLayout({
   children,
@@ -29,7 +31,7 @@ export default function GlobalLayout({
   // };
 
   return (
-    <div style={{ width: "100%", height: "100%" }}>
+    <div style={{ width: "100%", height: "100%", position: "relative" }}>
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -65,6 +67,7 @@ export default function GlobalLayout({
         >
           <Navbar address={userContext?.address} />
           {children}
+          <FloatButtons address={userContext?.address} />
           {footer && (
             <BottomFooter
               address={userContext?.address}
