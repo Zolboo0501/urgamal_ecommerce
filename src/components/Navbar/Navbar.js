@@ -106,12 +106,15 @@ const Navbar = (props) => {
   // }, [categories]);
 
   const renderOptionItem = ({ option }) => {
-    const value = suggestions?.filter(
+    const value = uniqueSuggestions?.filter(
       (item) => item?.value === option?.value,
     )?.[0];
 
     return (
-      <div className="flex items-center gap-2 p-2 hover:rounded-md hover:bg-gray-100">
+      <div
+        className="flex items-center gap-2 p-2 hover:rounded-md hover:bg-gray-100"
+        key={value?.id}
+      >
         <Avatar
           src={value?.image}
           alt="Зураг"
@@ -310,6 +313,11 @@ const Navbar = (props) => {
     );
   };
 
+  const uniqueSuggestions = suggestions.filter(
+    (item, index, self) =>
+      index === self.findIndex((t) => t.value === item.value),
+  );
+
   return (
     <div
       className="sticky top-0 z-30 shadow"
@@ -411,7 +419,7 @@ const Navbar = (props) => {
               className="w-full"
               size={"md"}
               placeholder="Хайлт хийх.."
-              data={suggestions ? suggestions : []}
+              data={uniqueSuggestions ? uniqueSuggestions : []}
               renderOption={renderOptionItem}
               limit={7}
               radius={30}
@@ -450,7 +458,7 @@ const Navbar = (props) => {
                 }
               }}
               onOptionSubmit={(option) => {
-                const value = suggestions?.filter(
+                const value = uniqueSuggestions?.filter(
                   (item) => item?.value === option,
                 )?.[0];
                 router.push({
@@ -490,7 +498,7 @@ const Navbar = (props) => {
                 className="w-full"
                 size={"sm"}
                 placeholder="Хайлт хийх.."
-                data={suggestions ? suggestions : []}
+                data={uniqueSuggestions ? uniqueSuggestions : []}
                 renderOption={renderOptionItem}
                 limit={7}
                 radius={30}
@@ -537,7 +545,7 @@ const Navbar = (props) => {
                   }
                 }}
                 onOptionSubmit={(option) => {
-                  const value = suggestions?.filter(
+                  const value = uniqueSuggestions?.filter(
                     (item) => item?.value === option,
                   )?.[0];
                   router.push({

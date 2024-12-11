@@ -17,11 +17,11 @@ const Notification = () => {
   const router = useRouter();
   const getNotification = async () => {
     const token = getCookie("token");
-    const data = await fetchMethod("GET", `user/notification`, token);
-    if (data?.success) {
-      setList(data?.data);
-    } else {
-      console.log(data?.message, "err");
+    if (token) {
+      const data = await fetchMethod("GET", `user/notification`, token);
+      if (data?.success) {
+        setList(data?.data);
+      }
     }
   };
 

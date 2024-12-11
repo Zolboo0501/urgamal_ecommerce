@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import axios from "axios";
+
 export const fetchMethod = async (method, path, token, body) => {
   const headers = {
     "Content-Type": "application/json",
@@ -24,7 +25,9 @@ export const fetchMethod = async (method, path, token, body) => {
       const errorData = await response.json();
       console.log(errorData.message || "An error occurred");
     }
-
+    // if (response.status === 401) {
+    //   window.location.href = "/login?expired";
+    // }
     // If status is 200, return the response as JSON
     return await response.json();
   } catch (err) {
