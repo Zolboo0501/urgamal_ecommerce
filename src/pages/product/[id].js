@@ -413,9 +413,12 @@ const ProductDetail = ({ product, dealData, category }) => {
           {product?.description && (
             <div className="flex flex-col gap-3 text-lg font-semibold text-grey700">
               Тайлбар
-              <p className="text-sm font-regular text-black">
-                {product?.description}
-              </p>
+              <p
+                className="text-sm font-regular text-black"
+                dangerouslySetInnerHTML={{
+                  __html: product?.description,
+                }}
+              />
             </div>
           )}
           {product?.note && (
