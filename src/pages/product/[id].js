@@ -362,19 +362,17 @@ const ProductDetail = ({ product, dealData, category }) => {
                     </span>
                   </div>
                 </div>
-
                 {product?.instruction && (
                   <div className="flex flex-col gap-4">
                     <span className="flex text-base font-semibold text-greenish-grey">
                       Хэрэглэх заавар
                     </span>
-                    <textarea
-                      cols={80}
-                      rows={15}
-                      readOnly
-                      className="focus: w-full overflow-y-auto overflow-x-hidden rounded-md bg-[#F8FAFC] px-3 py-3 text-base outline-0"
-                      value={product.instruction}
-                    ></textarea>
+                    <div
+                      className="w-full overflow-y-auto overflow-x-hidden rounded-md bg-[#F8FAFC] px-3 py-3 text-base outline-0"
+                      dangerouslySetInnerHTML={{
+                        __html: product.instruction || "",
+                      }}
+                    />
                   </div>
                 )}
               </div>
@@ -413,10 +411,10 @@ const ProductDetail = ({ product, dealData, category }) => {
           {product?.description && (
             <div className="flex flex-col gap-3 text-lg font-semibold text-grey700">
               Тайлбар
-              <p
-                className="text-sm font-regular text-black"
+              <div
+                className="text-base font-regular text-black"
                 dangerouslySetInnerHTML={{
-                  __html: product?.description,
+                  __html: product?.description || "",
                 }}
               />
             </div>
