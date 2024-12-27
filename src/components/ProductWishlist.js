@@ -86,6 +86,7 @@ const ProductWishlist = ({ data, refresh }) => {
     }
   };
 
+
   return (
     <div className="w-full rounded p-4 shadow-md hover:bg-gray-50">
       <div className="flex flex-col gap-2 p-4 sm:flex-row">
@@ -108,7 +109,7 @@ const ProductWishlist = ({ data, refresh }) => {
           )}
         </div>
         <div className="flex flex-col justify-around sm:ml-3">
-          <p className="text-lg font-semibold lg:text-lg">{data.name}</p>
+          <a className="text-lg font-semibold lg:text-lg cursor:hover" href={`/product/${data.productid}`} >{data.name}</a>
           <div className="mt-1 flex flex-row flex-wrap items-center gap-5">
             <div className="flex flex-row items-center">
               <p className="text-base text-[#696A6C] lg:text-base">Үнэ :</p>
