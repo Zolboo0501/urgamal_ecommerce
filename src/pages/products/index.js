@@ -55,34 +55,53 @@ export default function SearchResult() {
 
   return (
     <CategoryLayout initPage={initPage}>
-      <div className="flex min-h-screen w-full gap-6 px-10 py-12">
-        <div className="flex flex-col">
-          <ProductGridList
-            showSkeleton={loading}
-            emptyStateMessage="Ангиллын бараа олдсонгүй"
-            isEmpty={!products || products?.length === 0}
-          >
-            {products?.length > 0 &&
-              products.map((e, index) => (
-                <ProductCard
-                  key={`product-card-key-${index}-${e?.id}`}
-                  src={e?.additionalImage?.[0]}
-                  additionalImages={e.additionalImage?.slice(1)}
-                  data={e}
-                />
-              ))}
-          </ProductGridList>
-          <div className="mt-8 flex items-center justify-center">
-            <Pagination
-              total={
-                data?.[0]?.total ? Math.ceil(data[0].total / PAGE_SIZE) : 0
-              }
-              color="teal"
-              radius="xl"
-              value={activePage}
-              siblings={2}
-              onChange={(value) => fetchMore(value)}
-            />
+      <div className="flex-1">
+        <div className="h-full px-4 md:px-5">
+          <div className="flex h-full flex-row justify-between gap-10 py-6 md:py-6">
+            <div
+              className="flex h-full w-full flex-row"
+              style={{ gap: "30px", flexWrap: "wrap" }}
+              id={"content"}
+            >
+              <div className="flex flex-row items-center">
+                <span className="text-xl text-grey600">Нийт бүтээгдэхүүн</span>
+                <span className="ml-2 text-2xl font-bold text-primary">
+                  {data?.length > 0 ? data?.[0]?.total : 0}
+                </span>
+              </div>
+
+              <div className="flex w-full flex-col">
+                <ProductGridList
+                  showSkeleton={loading}
+                  emptyStateMessage="Ангиллын бараа олдсонгүй"
+                  isEmpty={!products || products?.length === 0}
+                >
+                  {products?.length > 0 &&
+                    products.map((e, index) => (
+                      <ProductCard
+                        key={`product-card-key-${index}-${e?.id}`}
+                        src={e?.additionalImage?.[0]}
+                        additionalImages={e.additionalImage?.slice(1)}
+                        data={e}
+                      />
+                    ))}
+                </ProductGridList>
+                <div className="mt-8 flex items-center justify-center">
+                  <Pagination
+                    total={
+                      data?.[0]?.total
+                        ? Math.ceil(data[0].total / PAGE_SIZE)
+                        : 0
+                    }
+                    color="teal"
+                    radius="xl"
+                    value={activePage}
+                    siblings={2}
+                    onChange={(value) => fetchMore(value)}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

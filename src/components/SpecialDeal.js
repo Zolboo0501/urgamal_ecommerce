@@ -89,6 +89,8 @@ export default function ProductListWithCategory({ className, suggest }) {
       1520: { slidesPerView: suggest ? 5 : 4, spaceBetween: 30 },
       1780: { slidesPerView: suggest ? 6 : 5, spaceBetween: 30 },
       2000: { slidesPerView: suggest ? 7 : 6, spaceBetween: 30 },
+      2300: { slidesPerView: suggest ? 8 : 7, spaceBetween: 30 },
+      2600: { slidesPerView: suggest ? 9 : 8, spaceBetween: 30 },
     };
 
     return (

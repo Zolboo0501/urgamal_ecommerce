@@ -63,7 +63,7 @@ export default function CategoryLayout({
             <aside className="sticky top-0 hidden h-screen lg:block">
               <Category initPage={initPage} />
             </aside>
-            <div className="mx-auto max-w-[1366px]">{children}</div>
+            {children}
           </div>
           {footer && (
             <BottomFooter
