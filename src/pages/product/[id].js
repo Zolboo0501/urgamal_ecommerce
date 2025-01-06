@@ -84,6 +84,7 @@ export async function getServerSideProps({ params }) {
 }
 
 const ProductDetail = ({ product, dealData, category }) => {
+  console.log(product)
   const [renderImage, setRenderImage] = useState("");
   const wishlist = useWishlist();
   const router = useRouter();

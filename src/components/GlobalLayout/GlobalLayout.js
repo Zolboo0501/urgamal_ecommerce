@@ -66,7 +66,9 @@ export default function GlobalLayout({
           }}
         >
           <Navbar address={userContext?.address} />
+          <div className="max-w-[1366px] mx-auto">
           {children}
+          </div>
           <FloatButtons address={userContext?.address} />
           {footer && (
             <BottomFooter

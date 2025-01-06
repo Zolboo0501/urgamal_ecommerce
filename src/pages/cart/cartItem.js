@@ -25,10 +25,12 @@ import {
   Modal,
   Stack,
   Switch,
+  TextInput,
   Tooltip,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { openContextModal } from "@mantine/modals";
+import { isNotEmpty } from "@mantine/form";
 import {
   IconAlertCircle,
   IconCheck,
@@ -69,6 +71,20 @@ const CartItems = () => {
     useDisclosure(false);
   const [inputOpened, { open: openInput, close: closeInput }] =
     useDisclosure(false);
+  const [userData, setUserData] = useState({
+    email: "",
+    phone_number: "",
+  });
+
+  const getUserInfo = async () => {
+    const data = await fetchMethod("GET", "user/profile", userToken);
+    if (data.success) {
+      setUserData({
+        email: data.data?.email,
+        phone_number: data.data?.mobile,
+      });
+    }
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -83,6 +99,7 @@ const CartItems = () => {
     if (data) {
       setCartItem(data);
     }
+    getUserInfo();
     getReminder();
   }, []);
 
@@ -176,6 +193,8 @@ const CartItems = () => {
     const requestBody = {
       address_id: addressId,
       cart_items: selectedItemsIds,
+      phone_number: userData?.phone_number,
+      email: userData?.email,
     };
 
     console.log(requestBody, "requestBody");
@@ -303,6 +322,12 @@ const CartItems = () => {
   };
 
   const makeOrder = async () => {
+    if(userData?.phone_number === "" || userData?.email === "" || !isNotEmpty(userData?.phone_number) || !isNotEmpty(userData?.email)) {
+      return errorNotification({
+        message: "Утасны дугаар болон имэйл хаягаа оруулна уу.",
+        color: "red",
+      });
+    }
     if (!cartItem?.cart_items?.length) {
       return errorNotification({
         message: "Сагс хоосон байна.",
@@ -811,6 +836,37 @@ const CartItems = () => {
                   )}
                   ₮
                 </span>
+              </span>
+              <hr className="border-t-dashed my-1 h-px border-0 bg-gray-300" />
+              <span className="mb-1 flex justify-between text-sm font-[400] text-[#212529af] lg:text-[1.1rem]">
+                <TextInput
+                  className="w-full"
+                  withAsterisk
+                  id="input-street"
+                  label="Хүлээж авах утасны дугаар"
+                  value={userData?.phone_number}
+                  onChange={(event) =>
+                    setUserData({
+                      ...userData,
+                      phone_number: event.currentTarget.value,
+                    })
+                  }
+                />
+              </span>
+              <span className="mb-1 flex justify-between text-sm font-[400] text-[#212529af] lg:text-[1.1rem]">
+                <TextInput
+                  className="w-full"
+                  withAsterisk
+                  id="input-street"
+                  label="Имэйл хаяг"
+                  value={userData?.email}
+                  onChange={(event) =>
+                    setUserData({
+                      ...userData,
+                      email: event.currentTarget.value,
+                    })
+                  }
+                />
               </span>
               <Button
                 styles={() => ({

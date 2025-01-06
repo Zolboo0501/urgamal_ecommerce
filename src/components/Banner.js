@@ -109,16 +109,25 @@ const Banner = () => {
           user?.address?.banners.map((item, index) => {
             return (
               <SwiperSlide key={index} style={{ opacity: 1 }}>
-                <Image
+                <img
+                  src={item}
+                  alt={item}
+                  className="h-full max-w-[1366px] max-h-[768px] object-cover object-center"
+                  // className="w-full h-auto object-cover object-center"
+                  // className="w-full bg-cover bg-center flex justify-center items-center"
+                ></img>
+                {/* <Image
                   alt={item}
                   src={item}
                   fill
+                  // width={480}
+                  // height={270}
                   style={{
                     width: "100%",
                     aspectRatio: "70 / 45", // Ensures correct aspect ratio
                   }}
                   className="relative h-auto w-full md:object-fill"
-                />
+                /> */}
               </SwiperSlide>
             );
           })
