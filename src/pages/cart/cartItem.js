@@ -862,6 +862,8 @@ const CartItems = () => {
                       stroke={2}
                     />
                   }
+                  placeholder="88888888"
+                  maxLength={8}
                   label="Хүлээж авах утасны дугаар"
                   value={userData?.phone_number}
                   onChange={(event) => {
@@ -882,6 +884,7 @@ const CartItems = () => {
                   withAsterisk
                   id="input-street"
                   label="Имэйл хаяг"
+                  placeholder="Имэйл хаяг оруулна уу"
                   value={userData?.email}
                   leftSection={
                     <IconMail
