@@ -23,8 +23,10 @@ import {
   Checkbox,
   Loader,
   Modal,
+  rem,
   Stack,
   Switch,
+  TextInput,
   Tooltip,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -33,7 +35,9 @@ import {
   IconAlertCircle,
   IconCheck,
   IconCircleXFilled,
+  IconMail,
   IconMinus,
+  IconPhone,
   IconPhotoOff,
   IconPlus,
   IconTrash,
@@ -48,6 +52,7 @@ import { BsCartX } from "react-icons/bs";
 import Address from "./shippingAddress";
 import { REMINDER_SLUG } from "@/utils/constant";
 import useUser from "@/hooks/useUser";
+import { isNotEmpty } from "@mantine/form";
 
 const CartItems = () => {
   const [isCheckAll, setIsCheckAll] = useState(true);
@@ -70,6 +75,21 @@ const CartItems = () => {
   const [inputOpened, { open: openInput, close: closeInput }] =
     useDisclosure(false);
 
+  const [userData, setUserData] = useState({
+    email: "",
+    phone_number: "",
+  });
+
+  const getUserInfo = async () => {
+    const data = await fetchMethod("GET", "user/profile", userToken);
+    if (data.success) {
+      setUserData({
+        email: data.data?.email,
+        phone_number: data.data?.mobile,
+      });
+    }
+  };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.addEventListener("storage", () => {
@@ -83,6 +103,7 @@ const CartItems = () => {
     if (data) {
       setCartItem(data);
     }
+    getUserInfo();
     getReminder();
   }, []);
 
@@ -176,6 +197,8 @@ const CartItems = () => {
     const requestBody = {
       address_id: addressId,
       cart_items: selectedItemsIds,
+      phone_number: userData?.phone_number,
+      email: userData?.email,
     };
 
     console.log(requestBody, "requestBody");
@@ -303,6 +326,17 @@ const CartItems = () => {
   };
 
   const makeOrder = async () => {
+    if (
+      userData?.phone_number === "" ||
+      userData?.email === "" ||
+      !isNotEmpty(userData?.phone_number) ||
+      !isNotEmpty(userData?.email)
+    ) {
+      return errorNotification({
+        message: "Утасны дугаар болон имэйл хаягаа оруулна уу.",
+        color: "red",
+      });
+    }
     if (!cartItem?.cart_items?.length) {
       return errorNotification({
         message: "Сагс хоосон байна.",
@@ -811,6 +845,61 @@ const CartItems = () => {
                   )}
                   ₮
                 </span>
+              </span>
+              <hr className="border-t-dashed my-1 h-px border-0 bg-gray-300" />
+              <span className="mb-1 flex justify-between text-sm font-[400] text-[#212529af] lg:text-[1.1rem]">
+                <TextInput
+                  className="w-full"
+                  withAsterisk
+                  id="input-street"
+                  leftSection={
+                    <IconPhone
+                      style={{
+                        width: rem(20),
+                        height: rem(20),
+                        color: "#48BE5B",
+                      }}
+                      stroke={2}
+                    />
+                  }
+                  label="Хүлээж авах утасны дугаар"
+                  value={userData?.phone_number}
+                  onChange={(event) => {
+                    const numericValue = event.currentTarget.value.replace(
+                      /[^0-9]/g,
+                      "",
+                    );
+                    setUserData({
+                      ...userData,
+                      phone_number: numericValue,
+                    });
+                  }}
+                />
+              </span>
+              <span className="mb-1 flex justify-between text-sm font-[400] text-[#212529af] lg:text-[1.1rem]">
+                <TextInput
+                  className="w-full"
+                  withAsterisk
+                  id="input-street"
+                  label="Имэйл хаяг"
+                  value={userData?.email}
+                  leftSection={
+                    <IconMail
+                      style={{
+                        width: rem(20),
+                        height: rem(20),
+                        color: "#48BE5B",
+                      }}
+                      stroke={2}
+                    />
+                  }
+                  onChange={(event) =>
+                    setUserData({
+                      ...userData,
+                      email: event.currentTarget.value,
+                    })
+                  }
+                />
               </span>
               <Button
                 styles={() => ({

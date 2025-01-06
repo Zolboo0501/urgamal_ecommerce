@@ -17,6 +17,7 @@ import {
 import { getCookie } from "cookies-next";
 import React, { useState } from "react";
 import Magnifier from "./Magnifier/Magnifier";
+import Link from "next/link";
 
 const ProductWishlist = ({ data, refresh }) => {
   const [loading, setLoading] = useState(false);
@@ -107,7 +108,10 @@ const ProductWishlist = ({ data, refresh }) => {
             </div>
           )}
         </div>
-        <div className="flex flex-col justify-around sm:ml-3">
+        <Link
+          className="flex flex-col justify-around sm:ml-3"
+          href={`/product/${data.productid}`}
+        >
           <p className="text-lg font-semibold lg:text-lg">{data.name}</p>
           <div className="mt-1 flex flex-row flex-wrap items-center gap-5">
             <div className="flex flex-row items-center">
@@ -153,7 +157,7 @@ const ProductWishlist = ({ data, refresh }) => {
               </div>
             </Button>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );
