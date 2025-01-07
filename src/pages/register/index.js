@@ -35,7 +35,7 @@ const Register = () => {
   const [checkNumber, setCheckNumber] = useState(false);
   const [checkSame, setCheckSame] = useState(false);
   const [show, setShow] = useState(false);
-
+  const userContext = useUser();
   const form = useForm({
     initialValues: {
       email: "",
@@ -126,7 +126,16 @@ const Register = () => {
         <Image fill src={"/plant.jpg"} alt="plant" objectFit="cover" />
       </div>
       <div className="relative flex flex-1 flex-col items-center justify-center">
-        <Image src="/logo.png" width={100} height={100} alt="logo" />
+        {userContext?.address?.logo ? (
+          <Image
+            src={userContext?.address?.logo}
+            width={100}
+            height={100}
+            alt={userContext?.address?.logo}
+          />
+        ) : (
+          <Image src={"/logo.png"} width={100} height={100} alt={"logo"} />
+        )}
         <p className="mt-4 text-xl font-bold">Бүртгүүлэх</p>
         <form
           className="mt-5 w-4/6"

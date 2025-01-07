@@ -87,12 +87,19 @@ const ProductDetail = ({ product, dealData, category }) => {
   const [renderImage, setRenderImage] = useState("");
   const wishlist = useWishlist();
   const router = useRouter();
+
   const addToCartHandler = async () => {
-    addCart({ ...product, quantity: 1 });
-    successNotification({
-      message: "Сагсанд амжилттай орлоо!",
-      title: `${product?.name}`,
-    });
+    if (product?.balance > 0) {
+      addCart({ ...product, quantity: 1 });
+      successNotification({
+        message: "Сагсанд амжилттай орлоо!",
+        title: `${product?.name}`,
+      });
+    } else {
+      errorNotification({
+        message: "Барааны үлдэгдэл хүрэлцэхгүй байна.",
+      });
+    }
   };
 
   const showErrorNotification = (message) => {
@@ -118,7 +125,7 @@ const ProductDetail = ({ product, dealData, category }) => {
     }
 
     try {
-      const requestOption = { productid: product.id };
+      const requestOption = { productid: product?.id };
       const data = await fetchMethod(
         "POST",
         "user/wishlist",

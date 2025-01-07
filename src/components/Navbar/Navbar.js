@@ -303,9 +303,9 @@ const Navbar = (props) => {
           className="h-6 max-xs:w-6"
         />
         <div className="absolute">
-          {wishlist.get.length > 0 && (
+          {wishlist?.get?.length > 0 && (
             <div className="-mt-5 ml-5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary600 text-xs">
-              <p className="text-sm-5 text-white">{wishlist.get.length}</p>
+              <p className="text-sm-5 text-white">{wishlist?.get?.length}</p>
             </div>
           )}
         </div>

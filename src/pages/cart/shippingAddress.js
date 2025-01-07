@@ -83,9 +83,6 @@ const Address = ({ setSelectedShippingData, setSelect }) => {
       });
   };
 
-  useEffect(() => {
-    console.log(value, "dasdas");
-  }, [value]);
   const openProductEditingModal = () => {
     setEditingProdData({ create: true });
     open();

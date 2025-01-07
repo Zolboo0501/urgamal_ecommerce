@@ -22,7 +22,9 @@ import Link from "next/link";
 const ProductWishlist = ({ data, refresh }) => {
   const [loading, setLoading] = useState(false);
   const wishlist = useWishlist();
-  const handleDelete = async () => {
+
+  const handleDelete = async (event) => {
+    event.preventDefault();
     const token = getCookie("token");
     const requestOption = {
       productid: data?.productid,
@@ -55,14 +57,21 @@ const ProductWishlist = ({ data, refresh }) => {
     refresh();
   };
 
-  const handleCart = async () => {
-    setLoading(true);
-    addCart({ ...data?.product, quantity: 1 });
-    successNotification({
-      message: "Сагсанд амжилттай орлоо!",
-      title: `${data?.name}`,
-    });
-    setLoading(false);
+  const handleCart = async (event) => {
+    event.preventDefault();
+    if (data?.product?.balance > 0) {
+      setLoading(true);
+      addCart({ ...data?.product, quantity: 1 });
+      successNotification({
+        message: "Сагсанд амжилттай орлоо!",
+        title: `${data?.name}`,
+      });
+      setLoading(false);
+    } else {
+      errorNotification({
+        message: "Барааны үлдэгдэл хүрэлцэхгүй байна.",
+      });
+    }
   };
 
   const renderRemains = (balance) => {
@@ -132,7 +141,7 @@ const ProductWishlist = ({ data, refresh }) => {
               color="green"
               variant="filled"
               radius="xl"
-              onClick={handleCart}
+              onClick={(event) => handleCart(event)}
             >
               {loading ? (
                 <div className="w-full items-center justify-center">
@@ -148,7 +157,7 @@ const ProductWishlist = ({ data, refresh }) => {
             <Button
               variant={"outline"}
               color={"red"}
-              onClick={handleDelete}
+              onClick={(event) => handleDelete(event)}
               radius="xl"
             >
               <div className="flex items-center gap-2 text-base font-semibold lg:text-ss">

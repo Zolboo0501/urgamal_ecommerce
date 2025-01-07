@@ -201,7 +201,6 @@ const CartItems = () => {
       email: userData?.email,
     };
 
-    console.log(requestBody, "requestBody");
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/order/v3`,

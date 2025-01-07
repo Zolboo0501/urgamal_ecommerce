@@ -10,7 +10,7 @@ import Order from "../../../components/Profile/Order";
 const MyOrder = () => {
   const [tabs, setTabs] = useState("all");
   const accessToken = getCookie("token");
-  console.log(tabs, "tabs");
+
   const config = {
     headers: { Authorization: `Bearer ${accessToken}` },
   };

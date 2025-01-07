@@ -57,12 +57,10 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
   const handleWishlist = async (event) => {
     event.stopPropagation();
 
-    // Toggle the wishlist state
-    const updatedToggle = !toggle;
-    setToggle(updatedToggle);
+    setToggle(!toggle);
 
     // Only proceed if we need to add to the wishlist
-    if (!updatedToggle) {
+    if (!toggle) {
       if (!token) {
         return showErrorNotification("Нэвтрэх шаардлагатай");
       }

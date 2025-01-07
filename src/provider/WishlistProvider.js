@@ -41,13 +41,16 @@ const WishlistProvider = ({ children }) => {
     const temp = [...wishlistData];
     temp.push(data);
     setWishlistData(temp);
+    getWishlist();
   };
 
   const removeItem = (id) => {
     const temp = [...wishlistData];
     const filtered = temp.filter((item) => item.productid !== id);
     setWishlistData(filtered);
+    getWishlist();
   };
+
   const mContext = {
     get: wishlistData,
     addItem: (data) => addItem(data),

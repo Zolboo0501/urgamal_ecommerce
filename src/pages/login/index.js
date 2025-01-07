@@ -25,6 +25,7 @@ const Login = () => {
   const { login } = useUser();
   const [remember, setRemember] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
+  const userContext = useUser();
   const form = useForm({
     initialValues: {
       email: "",
@@ -197,7 +198,16 @@ const Login = () => {
         <Image fill src={"/plant.jpg"} alt="plant" objectFit="cover" />
       </div>
       <div className="relative flex flex-1 flex-col items-center justify-center">
-        <Image src="/logo.png" width={100} height={100} alt="logo" />
+        {userContext?.address?.logo ? (
+          <Image
+            src={userContext?.address?.logo}
+            width={100}
+            height={100}
+            alt={userContext?.address?.logo}
+          />
+        ) : (
+          <Image src={"/logo.png"} width={100} height={100} alt={"logo"} />
+        )}
         <p className="mt-4 text-xl font-bold">Нэвтрэх</p>
         <div className="mt-5 px-8 xl:px-12">
           <form onSubmit={form.onSubmit((values) => loginFetchData(values))}>
