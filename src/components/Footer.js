@@ -35,7 +35,7 @@ const BottomFooter = ({ address }) => {
                 Түгээмэл асуулт
               </Link>
               <Link
-                href={""}
+                href={"tos"}
                 className="text-sm font-medium text-[#1C3F11] md:text-base"
               >
                 Үйлчилгээний нөхцөл

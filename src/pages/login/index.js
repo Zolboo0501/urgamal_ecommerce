@@ -19,12 +19,14 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Buttons from "../../components/Buttons";
 import useUser from "@/hooks/useUser";
+import { openContextModal } from "@mantine/modals";
 
 const Login = () => {
   const router = useRouter();
   const { login } = useUser();
   const [remember, setRemember] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
+  const [tos, setTos] = useState();
   const userContext = useUser();
   const form = useForm({
     initialValues: {
@@ -122,6 +124,15 @@ const Login = () => {
     }
   };
 
+  const getTos = async () => {
+    const res = await fetchMethod("GET", "/config/tos");
+    if (res.success) {
+      setTos(res.data);
+    } else {
+      console.log(res.error);
+    }
+  };
+
   useEffect(() => {
     if (
       router.query.code &&
@@ -134,6 +145,7 @@ const Login = () => {
     if (router.query.code) {
       getFacebook();
     }
+    getTos();
   }, [router.query]);
 
   const getStorageUser = () => {
@@ -271,7 +283,20 @@ const Login = () => {
               <p className="">
                 Үргэлжлүүлэх товчийг дарж, Facebook эрхээрээ нэвтрэх болон
                 бүртгэл үүсгэснээр Та манай{" "}
-                <button className="m-0 p-0 font-semibold text-blue-600 hover:underline">
+                <button
+                  className="m-0 p-0 font-semibold text-blue-600 hover:underline"
+                  onClick={() => {
+                    openContextModal({
+                      modal: "tosModal",
+                      title: "Үйлчилгээний нөхцөл",
+                      centered: true,
+                      size: "xl",
+                      innerProps: {
+                        data: tos?.content,
+                      },
+                    });
+                  }}
+                >
                   Үйлчилгээний нөхцөл
                 </button>{" "}
                 болон{" "}

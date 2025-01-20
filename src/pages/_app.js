@@ -29,6 +29,7 @@ import { UserConfigProvider } from "../provider/UserConfigProvider";
 import WishlistProvider from "@/provider/WishlistProvider";
 import CategoryContextProvider from "@/provider/CategoryContextProvider";
 import { ActivePageProvider } from "@/provider/ActivePageProvider";
+import TosModal from "@/components/LoginModal/TosModal";
 export default function App({ Component, pageProps }) {
   const theme = createTheme({
     fontFamily: sfProRounded.style.fontFamily,
@@ -66,6 +67,7 @@ export default function App({ Component, pageProps }) {
                     invoiceFile: InvoiceFileModal,
                     changeModal: ChangeModal,
                     ebarimt: EbarimtModal,
+                    tosModal: TosModal,
                   }}
                 >
                   <CategoryContextProvider>

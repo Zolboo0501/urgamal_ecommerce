@@ -420,7 +420,7 @@ const ProductDetail = ({ product, dealData, category }) => {
           {product?.instruction && (
             <div className="flex flex-col gap-4">
               <span className="flex flex-col gap-3 text-lg font-semibold text-grey700">
-                Хэрэглэх заавар
+                Тайлбар
               </span>
               <div
                 className="w-full overflow-y-auto overflow-x-hidden rounded-md bg-[#F8FAFC] px-3 py-3 text-base outline-0"

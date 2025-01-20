@@ -129,6 +129,21 @@ body,
   height: 100%;
 }
 
+@media screen and (max-width: 800px) {
+  .tos-container p {
+    font-size: 0.9rem !important;
+  }
+}
+
+.tos-container p strong {
+  @apply text-lg font-bold text-blue-500;
+}
+.tos-container p {
+  @apply mt-3 text-justify leading-loose text-gray-700;
+}
+.tos-container p {
+  @apply text-base;
+}
 .swiper-slide {
   text-align: center;
   font-size: 18px;
