@@ -1,5 +1,11 @@
 /* eslint-disable react/prop-types */
-import { IconChevronUp, IconMessage, IconPhone } from "@tabler/icons-react";
+import {
+  IconBrandFacebook,
+  IconBrandInstagram,
+  IconChevronUp,
+  IconMessage,
+  IconPhone,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import React from "react";
 const FloatButtons = ({ address }) => {
@@ -20,6 +26,18 @@ const FloatButtons = ({ address }) => {
         className="rounded-full bg-primary10 p-2.5 md:p-3.5"
       >
         <IconPhone className="h-5 w-5 md:h-7 md:w-7" color="#fff" />
+      </Link>
+      <Link
+        href="https://www.instagram.com/urga.mn/"
+        className="rounded-full bg-primary10 p-2.5 md:p-3.5"
+      >
+        <IconBrandInstagram className="h-5 w-5 md:h-7 md:w-7" color="#fff" />
+      </Link>
+      <Link
+        href="https://www.facebook.com/tarimalurgamal"
+        className="rounded-full bg-primary10 p-2.5 md:p-3.5"
+      >
+        <IconBrandFacebook className="h-5 w-5 md:h-7 md:w-7" color="#fff" />
       </Link>
       <Link
         href="http://m.me/tarimalurgamal"
