@@ -288,7 +288,6 @@ const Login = () => {
                   onClick={() => {
                     openContextModal({
                       modal: "tosModal",
-                      title: "Үйлчилгээний нөхцөл",
                       centered: true,
                       size: "xl",
                       innerProps: {
