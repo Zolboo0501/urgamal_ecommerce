@@ -227,14 +227,10 @@ const ProductDetail = ({ product, dealData, category }) => {
         return <Badge color="teal">Хангалттай</Badge>;
       }
       if (convertInt <= 10 && convertInt > 0) {
-        return (
-          <span className="text-base font-bold text-primary-50">
-            {product?.balance}
-          </span>
-        );
+        return <span className="text-base font-bold">{product?.balance}</span>;
       }
     } else {
-      return <Badge color="grey">Үлдэгдэлгүй</Badge>;
+      return <Badge color="black">Үлдэгдэлгүй</Badge>;
     }
   };
 
@@ -327,16 +323,24 @@ const ProductDetail = ({ product, dealData, category }) => {
                 <div className="text-lg font-semibold lg:text-2xl">
                   {product?.name}
                 </div>
-
+                {product?.barCode && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-base text-greenish-grey lg:text-base">
+                      Бар код:
+                    </span>
+                    <p className="ml-1 text-start text-base font-bold lg:text-lg">
+                      {product?.barCode}
+                    </p>
+                  </div>
+                )}
                 <div className="flex items-center gap-2">
                   <span className="text-base text-greenish-grey lg:text-base">
-                    Ширхэгийн үнэ:
+                    Нэгжийн үнэ:
                   </span>
                   <p className="ml-1 text-start text-base font-bold text-primary700 lg:text-lg">
                     {numberWithCommas(product?.listPrice) || 0}₮
                   </p>
                 </div>
-
                 {product?.wholePrice > 0 && (
                   <div className="flex gap-2">
                     <span className="text-base text-greenish-grey lg:text-base">
@@ -369,15 +373,13 @@ const ProductDetail = ({ product, dealData, category }) => {
                     </span>
                   </div>
                 </div>
-                {product?.instruction && (
-                  <div className="flex flex-col gap-4">
-                    <span className="flex text-base font-semibold text-greenish-grey">
-                      Хэрэглэх заавар
-                    </span>
+                {product?.description && (
+                  <div className="flex flex-col gap-3 text-base font-semibold text-greenish-grey">
+                    Савалгаа
                     <div
-                      className="w-full overflow-y-auto overflow-x-hidden rounded-md bg-[#F8FAFC] px-3 py-3 text-base outline-0"
+                      className="text-base font-regular text-black"
                       dangerouslySetInnerHTML={{
-                        __html: product.instruction || "",
+                        __html: product?.description || "",
                       }}
                     />
                   </div>
@@ -415,13 +417,15 @@ const ProductDetail = ({ product, dealData, category }) => {
           </div>
         </div>
         <div className="container mt-8 flex flex-col gap-6 rounded-md px-4 py-2">
-          {product?.description && (
-            <div className="flex flex-col gap-3 text-lg font-semibold text-grey700">
-              Тайлбар
+          {product?.instruction && (
+            <div className="flex flex-col gap-4">
+              <span className="flex flex-col gap-3 text-lg font-semibold text-grey700">
+                Хэрэглэх заавар
+              </span>
               <div
-                className="text-base font-regular text-black"
+                className="w-full overflow-y-auto overflow-x-hidden rounded-md bg-[#F8FAFC] px-3 py-3 text-base outline-0"
                 dangerouslySetInnerHTML={{
-                  __html: product?.description || "",
+                  __html: product.instruction || "",
                 }}
               />
             </div>

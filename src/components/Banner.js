@@ -21,7 +21,7 @@ const Banner = () => {
   const user = useUser();
 
   return (
-    <div className="relative mx-auto flex h-[320px] w-[100%] sm:h-[380px] md:h-[24rem] lg:h-[36rem]">
+    <div className="relative mx-auto flex h-[320px] w-[100%] sm:h-[380px] md:h-[24rem] lg:h-[36rem] xl:h-[40rem] 2xl:h-[45rem]">
       <div
         className="relative hidden flex-row bg-white lg:flex"
         onMouseLeave={() => {
