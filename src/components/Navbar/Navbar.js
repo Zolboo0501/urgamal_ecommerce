@@ -180,6 +180,7 @@ const Navbar = (props) => {
     const token = getCookie("token");
     if (token) {
       const data = await fetchMethod("GET", "user/profile", token);
+
       if (data.success) {
         setUserInfo({
           picture: data?.data?.picture,

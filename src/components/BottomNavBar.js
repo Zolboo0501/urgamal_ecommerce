@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { getCart } from "@/utils/Store";
 import { Drawer, ScrollArea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { openContextModal } from "@mantine/modals";
 import {
   IconCategory2,
   IconHomeEco,
@@ -134,15 +133,16 @@ const BottomNavBar = () => {
                 }`}
                 onClick={() => {
                   if (!userContext.auth) {
-                    openContextModal({
-                      modal: "login",
-                      title: (
-                        <p className="text-sm font-normal">
-                          Хэрэглэгч та өөрийн утасны дугаараар нэвтрэнэ үү
-                        </p>
-                      ),
-                      centered: true,
-                    });
+                    router.push("./login");
+                    // openContextModal({
+                    //   modal: "login",
+                    //   title: (
+                    //     <p className="text-sm font-normal">
+                    //       Хэрэглэгч та өөрийн утасны дугаараар нэвтрэнэ үү
+                    //     </p>
+                    //   ),
+                    //   centered: true,
+                    // });
                   } else {
                     router.push("/profile");
                   }

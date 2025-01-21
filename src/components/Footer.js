@@ -246,10 +246,7 @@ const BottomFooter = ({ address }) => {
                       </a>
                     </li>
                     <li className="mb-4">
-                      <a
-                        href="https://github.com/themesberg/flowbite"
-                        className="hover:underline"
-                      >
+                      <a href="tos" className="hover:underline">
                         Үйлчилгээний нөхцөл
                       </a>
                     </li>

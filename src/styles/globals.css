@@ -139,11 +139,9 @@ body,
   @apply text-lg font-bold text-blue-500;
 }
 .tos-container p {
-  @apply mt-3 text-justify leading-loose text-gray-700;
+  @apply mt-3 text-justify text-base leading-loose text-gray-700;
 }
-.tos-container p {
-  @apply text-base;
-}
+
 .swiper-slide {
   text-align: center;
   font-size: 18px;

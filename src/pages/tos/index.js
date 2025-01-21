@@ -35,12 +35,12 @@ const index = () => {
   }
   return (
     <GlobalLayout>
-      <div className="flex max-h-[800px] flex-col gap-4 overflow-auto p-4 lg:flex-row">
-        <div className="max-w-[450px] flex-shrink-0 self-center bg-slate-50 xl:max-w-[45%]">
+      <div className="flex flex-col gap-4 p-4 lg:max-h-[800px] lg:flex-row">
+        <div className="max-w-[550px] flex-shrink-0 self-center bg-slate-50 xl:max-w-[45%]">
           <Lottie animationData={animationData} loop={true} />
         </div>
         <div
-          className="tos-container overflow-auto p-4"
+          className="tos-container p-4 md:overflow-auto"
           dangerouslySetInnerHTML={{
             __html: htmlFrom(tos?.content),
           }}

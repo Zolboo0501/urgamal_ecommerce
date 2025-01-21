@@ -205,7 +205,7 @@ const Login = () => {
   };
 
   return (
-    <div className="absolute flex h-full w-full flex-row">
+    <div className="absolute flex flex-row md:h-full md:w-full">
       <div className="relative hidden h-full w-4/6 md:block lg:w-8/12 xl:w-9/12">
         <Image fill src={"/plant.jpg"} alt="plant" objectFit="cover" />
       </div>
