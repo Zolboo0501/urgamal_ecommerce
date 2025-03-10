@@ -1,51 +1,61 @@
 export const addCart = (product) => {
   if (typeof window !== "undefined") {
-    // client-side operation such as local storage.
-    const get = localStorage.getItem("cartItems");
-    if (get) {
-      let state = JSON.parse(get);
-      const existingItemIndex = state?.cart_items?.findIndex(
+    const storedCart = localStorage.getItem("cartItems");
+    if (storedCart) {
+      const state = JSON.parse(storedCart);
+      const existingItemIndex = state.cart_items.findIndex(
         (item) => item.id === product.id,
       );
+
       let updatedCartItems;
       if (existingItemIndex !== -1) {
-        updatedCartItems = state?.cart_items?.map((item, index) => {
+        updatedCartItems = state.cart_items.map((item, index) => {
           if (index === existingItemIndex) {
+            const price =
+              product.price_sales && product.price_sales.length > 0
+                ? product.price_sales[0].listPrice
+                : product.listPrice;
+            const newQuantity = item.quantity + product.quantity;
             return {
               ...item,
+              quantity: newQuantity,
+              total: newQuantity * price,
               isChecked: false,
-              quantity: item.quantity + product.quantity,
-              total: (item.quantity + product.quantity) * item.listPrice,
             };
           }
-          return item;
+          return item; // leave other items unchanged
         });
       } else {
+        const price =
+          product.price_sales && product.price_sales.length > 0
+            ? product.price_sales[0].listPrice
+            : product.listPrice;
         updatedCartItems = [
           ...state.cart_items,
-          { ...product, total: product.quantity * product.listPrice },
+          { ...product, total: product.quantity * price },
         ];
       }
 
-      let total = 0;
-      updatedCartItems?.forEach((item) => {
-        total +=
-          parseInt(item.total) || parseInt(item.quantity * item.listPrice);
-      });
+      // Calculate the new cart total
+      const total = updatedCartItems.reduce((sum, item) => sum + item.total, 0);
 
       const updatedState = {
         ...state,
-        total: total,
+        total,
         cart_items: updatedCartItems,
       };
+
       localStorage.setItem("cartItems", JSON.stringify(updatedState));
       window.dispatchEvent(new Event("storage"));
     } else {
+      // If there is no cart in localStorage yet, create one
+      const price =
+        product.price_sales && product.price_sales.length > 0
+          ? product.price_sales[0].listPrice
+          : product.listPrice;
       const updatedState = {
-        cart_items: [
-          { ...product, total: product.quantity * product.listPrice },
-        ],
-        total: product.quantity * product.listPrice,
+        cart_items: [{ ...product, total: product.quantity * price }],
+        total: product.quantity * price,
       };
       localStorage.setItem("cartItems", JSON.stringify(updatedState));
       window.dispatchEvent(new Event("storage"));

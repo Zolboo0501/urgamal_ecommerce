@@ -111,7 +111,7 @@ const NotificationButtonImage = ({ list }) => {
       />
       <div className="absolute">
         {list?.length > 0 && (
-          <div className="-mt-8 ml-4 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary600 text-xs">
+          <div className="-mt-8 ml-4 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary text-xs">
             <p className="text-sm-5 text-white">{list?.length}</p>
           </div>
         )}

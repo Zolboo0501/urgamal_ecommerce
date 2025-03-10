@@ -149,7 +149,7 @@ const Password = (props) => {
   const renderCheck = (state, text) => {
     return (
       <p
-        className={`text-sm font-semibold ${state ? "text-primary600" : "text-red-500"}`}
+        className={`text-sm font-semibold ${state ? "text-primary" : "text-red-500"}`}
       >
         - {text}
       </p>

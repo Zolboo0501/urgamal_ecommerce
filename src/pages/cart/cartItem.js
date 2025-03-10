@@ -123,10 +123,16 @@ const CartItems = () => {
       }
     });
     setSelectedItemsIds(ids);
-    let total = checkIsChecked?.reduce(
-      (acc, item) => acc + item.quantity * item.listPrice,
-      0,
-    );
+    let total = checkIsChecked?.reduce((acc, item) => {
+      const quantity = item?.quantity || 1;
+      const price =
+        item?.price_sales?.length > 0
+          ? item?.price_sales?.[0]?.listPrice
+          : item?.listPrice;
+
+      return acc + quantity * price;
+    }, 0);
+
     setSelectedItemsTotal(total);
   }, [cartItem]);
 
@@ -152,6 +158,11 @@ const CartItems = () => {
     }
   }, [selectedShippingData]);
 
+  useEffect(() => {
+    if (checked) {
+      setShippingPee(0);
+    }
+  }, [checked]);
   const deleteCartItem = (event, id) => {
     event.stopPropagation();
     const temp = [...(cartItem?.cart_items || [])];
@@ -365,17 +376,16 @@ const CartItems = () => {
   };
 
   const handleInvoiceInput = async (values) => {
-    const addressData = checked
-      ? "Очиж авна"
-      : `Хот: ${selectedShippingData?.city}, Дүүрэг: ${selectedShippingData?.district}, Хороо: ${selectedShippingData?.committee}, Гудамж: ${selectedShippingData?.street}, Байр: ${selectedShippingData?.apartment}, Тоот: ${selectedShippingData?.number}`;
+    const addressId = checked ? null : selectedShippingData?.id;
 
     const requestOption = {
-      address: addressData,
+      address_id: addressId,
       method: "invoice",
       companyName: values?.companyName,
       contact: values?.contact,
       email: values?.email,
       registry: values?.registry,
+      phone_number: userData?.phone_number,
       cart_items: selectedItemsIds,
     };
 
@@ -672,9 +682,23 @@ const CartItems = () => {
                         <span className="line-clamp-2 text-start text-ss font-medium text-grey800 lg:text-base xl:text-lg">
                           {item?.name}
                         </span>
-                        <span className="text-start text-sm font-medium text-grey600 lg:text-ss xl:text-base">
-                          {numberWithCommas(item.listPrice)}₮
-                        </span>
+                        {item?.price_sales?.length > 0 ? (
+                          <div className="flex flex-row gap-2">
+                            <span className="text-start text-sm font-medium text-grey600 lg:text-ss xl:text-base">
+                              {numberWithCommas(
+                                item?.price_sales?.[0]?.listPrice,
+                              )}
+                              ₮
+                            </span>
+                            <span className="text-start text-sm font-medium text-grey400 line-through lg:text-ss xl:text-base">
+                              {numberWithCommas(item?.listPrice)}₮
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="text-start text-sm font-medium text-grey600 lg:text-ss xl:text-base">
+                            {numberWithCommas(item.listPrice)}₮
+                          </span>
+                        )}
                         <div className="hidden items-center gap-1 sm:flex">
                           <span className="text-sm font-[500] text-[#2125297a] lg:text-ss xl:text-base">
                             Үлдэгдэл:
@@ -784,7 +808,7 @@ const CartItems = () => {
               </div>
               {renderCartContent()}
             </div>
-            {addressVisible === true && (
+            {addressVisible === true && !checked && (
               <Address
                 setSelectedShippingData={setSelectedShippingData}
                 setSelect={setSelect}
@@ -937,9 +961,10 @@ const CartItems = () => {
               {checked && (
                 <div className="rounded-md border-2 border-primary p-2 text-lg font-semibold text-gray-700">
                   Санамж
-                  <p className="mt-1 text-base font-regular text-gray-600">
-                    {reminderText?.value || ""}
-                  </p>
+                  <p
+                    className="mt-1 text-base font-regular text-gray-600"
+                    dangerouslySetInnerHTML={{ __html: reminderText?.value }}
+                  />
                 </div>
               )}
             </div>

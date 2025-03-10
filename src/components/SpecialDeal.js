@@ -43,7 +43,9 @@ export default function ProductListWithCategory({ className, suggest }) {
       </SimpleGrid>
     );
 
-  return data?.map((product, index) => {
+  const order = data.sort((a, b) => a.order - b.order);
+
+  return order?.map((product, index) => {
     if (!product?.products?.length) return null;
 
     const renderSwiperSlides = () =>

@@ -88,7 +88,7 @@ const BottomNavBar = () => {
                 <span
                   className={`text-sm font-medium ${
                     router.pathname === "/home"
-                      ? "text-primary600"
+                      ? "text-primary"
                       : "text-grey700"
                   }`}
                 >
@@ -119,7 +119,7 @@ const BottomNavBar = () => {
                 <span
                   className={`text-sm font-medium ${
                     router.pathname === "/cart/cartItem"
-                      ? "text-primary600"
+                      ? "text-primary"
                       : "text-grey700"
                   }`}
                 >
@@ -157,7 +157,7 @@ const BottomNavBar = () => {
                 <span
                   className={`text-sm font-medium ${
                     router.pathname === "/profile"
-                      ? "text-primary600"
+                      ? "text-primary"
                       : "text-grey700"
                   }`}
                 >

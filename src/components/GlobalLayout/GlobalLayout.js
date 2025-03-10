@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import Head from "next/head";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import BottomFooter from "../Footer";
 import BottomNavBar from "../BottomNavBar";
 import Navbar from "../Navbar/Navbar";
@@ -16,7 +16,7 @@ export default function GlobalLayout({
 }) {
   const userContext = useUser();
   const [_, setUserConfigValue] = useState(userContext.preferenceConfig);
-
+  const bottomRef = useRef();
   useEffect(() => {
     setUserConfigValue(userContext.configId);
   }, [userContext.preferenceConfig, userContext.configId]);
@@ -67,11 +67,12 @@ export default function GlobalLayout({
         >
           <Navbar address={userContext?.address} />
           {children}
-          <FloatButtons address={userContext?.address} />
+          <FloatButtons address={userContext?.address} bottomRef={bottomRef} />
           {footer && (
             <BottomFooter
               address={userContext?.address}
               links={userContext?.links}
+              bottomRef={bottomRef}
             />
           )}
           <BottomNavBar />

@@ -2,21 +2,27 @@
 import {
   IconBrandFacebook,
   IconBrandInstagram,
+  IconChevronDown,
   IconChevronUp,
   IconMessage,
   IconPhone,
 } from "@tabler/icons-react";
 import Link from "next/link";
-import React from "react";
-const FloatButtons = ({ address }) => {
+import React, { useState } from "react";
+const FloatButtons = ({ address, bottomRef }) => {
   const contact = address?.contact || "";
   const numbers = contact.match(/\d+/)?.[0] || "";
-
+  const [toggle, setToggle] = useState(false);
   const isBrowser = () => typeof window !== "undefined";
 
   const scrollToTop = () => {
     if (!isBrowser()) return;
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (toggle) {
+      setToggle(false);
+      return window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    setToggle(true);
+    return bottomRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -50,7 +56,11 @@ const FloatButtons = ({ address }) => {
         href="http://m.me/tarimalurgamal"
         className="rounded-full bg-primary10 p-2.5 md:p-3.5"
       >
-        <IconChevronUp className="h-5 w-5 md:h-7 md:w-7" color="#fff" />
+        {toggle ? (
+          <IconChevronUp className="h-5 w-5 md:h-7 md:w-7" color="#fff" />
+        ) : (
+          <IconChevronDown className="h-5 w-5 md:h-7 md:w-7" color="#fff" />
+        )}
       </button>
     </div>
   );

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { nextui } from "@nextui-org/react";
 
 /** @type {import('tailwindcss').Config} */
@@ -66,7 +65,7 @@ const config = {
         primary20: "#54C392",
         primary30: "#73EC8B",
         primary40: "#D2FF72",
-        primary: "#40C057",
+        primary: "#22C67F",
         primary25: "#E6F9E9",
         primary50: "#CCF4D3",
         primary100: "#99E9A6",

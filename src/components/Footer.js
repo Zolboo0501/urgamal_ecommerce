@@ -4,11 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const BottomFooter = ({ address }) => {
+const BottomFooter = ({ address, bottomRef }) => {
   return (
     <>
       {/* desktop */}
-      <div className="hidden md:block">
+      <section className="hidden md:block" ref={bottomRef}>
         <div
           className="flex w-full justify-between bg-green2 px-6 py-8 md:flex-col lg:flex-row xl:px-8"
           style={{
@@ -177,11 +177,11 @@ const BottomFooter = ({ address }) => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* mobile */}
 
-      <div className="block md:hidden">
+      <section className="block md:hidden">
         <footer
           className="bg-green2"
           style={{
@@ -341,7 +341,7 @@ const BottomFooter = ({ address }) => {
             </div>
           </div>
         </footer>
-      </div>
+      </section>
     </>
   );
 };

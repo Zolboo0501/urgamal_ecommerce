@@ -333,27 +333,30 @@ const ProductDetail = ({ product, dealData, category }) => {
                     </p>
                   </div>
                 )}
-                <div className="flex items-center gap-2">
-                  <span className="text-base text-greenish-grey lg:text-base">
-                    Нэгжийн үнэ:
-                  </span>
-                  <p className="ml-1 text-start text-base font-bold text-primary700 lg:text-lg">
-                    {numberWithCommas(product?.listPrice) || 0}₮
-                  </p>
-                </div>
-                {product?.wholePrice > 0 && (
-                  <div className="flex gap-2">
+                {product?.price_sales?.length > 0 ? (
+                  <div className="flex items-center gap-2">
                     <span className="text-base text-greenish-grey lg:text-base">
-                      Ширхэгийн үнэ:
+                      Нэгжийн үнэ:
                     </span>
-                    <p className="ml-1 text-start text-base font-bold text-primary700 lg:text-lg">
+                    <div className="ml-1 flex flex-row items-center gap-2">
+                      <p className="text-base font-bold text-primary lg:text-lg">
+                        {numberWithCommas(
+                          product?.price_sales?.[0]?.listPrice,
+                        ) || 0}
+                        ₮
+                      </p>
+                      <p className="text-base font-bold text-grey400 line-through lg:text-lg">
+                        {numberWithCommas(product?.listPrice)}₮
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <span className="text-base text-greenish-grey lg:text-base">
+                      Нэгжийн үнэ:
+                    </span>
+                    <p className="ml-1 text-start text-base font-bold text-primary lg:text-lg">
                       {numberWithCommas(product?.listPrice) || 0}₮
-                    </p>
-                    <span className="text-base text-[#696A6C] lg:text-base">
-                      /
-                    </span>
-                    <p className="ml-1 text-start text-base font-bold text-grey600 lg:text-lg">
-                      {numberWithCommas(product?.wholePrice) || 0}₮
                     </p>
                   </div>
                 )}

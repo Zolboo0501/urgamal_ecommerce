@@ -29,7 +29,7 @@ import {
 } from "@tabler/icons-react";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { IoIosBarcode } from "react-icons/io";
 import { addCart } from "../utils/Store";
 
@@ -147,6 +147,19 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
     }
   };
 
+  const discountPercentage = useMemo(() => {
+    const discountPrice = data?.price_sales?.[0]?.listPrice;
+    const originalPrice = data?.listPrice;
+
+    if (discountPrice && originalPrice && originalPrice > 0) {
+      return (((originalPrice - discountPrice) * 100) / originalPrice).toFixed(
+        0,
+      );
+    }
+
+    return null;
+  }, [data]);
+
   return (
     <Card
       shadow="md"
@@ -166,6 +179,13 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
     >
       <Card.Section>
         <div className="relative block border-b">
+          {discountPercentage && (
+            <div className="absolute right-0 top-1 items-center justify-center rounded-bl-3xl bg-tertiary px-4 py-1">
+              <p className="pl-3 text-sm font-bold text-white">
+                {discountPercentage}%
+              </p>
+            </div>
+          )}
           <AspectRatio ratio={4 / 3}>
             <Image
               src={currentImage?.src}
@@ -230,9 +250,11 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
         </div>
       </Card.Section>
       <div className="mt-3">
-        <p className="mt-1 line-clamp-1 grow text-start text-lg font-medium">
-          {data?.name}
-        </p>
+        <div className="h-14">
+          <p className="mt-1 line-clamp-2 grow text-start text-lg font-medium">
+            {data?.name}
+          </p>
+        </div>
         <div className="flex flex-row items-center gap-1">
           <p className="text-xs font-semibold text-[#696A6C]">Үлдэгдэл : </p>
           {renderRemains(data?.balance)}
@@ -240,9 +262,20 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
       </div>
       <div className="flex w-full flex-col">
         <div className="flex flex-row items-center justify-between">
-          <p className="mt-1 text-start text-lg font-bold text-primary600">
-            {numberWithCommas(data?.listPrice)}₮
-          </p>
+          {data?.price_sales?.length > 0 ? (
+            <div className="mt-1 flex flex-row items-center gap-2">
+              <p className="text-lg font-bold text-primary">
+                {numberWithCommas(data?.price_sales?.[0]?.listPrice)}₮
+              </p>
+              <p className="text font-bold text-grey400 line-through">
+                {numberWithCommas(data?.listPrice)}₮
+              </p>
+            </div>
+          ) : (
+            <p className="text-lg font-bold text-primary">
+              {numberWithCommas(data?.listPrice)}₮
+            </p>
+          )}
           <ActionIcon
             variant="subtle"
             radius="lg"
@@ -255,10 +288,10 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
               <IconHeartFilled
                 stroke={1.5}
                 size={rem(24)}
-                style={{ color: "#40C057" }}
+                style={{ color: "#22C67F" }}
               />
             ) : (
-              <IconHeart stroke={1.5} size={rem(24)} color="green" />
+              <IconHeart stroke={1.5} size={rem(24)} color="#22C67F" />
             )}
           </ActionIcon>
         </div>
@@ -278,7 +311,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
             size="md"
             radius="xl"
             className="flex items-center justify-center rounded-md border"
-            color="green"
+            color="#22C67F"
             onClick={(event) => {
               event.preventDefault();
               minusCount(event);
@@ -294,7 +327,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
             size="md"
             radius="xl"
             className="flex items-center justify-center rounded-md"
-            color="green"
+            color="#22C67F"
             onClick={(event) => {
               event.preventDefault();
               addCount(event);
@@ -306,7 +339,7 @@ const ProductCard = ({ src, data, shouldScale = true, additionalImages }) => {
         <Button
           variant="filled"
           radius="xl"
-          color="green"
+          color="#22C67F"
           onClick={(event) => {
             event.preventDefault();
             addToCartHandler(event);

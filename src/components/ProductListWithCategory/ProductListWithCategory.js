@@ -43,7 +43,7 @@ export default function ProductListWithCategory({
           className="flex flex-row items-center gap-2 text-greenish-grey hover:underline"
         >
           <p className="text-sm xs:text-sm xs:font-light sm:text-sm sm:font-normal md:text-base md:font-medium">
-            Бүгдийг үзэх
+            Бүгдийг үзэхd
           </p>
           <IconChevronRight size={"1.1rem"} />
         </Link>

@@ -249,7 +249,7 @@ const Order = ({ data }) => {
                 <p className="text-base text-[#696A6C] lg:text-base">
                   Захиалгын дугаар :
                 </p>
-                <p className="ml-1 text-start text-base font-medium lg:text-base">
+                <p className="ml-1 text-start text-base font-medium text-grey700 lg:text-base">
                   {data?.orderid}
                 </p>
               </div>
@@ -258,7 +258,7 @@ const Order = ({ data }) => {
                   <IconCalendarEvent color="#344054" />
                 </div>
                 <p className="text-base text-[#696A6C] lg:text-base">Огноо :</p>
-                <p className="ml-1 text-start text-base font-medium text-grey900 lg:text-base">
+                <p className="ml-1 text-start text-base font-medium text-grey700 lg:text-base">
                   {dayjs(data?.createdAt).format("YYYY-MM-DD HH:mm")}
                 </p>
               </div>
@@ -273,7 +273,11 @@ const Order = ({ data }) => {
           </p>
         </div>
       </div>
-
+      <div className="mt-2 flex flex-row">
+        <p className="ml-1 text-start text-base font-medium lg:text-base">
+          {data?.address || "Очиж авах"}
+        </p>
+      </div>
       <Collapse in={opened}>
         <div>
           <div className="flex w-full flex-col items-center py-2">
