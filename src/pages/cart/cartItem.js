@@ -392,7 +392,7 @@ const CartItems = () => {
     const token = getCookie("token");
 
     try {
-      await fetchMethod("POST", "order/invoice", token, requestOption);
+      await fetchMethod("POST", "order/invoice/v2", token, requestOption);
 
       successNotification({
         message: "Амжилттай нэхэмжлэл үүслээ.",
